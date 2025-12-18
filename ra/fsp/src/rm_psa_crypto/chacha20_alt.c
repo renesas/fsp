@@ -38,9 +38,10 @@ void mbedtls_chacha20_init(mbedtls_chacha20_context *ctx)
     mbedtls_platform_zeroize(ctx->state, sizeof(ctx->state));
     mbedtls_platform_zeroize(ctx->keystream8, sizeof(ctx->keystream8));
     mbedtls_platform_zeroize(ctx->internal_state, sizeof(ctx->internal_state));
+    mbedtls_platform_zeroize(ctx->internal_key, sizeof(ctx->internal_key));
 
     /* Initially, there's no keystream bytes available */
-    ctx->keystream_bytes_used = CHACHA20_BLOCK_SIZE_BYTES;
+    ctx->keystream_bytes_used = HW_SCE_CHACHA20_BLOCK_BYTE_SIZE;
 }
 
 void mbedtls_chacha20_free(mbedtls_chacha20_context *ctx)
@@ -60,14 +61,10 @@ int mbedtls_chacha20_setkey(mbedtls_chacha20_context *ctx,
     ctx->state[3] = 0x6b206574;
 
     /* Set key */
-    ctx->state[4]  = MBEDTLS_GET_UINT32_LE(key, 0);
-    ctx->state[5]  = MBEDTLS_GET_UINT32_LE(key, 4);
-    ctx->state[6]  = MBEDTLS_GET_UINT32_LE(key, 8);
-    ctx->state[7]  = MBEDTLS_GET_UINT32_LE(key, 12);
-    ctx->state[8]  = MBEDTLS_GET_UINT32_LE(key, 16);
-    ctx->state[9]  = MBEDTLS_GET_UINT32_LE(key, 20);
-    ctx->state[10] = MBEDTLS_GET_UINT32_LE(key, 24);
-    ctx->state[11] = MBEDTLS_GET_UINT32_LE(key, 28);
+    if(FSP_SUCCESS != mbedtls_internal_chacha20_setkey(ctx, key))
+    {
+    	return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
 
     return 0;
 }
@@ -86,7 +83,7 @@ int mbedtls_chacha20_starts(mbedtls_chacha20_context *ctx,
     mbedtls_platform_zeroize(ctx->keystream8, sizeof(ctx->keystream8));
 
     /* Initially, there's no keystream bytes available */
-    ctx->keystream_bytes_used = CHACHA20_BLOCK_SIZE_BYTES;
+    ctx->keystream_bytes_used = HW_SCE_CHACHA20_BLOCK_BYTE_SIZE;
 
     return 0;
 }
@@ -102,21 +99,21 @@ int mbedtls_chacha20_update(mbedtls_chacha20_context *ctx,
         return 0;
     }
     
-    size_t offset = CHACHA20_BLOCK_SIZE_BYTES - ctx->keystream_bytes_used;
+    size_t offset = HW_SCE_CHACHA20_BLOCK_BYTE_SIZE - ctx->keystream_bytes_used;
     size_t remain_bytes = 0;
     size_t processed = 0;
     
     /* Use leftover keystream bytes */
-    if (ctx->keystream_bytes_used < CHACHA20_BLOCK_SIZE_BYTES && size > 0) {
+    if (ctx->keystream_bytes_used < HW_SCE_CHACHA20_BLOCK_BYTE_SIZE && size > 0) {
         size_t copy_size = (size < offset) ? size : offset;
         
-        unsigned char input_tmp[CHACHA20_BLOCK_SIZE_BYTES] = {0};
-        unsigned char output_tmp[CHACHA20_BLOCK_SIZE_BYTES] = {0};
+        unsigned char input_tmp[HW_SCE_CHACHA20_BLOCK_BYTE_SIZE] = {0};
+        unsigned char output_tmp[HW_SCE_CHACHA20_BLOCK_BYTE_SIZE] = {0};
         
         memcpy(input_tmp, ctx->keystream8, ctx->keystream_bytes_used);
         memcpy(input_tmp + ctx->keystream_bytes_used, input, copy_size);
         
-        ret = mbedtls_internal_chacha20_update(ctx, input_tmp, output_tmp, CHACHA20_BLOCK_SIZE_BYTES);
+        ret = mbedtls_internal_chacha20_update(ctx, input_tmp, output_tmp, HW_SCE_CHACHA20_BLOCK_BYTE_SIZE);
         if (ret != 0) {
             return ret;
         }
@@ -137,8 +134,8 @@ int mbedtls_chacha20_update(mbedtls_chacha20_context *ctx,
     size_t remaining_size = size - processed;
     
     /* Process full blocks */
-    if (remaining_size >= CHACHA20_BLOCK_SIZE_BYTES) {
-        size_t full_blocks_size = (remaining_size / CHACHA20_BLOCK_SIZE_BYTES) * CHACHA20_BLOCK_SIZE_BYTES;
+    if (remaining_size >= HW_SCE_CHACHA20_BLOCK_BYTE_SIZE) {
+        size_t full_blocks_size = (remaining_size / HW_SCE_CHACHA20_BLOCK_BYTE_SIZE) * HW_SCE_CHACHA20_BLOCK_BYTE_SIZE;
         
         ret = mbedtls_internal_chacha20_update(ctx, 
                                              input + processed, 
@@ -148,25 +145,25 @@ int mbedtls_chacha20_update(mbedtls_chacha20_context *ctx,
             return ret;
         }
         
-        ctx->state[12] += (uint32_t)(full_blocks_size / CHACHA20_BLOCK_SIZE_BYTES);
+        ctx->state[12] += (uint32_t)(full_blocks_size / HW_SCE_CHACHA20_BLOCK_BYTE_SIZE);
         processed += full_blocks_size;
         remaining_size -= full_blocks_size;
     }
     
     /* Last (partial) block */
     if (remaining_size > 0) {
-        unsigned char output_tmp[CHACHA20_BLOCK_SIZE_BYTES] = {0};
+        unsigned char output_tmp[HW_SCE_CHACHA20_BLOCK_BYTE_SIZE] = {0};
         
         ret = mbedtls_internal_chacha20_update(ctx, 
-                                             input + processed, 
-                                             output_tmp, 
-                                             CHACHA20_BLOCK_SIZE_BYTES);
+                                               input + processed, 
+                                               output_tmp, 
+                                               HW_SCE_CHACHA20_BLOCK_BYTE_SIZE);
         if (ret != 0) {
             return ret;
         }
         
         memcpy(output + processed, output_tmp, remaining_size);
-        memset(&ctx->keystream8[0], 0, CHACHA20_BLOCK_SIZE_BYTES);
+        memset(&ctx->keystream8[0], 0, HW_SCE_CHACHA20_BLOCK_BYTE_SIZE);
         memcpy(ctx->keystream8, input + processed, remaining_size);
         ctx->keystream_bytes_used = remaining_size;
     }

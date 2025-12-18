@@ -426,8 +426,7 @@ exit:
 
 
 
-#ifdef FSP_NOT_DEFINED
-#if !defined(MBEDTLS_CMAC_ALT)
+#if defined(MBEDTLS_CMAC_ALT)
 #if defined(MBEDTLS_AES_C)
 /*
  * Implementation of AES-CMAC-PRF-128 defined in RFC 4615
@@ -476,7 +475,6 @@ exit:
 #endif /* MBEDTLS_AES_C */
 
 #endif /* !MBEDTLS_CMAC_ALT */
-#endif // FSP_NOT_DEFINED
 
 #if defined(MBEDTLS_SELF_TEST)
 /*

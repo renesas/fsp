@@ -15,7 +15,7 @@
  * Functions
  **********************************************************************************************************************/
 
-rsip_ret_t r_rsip_pe5e (const uint32_t InData_EncMsg[], uint32_t MAX_CNT2)
+rsip_ret_t r_rsip_pe5e (const uint32_t InData_EncMsg[], const uint32_t InData_EncMsgLength[])
 {
     uint32_t OFS_ADR = 0U;
     uint32_t iLoop   = 0U;
@@ -23,7 +23,7 @@ rsip_ret_t r_rsip_pe5e (const uint32_t InData_EncMsg[], uint32_t MAX_CNT2)
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x80010100U);
     WAIT_STS(REG_1444H, 31, 1);
-    WR1_PROG(REG_1420H, bswap_32big(MAX_CNT2));
+    WR1_PROG(REG_1420H, InData_EncMsgLength[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x38000d08U);

@@ -93,14 +93,34 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     p_instance_ctrl->p_cfg = p_cfg;
     ceu_extended_cfg_t * p_extend = (ceu_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    bool     bus_width_8_bit = (CEU_DATA_BUS_SIZE_8_BIT == p_extend->data_bus_width);
-    uint32_t bytes_per_cycle = p_extend->data_bus_width + 1;
-    uint32_t bytes_per_line  = p_cfg->x_capture_pixels * p_cfg->bytes_per_pixel;
-    uint32_t cycles_per_byte = (bus_width_8_bit ? 2 : 1);
-    uint32_t cycles_per_line = bytes_per_line / bytes_per_cycle;
-    uint32_t lines_per_image = p_cfg->y_capture_pixels;
-    uint32_t hfclp           = cycles_per_line / cycles_per_byte; // Div by 2 for CEU_DATA_BUS_SIZE_8_BIT
-    uint32_t vfclp           = lines_per_image;
+    bool     bus_width_8_bit        = (CEU_DATA_BUS_SIZE_8_BIT == p_extend->data_bus_width);
+    uint32_t bytes_per_cycle        = p_extend->data_bus_width + 1;
+    uint32_t bytes_per_line         = p_cfg->x_capture_pixels * p_cfg->bytes_per_pixel;
+    uint32_t cycles_per_byte        = (bus_width_8_bit ? 2 : 1);
+    uint32_t cycles_per_line        = bytes_per_line / bytes_per_cycle;
+    uint32_t lines_per_image        = p_cfg->y_capture_pixels;
+    uint32_t hfclp                  = cycles_per_line / cycles_per_byte; // Div by 2 for CEU_DATA_BUS_SIZE_8_BIT
+    uint32_t vfclp                  = lines_per_image;
+    uint32_t bytes_per_output_line  = bytes_per_line;
+    uint32_t lines_per_output_image = lines_per_image;
+
+    if ((CEU_CAPTURE_FORMAT_IMAGE_CAPTURE == p_extend->capture_format))
+    {
+        uint32_t scale_down_factor = p_extend->scale_down_factor;
+        if (scale_down_factor & (R_CEU_CFLCR_HMANT_Msk | R_CEU_CFLCR_HFRAC_Msk))
+        {
+            /* Horizontal scale down is enabled */
+            hfclp                 = p_extend->h_output_size;
+            bytes_per_output_line = hfclp * p_cfg->bytes_per_pixel;
+        }
+
+        if (scale_down_factor & (R_CEU_CFLCR_VMANT_Msk | R_CEU_CFLCR_VFRAC_Msk))
+        {
+            /* Vertical scale down is enabled */
+            vfclp = p_extend->v_output_size;
+            lines_per_output_image = vfclp;
+        }
+    }
 
     /* Initialize control structure data */
     p_instance_ctrl->p_callback = p_cfg->p_callback;
@@ -111,7 +131,7 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     }
     else
     {
-        p_instance_ctrl->image_area_size = cycles_per_line * bytes_per_line;
+        p_instance_ctrl->image_area_size = lines_per_output_image * bytes_per_output_line;
     }
 
     /* Start the peripheral */
@@ -122,6 +142,14 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     FSP_HARDWARE_REGISTER_WAIT(R_CEU->CSTSR_b.CPTON, 0);
     FSP_HARDWARE_REGISTER_WAIT(R_CEU->CAPSR_b.CPKIL, 0);
 
+    /* Capture Filter Control Register (CFLCR)
+     * [Note] Must be 0 in data fetch modes and for interlace formats
+     */
+    R_CEU->CFLCR = p_extend->scale_down_factor;
+
+    /* Capture interface format register (CAIFR)*/
+    R_CEU->CAIFR = 0;                                                                                          // Disable progressive capture
+
     /* capture control register (CAPCR)
      * [Note] Continuous capture operations are possible only in image capture mode. */
     R_CEU->CAPCR = ((uint32_t) (p_extend->burst_mode << R_CEU_CAPCR_MTCM_Pos) & R_CEU_CAPCR_MTCM_Msk);         // Unit for transferring data to bus bridge module;
@@ -130,6 +158,7 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     R_CEU->CAMCR = ((uint32_t) (p_extend->hsync_polarity << R_CEU_CAMCR_HDPOL_Pos) & R_CEU_CAMCR_HDPOL_Msk) |  // Polarity for detection of the horizontal sync signal input
                    ((uint32_t) (p_extend->vsync_polarity << R_CEU_CAMCR_VDPOL_Pos) & R_CEU_CAMCR_VDPOL_Msk) |  // Polarity for detection of the vertical sync signal input
                    ((uint32_t) (p_extend->capture_format << R_CEU_CAMCR_JPG_Pos) & R_CEU_CAMCR_JPG_Msk) |      // Fetched data type
+                   ((uint32_t) (p_extend->input_order << R_CEU_CAMCR_DTARY_Pos) & R_CEU_CAMCR_DTARY_Msk) |     // Input order for Image Capture Mode
                    ((uint32_t) (p_extend->data_bus_width << R_CEU_CAMCR_DTIF_Pos) & R_CEU_CAMCR_DTIF_Msk) |    // Digital image input pins from which data is to be captured
                    ((uint32_t) (p_extend->edge_info.dsel << R_CEU_CAMCR_DSEL_Pos) & R_CEU_CAMCR_DSEL_Msk) |    // Edge for fetching external image data (D7 to D0)
                    ((uint32_t) (p_extend->edge_info.hdsel << R_CEU_CAMCR_HDSEL_Pos) & R_CEU_CAMCR_HDSEL_Msk) | // Edge for capturing external horizontal sync signal (HD)
@@ -147,7 +176,7 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
                    (((uint32_t) p_cfg->y_capture_start_pixel << R_CEU_CAMOR_VOFST_Pos) & R_CEU_CAMOR_VOFST_Msk); // capture start location from a vertical sync signal (1-HD units)
 
     /* Capture Interface Width Register (CAPWR)
-     * [Note] This register is used during Data synchronous fetch mode. */
+     * [Note] This register is used during Data synchronous fetch mode and image capture mode. */
     R_CEU->CAPWR = ((cycles_per_line << R_CEU_CAPWR_HWDTH_Pos) & R_CEU_CAPWR_HWDTH_Msk) |                        // Number of HD cycles to be captured, starting from CAMOR.HOFST
                    ((lines_per_image << R_CEU_CAPWR_VWDTH_Pos) & R_CEU_CAPWR_VWDTH_Msk);                         // Number of VD cycles (HD count) to be captured from CAMOR.VOFST
 
@@ -156,13 +185,16 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     R_CEU->CFWCR = 0;
 
     /* Capture Filter Size Clip Register (CFSZR)
-     * [Note] Set HFCLP to CAPWR.HWDTH/2 in 8-bit interface mode */
+     * [Note] In data synchronous fetch mode, set HFCLP to CAPWR.HWDTH/2 in 8-bit interface mode
+     * [Note] Only when the scale-down filter is used, if image is larger than VGA, the output image must be equal to or larger than SubQCIF and equal to or smaller than VGA
+     * [Note] The clipping size specified in CFSZR must be equal to or smaller than the number of pixels output from the capture filter.*/
     R_CEU->CFSZR = ((vfclp << R_CEU_CFSZR_VFCLP_Pos) & R_CEU_CFSZR_VFCLP_Msk) | // Vertical clipping value of the filter output size (4-pixel units)
                    ((hfclp << R_CEU_CFSZR_HFCLP_Pos) & R_CEU_CFSZR_HFCLP_Msk);  // Horizontal clipping value of the filter output size (4-pixel units)
 
     /* Capture Destination Width Register (CDWDR)
-     * [Note] Set CHDW to CAPWR.HWDTH * 2 for 16-bit interface mode */
-    R_CEU->CDWDR = bytes_per_line;                                              // Horizontal image size in the memory where image is to be stored (4-byte units)
+     * [Note] In data synchronous fetch mode, set CHDW to CAPWR.HWDTH * 2 for 16-bit interface mode */
+    R_CEU->CDWDR = (CEU_CAPTURE_FORMAT_IMAGE_CAPTURE == p_extend->capture_format) ?
+                   bytes_per_output_line / 2 : bytes_per_output_line;           // Horizontal image size in the memory where image is to be stored (4-byte units)
 
     /* Capture Low-Pass Filter Control Register (CLFCR)  */
     R_CEU->CLFCR = 0U;
@@ -172,7 +204,7 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
         (((uint32_t) p_extend->byte_swapping.swap_8bit_units << R_CEU_CDOCR_COBS_Pos) & R_CEU_CDOCR_COBS_Msk) |  // Swapping 8-bit units for data output from the CEU
         (((uint32_t) p_extend->byte_swapping.swap_16bit_units << R_CEU_CDOCR_COWS_Pos) & R_CEU_CDOCR_COWS_Msk) | // Swapping 16-bit units for data output from the CEU
         (((uint32_t) p_extend->byte_swapping.swap_32bit_units << R_CEU_CDOCR_COLS_Pos) & R_CEU_CDOCR_COLS_Msk) | // Swapping 32-bit units for data output from the CEU
-        (((uint32_t) 1U << R_CEU_CDOCR_CDS_Pos) & R_CEU_CDOCR_CDS_Msk);                                          // Image format for data captured in the YCbCr 422 format (Must be set for Data Fetch capture modes)
+        (((uint32_t) p_extend->output_format << R_CEU_CDOCR_CDS_Pos) & R_CEU_CDOCR_CDS_Msk);                     // Image format for data captured in the YCbCr 422 format (Must be set to 1 in Data Fetch capture modes)
 
     /* Clear any previous buffer address */
     p_instance_ctrl->p_buffer = 0U;
@@ -272,7 +304,15 @@ fsp_err_t R_CEU_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_b
         R_CEU->CFWCR = R_CEU_CFWCR_FWE_Msk | (firewall_address & R_CEU_CFWCR_FWV_Msk);
     }
 
+    /* Image capture mode: Set luminance component start address
+     * Data fetch modes: Set capture start address */
     R_CEU->CDAYR = (uint32_t) p_instance_ctrl->p_buffer; // Set start address of memory area for write
+
+    if ((CEU_CAPTURE_FORMAT_IMAGE_CAPTURE == p_extend->capture_format))
+    {
+        /* Set chrominance component start address */
+        R_CEU->CDACR = (uint32_t) (&p_instance_ctrl->p_buffer[p_instance_ctrl->image_area_size / 2]);
+    }
 
     /* Clear pending flags before starting capture */
     R_CEU->CETCR = 0;
@@ -281,7 +321,7 @@ fsp_err_t R_CEU_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_b
     R_CEU->CAPSR = R_CEU_CAPSR_CE_Msk;
 
     return FSP_SUCCESS;
-}                                      /* End of function R_CEU_SetMemoryAddress() */
+}                                      /* End of function R_CEU_CaptureStart() */
 
 /***********************************************************************************************************************//**
  * Updates the user callback and has option of providing memory for callback structure.

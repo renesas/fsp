@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p81 (void)
 {
@@ -50,9 +53,7 @@ rsip_ret_t r_rsip_p81 (void)
         r_rsip_func101(0x31abdad9U, 0xe2670818U, 0xa1798641U, 0xdfe2b0baU);
         WR1_PROG(REG_00C4H, 0x00000000U);
 
-        WR1_PROG(REG_0014H, 0x000003a1U);
-        WR1_PROG(REG_00D0H, 0x0a0700f5U);
-        WAIT_STS(REG_0014H, 31, 1);
+        r_rsip_func_sub019(0x000003a1U, 0x0a0700f5U);
         WR4_PROG(REG_002CH, 0x8c789bd1U, 0x86be0420U, 0x0861c081U, 0x52317426U);
 
         r_rsip_func101(0x62898deaU, 0x6230c402U, 0x7f8ae49dU, 0x1fd2fe86U);

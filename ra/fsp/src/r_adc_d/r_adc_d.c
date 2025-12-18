@@ -61,8 +61,12 @@ static fsp_err_t r_adc_d_scan_cfg_check(adc_d_instance_ctrl_t * const     p_ctrl
 static fsp_err_t r_adc_d_open_cfg_check(adc_cfg_t const * const p_cfg);
 
 #endif
-static void     r_adc_d_open_sub(adc_d_instance_ctrl_t * const p_ctrl);
+static void r_adc_d_open_sub(adc_d_instance_ctrl_t * const p_ctrl);
+
+#if BSP_FEATURE_ADC_D_IS_ADC12
 static uint32_t r_adc_d_get_adc_frequency(adc_d_clock_div_t div);
+
+#endif
 
 #if ADC_D_CFG_INTERRUPT_SUPPORT_ENABLE
 void adc_d_scan_end_isr(void);
@@ -83,7 +87,10 @@ uint8_t resolution_read_shift_lut[] =
 {
     [ADC_RESOLUTION_8_BIT]  = 8,       ///< Shift read value right 8 bits
     [ADC_RESOLUTION_10_BIT] = 6,       ///< Shift read value right 6 bits
+
+#if BSP_FEATURE_ADC_MAX_RESOLUTION_BITS == 12U
     [ADC_RESOLUTION_12_BIT] = 0,       ///< Shift read value right 0 bits
+#endif
 };
 
 /***********************************************************************************************************************
@@ -132,6 +139,7 @@ const adc_api_t g_adc_on_adc_d =
  * @retval FSP_ERR_ALREADY_OPEN           The instance control structure has already been opened.
  * @retval FSP_ERR_IRQ_BSP_DISABLED       A callback is provided, but the interrupt is not enabled.
  * @retval FSP_ERR_INVALID_HW_CONDITION   Invalid configuration corresponds to condition HardWare UM.
+ * @retval FSP_ERR_UNSUPPORTED            Function not supported on this MCU.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_D_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 {
@@ -288,24 +296,38 @@ fsp_err_t R_ADC_D_ScanStart (adc_ctrl_t * p_ctrl)
     adc_d_extended_cfg_t * p_extend = (adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
     uint8_t adm0_mask = R_ADC_D_ADM0_ADCE_Msk;
-    if (ADC_D_TRIGGER_MODE_NO_WAIT == p_extend->operation_trigger)
+    if ((ADC_D_TRIGGER_MODE_NO_WAIT == p_extend->operation_trigger)
+#if !BSP_FEATURE_ADC_D_IS_ADC12
+        || (ADC_D_TRIGGER_SOURCE_SOFTWARE == p_extend->trigger_source)
+#endif
+        )
     {
         /* Software/Hardware no-wait mode sets ADCE then ADCS. */
         R_ADC_D->ADM0 |= adm0_mask;
+
+#if BSP_FEATURE_ADC_D_IS_ADC12
 
         /* In Software/Hardware no-wait mode, it takes 1 us + 2 cycles of the conversion clock (fAD)
          * from the start of operation for the operation to stabilize. */
         uint32_t freq_adc       = r_adc_d_get_adc_frequency(p_extend->conversion_clockdiv);
         uint32_t delay_us_cycle = (uint32_t) (ADC_D_CONVERT_TO_MICRO_SECOND / freq_adc);
         R_BSP_SoftwareDelay((2 * delay_us_cycle) + 1, BSP_DELAY_UNITS_MICROSECONDS);
+#else
 
+        /* In Software mode and Hardware no-wait mode, it takes 1 us
+         * from the start of operation for the operation to stabilize. */
+        R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+#endif
         adm0_mask |= R_ADC_D_ADM0_ADCS_Msk;
     }
+
+#if BSP_FEATURE_ADC_D_IS_ADC12
     else if (ADC_D_TRIGGER_SOURCE_SOFTWARE == p_extend->trigger_source)
     {
         /* Software wait mode does not set ADCE, only set ADCS */
         adm0_mask = R_ADC_D_ADM0_ADCS_Msk;
     }
+#endif
     else
     {
         /* Hardware wait mode does not set ADCS, only set ADCE */
@@ -399,8 +421,10 @@ fsp_err_t R_ADC_D_StatusGet (adc_ctrl_t * p_ctrl, adc_status_t * p_status)
 fsp_err_t R_ADC_D_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t * const p_data)
 {
     adc_d_instance_ctrl_t * p_instance_ctrl = (adc_d_instance_ctrl_t *) p_ctrl;
-    uint8_t                 adsreg          = R_ADC_D->ADS;
-    uint8_t                 adsbit          = adsreg & R_ADC_D_ADS_ADS_Msk;
+
+#if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
+    uint8_t adsbit = R_ADC_D->ADS & R_ADC_D_ADS_ADS_Msk;
+#endif
 
     /* Perform parameter checking. */
 #if ADC_D_CFG_PARAM_CHECKING_ENABLE
@@ -416,6 +440,8 @@ fsp_err_t R_ADC_D_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_
     {
         uint32_t requested_channel_mask = (1U << (uint32_t) reg_id);
         FSP_ASSERT(0 != (requested_channel_mask & BSP_FEATURE_ADC_D_CHANNELS_MASK));
+
+ #if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
         if (ADC_D_CHANNEL_MODE_SELECT == ((adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->channel_mode)
         {
             FSP_ASSERT(reg_id == adsbit);
@@ -424,17 +450,25 @@ fsp_err_t R_ADC_D_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_
         {
             FSP_ASSERT(((adsbit + 3) >= reg_id) && (adsbit <= reg_id));
         }
+
+ #else
+        FSP_ASSERT(reg_id == ((uint8_t) (R_ADC_D->ADS & R_ADC_D_ADS_ADS_Msk)));
+ #endif
     }
     else
     {
-        FSP_ASSERT((((ADC_CHANNEL_TEMPERATURE == reg_id) || (ADC_CHANNEL_VOLT == reg_id)) && (adsreg == reg_id)) ||
+        FSP_ASSERT((((ADC_CHANNEL_TEMPERATURE == reg_id) || (ADC_CHANNEL_VOLT == reg_id)) && (R_ADC_D->ADS == reg_id)) ||
                    (ADC_CHANNEL_POSITIVE_SIDE_VREF == reg_id) || (ADC_CHANNEL_NEGATIVE_SIDE_VREF == reg_id));
+
+ #if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
         FSP_ERROR_RETURN(
             ADC_D_CHANNEL_MODE_SELECT == ((adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->channel_mode,
             FSP_ERR_INVALID_MODE);
+ #endif
     }
 #endif
 
+#if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
     adc_d_extended_cfg_t * p_extend         = (adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     uint8_t                scan_mode_offset = 0;
 
@@ -447,6 +481,11 @@ fsp_err_t R_ADC_D_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_
         ((R_ADC_D->ADCR[scan_mode_offset]) >>
          resolution_read_shift_lut[p_instance_ctrl->p_cfg->resolution]) &
         ADC_D_MASK_RESOLUTION_12_BIT_VALUE;
+#else
+    FSP_PARAMETER_NOT_USED(reg_id);
+    *p_data = ((R_ADC_D->ADCR) >>
+               resolution_read_shift_lut[p_instance_ctrl->p_cfg->resolution]);
+#endif
 
     /* Return the error code */
     return FSP_SUCCESS;
@@ -499,9 +538,10 @@ fsp_err_t R_ADC_D_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     FSP_ERROR_RETURN(ADC_D_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 #endif
 
+    /* The total number of transfers to read depend on channel mode */
+#if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
     adc_d_extended_cfg_t * p_extend = (adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    /* The total number of transfers to read depend on channel mode */
     if (ADC_D_CHANNEL_MODE_SELECT == p_extend->channel_mode)
     {
         p_adc_info->length = ADC_D_SELECT_MODE_DATA_LENGTH;
@@ -511,20 +551,36 @@ fsp_err_t R_ADC_D_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
         p_adc_info->length = ADC_D_SCAN_MODE_DATA_LENGTH;
     }
 
+#else
+    p_adc_info->length = ADC_D_SELECT_MODE_DATA_LENGTH;
+#endif
+
     /* The size transfer byte after conversion end depend on resolution mode */
     if (ADC_RESOLUTION_8_BIT == p_instance_ctrl->p_cfg->resolution)
     {
-        p_adc_info->p_address     = ((uint8_t *) &R_ADC_D->ADCR[0]) + 1;
+#if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
+        p_adc_info->p_address = ((uint8_t *) &R_ADC_D->ADCR[0]) + 1;
+#else
+        p_adc_info->p_address = ((uint8_t *) &R_ADC_D->ADCR) + 1;
+#endif
+
         p_adc_info->transfer_size = TRANSFER_SIZE_1_BYTE;
     }
     else
     {
-        p_adc_info->p_address     = &R_ADC_D->ADCR[0];
+#if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
+        p_adc_info->p_address = &R_ADC_D->ADCR[0];
+#else
+        p_adc_info->p_address = &R_ADC_D->ADCR;
+#endif
+
         p_adc_info->transfer_size = TRANSFER_SIZE_2_BYTE;
     }
 
+#if BSP_PERIPHERAL_ELC_PRESENT
     p_adc_info->elc_peripheral = ELC_PERIPHERAL_AD;
     p_adc_info->elc_event      = ELC_EVENT_ADC0_SCAN_END;
+#endif
 
     /* Preset data to invalid value */
     p_adc_info->calibration_data = UINT32_MAX;
@@ -649,7 +705,8 @@ fsp_err_t R_ADC_D_SnoozeModePrepare (adc_ctrl_t * const p_ctrl)
     R_ADC_D->ADM0 &= ((uint8_t) ~(R_ADC_D_ADM0_ADCS_Msk | R_ADC_D_ADM0_ADCE_Msk));
 
     /* Set AWC prior to entering software standby mode.
-     * See in hardware manual: ADC12 > Snooze Mode Function > A/D Conversion by Inputting a Hardware Trigger */
+     * See in hardware manual: ADC12 or ADC10 > Snooze Mode Function > A/D Conversion
+     * by Inputting a Hardware Trigger */
     R_ADC_D->ADM2_b.AWC  = 1;
     R_ADC_D->ADM0_b.ADCE = 1;
 
@@ -684,7 +741,8 @@ fsp_err_t R_ADC_D_SnoozeModeExit (adc_ctrl_t * const p_ctrl)
  #endif
 
     /* Clear AWC after exiting software standby mode.
-     * See in hardware manual: ADC12 > Snooze Mode Function > A/D Conversion by Inputting a Hardware Trigger */
+     * See in hardware manual: ADC12 or ADC10 > Snooze Mode Function > A/D Conversion
+     * by Inputting a Hardware Trigger */
     R_ADC_D->ADM2_b.AWC = 0;
 
     return FSP_SUCCESS;
@@ -749,11 +807,16 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
     }
 
     /* Check invalid configuration when the channel input is internal reference voltage or temperature sensor. */
-    if ((ADC_D_CHANNEL_MODE_SELECT == p_extend->channel_mode) &&
+    if (
+ #if BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK
+        (ADC_D_CHANNEL_MODE_SELECT == p_extend->channel_mode) &&
+ #endif
         ((ADC_CHANNEL_TEMPERATURE == channel) ||
          (ADC_CHANNEL_VOLT == channel)))
     {
-        /* Use normal mode 2 when the internal reference voltage or temperature sensor output voltage is selected
+ #if BSP_FEATURE_ADC_D_IS_ADC12
+
+        /* Use normal/low mode 2 when the internal reference voltage or temperature sensor output voltage is selected
          * as the target for A/D conversion. */
         FSP_ERROR_RETURN((ADC_D_VOLTAGE_MODE_NORMAL_2 == p_extend->operation_voltage) ||
                          (ADC_D_VOLTAGE_MODE_LOW_2 == p_extend->operation_voltage),
@@ -765,14 +828,18 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
                           r_adc_d_get_adc_frequency(p_extend->conversion_clockdiv)) ||
                          (ADC_D_VOLTAGE_MODE_LOW_2 != p_extend->operation_voltage),
                          FSP_ERR_INVALID_HW_CONDITION);
+ #endif
 
         /* The internal reference voltage cannot be used for the positive side reference voltage. */
         FSP_ERROR_RETURN(ADC_D_POSITIVE_VREF_IVREF > p_extend->positive_vref, FSP_ERR_INVALID_HW_CONDITION);
+
+ #if BSP_FEATURE_ADC_D_IS_ADC12
 
         /* The hardware/software trigger wait mode and one-shot conversion mode cannot be used at the same time. */
         FSP_ERROR_RETURN((ADC_D_CONVERSION_MODE_SEQUENTIAL == p_extend->conversion_operation) ||
                          (ADC_D_TRIGGER_MODE_NO_WAIT == p_extend->operation_trigger),
                          FSP_ERR_INVALID_HW_CONDITION);
+ #endif
     }
 
     return FSP_SUCCESS;
@@ -786,6 +853,7 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
  * @retval FSP_SUCCESS                     No configuration errors detected.
  * @retval FSP_ERR_ASSERTION               An input argument is invalid.
  * @retval FSP_ERR_INVALID_HW_CONDITION    Invalid configuration corresponds to condition HardWare UM.
+ * @retval FSP_ERR_UNSUPPORTED             This feature is not supported on this MCU.
  **********************************************************************************************************************/
 static fsp_err_t r_adc_d_open_cfg_check (adc_cfg_t const * const p_cfg)
 {
@@ -793,6 +861,16 @@ static fsp_err_t r_adc_d_open_cfg_check (adc_cfg_t const * const p_cfg)
     FSP_ASSERT(NULL != p_cfg);
 
     adc_d_extended_cfg_t const * p_cfg_extend = (adc_d_extended_cfg_t const *) p_cfg->p_extend;
+
+ #if !BSP_PERIPHERAL_ELC_PRESENT
+    FSP_ERROR_RETURN(ADC_D_TRIGGER_SOURCE_ELC != p_cfg_extend->trigger_source, FSP_ERR_UNSUPPORTED)
+ #endif
+
+ #if !BSP_PERIPHERAL_RTC_C_PRESENT
+    FSP_ERROR_RETURN(ADC_D_TRIGGER_SOURCE_RTC_ALARM_OR_PERIOD != p_cfg_extend->trigger_source, FSP_ERR_UNSUPPORTED)
+ #endif
+
+ #if BSP_FEATURE_ADC_D_IS_ADC12
 
     /* Get conversion clock (fAD) */
     uint32_t freq_ad_hz = r_adc_d_get_adc_frequency(p_cfg_extend->conversion_clockdiv);
@@ -806,11 +884,13 @@ static fsp_err_t r_adc_d_open_cfg_check (adc_cfg_t const * const p_cfg)
     {
         FSP_ERROR_RETURN((ADC_D_LOW12_MAX_FAD_FREQ_HZ >= freq_ad_hz), FSP_ERR_INVALID_HW_CONDITION);
     }
+ #endif
 
     /* The setting of the ADUL must be greater than that of the ADLL.*/
     FSP_ERROR_RETURN(p_cfg_extend->lower_bound_limit < p_cfg_extend->upper_bound_limit, FSP_ERR_INVALID_HW_CONDITION);
 
  #if ADC_D_CFG_INTERNAL_REF_VOLT_ENABLE
+  #if BSP_FEATURE_ADC_D_IS_ADC12
 
     /* Check invalid configuration when the internal reference voltage is used for the positive side reference voltage. */
     if (ADC_D_POSITIVE_VREF_IVREF == p_cfg_extend->positive_vref)
@@ -825,6 +905,7 @@ static fsp_err_t r_adc_d_open_cfg_check (adc_cfg_t const * const p_cfg)
                          (ADC_D_ADREFP1_IVREF_MIN_FAD_FREQ_HZ <= freq_ad_hz),
                          FSP_ERR_INVALID_HW_CONDITION);
     }
+  #endif
  #endif
 
     return FSP_SUCCESS;
@@ -857,8 +938,13 @@ static void r_adc_d_open_sub (adc_d_instance_ctrl_t * const p_ctrl)
     /* Setting ICLK input frequency */
     uint8_t adcadm1 =
         (uint8_t) ((uint8_t) (p_extend->operation_trigger << R_ADC_D_ADM1_ADTMD_Pos) |
-                   (uint8_t) (p_extend->conversion_operation << R_ADC_D_ADM1_ADSCM_Pos) |
-                   (R_ADC_D_STATE_ICLK_FREQUENCY() << R_ADC_D_ADM1_ADLSP_Pos));
+                   (uint8_t) (p_extend->conversion_operation << R_ADC_D_ADM1_ADSCM_Pos)
+
+#if BSP_FEATURE_ADC_D_IS_ADC12
+                   | (R_ADC_D_STATE_ICLK_FREQUENCY() << R_ADC_D_ADM1_ADLSP_Pos)
+#endif
+
+                   );
 
     if (ADC_D_TRIGGER_SOURCE_SOFTWARE != p_extend->trigger_source)
     {
@@ -892,15 +978,18 @@ static void r_adc_d_open_sub (adc_d_instance_ctrl_t * const p_ctrl)
 #if ADC_D_CFG_INTERNAL_REF_VOLT_ENABLE
     R_ADC_D->ADM2 = adcadm2;
 
-    /* Setting reference voltage source. See in hardware manual: ADC12 > Registers to Control the A/D Converter >
-     * Table "Register settings for ADREFP[1:0] rewrite" */
+    /* Setting reference voltage source. See in hardware manual: ADC12 or ADC10 >
+     * Registers to Control the A/D Converter > Table "Register settings for ADREFP[1:0] rewrite" */
     if (ADC_D_POSITIVE_VREF_IVREF == p_extend->positive_vref)
     {
         /* Discharge */
         R_ADC_D->ADM2 = (adcadm2 | (uint8_t) ADC_D_POSITIVE_DISCHARGE_MASK);
 
+ #if BSP_FEATURE_ADC_D_IS_ADC12
+
         /* Reference voltage discharge time: 1us */
         R_BSP_SoftwareDelay(ADC_D_DISCHARGE_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+ #endif
     }
 #endif
 
@@ -922,6 +1011,7 @@ static void r_adc_d_open_sub (adc_d_instance_ctrl_t * const p_ctrl)
  *
  * @return frequency of conversion clock (fAD).
  **********************************************************************************************************************/
+#if BSP_FEATURE_ADC_D_IS_ADC12
 __STATIC_INLINE uint32_t r_adc_d_get_adc_frequency (adc_d_clock_div_t div)
 {
     /* Remap the divider value fromm the register value to a value that can be shifted for the equivalent divide. This uses less space than a LUT.
@@ -930,6 +1020,8 @@ __STATIC_INLINE uint32_t r_adc_d_get_adc_frequency (adc_d_clock_div_t div)
 
     return SystemCoreClock >> shift;
 }
+
+#endif
 
 #if ADC_D_CFG_INTERRUPT_SUPPORT_ENABLE
 

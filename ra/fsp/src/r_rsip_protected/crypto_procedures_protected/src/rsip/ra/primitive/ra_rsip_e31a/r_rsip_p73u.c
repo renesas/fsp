@@ -15,6 +15,8 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 rsip_ret_t r_rsip_p73u (const uint32_t InData_Msg[], uint32_t MAX_CNT)
 {
     uint32_t iLoop = 0U;

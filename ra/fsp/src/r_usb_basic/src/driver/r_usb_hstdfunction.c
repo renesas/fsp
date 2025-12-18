@@ -160,12 +160,14 @@ void usb_hstd_ovrcr0function (usb_utr_t * ptr)
 /******************************************************************************
  * Function Name   : usb_hdriver_init
  * Description     : USB Host driver initialization
- * Arguments       : usb_utr_t *ptr : Pointer to usb_utr_t structure.
+ * Arguments       : usb_utr_t   *ptr   : Pointer to usb_utr_t structure.
+ *                 : usb_class_t type   : USB class type
  * Return value    : none
  ******************************************************************************/
-void usb_hdriver_init (usb_utr_t * ptr)
+void usb_hdriver_init (usb_utr_t * ptr, usb_class_t type)
 {
     uint16_t i;
+    (void) type;
 
     if (USB_FALSE == g_usb_cstd_driver_open)
     {
@@ -195,12 +197,12 @@ void usb_hdriver_init (usb_utr_t * ptr)
     usb_hstd_mgr_open(ptr);            /* Manager open */
     usb_hstd_hcd_open(ptr);            /* Hcd open */
  #if (BSP_CFG_RTOS == 1)
-    usb_host_registration(ptr);        /* Class Registration */
+    usb_host_registration(ptr, type);  /* Class Registration */
  #else
   #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || \
     defined(USB_CFG_HVND_USE) || defined(USB_CFG_HAUD_USE)
     usb_class_driver_start(ptr);       /* Init host class driver task. */
-    usb_host_registration(ptr);        /* Class Registration */
+    usb_host_registration(ptr, type);  /* Class Registration */
   #endif /* defined(USB_CFG_HCDC_USE)||defined(USB_CFG_HHID_USE)||defined(USB_CFG_HMSC_USE)||defined(USB_CFG_HVND_USE)|| defined(USB_CFG_HAUD_USE) */
  #endif
 } /* End of function usb_hdriver_init() */

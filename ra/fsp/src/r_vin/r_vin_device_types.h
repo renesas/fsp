@@ -178,6 +178,7 @@ typedef struct st_vin_input_ctrl
 typedef struct st_vin_output_ctrl
 {
     uint8_t * image_buffer[3];         ///< Pointer to Image Buffer Memory Base (64-byte aligned)
+    bool      use_runtime_buffer;      ///< 1: use runtime buffer, 0: use static buffer
 } vin_output_ctrl_t;
 
 /** VIN Conversion Control Structure */

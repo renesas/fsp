@@ -72,11 +72,17 @@ typedef enum e_spi_flash_protocol
     /** 8D-8D-8D protocol mode */
     SPI_FLASH_PROTOCOL_8D_8D_8D = 0x3FF,
 
+    /** 8D-8D-8S protocol mode */
+    SPI_FLASH_PROTOCOL_8D_8D_8S = 0x2FF,
+
     /** 1S-2S-2S protocol mode */
     SPI_FLASH_PROTOCOL_1S_2S_2S = 0x048,
 
     /** 2S-2S-2S protocol mode */
     SPI_FLASH_PROTOCOL_2S_2S_2S = 0x049,
+
+    /** 1S-1S-4S protocol mode */
+    SPI_FLASH_PROTOCOL_1S_1S_4S = 0x080,
 
     /** 1S-4S-4S protocol mode */
     SPI_FLASH_PROTOCOL_1S_4S_4S = 0x090,
@@ -84,6 +90,8 @@ typedef enum e_spi_flash_protocol
     /** 4S-4S-4S protocol mode */
     SPI_FLASH_PROTOCOL_4S_4S_4S = 0x092
 } spi_flash_protocol_t;
+
+#ifndef BSP_OVERRIDE_SPI_FLASH_ADDRESS_BYTES_T
 
 /** Number of bytes in the address. */
 typedef enum e_spi_flash_address_bytes
@@ -96,6 +104,7 @@ typedef enum e_spi_flash_address_bytes
     /** 4 address bytes using standard 4-byte command set. */
     SPI_FLASH_ADDRESS_BYTES_4_4BYTE_READ_CODE = 0x13,
 } spi_flash_address_bytes_t;
+#endif
 
 /** Number of data lines used. */
 typedef enum e_spi_flash_data_lines

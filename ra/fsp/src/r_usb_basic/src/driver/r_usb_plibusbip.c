@@ -1467,7 +1467,9 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
                     {
                         if (USB_NULL == g_usb_pcdc_int_in_pipe[p_utr->ip])
                         {
-                            g_usb_pcdc_int_in_pipe[p_utr->ip] = pipe; /* Set Free pipe */
+                            g_usb_pcdc_int_in_pipe[p_utr->ip] = pipe;    /* Set Free pipe */
+                            idx = (USB_CLASS_INTERNAL_PCDCC * 2) + !dir; /*Calculate index*/
+                            g_usb_pipe_peri[idx] = g_usb_pcdc_int_in_pipe[p_utr->ip];
                             break;
                         }
 
@@ -1476,7 +1478,9 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
                         /*Check if the int pipe is not allocated for pcdc2*/
                         if (USB_NULL == g_usb_pcdc2_int_in_pipe[p_utr->ip])
                         {
-                            g_usb_pcdc2_int_in_pipe[p_utr->ip] = pipe; /* Set Free pipe */
+                            g_usb_pcdc2_int_in_pipe[p_utr->ip] = pipe;    /* Set Free pipe */
+                            idx = (USB_CLASS_INTERNAL_PCDCC2 * 2) + !dir; /*Calculate index*/
+                            g_usb_pipe_peri[idx] = g_usb_pcdc2_int_in_pipe[p_utr->ip];
                             break;
                         }
   #endif

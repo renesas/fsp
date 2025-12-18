@@ -10,24 +10,22 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_func081 (void)
 {
     uint32_t iLoop = 0U;
 
-    WR1_PROG(REG_0094H, 0x00000821U);
-
-    WR1_PROG(REG_0094H, 0x0000b4e0U);
-    WR1_PROG(REG_0094H, 0x00000016U);
+    r_rsip_func_sub022(0x00000821U, 0x0000b4e0U, 0x00000016U);
 
     WR1_PROG(REG_0094H, 0x00000842U);
-    WR1_PROG(REG_0014H, 0x000005a7U);
-    WR1_PROG(REG_009CH, 0x80860002U);
-    WAIT_STS(REG_0014H, 31, 1);
+    r_rsip_func_sub014(0x000005a7U, 0x80860002U);
     WR1_PROG(REG_002CH, bswap_32big(0x00000016U));
     WAIT_STS(REG_0014H, 31, 1);
     WR1_PROG(REG_002CH, bswap_32big(0x00000018U));
@@ -43,10 +41,7 @@ void r_rsip_func081 (void)
 
     for (iLoop = 0U; iLoop < 6; iLoop++)
     {
-        WR1_PROG(REG_0094H, 0x000038a2U);
-
-        WR1_PROG(REG_0094H, 0x38000885U);
-        WR1_PROG(REG_0094H, 0x10003427U);
+        r_rsip_func_sub022(0x000038a2U, 0x38000885U, 0x10003427U);
 
         WR1_PROG(REG_0094H, 0x0000a440U);
         WR1_PROG(REG_0094H, 0x00000004U);

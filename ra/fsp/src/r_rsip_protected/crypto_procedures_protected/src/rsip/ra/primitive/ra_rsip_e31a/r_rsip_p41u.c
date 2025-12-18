@@ -15,6 +15,8 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_p41u (const uint32_t InData_Text[], uint32_t MAX_CNT)
 {
     uint32_t iLoop = 0U;

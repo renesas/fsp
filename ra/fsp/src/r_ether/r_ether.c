@@ -906,6 +906,7 @@ fsp_err_t R_ETHER_WakeOnLANEnable (ether_ctrl_t * const p_ctrl)
  * @retval  FSP_ERR_ETHER_ERROR_FILTERING               Multicast Frame filter is enable, and Multicast Address Frame is
  *                                                      received.
  * @retval  FSP_ERR_INVALID_POINTER                     Value of the pointer is NULL.
+ * @retval  FSP_ERR_INVALID_SIZE                        The buffer size is smaller than  @ref ether_cfg_t::ether_buffer_size.
  *
  ***********************************************************************************************************************/
 fsp_err_t R_ETHER_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint32_t * const length_bytes)
@@ -922,6 +923,9 @@ fsp_err_t R_ETHER_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint
     ETHER_ERROR_RETURN(ETHER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     ETHER_ERROR_RETURN(NULL != p_buffer, FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN(NULL != length_bytes, FSP_ERR_INVALID_POINTER);
+ #if (ETHER_CFG_READ_BUFFER_SIZE_CHECK)
+    ETHER_ERROR_RETURN(p_instance_ctrl->p_ether_cfg->ether_buffer_size <= *length_bytes, FSP_ERR_INVALID_SIZE);
+ #endif
 #endif
 
     /* (1) Retrieve the receive buffer location controlled by the  descriptor. */

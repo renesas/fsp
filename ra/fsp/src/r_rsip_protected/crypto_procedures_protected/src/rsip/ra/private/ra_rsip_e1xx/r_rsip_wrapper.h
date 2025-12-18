@@ -120,18 +120,46 @@
 #define RSIP_PRV_FUNC_NAME_PKI_ECDSA_VERIFY_FINAL_SECP256R1                 r_rsip_peef
 #define RSIP_PRV_FUNC_NAME_PKI_CERT_KEY_IMPORT_ECC_SECP256R1                r_rsip_wrapper_pe1_secp256r1
 
+#define RSIP_PRV_FUNC_NAME_SHA1SHA2                                         r_rsip_p72
+
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA224_INIT                                 r_rsip_pdci
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA224_RESUME                               r_rsip_pdcr
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA224_UPDATE                               r_rsip_pdcu
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA224_SUSPEND                              r_rsip_pdcs
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA224_FINAL                                r_rsip_pdcf
+
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA256_INIT                                 r_rsip_p76i
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA256_RESUME                               r_rsip_p76r
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA256_UPDATE                               r_rsip_p76u
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA256_SUSPEND                              r_rsip_p76s
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA256_FINAL                                r_rsip_p76f
+
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2                                     r_rsip_pef
+
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_INIT                           r_rsip_pe5i
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_RESUME                         r_rsip_pe5r
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_ENC_UPDATE                     r_rsip_pe5e
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_UPDATE                         r_rsip_pe5u
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_SUSPEND                        r_rsip_pe5s
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_FINAL                          r_rsip_pe5f
+
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_ECDH_SECRET_MSG_WRAP_SHA256              r_rsip_pe3
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_DERIVED_KEY_IMPORT_SHA256_AES_128        r_rsip_wrapper_pe7_sha256_aes128
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_DERIVED_KEY_IMPORT_SHA256_AES_256        r_rsip_wrapper_pe7_sha256_aes256
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_DERIVED_IV_WRAP_SHA256_AES               r_rsip_wrapper_pe7_sha256_iv_aes
 
-#define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_KEY_IMPORT_SHA256                NULL
-#define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_MSG_WRAP_SHA256                  NULL
-#define RSIP_PRV_FUNC_NAME_KDF_MAC_KEY_IMPORT_SHA256                        NULL
-#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_AES_128            NULL
-#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_AES_256            NULL
-#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA256        NULL
-#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_AES                   NULL
+#define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_KEY_IMPORT_SHA256                r_rsip_wrapper_pe4_sha256
+#define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_MSG_WRAP_SHA256                  r_rsip_wrapper_pe3_sha256
+#define RSIP_PRV_FUNC_NAME_KDF_MAC_KEY_IMPORT_SHA256                        r_rsip_wrapper_pe6_sha256
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_AES_128            r_rsip_wrapper_pe7_sha256_aes128
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_AES_256            r_rsip_wrapper_pe7_sha256_aes256
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA1          NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA256        r_rsip_wrapper_pe7_sha256_hmac_sha256
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA384        NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA512        NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_AES                   r_rsip_wrapper_pe7_sha256_iv_aes
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_TLS12                 NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_TLS13                 NULL
 #define RSIP_PRV_FUNC_NAME_KEY_PAIR_GENERATE_ECC_SECP256K1                  r_rsip_wrapper_pf4_secp256k1
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_ECC_SECP256K1_PUBLIC                r_rsip_wrapper_p6f_secp256k1_pub
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_ECC_SECP256K1_PRIVATE               r_rsip_wrapper_p6f_secp256k1_priv
@@ -383,6 +411,23 @@ rsip_ret_t r_rsip_wrapper_pe1_brainpoolp256r1(const uint32_t InData_HashType[],
 
 /* KDF */
 rsip_ret_t r_rsip_wrapper_pe3_sha256(const uint32_t InData_EncSecret[], uint32_t OutData_EncMsg[]);
+rsip_ret_t r_rsip_wrapper_pe4_sha256(const uint32_t InData_EncSecret[], uint32_t OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_pe6_sha256(const uint32_t InData_KDFInfo[],
+                                     const uint32_t InData_KDFInfo_Count[],
+                                     const uint32_t InData_OutDataLength[],
+                                     uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_pe6_sha256(const uint32_t InData_KDFInfo[],
+                                     const uint32_t InData_KDFInfo_Count[],
+                                     const uint32_t InData_OutDataLength[],
+                                     uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_pe6_sha384(const uint32_t InData_KDFInfo[],
+                                     const uint32_t InData_KDFInfo_Count[],
+                                     const uint32_t InData_OutDataLength[],
+                                     uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_pe7_sha256_hmac_sha256(const uint32_t InData_KDFInfo[],
+                                                 const uint32_t InData_KDFInfo_Count[],
+                                                 const uint32_t InData_OutDataLocation[],
+                                                 uint32_t       OutData_HMACKeyIndex[]);
 rsip_ret_t r_rsip_wrapper_pe7_sha256_aes128(const uint32_t InData_KDFInfo[],
                                             const uint32_t InData_KDFInfo_Count[],
                                             const uint32_t InData_OutDataLocation[],

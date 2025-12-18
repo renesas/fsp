@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
                        const uint32_t InData_Cmd[],
@@ -37,43 +40,19 @@ rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
     WR1_PROG(REG_0094H, 0x0000001cU);
 
     WR1_PROG(REG_00B0H, 0x000008b2U);
-    WR1_PROG(REG_009CH, 0x80810006U);
-    WR1_PROG(REG_0000H, 0x00030005U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
-    WR1_PROG(REG_0000H, 0x03430005U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
+    r_rsip_func_sub005(0x80810006U, 0x00030005U, 0x03430005U);
 
     r_rsip_func049(InData_Cmd);
 
-    WR1_PROG(REG_0094H, 0x00000842U);
+    r_rsip_func_sub022(0x00000842U, 0x3420a800U, 0x00000009U);
+    r_rsip_func_sub022(0x00070020U, 0x3020a880U, 0x00000020U);
+    r_rsip_func_sub022(0x00070020U, 0x0000b440U, 0xFBC003A0U);
+    r_rsip_func_sub022(0x00000080U, 0x3020a880U, 0x00000040U);
+    r_rsip_func_sub022(0x00070020U, 0x3020a880U, 0x00000020U);
+    r_rsip_func_sub022(0x00060020U, 0x0000b440U, 0x00000FCCU);
+    r_rsip_func_sub022(0x00000080U, 0x00000080U, 0x00000080U);
 
-    WR1_PROG(REG_0094H, 0x3420a800U);
-    WR1_PROG(REG_0094H, 0x00000009U);
-    WR1_PROG(REG_0094H, 0x00070020U);
-    WR1_PROG(REG_0094H, 0x3020a880U);
-    WR1_PROG(REG_0094H, 0x00000020U);
-    WR1_PROG(REG_0094H, 0x00070020U);
-    WR1_PROG(REG_0094H, 0x0000b440U);
-    WR1_PROG(REG_0094H, 0xFBC003A0U);
-    WR1_PROG(REG_0094H, 0x00000080U);
-    WR1_PROG(REG_0094H, 0x3020a880U);
-    WR1_PROG(REG_0094H, 0x00000040U);
-    WR1_PROG(REG_0094H, 0x00070020U);
-    WR1_PROG(REG_0094H, 0x3020a880U);
-    WR1_PROG(REG_0094H, 0x00000020U);
-    WR1_PROG(REG_0094H, 0x00060020U);
-    WR1_PROG(REG_0094H, 0x0000b440U);
-    WR1_PROG(REG_0094H, 0x00000FCCU);
-    WR1_PROG(REG_0094H, 0x00000080U);
-    WR1_PROG(REG_0094H, 0x00000080U);
-    WR1_PROG(REG_0094H, 0x00000080U);
-
-    WR1_PROG(REG_0094H, 0x000034a4U);
-
-    WR1_PROG(REG_0094H, 0x00008c80U);
-    WR1_PROG(REG_0094H, 0x0000001fU);
+    r_rsip_func_sub022(0x000034a4U, 0x00008c80U, 0x0000001fU);
 
     r_rsip_func056();
 
@@ -96,47 +75,26 @@ rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
     {
         WR1_PROG(REG_0094H, 0x00003485U);
 
-        WR1_PROG(REG_0014H, 0x000001a1U);
-        WR1_PROG(REG_00D0H, 0x07330c04U);
-        WAIT_STS(REG_0014H, 31, 1);
-        WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
+        r_rsip_func_sub008(0x000001a1U, 0x07330c04U, 0x00000000U);
 
         WR1_PROG(REG_00D0H, 0x07330d04U);
         WAIT_STS(REG_0014H, 31, 1);
         WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
 
-        WR1_PROG(REG_009CH, 0x80010000U);
-        WR1_PROG(REG_0000H, 0x03410005U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
-        WR1_PROG(REG_0000H, 0x0001000dU);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub005(0x80010000U, 0x03410005U, 0x0001000dU);
 
-        WR1_PROG(REG_0014H, 0x000001a1U);
-        WR1_PROG(REG_00D0H, 0x07330d04U);
-        WAIT_STS(REG_0014H, 31, 1);
-        WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
+        r_rsip_func_sub008(0x000001a1U, 0x07330d04U, 0x00000000U);
 
         WR1_PROG(REG_00D0H, 0x06330104U);
         WAIT_STS(REG_0014H, 31, 1);
         WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
 
-        WR1_PROG(REG_00B0H, 0x00001404U);
-        WR1_PROG(REG_0000H, 0x00c10021U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
-        WR1_PROG(REG_0014H, 0x000000c7U);
-        WR1_PROG(REG_009CH, 0x800100c0U);
-        WAIT_STS(REG_0014H, 31, 1);
+        r_rsip_func_sub009(0x00001404U, 0x00c10021U, 0x00001800U);
+        r_rsip_func_sub014(0x000000c7U, 0x800100c0U);
         WR1_PROG(REG_002CH, S_INST2[0]);
         WR1_PROG(REG_0024H, 0x00000000U);
 
-        WR1_PROG(REG_0014H, 0x000000a7U);
-        WR1_PROG(REG_009CH, 0x800100e0U);
-        WAIT_STS(REG_0014H, 31, 1);
-        WR1_PROG(REG_002CH, bswap_32big(0x0000006fU));
-        WR1_PROG(REG_0024H, 0x00000000U);
+        r_rsip_func_sub002(0x000000a7U, 0x800100e0U, 0x0000006fU, 0x00000000U);
 
         r_rsip_func101(bswap_32big(0xf53d890bU), bswap_32big(0xd99b6d94U), bswap_32big(0x39386d35U),
                        bswap_32big(0x064063e8U));
@@ -145,11 +103,7 @@ rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
         WR1_PROG(REG_0094H, 0x0000b4c0U);
         WR1_PROG(REG_0094H, 0x000000ffU);
 
-        WR1_PROG(REG_0014H, 0x000000a7U);
-        WR1_PROG(REG_009CH, 0x800100e0U);
-        WAIT_STS(REG_0014H, 31, 1);
-        WR1_PROG(REG_002CH, bswap_32big(0x0000006fU));
-        WR1_PROG(REG_0024H, 0x00000000U);
+        r_rsip_func_sub002(0x000000a7U, 0x800100e0U, 0x0000006fU, 0x00000000U);
 
         r_rsip_func101(bswap_32big(0xed634e32U), bswap_32big(0x43d18475U), bswap_32big(0x94dcadc2U),
                        bswap_32big(0x57b10c95U));
@@ -157,42 +111,23 @@ rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
 
         r_rsip_func100(bswap_32big(0x0fbff413U), bswap_32big(0x51bdb54dU), bswap_32big(0x903947f4U),
                        bswap_32big(0x147c0ffdU));
-        WR1_PROG(REG_0014H, 0x000007c1U);
-        WR1_PROG(REG_00D4H, 0x40000100U);
-        WR1_PROG(REG_00D0H, 0xf7009d07U);
-        WAIT_STS(REG_0014H, 31, 1);
+        r_rsip_func_sub011(0x000007c1U, 0x40000100U, 0xf7009d07U);
         WR4_ADDR(REG_002CH, &S_INST2[0 + 1]);
         WAIT_STS(REG_0014H, 31, 1);
         WR4_ADDR(REG_002CH, &S_INST2[0 + 5]);
 
-        WR1_PROG(REG_00D0H, 0x080000a5U);
-        WR1_PROG(REG_0000H, 0x00410011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub013(0x080000a5U, 0x00410011U);
 
         r_rsip_func100(bswap_32big(0x3171f90cU), bswap_32big(0xd184244fU), bswap_32big(0xbb0fd8ccU),
                        bswap_32big(0x979e7b58U));
-        WR1_PROG(REG_00D0H, 0x080000b5U);
-        WR1_PROG(REG_0000H, 0x00410011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub013(0x080000b5U, 0x00410011U);
 
-        WR1_PROG(REG_0014H, 0x000003c1U);
-        WR1_PROG(REG_00D4H, 0x40000000U);
-        WR1_PROG(REG_00D0H, 0x07008d05U);
-        WAIT_STS(REG_0014H, 31, 1);
+        r_rsip_func_sub011(0x000003c1U, 0x40000000U, 0x07008d05U);
         WR4_ADDR(REG_002CH, &S_INST2[0 + 9]);
 
-        WR1_PROG(REG_00D0H, 0x8c100005U);
-        WR1_PROG(REG_0000H, 0x00410011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub013(0x8c100005U, 0x00410011U);
 
-        WR1_PROG(REG_0014H, 0x000000a7U);
-        WR1_PROG(REG_009CH, 0x800100e0U);
-        WAIT_STS(REG_0014H, 31, 1);
-        WR1_PROG(REG_002CH, bswap_32big(0x0000006fU));
-        WR1_PROG(REG_0024H, 0x00000000U);
+        r_rsip_func_sub002(0x000000a7U, 0x800100e0U, 0x0000006fU, 0x00000000U);
 
         r_rsip_func101(bswap_32big(0xc67d6b95U), bswap_32big(0x8e1d7f3fU), bswap_32big(0x74172653U),
                        bswap_32big(0xbf54173bU));
@@ -202,15 +137,9 @@ rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
                        bswap_32big(0xd3c65c63U));
         WR1_PROG(REG_00B0H, 0x00001804U);
 
-        WR1_PROG(REG_00D0H, 0x080000b5U);
-        WR1_PROG(REG_0000H, 0x00430011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub013(0x080000b5U, 0x00430011U);
 
-        WR1_PROG(REG_00D0H, 0x08000075U);
-        WR1_PROG(REG_0000H, 0x00430011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub013(0x08000075U, 0x00430011U);
 
         r_rsip_func100(bswap_32big(0x4622d79bU), bswap_32big(0x1e527dd4U), bswap_32big(0xf19a5367U),
                        bswap_32big(0xb252a1b0U));
@@ -229,9 +158,7 @@ rsip_ret_t r_rsip_p6f (const uint32_t InData_LC[],
         {
             r_rsip_func100(bswap_32big(0x08149a85U), bswap_32big(0xeeb341b5U), bswap_32big(0x5d0a044dU),
                            bswap_32big(0x815cefb1U));
-            WR1_PROG(REG_009CH, 0x81010000U);
-            WR1_PROG(REG_0008H, 0x00005006U);
-            WAIT_STS(REG_0008H, 30, 1);
+            r_rsip_func_sub017(0x81010000U, 0x00005006U);
             RD1_ADDR(REG_002CH, &OutData_KeyIndex[0]);
 
             r_rsip_func102(bswap_32big(0xcb360b30U), bswap_32big(0x61c6dc1dU), bswap_32big(0x2fed2bf0U),

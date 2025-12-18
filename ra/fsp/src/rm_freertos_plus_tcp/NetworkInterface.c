@@ -369,9 +369,17 @@ static BaseType_t prvNetworkInterfaceInput (NetworkInterface_t * pxInterface) {
 #endif
 
         ether_instance_t * p_ether_instance = p_freertos_plus_tcp_instance->p_cfg->p_ether_instance;
-        err = p_ether_instance->p_api->read(p_ether_instance->p_ctrl,
-                                            (void *) pxBufferDescriptor->pucEthernetBuffer,
-                                            &xBytesReceived);
+
+        /* Set the maximum buffer size when reading. */
+        xBytesReceived = p_ether_instance->p_cfg->ether_buffer_size;
+        err            = p_ether_instance->p_api->read(p_ether_instance->p_ctrl,
+                                                       (void *) pxBufferDescriptor->pucEthernetBuffer,
+                                                       &xBytesReceived);
+
+        if (FSP_SUCCESS != err)
+        {
+            xBytesReceived = 0;
+        }
 
         pxBufferDescriptor->xDataLength = (size_t) xBytesReceived;
         pxBufferDescriptor->pxInterface = pxInterface;

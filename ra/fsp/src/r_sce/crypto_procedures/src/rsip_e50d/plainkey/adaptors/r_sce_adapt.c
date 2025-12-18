@@ -895,3 +895,13 @@ fsp_err_t HW_SCE_Rsa4096ModularExponentEncryptSubAdaptor(const uint32_t InData_K
     return HW_SCE_Rsa4096ModularExponentEncryptSub(InData_KeyIndex, InData_Text, OutData_Text);
 }
 
+fsp_err_t HW_SCE_GenerateRsa4096RandomKeyIndexSub(const uint32_t InData_KeyMode[],
+                                                  const uint32_t MAX_CNT,
+                                                  uint32_t OutData_PubKeyIndex[],
+                                                  uint32_t OutData_PubKey[],
+                                                  uint32_t OutData_PrivKeyIndex[],
+                                                  uint32_t OutData_PrivKey[])
+{
+    FSP_PARAMETER_NOT_USED(OutData_PubKeyIndex);
+    return HW_SCE_RSA4096_KeyPairGenerateSub(InData_KeyMode, MAX_CNT, OutData_PubKey, OutData_PrivKeyIndex, OutData_PrivKey);
+}

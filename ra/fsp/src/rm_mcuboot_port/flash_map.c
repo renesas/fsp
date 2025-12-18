@@ -392,7 +392,7 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
     if (FLASH_DEVICE_INTERNAL_FLASH == area->fa_device_id)
     {
 #if BSP_FEATURE_MRAM_IS_AVAILABLE
-        sector_size      = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE;
+        sector_size      = BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES;
         sectors_to_erase = len / sector_size;
 #elif BSP_FEATURE_FLASH_HP_VERSION > 0
         uint32_t deleted_len = 0;

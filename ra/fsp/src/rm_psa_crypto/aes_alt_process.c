@@ -666,7 +666,8 @@ int mbedtls_internal_aes_encrypt_xts (mbedtls_aes_context * ctx,
                 /* Once final is successful, change operation state back to SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT to allow same AES key to
                  * be used for subsequent operations */
                 ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT;
-                memcpy((output + (input_data_size * HW_SCE_AES_BLOCK_BYTE_SIZE)), local_output, length);
+                memcpy((output + (input_data_size * HW_SCE_AES_BLOCK_BYTE_SIZE)), local_output,
+                       length - (input_data_size * HW_SCE_AES_BLOCK_BYTE_SIZE));
             }
             else
             {
@@ -936,7 +937,8 @@ int mbedtls_internal_aes_decrypt_xts (mbedtls_aes_context * ctx,
                 /* Once final is successful, change operation state back to SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT to allow same AES key to
                  * be used for subsequent operations */
                 ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT;
-                memcpy((output + (input_data_size * HW_SCE_AES_BLOCK_BYTE_SIZE)), local_output, length);
+                memcpy((output + (input_data_size * HW_SCE_AES_BLOCK_BYTE_SIZE)), local_output,
+                       length - (input_data_size * HW_SCE_AES_BLOCK_BYTE_SIZE));
             }
             else
             {

@@ -84,6 +84,8 @@ psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, str
 
     if (!ret)
     {
+ #if !defined(MBEDTLS_PSA_STATIC_KEY_SLOTS)
+
 /* Allocate memory for the key */
         p_temp_keydata = mbedtls_calloc((key->bytes / 4), sizeof(uint32_t));
         key->data      = (uint8_t *) p_temp_keydata;
@@ -93,6 +95,10 @@ psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, str
 
             ret = PSA_ERROR_INSUFFICIENT_MEMORY;
         }
+ #else
+        FSP_PARAMETER_NOT_USED(p_temp_keydata);
+        ret = PSA_ERROR_NOT_SUPPORTED;
+ #endif
     }
 
     return ret;

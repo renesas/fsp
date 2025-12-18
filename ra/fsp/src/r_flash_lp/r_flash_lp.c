@@ -2717,7 +2717,7 @@ static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
     R_FACI_LP->FASR = 1U;
 
     /* Change the BANKSWP[2:0] of extra area  */
-    R_FACI_LP->FWBL0_b.WDATA = ~cur_bank & FLASH_LP_3BIT_MASK;
+    R_FACI_LP->FWBL0_b.WDATA = ((uint8_t) ~cur_bank) & FLASH_LP_3BIT_MASK;
     R_FACI_LP->FWBH0_b.WDATA = 0x0000U;
     R_FACI_LP->FEXCR         = FLASH_LP_FEXCR_MF4_CONTROL;
 
@@ -2743,7 +2743,7 @@ static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
     (void) *(uint32_t *) FLASH_LP_EXTRA_AREA_FCTLF_ADDRESS;
 
     /* Update FCTLFR with the new bank value. */
-    R_FACI_LP->FCTLFR = ~cur_bank & FLASH_LP_3BIT_MASK;
+    R_FACI_LP->FCTLFR = ((uint8_t) ~cur_bank) & FLASH_LP_3BIT_MASK;
 
     /* Disable writing to FCTLFR. */
     R_FACI_LP->FBKSWCR = FLASH_LP_BANK_SWAP_UPDATE_DISABLE;

@@ -50,8 +50,12 @@ typedef struct st_rm_block_media_usb_instance_ctrl
     uint32_t sector_count;
     uint32_t sector_size_bytes;
     uint8_t  device_address;
-    bool     initialized;
-    uint8_t  p_read_buffer[USB_HMSC_SECTOR_SIZE] __attribute__((__aligned__(4)));
+#if (USB_CFG_HUB == USB_CFG_ENABLE)
+    bool initialized[USB_MAXDEVADDR + 1];
+#else                                  /* (USB_CFG_HUB == USB_CFG_ENABLE) */
+    bool initialized;
+#endif
+    uint8_t p_read_buffer[USB_HMSC_SECTOR_SIZE] __attribute__((__aligned__(4)));
 #if 2 == BSP_CFG_RTOS
     EventGroupHandle_t event_group;
 #endif

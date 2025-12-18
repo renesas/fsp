@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p44i (const uint32_t InData_KeyIndex[])
 {
@@ -28,11 +31,7 @@ rsip_ret_t r_rsip_p44i (const uint32_t InData_KeyIndex[])
     WR1_PROG(REG_0094H, 0x0000b4a0U);
     WR1_PROG(REG_0094H, 0x00000007U);
 
-    WR1_PROG(REG_0014H, 0x000000a7U);
-    WR1_PROG(REG_009CH, 0x800100e0U);
-    WAIT_STS(REG_0014H, 31, 1);
-    WR1_PROG(REG_002CH, bswap_32big(0x00000044U));
-    WR1_PROG(REG_0024H, 0x00000000U);
+    r_rsip_func_sub002(0x000000a7U, 0x800100e0U, 0x00000044U, 0x00000000U);
 
     r_rsip_func101(bswap_32big(0xdb636ea2U),
                    bswap_32big(0xe9e16b67U),
@@ -61,22 +60,13 @@ rsip_ret_t r_rsip_p44i (const uint32_t InData_KeyIndex[])
                        bswap_32big(0xd52b1cd3U));
 
         WR1_PROG(REG_00D0H, 0x08000085U);
-        WR1_PROG(REG_00B0H, 0x0000181eU);
-        WR1_PROG(REG_0000H, 0x00430011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub009(0x0000181eU, 0x00430011U, 0x00001800U);
 
         r_rsip_func100(bswap_32big(0xb035c67dU), bswap_32big(0xac45080dU), bswap_32big(0x9c18f0f4U),
                        bswap_32big(0x739792feU));
-        WR1_PROG(REG_00D0H, 0x08000095U);
-        WR1_PROG(REG_0000H, 0x00430011U);
-        WAIT_STS(REG_0004H, 30, 0);
-        WR1_PROG(REG_0040H, 0x00001800U);
+        r_rsip_func_sub013(0x08000095U, 0x00430011U);
 
-        WR1_PROG(REG_0014H, 0x000000a1U);
-        WR1_PROG(REG_00D0H, 0x08000044U);
-        WAIT_STS(REG_0014H, 31, 1);
-        WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
+        r_rsip_func_sub008(0x000000a1U, 0x08000044U, 0x00000000U);
 
         return RSIP_RET_PASS;
     }

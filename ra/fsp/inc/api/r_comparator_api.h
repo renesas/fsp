@@ -49,6 +49,7 @@ typedef enum e_comparator_mode
     COMPARATOR_MODE_WINDOW = 1,        ///< Window mode, not supported by all implementations
 } comparator_mode_t;
 
+#ifndef BSP_OVERRIDE_COMARATOR_TRIGGER_T
 /** Trigger type: rising edge, falling edge, both edges, low level. */
 typedef enum e_comparator_trigger
 {
@@ -56,6 +57,7 @@ typedef enum e_comparator_trigger
     COMPARATOR_TRIGGER_FALLING   = 2,  ///< Falling edge trigger
     COMPARATOR_TRIGGER_BOTH_EDGE = 3,  ///< Both edges trigger
 } comparator_trigger_t;
+#endif
 
 /** Select whether to invert the polarity of the comparator output. */
 typedef enum e_comparator_polarity_invert

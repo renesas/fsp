@@ -51,11 +51,16 @@ typedef struct st_external_irq_callback_args
 /** Condition that will trigger an interrupt when detected. */
 typedef enum e_external_irq_trigger
 {
-    EXTERNAL_IRQ_TRIG_FALLING    = 0,  ///< Falling edge trigger
-    EXTERNAL_IRQ_TRIG_RISING     = 1,  ///< Rising edge trigger
-    EXTERNAL_IRQ_TRIG_BOTH_EDGE  = 2,  ///< Both edges trigger
-    EXTERNAL_IRQ_TRIG_LEVEL_LOW  = 3,  ///< Low level trigger
-    EXTERNAL_IRQ_TRIG_LEVEL_HIGH = 4   ///< High level trigger
+    EXTERNAL_IRQ_TRIGGER_FALLING    = 0,                              ///< Falling edge trigger
+    EXTERNAL_IRQ_TRIGGER_RISING     = 1,                              ///< Rising edge trigger
+    EXTERNAL_IRQ_TRIGGER_BOTH_EDGE  = 2,                              ///< Both edges trigger
+    EXTERNAL_IRQ_TRIGGER_LEVEL_LOW  = 3,                              ///< Low level trigger
+    EXTERNAL_IRQ_TRIGGER_LEVEL_HIGH = 4,                              ///< High level trigger
+    EXTERNAL_IRQ_TRIG_FALLING       = EXTERNAL_IRQ_TRIGGER_FALLING,   ///< DEPRECATED, do not use
+    EXTERNAL_IRQ_TRIG_RISING        = EXTERNAL_IRQ_TRIGGER_RISING,    ///< DEPRECATED, do not use
+    EXTERNAL_IRQ_TRIG_BOTH_EDGE     = EXTERNAL_IRQ_TRIGGER_BOTH_EDGE, ///< DEPRECATED, do not use
+    EXTERNAL_IRQ_TRIG_LEVEL_LOW     = EXTERNAL_IRQ_TRIGGER_LEVEL_LOW, ///< DEPRECATED, do not use
+    EXTERNAL_IRQ_TRIG_LEVEL_HIGH    = EXTERNAL_IRQ_TRIGGER_LEVEL_HIGH ///< DEPRECATED, do not use
 } external_irq_trigger_t;
 #endif
 

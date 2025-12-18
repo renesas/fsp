@@ -38,14 +38,13 @@ static rsip_func_kdf_derived_key_import_t select_func_derived_key_import(uint8_t
 static rsip_func_kdf_derived_iv_wrap_t select_func_derived_iv_wrap(uint8_t                    dkm_alg,
                                                                    uint8_t                    dkm_subtype,
                                                                    rsip_initial_vector_type_t iv_type);
-
-#if RSIP_CFG_KDF_SHA_PRC_MULTI_UPDATE_ENABLE
-static rsip_ret_t kdf_sha_update(rsip_ctrl_t * const p_ctrl, const uint8_t * p_message, uint32_t message_length);
-
-#endif
+static rsip_ret_t kdf_sha_update(rsip_ctrl_t * const p_ctrl,
+                                 const uint8_t     * p_message,
+                                 uint32_t            message_length);
 static rsip_ret_t kdf_sha_finish(rsip_ctrl_t * const p_ctrl, uint8_t * p_digest);
-
-static rsip_ret_t kdf_hmac_update(rsip_ctrl_t * const p_ctrl, const uint8_t * p_message, uint32_t message_length);
+static rsip_ret_t kdf_hmac_update(rsip_ctrl_t * const p_ctrl,
+                                  const uint8_t     * p_message,
+                                  uint32_t            message_length);
 static rsip_ret_t kdf_hmac_sign_finish(rsip_ctrl_t * const p_ctrl, uint8_t * p_mac);
 
 static const uint8_t gs_kdf_hmac_byte_length_min[] =
@@ -285,13 +284,10 @@ fsp_err_t R_RSIP_KDF_SHA_ECDHSecretUpdate (rsip_ctrl_t * const                 p
  * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
- * @retval FSP_ERR_INVALID_SIZE                  Input message_length is illegal.
  * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
  *
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
- *
- * @note For RSIP-E11A, the total message length that can be input is the block size of the SHA algorithm used.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_SHA_Update (rsip_ctrl_t * const   p_ctrl,
                                  uint8_t const * const p_message,
@@ -309,18 +305,6 @@ fsp_err_t R_RSIP_KDF_SHA_Update (rsip_ctrl_t * const   p_ctrl,
     FSP_ERROR_RETURN(RSIP_STATE_KDF_SHA == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
 
     rsip_kdf_sha_handle_t * p_handle = &p_instance_ctrl->handle.kdf_sha;
-
-    /* Check length when primitive does not support multi-update */
-#if !RSIP_CFG_KDF_SHA_PRC_MULTI_UPDATE_ENABLE
-    if (0 == p_handle->actual_wrapped_msg_length)
-    {
-        FSP_ERROR_RETURN(p_handle->block_size >= p_handle->buffered_length1 + message_length, FSP_ERR_INVALID_SIZE);
-    }
-    else
-    {
-        FSP_ERROR_RETURN(p_handle->block_size >= p_handle->buffered_length2 + message_length, FSP_ERR_INVALID_SIZE);
-    }
-#endif
 
     fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
     if (0 == message_length)
@@ -354,7 +338,6 @@ fsp_err_t R_RSIP_KDF_SHA_Update (rsip_ctrl_t * const   p_ctrl,
             rsip_ret_t rsip_ret      = RSIP_RET_PASS;
             uint32_t   processed_len = 0;
 
-#if RSIP_CFG_KDF_SHA_PRC_MULTI_UPDATE_ENABLE
             const uint8_t * p_msg_pos = p_message;
 
             /* (0) Remaining message in buffer and head of new input message (wrapped) */
@@ -409,7 +392,6 @@ fsp_err_t R_RSIP_KDF_SHA_Update (rsip_ctrl_t * const   p_ctrl,
                 p_handle->total_length += len;
                 processed_len          += len;
             }
-#endif
 
             /* Check error */
             switch (rsip_ret)
@@ -602,7 +584,7 @@ fsp_err_t R_RSIP_KDF_SHA_Suspend (rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handl
         case RSIP_USER_HANDLE_STATE_UPDATE:
         {
             /* Read internal state */
-            rsip_ret = r_rsip_kdf_sha_suspend(p_instance_ctrl->handle.kdf_sha.internal_state);
+            rsip_ret = r_rsip_kdf_sha_suspend(&p_instance_ctrl->handle.kdf_sha);
 
             /* Handle state transition */
             p_instance_ctrl->handle.kdf_sha.handle_state = RSIP_USER_HANDLE_STATE_RESUME;
@@ -694,7 +676,7 @@ fsp_err_t R_RSIP_KDF_SHA_Resume (rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle
  *  - @ref RSIP_KEY_TYPE_KDF_HMAC_SHA384
  *  - @ref RSIP_KEY_TYPE_KDF_HMAC_SHA512
  *
- * The argument p_wrapped_mac must be input the result of R_RSIP_KDF_HMAC_SignFinish().
+ * The argument p_wrapped_dkm must be input the result of R_RSIP_KDF_HMAC_SignFinish().
  * @endparblock
  *
  * Argument kdf_data_length depends on key type.
@@ -829,12 +811,13 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretKeyImport (rsip_ctrl_t * const              
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    rsip_key_type_extend_t                 key_type_ext = r_rsip_key_type_parse(p_wrapped_key->type);                    // Parse key type
-    rsip_func_kdf_ecdh_secret_key_import_t p_func       = gp_func_kdf_hmac_ecdh_secret_key_import[key_type_ext.subtype]; // Set function
+    rsip_key_type_extend_t                 key_type_ext = r_rsip_key_type_parse(p_wrapped_key->type); // Parse key type
+    rsip_func_kdf_ecdh_secret_key_import_t p_func       =
+        gp_func_kdf_hmac_ecdh_secret_key_import[key_type_ext.subtype][p_wrapped_secret->type];        // Set function
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
-    FSP_ERROR_RETURN(RSIP_PRV_ALG_KDF_HMAC == key_type_ext.alg, FSP_ERR_NOT_ENABLED);                                    // Check key type
-    FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);                                                                       // Check configuration
+    FSP_ERROR_RETURN(RSIP_PRV_ALG_KDF_HMAC == key_type_ext.alg, FSP_ERR_NOT_ENABLED);                 // Check key type
+    FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);                                                    // Check configuration
 #endif
 
     /* Check state */
@@ -966,7 +949,7 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
  * Implements @ref rsip_api_t::kdfHmacDkmUpdate.
  *
  * @par Conditions
- * The argument p_wrapped_mac must be input the result of R_RSIP_KDF_HMAC_SignFinish().
+ * The argument p_wrapped_dkm must be input the result of R_RSIP_KDF_HMAC_SignFinish().
  *
  * @par State transition
  * This API can only be executed in **STATE_KDF_HMAC**, and does not cause any state transitions.
@@ -1064,7 +1047,8 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
     rsip_key_type_extend_t key_type_ext = r_rsip_key_type_parse(p_handle->wrapped_key.type); // Parse key type
 
     /* Set function */
-    rsip_func_kdf_ecdh_secret_msg_wrap_t p_func = gp_func_kdf_hmac_ecdh_secret_msg_wrap[key_type_ext.subtype];
+    rsip_func_kdf_ecdh_secret_msg_wrap_t p_func =
+        gp_func_kdf_hmac_ecdh_secret_msg_wrap[key_type_ext.subtype][p_wrapped_secret->type];
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
 
@@ -1105,6 +1089,14 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
                 {
                     p_handle->wrapped_msg_length        = RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_384;
                     p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_384_PARAM;
+                    break;
+                }
+
+                /* ECC brainpoolP512r1 */
+                case RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP512R1:
+                {
+                    p_handle->wrapped_msg_length        = RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_512;
+                    p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_512_PARAM;
                     break;
                 }
 
@@ -1443,7 +1435,7 @@ fsp_err_t R_RSIP_KDF_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_han
         case RSIP_USER_HANDLE_STATE_UPDATE:
         {
             /* Read internal state */
-            rsip_ret = r_rsip_kdf_hmac_suspend(p_instance_ctrl->handle.kdf_hmac.internal_state);
+            rsip_ret = r_rsip_kdf_hmac_suspend(&p_instance_ctrl->handle.kdf_hmac);
 
             /* Handle state transition */
             p_instance_ctrl->handle.kdf_hmac.handle_state = RSIP_USER_HANDLE_STATE_RESUME;
@@ -1572,7 +1564,8 @@ fsp_err_t R_RSIP_KDF_DKMConcatenate (rsip_wrapped_dkm_t * const       p_wrapped_
  *
  * @par Conditions
  * @parblock
- * Argument p_wrapped_mac must be input the result of R_RSIP_KDF_HMAC_SignFinish() or R_RSIP_KDF_MACConcatenate().
+ * Argument p_wrapped_dkm must be input the result of R_RSIP_KDF_SHA_Finish(), R_RSIP_KDF_HMAC_SignFinish()
+ * or R_RSIP_KDF_DKMConcatenate().
  * Argument key_type must be one of the following:
  *  - @ref RSIP_KEY_TYPE_AES_128
  *  - @ref RSIP_KEY_TYPE_AES_256
@@ -1669,7 +1662,9 @@ fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
  *
  * @par Conditions
  * @parblock
- * Argument p_wrapped_mac must be input the result of R_RSIP_KDF_HMAC_SignFinish() or R_RSIP_KDF_MACConcatenate().
+ * Argument p_wrapped_dkm must be input the result of R_RSIP_KDF_SHA_Finish(), R_RSIP_KDF_HMAC_SignFinish()
+ * or R_RSIP_KDF_DKMConcatenate().
+ *
  * Argument initial_vector_type must be one of the following:
  *  - @ref RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE
  * @endparblock
@@ -1773,8 +1768,6 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
  * Private Functions
  **********************************************************************************************************************/
 
-#if RSIP_CFG_KDF_SHA_PRC_MULTI_UPDATE_ENABLE
-
 /*******************************************************************************************************************//**
  * Inputs message.
  *
@@ -1834,8 +1827,6 @@ static rsip_ret_t kdf_sha_update (rsip_ctrl_t * const p_ctrl, const uint8_t * p_
     return ret;
 }
 
-#endif
-
 /*******************************************************************************************************************//**
  * Finalizes a SHA generation.
  *
@@ -1853,32 +1844,20 @@ static rsip_ret_t kdf_sha_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_digest
     {
         case RSIP_USER_HANDLE_STATE_INIT:
         {
-            ret = r_rsip_kdf_sha_init_final(p_handle,
-                                            p_handle->buffer2,
-                                            p_handle->buffered_length2,
-                                            p_handle->total_length,
-                                            p_digest);
+            ret = r_rsip_kdf_sha_init_final(p_handle, p_digest);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_kdf_sha_resume_final(p_handle,
-                                              p_handle->buffer2,
-                                              p_handle->buffered_length2,
-                                              p_handle->total_length + p_handle->buffered_length2,
-                                              p_digest);
+            ret = r_rsip_kdf_sha_resume_final(p_handle, p_digest);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_kdf_sha_final(p_handle,
-                                       p_handle->buffer2,
-                                       p_handle->buffered_length2,
-                                       p_handle->total_length + p_handle->buffered_length2,
-                                       p_digest);
+            ret = r_rsip_kdf_sha_final(p_handle, p_digest);
         }
     }
 
@@ -2016,30 +1995,21 @@ static rsip_ret_t kdf_hmac_update (rsip_ctrl_t * const p_ctrl, const uint8_t * p
     {
         case RSIP_USER_HANDLE_STATE_INIT:
         {
-            ret = r_rsip_kdf_hmac_init_update(&p_handle->wrapped_key,
-                                              p_message,
-                                              message_length - p_handle->actual_wrapped_msg_length,
-                                              p_handle->wrapped_msg,
-                                              p_handle->wrapped_msg_length,
-                                              p_handle->internal_state);
+            ret =
+                r_rsip_kdf_hmac_init_update(p_handle, p_message, message_length - p_handle->actual_wrapped_msg_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_kdf_hmac_resume_update(&p_handle->wrapped_key,
-                                                p_message,
-                                                message_length,
-                                                p_handle->wrapped_msg,
-                                                p_handle->wrapped_msg_length,
-                                                p_handle->internal_state);
+            ret = r_rsip_kdf_hmac_resume_update(p_handle, p_message, message_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_kdf_hmac_update(&p_handle->wrapped_key, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_kdf_hmac_update(p_handle, p_message, message_length);
         }
     }
 
@@ -2081,36 +2051,20 @@ static rsip_ret_t kdf_hmac_sign_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_
         case RSIP_USER_HANDLE_STATE_INIT:
         {
             ret =
-                r_rsip_kdf_hmac_init_final(&p_handle->wrapped_key,
-                                           p_handle->buffer,
-                                           p_handle->buffered_length,
-                                           p_handle->wrapped_msg,
-                                           p_handle->wrapped_msg_length,
-                                           p_handle->actual_wrapped_msg_length,
-                                           p_mac);
+                r_rsip_kdf_hmac_init_final(p_handle, p_mac);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_kdf_hmac_resume_final(&p_handle->wrapped_key,
-                                               p_handle->buffer,
-                                               p_handle->buffered_length,
-                                               p_handle->total_length + p_handle->buffered_length,
-                                               p_mac,
-                                               p_handle->internal_state);
+            ret = r_rsip_kdf_hmac_resume_final(p_handle, p_mac);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_kdf_hmac_final(&p_handle->wrapped_key,
-                                        p_handle->buffer,
-                                        p_handle->buffered_length,
-                                        p_handle->total_length + p_handle->buffered_length,
-                                        p_mac,
-                                        p_handle->internal_state);
+            ret = r_rsip_kdf_hmac_final(p_handle, p_mac);
         }
     }
 

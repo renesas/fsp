@@ -1110,6 +1110,18 @@ fsp_err_t HW_SCE_Aes128CcmDecryptInitSub (const uint32_t InData_KeyType[],
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
     uint32_t InData_IVLen = InData_Cmd[0];
 
+    /*
+     * Check length requirements: SP800-38C A.1
+     * Additional requirement: a < 2^16 - 2^8 to simplify the code.
+     * 'length' checked later (when writing it to the first block)
+     *
+     * Also, loosen the requirements to enable support for CCM* (IEEE 802.15.4).
+     */
+    if ((*InData_MACLength == 2) || (*InData_MACLength > 16) || (*InData_MACLength % 2 != 0))
+    {
+        return FSP_ERR_CRYPTO_INVALID_SIZE;
+    }
+
     if (*InData_DataType == 0)
     {
         FSP_PARAMETER_NOT_USED(InData_Header);
@@ -1159,6 +1171,18 @@ fsp_err_t HW_SCE_Aes192CcmDecryptInitSub (const uint32_t InData_KeyType[],
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
     uint32_t InData_IVLen = InData_Cmd[0];
 
+    /*
+     * Check length requirements: SP800-38C A.1
+     * Additional requirement: a < 2^16 - 2^8 to simplify the code.
+     * 'length' checked later (when writing it to the first block)
+     *
+     * Also, loosen the requirements to enable support for CCM* (IEEE 802.15.4).
+     */
+    if ((*InData_MACLength == 2) || (*InData_MACLength > 16) || (*InData_MACLength % 2 != 0))
+    {
+        return FSP_ERR_CRYPTO_INVALID_SIZE;
+    }
+
     if (*InData_DataType == 0)
     {
         FSP_PARAMETER_NOT_USED(InData_Header);
@@ -1207,6 +1231,18 @@ fsp_err_t HW_SCE_Aes256CcmDecryptInitSub (const uint32_t InData_KeyType[],
     FSP_PARAMETER_NOT_USED(InData_Cmd);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
     uint32_t InData_IVLen = InData_Cmd[0];
+
+    /*
+     * Check length requirements: SP800-38C A.1
+     * Additional requirement: a < 2^16 - 2^8 to simplify the code.
+     * 'length' checked later (when writing it to the first block)
+     *
+     * Also, loosen the requirements to enable support for CCM* (IEEE 802.15.4).
+     */
+    if ((*InData_MACLength == 2) || (*InData_MACLength > 16) || (*InData_MACLength % 2 != 0))
+    {
+        return FSP_ERR_CRYPTO_INVALID_SIZE;
+    }
 
     if (*InData_DataType == 0)
     {

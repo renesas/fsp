@@ -1236,7 +1236,7 @@ static void usb_hmsc_specified_path (usb_utr_t * mess)
     usb_er_t    err;
 
     /* Get mem pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HMSC_MPL, &pblf))
+    if (USB_OK == USB_PGET_BLK(USB_HMSC_MPL, &pblf, mess->ip))
     {
         *pblf         = *mess;
         pblf->msginfo = usb_shmsc_process[mess->ip];
@@ -1297,7 +1297,7 @@ static void usb_hmsc_command_result (usb_utr_t * ptr, uint16_t result)
     usb_er_t    err;
 
     /* Get mem pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HSTRG_MPL, &pblf))
+    if (USB_OK == USB_PGET_BLK(USB_HSTRG_MPL, &pblf, ptr->ip))
     {
         pblf->msginfo = g_usb_hmsc_strg_process[ptr->ip];
         pblf->result  = result;
@@ -2364,7 +2364,7 @@ static void usb_hmsc_class_check_result (usb_utr_t * mess, uint16_t data1, uint1
     (void) data2;
 
     /* Get mem pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HMSC_MPL, &pblf))
+    if (USB_OK == USB_PGET_BLK(USB_HMSC_MPL, &pblf, mess->ip))
     {
         pblf->msginfo = USB_MSG_CLS_INIT;
         pblf->keyword = mess->keyword;
@@ -2640,10 +2640,7 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
         ctrl.p_transfer_rx = p_cfg->p_transfer_rx;
         ctrl.p_transfer_rx = p_cfg->p_transfer_tx;
     }
-
-    xSemaphoreTake(SemaphoreHandleRead, portMAX_DELAY);
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
-    xSemaphoreGive(SemaphoreHandleRead);
  #endif /* BSP_CFG_RTOS == 0 */
 }
 
@@ -2806,7 +2803,7 @@ void usb_hmsc_message_retry (uint16_t id, usb_utr_t * mess)
     /* Resend message */
     if (USB_HSTRG_MBX == id)
     {
-        err = USB_PGET_BLK(USB_HSTRG_MPL, &pblf);
+        err = USB_PGET_BLK(USB_HSTRG_MPL, &pblf, mess->ip);
     }
 
     if (USB_OK == err)
@@ -3231,7 +3228,7 @@ void usb_hmsc_class_check (usb_utr_t * ptr, uint16_t ** table)
 
  #else                                 /* (BSP_CFG_RTOS == 2) */
     /* Get mem pool blk */
-    if (USB_PGET_BLK(USB_HMSC_MPL, &pblf) == USB_OK)
+    if (USB_PGET_BLK(USB_HMSC_MPL, &pblf, ptr->ip) == USB_OK)
     {
         pblf->msginfo                = USB_MSG_CLS_INIT;
         g_usb_hmsc_init_seq[ptr->ip] = USB_SEQ_0;

@@ -27,7 +27,9 @@
 #include "bsp_api.h"
 #include "r_adc_api.h"
 #include "r_three_phase_api.h"
-#include "r_elc_api.h"
+#if __has_include("r_elc_api.h")
+ #include "r_elc_api.h"
+#endif
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -98,7 +100,7 @@ typedef struct st_motor_driver_cfg
     /* Shunt Type */
     motor_driver_shunt_type_t shunt;   ///< Selection of shunt type
 
-    /* PWM Output Module (GPT THREE PHASE) */
+    /* PWM Output Module (THREE PHASE Module) */
     three_phase_instance_t const * p_three_phase_instance;
 
     void (* p_callback)(motor_driver_callback_args_t * p_args);

@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p20 (uint32_t OutData_Text[])
 {
@@ -34,10 +37,7 @@ rsip_ret_t r_rsip_p20 (uint32_t OutData_Text[])
                    bswap_32big(0x0a28af6bU),
                    bswap_32big(0xc9340a15U),
                    bswap_32big(0xdb080f5bU));
-    WR1_PROG(REG_0014H, 0x000000a1U);
-    WR1_PROG(REG_00D0H, 0x0c200104U);
-    WAIT_STS(REG_0014H, 31, 1);
-    WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
+    r_rsip_func_sub008(0x000000a1U, 0x0c200104U, 0x00000000U);
 
     WR1_PROG(REG_0008H, 0x00001012U);
     WAIT_STS(REG_0008H, 30, 1);

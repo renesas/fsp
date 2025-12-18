@@ -377,7 +377,118 @@ typedef enum e_layer3_switch_ts_descriptor_queue_status
     LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_USED   = 1U, ///< TS descriptor queue is used.
 } layer3_switch_ts_descriptor_queue_status_t;
 
-/**  Configuration of FRER feature. */
+/** Fragment size of preemptable frame. */
+typedef enum e_layer3_switch_preemptable_frame_fragment_size
+{
+    LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_64BYTE  = 0U, ///< Minimum fragment size is 64 byte.
+    LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_128BYTE = 1U, ///< Minimum fragment size is 64 byte.
+    LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_192BYTE = 2U, ///< Minimum fragment size is 64 byte.
+    LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_256BYTE = 3U, ///< Minimum fragment size is 64 byte.
+} layer3_switch_preemptable_frame_fragment_size_t;
+
+/** Used or not PSFP MSDU filter. */
+typedef enum e_layer3_switch_psfp_filter_status
+{
+    LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED = 0U, ///< PSFP filter is unused.
+    LAYER3_SWITCH_PSFP_FILTER_STATUS_USED   = 1U, ///< PSFP filter is used.
+} layer3_switch_psfp_filter_status_t;
+
+/** PSFP MSDU filter mode. */
+typedef enum e_layer3_switch_msdu_filter_mode
+{
+    LAYER3_SWITCH_MSDU_FILTER_NORMAL_MODE   = 0, ///< Filtering occurs if LDESCR.TPL[GWCA] is greater than FWPMPCi.MSDUV.
+    LAYER3_SWITCH_MSDU_FILTER_THROTTLE_MODE = 1, ///< Filtering occurs if LDESCR.TPL[GWCA] is greater than FWPMPCi.MSDUV. Frames with FWEIS2.PMFS[i] set are also filtered.
+} layer3_switch_msdu_filter_mode_t;
+
+/** PSFP Meter filter mode. */
+typedef enum e_layer3_switch_meter_filter_mode
+{
+    LAYER3_SWITCH_METER_FILTER_NORMAL_MODE   = 0U, ///< Any frame linked to Meter filter i thanks to L3 table received when not enough token is available will be red.
+    LAYER3_SWITCH_METER_FILTER_THROTTLE_MODE = 1U, ///< Any frame linked to Meter filter i thanks to L3 table received when not enough token is available or when FWEIS5.PMRFSi is set will be red.
+} layer3_switch_meter_filter_mode_t;
+
+/** Enable or disable copling flag. */
+typedef enum e_layer3_switch_meter_filter_coupling_status
+{
+    LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_DISABLE = 0U, ///< When green bucket is full, CIR tokens are lost.
+    LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_ENABLE  = 1U, ///< When green bucket is full, CIR tokens are added to the yellow bucket.
+} layer3_switch_meter_filter_coupling_status_t;
+
+/** Drop or not red frames. */
+typedef enum e_layer3_switch_meter_filter_drop_red_frame
+{
+    LAYER3_SWITCH_METER_FILTER_NOT_DROP_RED_FRAME = 0U, ///< Red frames are not dropped by Meter filter.
+    LAYER3_SWITCH_METER_FILTER_DROP_RED_FRAME     = 1U, ///< Red frames are dropped by Meter filter.
+} layer3_switch_meter_filter_drop_red_frame_t;
+
+/** DEI handling policy for determining a frame color. */
+typedef enum e_layer3_switch_meter_filter_dei_handling_policy
+{
+    LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_IGNORE = 0U, ///< Ignore the DEI of the VLAN TAG, and the frame color is determined only by the PCP value.
+    LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_YELLOW = 1U, ///< When the DEI of the VLAN TAG is 1, treat it as a yellow frame.
+} layer3_switch_meter_filter_dei_handling_policy_t;
+
+/** PCP handling policy for determining a frame color. */
+typedef enum e_layer3_switch_meter_filter_pcp_handling_policy
+{
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_GREEN_ALL      = 0U, ///< Treat all frames as green, regardless of the PCP.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_1 = 1U, ///< Treat a frame as yellow when the PCP is less than 1.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_2 = 2U, ///< Treat a frame as yellow when the PCP is less than 2.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_3 = 3U, ///< Treat a frame as yellow when the PCP is less than 3.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_4 = 4U, ///< Treat a frame as yellow when the PCP is less than 4.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_5 = 5U, ///< Treat a frame as yellow when the PCP is less than 5.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_6 = 6U, ///< Treat a frame as yellow when the PCP is less than 6.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_7 = 7U, ///< Treat a frame as yellow when the PCP is less than 7.
+    LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_ALL     = 8U, ///< Treat all frames as yellow, regardless of the PCP.
+} layer3_switch_meter_filter_pcp_handling_policy_t;
+
+/** Configuration of PSFP MSDU filter. */
+typedef struct st_layer3_switch_psfp_msdu_filter_cfg
+{
+    uint32_t msdu_filter_id;               ///< PSFP MSDU filter ID.
+    uint32_t maximum_frame_size;           ///< Maximum frame size is rejected by PSFP MSDU filter.
+    layer3_switch_msdu_filter_mode_t mode; ///< PSFP MSDU filter mode.
+} layer3_switch_psfp_msdu_filter_cfg_t;
+
+/** Information of PSFP MSDU filter. */
+typedef struct st_layer3_switch_psfp_msdu_filter_info
+{
+    uint32_t msdu_filter_hw_id;                                    /// PSFP MSDU filter ID for hardware.
+    layer3_switch_psfp_filter_status_t     status;                 /// Status of PSFP MSDU filter.
+    layer3_switch_psfp_msdu_filter_cfg_t * p_psfp_msdu_filter_cfg; ///< Pointer to configuration of PSFP MSDU filter.
+} layer3_switch_psfp_msdu_filter_info_t;
+
+/** Configuration of PSFP Meter filter for user. */
+typedef struct st_layer3_switch_psfp_meter_filter_cfg
+{
+    uint32_t meter_filter_id;                                             ///< PSFP Meter filter ID.
+    uint32_t cbs;                                                         ///< Maximum number of tokens (in bytes) contained in green bucket.
+    uint32_t cir;                                                         ///< Used to increment green tokens when green bucket is not full.
+    uint32_t ebs;                                                         ///< Maximum number of tokens (in bytes) contained in yellow bucket.
+    uint32_t eir;                                                         ///< Used to increment yellow tokens when yellow bucket is not full.
+    layer3_switch_meter_filter_mode_t                mode;                ///< Meter filter mode.
+    layer3_switch_meter_filter_drop_red_frame_t      drop_red_frame;      ///< Drop or not red frame by Meter filter.
+    layer3_switch_meter_filter_coupling_status_t     coupling_enable;     ///< When green bucket is full, CIR tokens are 0:lost, 1:added the yellow bucket.
+    layer3_switch_meter_filter_dei_handling_policy_t dei_handling_policy; ///< DEI handling policy for determining a frame color.
+    layer3_switch_meter_filter_pcp_handling_policy_t pcp_handling_policy; ///< PCP handling policy for determining a frame color.
+} layer3_switch_psfp_meter_filter_cfg_t;
+
+/** Information of PSFP Meter filter. */
+typedef struct st_layer3_switch_psfp_meter_filter_info
+{
+    uint32_t meter_filter_hw_id;                                     /// PSFP Meter filter ID for hardware.
+    layer3_switch_psfp_filter_status_t      status;                  /// Status of PSFP Meter filter.
+    layer3_switch_psfp_meter_filter_cfg_t * p_psfp_meter_filter_cfg; ///< Pointer to configuration of PSFP Meter filter.
+} layer3_switch_psfp_meter_filter_info_t;
+
+/** Bitmasks for clearing error status of throttle mode. */
+typedef struct st_layer3_switch_psfp_error_status_bitmask
+{
+    uint32_t msdu_filter_bitmask;      ///< Bitmask for clearing error status bit of PSFP MSDU filter.
+    uint32_t meter_filter_bitmask;     ///< Bitmask for clearing error status bit of PSFP Meter filter.
+} layer3_switch_psfp_error_status_bitmask_t;
+
+/** Configuration of FRER feature. */
 typedef struct st_layer3_switch_frer_cfg
 {
     uint32_t sys_clock;                ///< Timeout check time.
@@ -528,18 +639,22 @@ typedef struct st_layer3_switch_l3_update_config
 typedef struct st_layer3_switch_table_entry_cfg
 {
     /* Entry settings. */
-    bool entry_enable;                                 ///< Enable or disable entry. If this field is false, entry will be removed.
-    bool security_enable;                              ///< Entry is secure or not.
+    bool entry_enable;                                               ///< Enable or disable entry. If this field is false, entry will be removed.
+    bool security_enable;                                            ///< Entry is secure or not.
+
+    /* PSFP setting. */
+    layer3_switch_psfp_msdu_filter_cfg_t  * p_psfp_msdu_filter_cfg;  /// Pointer to configuration of PSFP MDSU filter.
+    layer3_switch_psfp_meter_filter_cfg_t * p_psfp_meter_filter_cfg; ///< Pointer to configuration of PSFP Meter filter.
 
     /* FRER setting. */
-    layer3_switch_frer_entry_cfg_t * p_frer_entry_cfg; ///< Configuration of the FRER entry(individual recovery) for this L3 entry (set to `NULL` : FRER is not valid in this L3 entry).
+    layer3_switch_frer_entry_cfg_t * p_frer_entry_cfg;               ///< Configuration of the FRER entry(individual recovery) for this L3 entry (set to `NULL` : FRER is not valid in this L3 entry).
 
     /* Forwarding settings. */
-    uint32_t destination_ports;                        ///< Destination ports of forwarding.
-    uint32_t source_ports;                             ///< Source ports that enable forwarding of incoming frame.
-    uint32_t destination_queue_index;                  ///< Destination queue. This fields is only used when a destination port is CPU.
-    uint32_t internal_priority_update_enable;          ///< Enable to update internal priority
-    uint32_t internal_priority_update_value;           ///< Internal priority when updating is enabled.
+    uint32_t destination_ports;                                      ///< Destination ports of forwarding.
+    uint32_t source_ports;                                           ///< Source ports that enable forwarding of incoming frame.
+    uint32_t destination_queue_index;                                ///< Destination queue. This fields is only used when a destination port is CPU.
+    uint32_t internal_priority_update_enable;                        ///< Enable to update internal priority
+    uint32_t internal_priority_update_value;                         ///< Internal priority when updating is enabled.
 
     /* Forwarding protocol specific features. */
     union
@@ -623,19 +738,21 @@ typedef struct st_layer3_switch_table_cfg
 /** ESWM extension configures each Ethernet port and forwarding feature. */
 typedef struct st_layer3_switch_extended_cfg
 {
-    ether_phy_instance_t const * p_ether_phy_instances[BSP_FEATURE_ETHER_NUM_CHANNELS]; ///< List of pointers to ETHER_PHY instance.
-    gptp_instance_t const      * p_gptp_instance;                                       ///< Pointer to a gPTP instance.
-    uint32_t  fowarding_target_port_masks[BSP_FEATURE_ETHER_NUM_CHANNELS];              ///< List of ports to which incoming frames are forwarded.
-    uint8_t * p_mac_addresses[BSP_FEATURE_ETHER_NUM_CHANNELS];                          // [DEPRECATED] MAC address of each port.
-    uint32_t  ipv_queue_depth_list[BSP_FEATURE_ETHER_NUM_CHANNELS][8];                  ///< List of IPV queue depth for each port.
-    layer3_switch_l3_filter_t * l3_filter_list;                                         ///< Filter list of layer3 routing.
-    uint32_t l3_filter_list_length;                                                     ///< Length of Layer3 filter list.
-    layer3_switch_port_cfg_t * p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];         ///< Configuration for each port.
-    IRQn_Type etha_error_irq_port_0;                                                    ///< ETHA error interrupt number for port 0.
-    IRQn_Type etha_error_irq_port_1;                                                    ///< ETHA error interrupt number for port 1.
-    uint8_t   etha_error_ipl_port_0;                                                    ///< ETHA error interrupt priority for port 0.
-    uint8_t   etha_error_ipl_port_1;                                                    ///< ETHA error interrupt priority for port 1.
-    uint8_t   gptp_timer_numbers[BSP_FEATURE_ESWM_GPTP_TIMER_NUM];                      ///< List of timer numbers for transmission/reception timestamp.
+    ether_phy_instance_t const * p_ether_phy_instances[BSP_FEATURE_ETHER_NUM_CHANNELS];                             ///< List of pointers to ETHER_PHY instance.
+    gptp_instance_t const      * p_gptp_instance;                                                                   ///< Pointer to a gPTP instance.
+    uint32_t  fowarding_target_port_masks[BSP_FEATURE_ETHER_NUM_CHANNELS];                                          ///< List of ports to which incoming frames are forwarded.
+    uint8_t * p_mac_addresses[BSP_FEATURE_ETHER_NUM_CHANNELS];                                                      // [DEPRECATED] MAC address of each port.
+    uint32_t  ipv_queue_depth_list[BSP_FEATURE_ETHER_NUM_CHANNELS][BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM];            ///< List of IPV queue depth for each port.
+    uint32_t  ipv_queue_preemptable_bitmask[BSP_FEATURE_ETHER_NUM_CHANNELS];                                        ///< Bitmask of IPV queues that contain preemptable frames.
+    layer3_switch_preemptable_frame_fragment_size_t frame_preemption_fragment_size[BSP_FEATURE_ETHER_NUM_CHANNELS]; ///< Minimum fragment size of preemptable frame.
+    layer3_switch_l3_filter_t * l3_filter_list;                                                                     ///< Filter list of layer3 routing.
+    uint32_t l3_filter_list_length;                                                                                 ///< Length of Layer3 filter list.
+    layer3_switch_port_cfg_t * p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];                                     ///< Configuration for each port.
+    IRQn_Type etha_error_irq_port_0;                                                                                ///< ETHA error interrupt number for port 0.
+    IRQn_Type etha_error_irq_port_1;                                                                                ///< ETHA error interrupt number for port 1.
+    uint8_t   etha_error_ipl_port_0;                                                                                ///< ETHA error interrupt priority for port 0.
+    uint8_t   etha_error_ipl_port_1;                                                                                ///< ETHA error interrupt priority for port 1.
+    uint8_t   gptp_timer_numbers[BSP_FEATURE_ESWM_GPTP_TIMER_NUM];                                                  ///< List of timer numbers for transmission/reception timestamp.
 } layer3_switch_extended_cfg_t;
 
 /** LAYER3_SWITCH control block. DO NOT INITIALIZE. Initialization occurs when @ref ether_switch_api_t::open is called. */
@@ -660,10 +777,18 @@ typedef struct st_layer3_switch_instance_ctrl
     layer3_switch_ts_descriptor_queue_status_t ts_descriptor_queue_status_list[
         BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM];                                                             ///< Status of TS reception descriptor queues.
 
+    /* PSFP features. */
+    layer3_switch_psfp_msdu_filter_info_t  psfp_msdu_filter_info_list[BSP_FEATURE_ESWM_PSFP_MSDU_FILTER_MAX_NUM];  ///< List of information of PSFP MSDU filter.
+    layer3_switch_psfp_meter_filter_info_t psfp_meter_filter_info_list[
+        BSP_FEATURE_ESWM_PSFP_METER_FILTER_SINGLE_BUCKET_METERS_MAX_NUM];                                          ///< List of information of PSFP Meter filter.
+
     /* FRER features. */
     uint32_t valid_frer_entry_num;                                                                                 ///< Number of valid FRER entry.
     layer3_switch_frer_sequence_recovery_status_t frer_sequence_recovery_status[BSP_FEATURE_ESWM_FRER_TABLE_SIZE]; ///< Status of table for each FRER sequence recovery entry.
     uint32_t used_frer_sequence_generator_num;                                                                     ///< Number of the sequence number generator.
+
+    /* Frame preemption features. */
+    bool frame_preemption_available[BSP_FEATURE_ETHER_NUM_CHANNELS];                                               ///< Status of the frame preemption verification.
 
     void (* p_callback)(ether_switch_callback_args_t * p_args);                                                    ///< Callback provided when an ISR occurs.
     ether_switch_callback_args_t * p_callback_memory;                                                              ///< Pointer to optional callback argument memory
@@ -748,6 +873,9 @@ fsp_err_t R_LAYER3_SWITCH_ConfigureTAS(ether_switch_ctrl_t * const p_ctrl,
                                        uint8_t                     port,
                                        layer3_switch_tas_cfg_t   * p_tas_cfg);
 fsp_err_t R_LAYER3_SWITCH_EnableTAS(ether_switch_ctrl_t * const p_ctrl, uint8_t port);
+
+fsp_err_t R_LAYER3_SWITCH_PsfpClearErrorStatus(ether_switch_ctrl_t * const               p_ctrl,
+                                               layer3_switch_psfp_error_status_bitmask_t bitmasks);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup LAYER3_SWITCH)

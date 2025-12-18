@@ -15,6 +15,8 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_p32a (const uint32_t InData_DataA[], uint32_t MAX_CNT)
 {
     r_rsip_func430(InData_DataA, MAX_CNT);

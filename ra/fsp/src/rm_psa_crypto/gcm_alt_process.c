@@ -300,6 +300,11 @@ int sce_gcm_crypt_and_tag (mbedtls_gcm_context * ctx,
     uint8_t             * gcm_buffer;
     uint32_t              dummy_val[1] = {0};
 
+    if ((tag_len > 16) || (tag_len < 4))
+    {
+        return MBEDTLS_ERR_GCM_BAD_INPUT;
+    }
+
     /* Get the hashed IV for AES-GCM operations */
     prepare_gcm_iv((uint8_t *) iv, iv_len, aes_ctx->buf, key_len_idx, hashed_ivec);
 

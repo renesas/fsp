@@ -195,7 +195,7 @@ void usb_hhub_open (usb_utr_t * ptr, uint16_t devaddr, uint16_t data2)
     {
         /* Wait 10ms */
         usb_cpu_delay_xms((uint16_t) 10);
-        err = USB_PGET_BLK(USB_HUB_MPL, &p_blf);
+        err = USB_PGET_BLK(USB_HUB_MPL, &p_blf, ptr->ip);
         if (USB_OK == err)
         {
             mp          = (usb_mgrinfo_t *) p_blf;
@@ -2397,7 +2397,7 @@ static void usb_hhub_check_class (usb_utr_t * ptr, uint16_t ** table)
     g_usb_shhub_class_seq[ptr->ip] = 0;
 
     /* Get memory pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf))
+    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf, ptr->ip))
     {
         cp          = (usb_clsinfo_t *) p_blf;
         cp->msginfo = USB_MSG_CLS_CHECKREQUEST;
@@ -2810,7 +2810,7 @@ static void usb_hhub_class_request_complete (usb_utr_t * ptr, uint16_t data1, ui
     usb_clsinfo_t * cp;
 
     /* Get memory pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf))
+    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf, ptr->ip))
     {
         cp          = (usb_clsinfo_t *) p_blf;
         cp->msginfo = g_usb_shhub_process[ptr->ip];
@@ -3010,7 +3010,7 @@ static void usb_hhub_check_request (usb_utr_t * ptr, uint16_t result)
     usb_clsinfo_t * cp;
 
     /* Get memory pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf))
+    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf, ptr->ip))
     {
         cp          = (usb_clsinfo_t *) p_blf;
         cp->msginfo = USB_MSG_CLS_CHECKREQUEST;
@@ -3606,7 +3606,7 @@ static void usb_hhub_specified_path (usb_clsinfo_t * ptr)
     usb_clsinfo_t * cp;
 
     /* Get memory pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf))
+    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf, ptr->ip))
     {
         cp          = (usb_clsinfo_t *) p_blf;
         cp->msginfo = g_usb_shhub_process[ptr->ip];
@@ -3656,7 +3656,7 @@ static void usb_hhub_specified_path_wait (usb_clsinfo_t * ptr, uint16_t times)
     usb_clsinfo_t * hp;
 
     /* Get memory pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf))
+    if (USB_OK == USB_PGET_BLK(USB_HUB_MPL, &p_blf, ptr->ip))
     {
         hp          = (usb_clsinfo_t *) p_blf;
         hp->msginfo = g_usb_shhub_process[ptr->ip];

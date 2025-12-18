@@ -111,7 +111,10 @@ uint32_t        g_aes256ccmdec_private_id;
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_EncryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -149,8 +152,12 @@ fsp_err_t R_SCE_AES128ECB_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(cipher);
     FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -195,7 +202,11 @@ fsp_err_t R_SCE_AES128ECB_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -235,7 +246,10 @@ fsp_err_t R_SCE_AES128ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -273,8 +287,12 @@ fsp_err_t R_SCE_AES128ECB_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(plain);
     FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -319,7 +337,11 @@ fsp_err_t R_SCE_AES128ECB_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -359,7 +381,10 @@ fsp_err_t R_SCE_AES128ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_EncryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -397,8 +422,12 @@ fsp_err_t R_SCE_AES256ECB_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(cipher);
     FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -443,7 +472,11 @@ fsp_err_t R_SCE_AES256ECB_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -483,7 +516,10 @@ fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -521,8 +557,12 @@ fsp_err_t R_SCE_AES256ECB_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(plain);
     FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -567,7 +607,11 @@ fsp_err_t R_SCE_AES256ECB_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -610,7 +654,11 @@ fsp_err_t R_SCE_AES128CBC_EncryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -650,8 +698,12 @@ fsp_err_t R_SCE_AES128CBC_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(cipher);
     FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -701,7 +753,11 @@ fsp_err_t R_SCE_AES128CBC_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -744,7 +800,11 @@ fsp_err_t R_SCE_AES128CBC_DecryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -784,8 +844,12 @@ fsp_err_t R_SCE_AES128CBC_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(plain);
     FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -835,7 +899,11 @@ fsp_err_t R_SCE_AES128CBC_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -878,7 +946,11 @@ fsp_err_t R_SCE_AES256CBC_EncryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -918,8 +990,12 @@ fsp_err_t R_SCE_AES256CBC_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(cipher);
     FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -969,7 +1045,11 @@ fsp_err_t R_SCE_AES256CBC_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1012,7 +1092,11 @@ fsp_err_t R_SCE_AES256CBC_DecryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
 
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -1052,8 +1136,12 @@ fsp_err_t R_SCE_AES256CBC_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(plain);
     FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1103,7 +1191,11 @@ fsp_err_t R_SCE_AES256CBC_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_length);
+#endif
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1149,13 +1241,17 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
                                        uint8_t               * initial_vector,
                                        uint32_t                initial_vector_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
+
     uint32_t hashed_ivec[4] =
     {
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
@@ -1238,11 +1334,16 @@ fsp_err_t R_SCE_AES128GCM_EncryptUpdate (sce_gcm_handle_t * handle,
                                          uint8_t          * aad,
                                          uint32_t           aad_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(plain || (0 == plain_data_length));
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(aad || (0 == aad_length));
+#endif
+
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1378,6 +1479,13 @@ fsp_err_t R_SCE_AES128GCM_EncryptFinal (sce_gcm_handle_t * handle,
                                         uint32_t         * cipher_data_length,
                                         uint8_t          * atag)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_data_length);
+    FSP_ASSERT(atag);
+#endif
+
     uint32_t aad_bit_size[2] =
     {
         0
@@ -1387,8 +1495,6 @@ fsp_err_t R_SCE_AES128GCM_EncryptFinal (sce_gcm_handle_t * handle,
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1452,7 +1558,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptFinal (sce_gcm_handle_t * handle,
  * @param[in,out] handle                AES-GCM handler (work area)
  * @param[in]     wrapped_key           128-bit AES wrapped key
  * @param[in]     initial_vector        initialization vector area (initial_vector_length byte)
- * @param[in]     initial_vector_length initialization vector length (1 ore more bytes)
+ * @param[in]     initial_vector_length initialization vector length
  *
  * @retval FSP_SUCCESS                          Normal termination
  * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
@@ -1470,13 +1576,17 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
                                        uint8_t               * initial_vector,
                                        uint32_t                initial_vector_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector || (wrapped_key->type == SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV));
+#endif
+
     uint32_t hashed_ivec[4] =
     {
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
@@ -1559,11 +1669,16 @@ fsp_err_t R_SCE_AES128GCM_DecryptUpdate (sce_gcm_handle_t * handle,
                                          uint8_t          * aad,
                                          uint32_t           aad_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(cipher || (0 == cipher_data_length));
+    FSP_ASSERT(plain);
+    FSP_ASSERT(aad || (0 == aad_length));
+#endif
+
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1705,6 +1820,13 @@ fsp_err_t R_SCE_AES128GCM_DecryptFinal (sce_gcm_handle_t * handle,
                                         uint8_t          * atag,
                                         uint32_t           atag_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_data_length);
+    FSP_ASSERT(atag);
+#endif
+
     uint32_t aad_bit_size[2] =
     {
         0
@@ -1719,8 +1841,6 @@ fsp_err_t R_SCE_AES128GCM_DecryptFinal (sce_gcm_handle_t * handle,
         0                              /* atag_tmp is initialized with 0. */
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1813,13 +1933,17 @@ fsp_err_t R_SCE_AES256GCM_EncryptInit (sce_gcm_handle_t      * handle,
                                        uint8_t               * initial_vector,
                                        uint32_t                initial_vector_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
+
     uint32_t hashed_ivec[4] =
     {
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if ((SCE_KEY_INDEX_TYPE_AES256 == wrapped_key->type) ||
         (SCE_KEY_INDEX_TYPE_AES256_GCM_FOR_DLMS_COSEM == wrapped_key->type))
@@ -1893,11 +2017,16 @@ fsp_err_t R_SCE_AES256GCM_EncryptUpdate (sce_gcm_handle_t * handle,
                                          uint8_t          * aad,
                                          uint32_t           aad_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(plain || (0 == plain_data_length));
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(aad || (0 == aad_length));
+#endif
+
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2034,6 +2163,13 @@ fsp_err_t R_SCE_AES256GCM_EncryptFinal (sce_gcm_handle_t * handle,
                                         uint32_t         * cipher_data_length,
                                         uint8_t          * atag)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_data_length);
+    FSP_ASSERT(atag);
+#endif
+
     uint32_t aad_bit_size[2] =
     {
         0
@@ -2043,8 +2179,6 @@ fsp_err_t R_SCE_AES256GCM_EncryptFinal (sce_gcm_handle_t * handle,
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2126,13 +2260,17 @@ fsp_err_t R_SCE_AES256GCM_DecryptInit (sce_gcm_handle_t      * handle,
                                        uint8_t               * initial_vector,
                                        uint32_t                initial_vector_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(initial_vector);
+#endif
+
     uint32_t hashed_ivec[4] =
     {
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if (0 == initial_vector_length)
     {
@@ -2202,11 +2340,16 @@ fsp_err_t R_SCE_AES256GCM_DecryptUpdate (sce_gcm_handle_t * handle,
                                          uint8_t          * aad,
                                          uint32_t           aad_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(cipher || (0 == cipher_data_length));
+    FSP_ASSERT(plain);
+    FSP_ASSERT(aad || (0 == aad_length));
+#endif
+
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2348,6 +2491,13 @@ fsp_err_t R_SCE_AES256GCM_DecryptFinal (sce_gcm_handle_t * handle,
                                         uint8_t          * atag,
                                         uint32_t           atag_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_data_length);
+    FSP_ASSERT(atag);
+#endif
+
     uint32_t aad_bit_size[2] =
     {
         0
@@ -2362,8 +2512,6 @@ fsp_err_t R_SCE_AES256GCM_DecryptFinal (sce_gcm_handle_t * handle,
         0                              /* atag_tmp is initialized with 0. */
     };
     fsp_err_t ercd = FSP_SUCCESS;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2463,9 +2611,14 @@ fsp_err_t R_SCE_AES128CCM_EncryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                payload_length,
                                        uint32_t                mac_length)
 {
-    uint32_t formatted_length = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(nonce);
+    FSP_ASSERT(adata || (0 == a_length));
+#endif
+
+    uint32_t formatted_length = 0;
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2522,9 +2675,13 @@ fsp_err_t R_SCE_AES128CCM_EncryptUpdate (sce_ccm_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain || (0 == plain_length));
+    FSP_ASSERT(cipher);
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2601,6 +2758,13 @@ fsp_err_t R_SCE_AES128CCM_EncryptFinal (sce_ccm_handle_t * handle,
                                         uint8_t          * mac,
                                         uint32_t           mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_length);
+    FSP_ASSERT(mac);
+#endif
+
     fsp_err_t ercd                           = FSP_SUCCESS;
     uint32_t  length_tmp                     = 0;
     uint32_t  mac_length_tmp                 = 0;
@@ -2612,8 +2776,6 @@ fsp_err_t R_SCE_AES128CCM_EncryptFinal (sce_ccm_handle_t * handle,
     {
         0
     };
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2683,9 +2845,14 @@ fsp_err_t R_SCE_AES128CCM_DecryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                payload_length,
                                        uint32_t                mac_length)
 {
-    uint32_t formatted_length = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(nonce);
+    FSP_ASSERT(adata || (0 == a_length));
+#endif
+
+    uint32_t formatted_length = 0;
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2742,9 +2909,13 @@ fsp_err_t R_SCE_AES128CCM_DecryptUpdate (sce_ccm_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher || (0 == cipher_length));
+    FSP_ASSERT(plain);
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2824,6 +2995,13 @@ fsp_err_t R_SCE_AES128CCM_DecryptFinal (sce_ccm_handle_t * handle,
                                         uint8_t          * mac,
                                         uint32_t           mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_length);
+    FSP_ASSERT(mac);
+#endif
+
     fsp_err_t ercd                           = FSP_SUCCESS;
     uint32_t  length_tmp                     = 0;
     uint32_t  mac_length_tmp                 = 0;
@@ -2835,8 +3013,6 @@ fsp_err_t R_SCE_AES128CCM_DecryptFinal (sce_ccm_handle_t * handle,
     {
         0
     };
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2909,9 +3085,14 @@ fsp_err_t R_SCE_AES256CCM_EncryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                payload_length,
                                        uint32_t                mac_length)
 {
-    uint32_t formatted_length = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(nonce);
+    FSP_ASSERT(adata || (0 == a_length));
+#endif
+
+    uint32_t formatted_length = 0;
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2968,9 +3149,13 @@ fsp_err_t R_SCE_AES256CCM_EncryptUpdate (sce_ccm_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(plain || (0 == plain_length));
+    FSP_ASSERT(cipher);
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3047,6 +3232,13 @@ fsp_err_t R_SCE_AES256CCM_EncryptFinal (sce_ccm_handle_t * handle,
                                         uint8_t          * mac,
                                         uint32_t           mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher_length);
+    FSP_ASSERT(mac);
+#endif
+
     fsp_err_t ercd                           = FSP_SUCCESS;
     uint32_t  length_tmp                     = 0;
     uint32_t  mac_length_tmp                 = 0;
@@ -3058,8 +3250,6 @@ fsp_err_t R_SCE_AES256CCM_EncryptFinal (sce_ccm_handle_t * handle,
     {
         0
     };
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3129,9 +3319,14 @@ fsp_err_t R_SCE_AES256CCM_DecryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                payload_length,
                                        uint32_t                mac_length)
 {
-    uint32_t formatted_length = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+    FSP_ASSERT(nonce);
+    FSP_ASSERT(adata || (0 == a_length));
+#endif
+
+    uint32_t formatted_length = 0;
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -3188,9 +3383,13 @@ fsp_err_t R_SCE_AES256CCM_DecryptUpdate (sce_ccm_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(cipher || (0 == cipher_length));
+    FSP_ASSERT(plain);
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3266,6 +3465,13 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
                                         uint8_t          * mac,
                                         uint32_t           mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain_length);
+    FSP_ASSERT(mac);
+#endif
+
     fsp_err_t ercd                           = FSP_SUCCESS;
     uint32_t  length_tmp                     = 0;
     uint32_t  mac_length_tmp                 = 0;
@@ -3277,8 +3483,6 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
     {
         0
     };
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3338,7 +3542,10 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -3374,9 +3581,12 @@ fsp_err_t R_SCE_AES128CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wra
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3440,9 +3650,12 @@ fsp_err_t R_SCE_AES128CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * mac)
 {
-    fsp_err_t ercd = FSP_SUCCESS;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(mac);
+#endif
+
+    fsp_err_t ercd = FSP_SUCCESS;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3491,7 +3704,10 @@ fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -3527,9 +3743,12 @@ fsp_err_t R_SCE_AES128CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapp
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3595,14 +3814,17 @@ fsp_err_t R_SCE_AES128CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * m
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * mac, uint32_t mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(mac);
+#endif
+
     fsp_err_t ercd = FSP_SUCCESS;
     uint32_t  mac_tmp[16 / sizeof(uint32_t)] =
     {
         0                              /* mac_tmp is initialized with 0. */
     };
     uint32_t mac_length_bit = 0;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3660,7 +3882,10 @@ fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -3696,9 +3921,12 @@ fsp_err_t R_SCE_AES256CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wra
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3762,9 +3990,12 @@ fsp_err_t R_SCE_AES256CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * mac)
 {
-    fsp_err_t ercd = FSP_SUCCESS;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(mac);
+#endif
+
+    fsp_err_t ercd = FSP_SUCCESS;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3813,7 +4044,10 @@ fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
 
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -3849,9 +4083,12 @@ fsp_err_t R_SCE_AES256CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapp
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
-    uint32_t length_rest = 0;
-
+#if SCE_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
+
+    uint32_t length_rest = 0;
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3917,14 +4154,17 @@ fsp_err_t R_SCE_AES256CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * m
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * mac, uint32_t mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(mac);
+#endif
+
     fsp_err_t ercd = FSP_SUCCESS;
     uint32_t  mac_tmp[16 / sizeof(uint32_t)] =
     {
         0                              /* mac_tmp is initialized with 0. */
     };
     uint32_t mac_length_bit = 0;
-
-    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {

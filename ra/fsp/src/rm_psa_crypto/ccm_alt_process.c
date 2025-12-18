@@ -244,13 +244,25 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
     uint8_t               work_buffer[HW_SCE_AES_CCM_B_FORMAT_BYTE_SIZE] = {0};
     uint8_t               mac_buff[HW_SCE_MAC_SIZE] = {0};
 
+    /*
+     * Check length requirements: SP800-38C A.1
+     * Additional requirement: a < 2^16 - 2^8 to simplify the code.
+     * 'length' checked later (when writing it to the first block)
+     *
+     * Also, loosen the requirements to enable support for CCM* (IEEE 802.15.4).
+     */
+    if ((tag_len == 2) || (tag_len > 16) || (tag_len % 2 != 0))
+    {
+        return MBEDTLS_ERR_CCM_BAD_INPUT;
+    }
+
     indata_textlen[0]   = change_endian_long(length);
     indata_maclength[0] = change_endian_long(tag_len);
 
     memset(work_buffer, 0, HW_SCE_AES_CCM_B_FORMAT_BYTE_SIZE);
 
     /* CCM expects non-empty tag.
-     * CCM* allows empty tag. For CCM* without tag, ignore plaintext length.
+     * CCM* allows empty tag. For CCM* without tag, the tag calculation is skipped.
      */
     if (tag_len == 0)
     {

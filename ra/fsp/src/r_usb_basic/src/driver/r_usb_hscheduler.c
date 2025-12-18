@@ -175,8 +175,9 @@ usb_er_t usb_cstd_isnd_msg (uint8_t id, usb_msg_t * mess)
  *               : usb_utr_t**  blk     : Memory block pointer.
  * Return          : usb_er_t             : USB_OK / USB_ERROR
  ******************************************************************************/
-usb_er_t usb_cstd_pget_blk (uint8_t id, usb_utr_t ** blk)
+usb_er_t usb_cstd_pget_blk (uint8_t id, usb_utr_t ** blk, uint8_t ip)
 {
+    FSP_PARAMETER_NOT_USED(ip);
     uint8_t usb_s_pblk_c;
 
     if (id < USB_IDMAX)

@@ -64,19 +64,13 @@ caddr_t _sbrk (int incr)
 #endif
 {
 #if (BSP_CFG_HEAP_BYTES > 0)
-    extern uint8_t g_heap[BSP_CFG_HEAP_BYTES];
-
-    uint32_t        bytes                = (uint32_t) incr;
+    extern uint8_t  g_heap[BSP_CFG_HEAP_BYTES];
     static uint32_t current_block_offset = 0;
-    char          * current_block_address;
-
-    current_block_address = (char *) &g_heap[current_block_offset];
 
     /* The returned address must be aligned to a word boundary to prevent hard faults on cores that do not support
-     * unaligned access. We assume the heap starts on a word boundary and make sure all allocations are a multiple
-     * of 4. */
-    bytes = (bytes + 3U) & (~3U);
-    if (current_block_offset + bytes > BSP_CFG_HEAP_BYTES)
+     * unaligned access. The heap starts on a word boundary, and the required size incr is also aligned in malloc(). */
+
+    if (current_block_offset + (uint32_t) incr > BSP_CFG_HEAP_BYTES)
     {
         /** Heap has overflowed */
         errno = ENOMEM;
@@ -84,7 +78,8 @@ caddr_t _sbrk (int incr)
         return (caddr_t) -1;
     }
 
-    current_block_offset += bytes;
+    char * current_block_address = (char *) &g_heap[current_block_offset];
+    current_block_offset += (uint32_t) incr;
 
     return (caddr_t) current_block_address;
 #else

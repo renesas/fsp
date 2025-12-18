@@ -81,9 +81,26 @@ typedef enum e_ceu_event
 /** Capture mode for CEU. */
 typedef enum e_ceu_capture_format
 {
+    CEU_CAPTURE_FORMAT_IMAGE_CAPTURE    = 0x0, ///< YCbCr data.
     CEU_CAPTURE_FORMAT_DATA_SYNCHRONOUS = 0x1, ///< Raw formatted data.
     CEU_CAPTURE_FORMAT_DATA_ENABLE      = 0x2  ///< JPG formatted data
 } ceu_capture_format_t;
+
+/** Set the input order of the luminance component and chrominance component (Y and CbCr). Used for image capture mode only. */
+typedef enum e_ceu_input_order
+{
+    CEU_INPUT_ORDER_CB0Y0CR0Y1 = 0,    ///< Image input data is fetched in the order of Cb0, Y0, Cr0, Y1
+    CEU_INPUT_ORDER_CR0Y0CB0Y1 = 1,    ///< Image input data is fetched in the order of Cr0, Y0, Cb0, Y1
+    CEU_INPUT_ORDER_Y0CB0Y1CR0 = 2,    ///< Image input data is fetched in the order of Y0, Cb0, Y1, Cr0
+    CEU_INPUT_ORDER_Y0CR0Y1CB0 = 3,    ///< Image input data is fetched in the order of Y0, Cr0, Y1, Cb0
+} ceu_input_order_t;
+
+/** Format for outputting captured CEU data to memory. */
+typedef enum e_ceu_output_format
+{
+    CEU_OUTPUT_FORMAT_YCBCR420 = 0,    ///< Output the data in YCbCr 4:2:0 format (hardware conversion from YCbCr 4:2:2)
+    CEU_OUTPUT_FORMAT_YCBCR422 = 1,    ///< Output the data in YCbCr 4:2:2 format (no conversion)
+} ceu_output_format_t;
 
 /** Swap bits configuration */
 typedef struct st_ceu_byte_swapping_t
@@ -105,6 +122,8 @@ typedef struct st_ceu_edge_info_t
 typedef struct st_ceu_extended_cfg
 {
     ceu_capture_format_t      capture_format;     ///< Capture format for incoming data
+    ceu_input_order_t         input_order;        ///< Input Y and CbCr order (Used for image capture mode)
+    ceu_output_format_t       output_format;      ///< Output format for storing to memory (Used for image capture mode)
     ceu_data_bus_size_t       data_bus_width;     ///< Size of camera data bus
     ceu_edge_info_t           edge_info;
     ceu_hsync_polarity_t      hsync_polarity;     ///< Polarity of HSYNC input
@@ -112,6 +131,9 @@ typedef struct st_ceu_extended_cfg
     uint32_t                  image_area_size;    ///< Image capture size. Used when setting firewall address for Data Enable Fetch mode.
     ceu_byte_swapping_t       byte_swapping;      ///< Controls byte swapping in 8-bit, 16-bit and 32-bit units
     ceu_burst_transfer_mode_t burst_mode;         ///< Bus transfer data size
+    uint32_t                  scale_down_factor;  ///< Scale down capture filter register setting (Used for image capture mode)
+    uint16_t                  h_output_size;      ///< Output image horizontal size, in pixels (Used for image capture mode)
+    uint16_t                  v_output_size;      ///< Output image vertical size, in lines (Used for image capture mode)
     uint32_t                  interrupts_enabled; ///< Enabled interrupt events bit mask
     uint8_t   ceu_ipl;                            ///< PDC interrupt priority
     IRQn_Type ceu_irq;                            ///< PDC IRQ number
@@ -155,8 +177,6 @@ fsp_err_t R_CEU_CallbackSet(capture_ctrl_t * const          p_ctrl,
                             capture_callback_args_t * const p_callback_memory);
 
 fsp_err_t R_CEU_StatusGet(capture_ctrl_t * const p_ctrl, capture_status_t * p_status);
-
-typedef uint32_t my_uint_t;
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

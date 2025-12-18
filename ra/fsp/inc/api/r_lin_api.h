@@ -55,24 +55,35 @@ typedef enum e_lin_checksum_type
 /** LIN Event codes */
 typedef enum e_lin_event
 {
-    LIN_EVENT_NONE = (0),                                  ///< No event present
-    LIN_EVENT_RX_START_FRAME_COMPLETE       = (1UL << 1),  ///< DEPRECATED, do not use
-    LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE = (1UL << 2),  ///< DEPRECATED, do not use
-    LIN_EVENT_TX_START_FRAME_COMPLETE       = (1UL << 3),  ///< DEPRECATED, do not use
-    LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE = (1UL << 4),  ///< DEPRECATED, do not use
-    LIN_EVENT_RX_HEADER_COMPLETE            = (1UL << 1),  ///< Header received event.
-    LIN_EVENT_RX_DATA_COMPLETE              = (1UL << 2),  ///< Data received event.
-    LIN_EVENT_TX_HEADER_COMPLETE            = (1UL << 3),  ///< Header transmission complete event
-    LIN_EVENT_TX_DATA_COMPLETE              = (1UL << 4),  ///< Data transmission complete event
-    LIN_EVENT_ERR_INVALID_CHECKSUM          = (1UL << 5),  ///< Data received successfully, but checksum was invalid
-    LIN_EVENT_TX_WAKEUP_COMPLETE            = (1UL << 6),  ///< Transmit wake up complete event
-    LIN_EVENT_RX_WAKEUP_COMPLETE            = (1UL << 7),  ///< Receive wake up complete event
-    LIN_EVENT_ERR_BUS_COLLISION_DETECTED    = (1UL << 9),  ///< Bus collision detection event
-    LIN_EVENT_ERR_COUNTER_OVERFLOW          = (1UL << 14), ///< Counter overflow event
-    LIN_EVENT_ERR_OVERRUN                   = (1UL << 24), ///< Overrun error event
-    LIN_EVENT_ERR_PARITY                    = (1UL << 27), ///< Parity error event (header only, LIN data is sent without parity)
-    LIN_EVENT_ERR_FRAMING                   = (1UL << 28), ///< Framing error event
+    LIN_EVENT_NONE = (0),                                 ///< No event present
+    LIN_EVENT_RX_START_FRAME_COMPLETE       = (1UL << 1), ///< DEPRECATED, do not use
+    LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE = (1UL << 2), ///< DEPRECATED, do not use
+    LIN_EVENT_TX_START_FRAME_COMPLETE       = (1UL << 3), ///< DEPRECATED, do not use
+    LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE = (1UL << 4), ///< DEPRECATED, do not use
+    LIN_EVENT_RX_HEADER_COMPLETE            = (1UL << 1), ///< Header received event.
+    LIN_EVENT_RX_DATA_COMPLETE              = (1UL << 2), ///< Data received event.
+    LIN_EVENT_TX_HEADER_COMPLETE            = (1UL << 3), ///< Header transmission complete event
+    LIN_EVENT_TX_DATA_COMPLETE              = (1UL << 4), ///< Data transmission complete event
+    LIN_EVENT_ERR_INVALID_CHECKSUM          = (1UL << 5), ///< Data received successfully, but checksum was invalid
+    LIN_EVENT_TX_WAKEUP_COMPLETE            = (1UL << 6), ///< Transmit wake up complete event
+    LIN_EVENT_RX_WAKEUP_COMPLETE            = (1UL << 7), ///< Receive wake up complete event
+    LIN_EVENT_ERR_TIMEOUT                = (1UL << 8),    ///< Timeout error event
+    LIN_EVENT_ERR_BUS_COLLISION_DETECTED = (1UL << 9),    ///< Bus collision detection event
+    LIN_EVENT_ERR_SYNC             = (1UL << 10),         ///< Sync field error event
+    LIN_EVENT_ERR_RESPONSE_PREPARE = (1UL << 11),         ///< Response preparation error event
+    LIN_EVENT_ERR_PHYSICAL_BUS     = (1UL << 12),         ///< Physical bus error detection event
+    LIN_EVENT_ERR_COUNTER_OVERFLOW = (1UL << 14),         ///< Counter overflow event
+    LIN_EVENT_ERR_OVERRUN          = (1UL << 24),         ///< Overrun error event
+    LIN_EVENT_ERR_PARITY           = (1UL << 27),         ///< Parity error event (header only, LIN data is sent without parity)
+    LIN_EVENT_ERR_FRAMING          = (1UL << 28),         ///< Framing error event
 } lin_event_t;
+
+/** LIN data length type */
+#ifndef BSP_OVERRIDE_LIN_DATA_LENGTH_T
+typedef uint8_t lin_data_length_t;     ///< Data length type uint8_t
+#else
+typedef uint16_t lin_data_length_t;    ///< Data length type uint16_t
+#endif
 
 /** LIN Transfer Parameters */
 typedef struct st_lin_transfer_params
@@ -84,7 +95,7 @@ typedef struct st_lin_transfer_params
         uint8_t * p_data;              ///< Pointer to rx or tx buffer associated with the data transfer.
     };
 
-    uint8_t             num_bytes;     ///< Length of buffer pointed to by p_data, in bytes
+    lin_data_length_t   num_bytes;     ///< Length of buffer pointed to by p_data, in bytes
     lin_checksum_type_t checksum_type; ///< Checksum type to use for checksum generation (when writing data) or validation (when reading data). See @ref lin_checksum_type_t
 } lin_transfer_params_t;
 
@@ -102,7 +113,7 @@ typedef struct st_lin_callback_arg
      * Contains the number of data bytes received for a
      * data reception.
      */
-    uint8_t bytes_received;
+    lin_data_length_t bytes_received;
 
     /** For LIN slave: Contains the most recently received protected identifier
      * For LIN master: Contains the most recently transmitted protected identifier.

@@ -26,7 +26,7 @@ FSP_HEADER
 
 /* Version Number of Module. */
 #define FSP_R_RSIP_PROTECTED_VERSION_MAJOR    (2U)
-#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (2U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (3U)
 #define FSP_R_RSIP_PROTECTED_VERSION_PATCH    (0U)
 
 /** Returns the plain key size formatted for RSIP driver of the key type. */
@@ -47,16 +47,17 @@ FSP_HEADER
 /* Wrapped ECDH secret size */
 #define RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_256      RSIP_PRV_BYTE_SIZE_WRAPPED_DATA(8)
 #define RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_384      RSIP_PRV_BYTE_SIZE_WRAPPED_DATA(12)
+#define RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_512      RSIP_PRV_BYTE_SIZE_WRAPPED_DATA(16)
 #define RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_521      RSIP_PRV_BYTE_SIZE_WRAPPED_DATA(20)
 
-/* Internal state Buffer size for SHA */
+/* Internal state buffer size for SHA */
 #if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
  #define RSIP_PRV_WORD_SIZE_SHA_INTERNAL_STATE_BUF      (52U)
 #else
  #define RSIP_PRV_WORD_SIZE_SHA_INTERNAL_STATE_BUF      (20U)
 #endif
 
-/* Internal state Buffer size for HMAC */
+/* Internal state buffer size for HMAC */
 #define RSIP_PRV_WORD_SIZE_HMAC_INTERNAL_STATE_BUF      (20U)
 
 /* Buffer size for SHA */
@@ -435,7 +436,6 @@ typedef struct st_rsip_sha_handle
 /** Working area for HMAC functions. DO NOT MODIFY. */
 typedef struct st_rsip_hmac_handle
 {
-    const void             * p_func;                                                     // Pointer to primitive functions
     rsip_wrapped_key_t       wrapped_key;                                                // Wrapped key
     uint8_t                  wrapped_key_value[RSIP_PRV_BYTE_SIZE_WRAPPED_KEY_HMAC_BUF]; // Wrapped key value
     uint8_t                  buffer[RSIP_PRV_BYTE_SIZE_HMAC_BLOCK_BUF];                  // Stored message
@@ -467,7 +467,6 @@ typedef struct st_rsip_kdf_sha_handle
 /** Working area for KDF HMAC functions. DO NOT MODIFY. */
 typedef struct st_rsip_kdf_hmac_handle
 {
-    const void             * p_func;                                                         // Pointer to primitive functions
     rsip_wrapped_key_t       wrapped_key;                                                    // Wrapped key
     uint8_t                  wrapped_key_value[RSIP_PRV_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_BUF]; // Wrapped key value
     uint8_t                  buffer[RSIP_PRV_BYTE_SIZE_KDF_HMAC_BLOCK_BUF];                  // Stored message

@@ -136,8 +136,12 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Open (rm_block_media_ctrl_t * const p_ctrl, rm_bloc
 #endif
 
     /* This module is now open. */
+#if (USB_CFG_HUB == USB_CFG_ENABLE)
+    memset(p_instance_ctrl->initialized, false, (USB_MAXDEVADDR + 1));
+#else                                  /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     p_instance_ctrl->initialized = false;
-    p_instance_ctrl->open        = RM_BLOCK_MEDIA_USB_OPEN;
+#endif
+    p_instance_ctrl->open = RM_BLOCK_MEDIA_USB_OPEN;
 
     return FSP_SUCCESS;
 }
@@ -202,7 +206,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
     p_instance_ctrl->sector_count      = __REV(*(uint32_t *) &p_instance_ctrl->p_read_buffer[0]) + 1;
     p_instance_ctrl->sector_size_bytes = __REV(*(uint32_t *) &p_instance_ctrl->p_read_buffer[4]);
 
+#if (USB_CFG_HUB == USB_CFG_ENABLE)
+    p_instance_ctrl->initialized[p_instance_ctrl->device_address] = true;
+#else                                  /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     p_instance_ctrl->initialized = true;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -237,7 +245,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized[p_instance_ctrl->device_address], FSP_ERR_NOT_INITIALIZED);
+ #else                                 /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+ #endif
 #endif
 
     rm_block_media_usb_extended_cfg_t * p_extended_cfg =
@@ -333,7 +345,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Write (rm_block_media_ctrl_t * const p_ctrl,
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized[p_instance_ctrl->device_address], FSP_ERR_NOT_INITIALIZED);
+ #else                                 /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+ #endif
 #endif
 
     rm_block_media_usb_extended_cfg_t * p_extended_cfg =
@@ -426,7 +442,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized[p_instance_ctrl->device_address], FSP_ERR_NOT_INITIALIZED);
+ #else                                 /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+ #endif
 #endif
 
     rm_block_media_usb_extended_cfg_t * p_extended_cfg =
@@ -565,7 +585,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_StatusGet (rm_block_media_ctrl_t * const   p_api_ct
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized[p_instance_ctrl->device_address], FSP_ERR_NOT_INITIALIZED);
+ #else                                 /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+ #endif
 #endif
 
     rm_block_media_usb_extended_cfg_t * p_extended_cfg =
@@ -583,7 +607,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_StatusGet (rm_block_media_ctrl_t * const   p_api_ct
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     p_status->media_inserted = (USB_STATUS_DETACH != status.device_status);
-    p_status->initialized    = p_instance_ctrl->initialized;
+#if (USB_CFG_HUB == USB_CFG_ENABLE)
+    p_status->initialized = p_instance_ctrl->initialized[p_instance_ctrl->device_address];
+#else                                  /* (USB_CFG_HUB == USB_CFG_ENABLE) */
+    p_status->initialized = p_instance_ctrl->initialized;
+#endif
 
     /* USB does not have busy status. */
     p_status->busy = false;
@@ -607,7 +635,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_InfoGet (rm_block_media_ctrl_t * const p_ctrl, rm_b
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_info);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized[p_instance_ctrl->device_address], FSP_ERR_NOT_INITIALIZED);
+ #else                                 /* (USB_CFG_HUB == USB_CFG_ENABLE) */
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+ #endif
 #endif
 
     p_info->sector_size_bytes = p_instance_ctrl->sector_size_bytes;
@@ -762,8 +794,12 @@ void rm_block_media_usb_callback (usb_event_info_t * p_usb_event_info, usb_hdl_t
 
         case USB_STATUS_DETACH:
         {
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+            p_instance_ctrl->initialized[p_usb_event_info->device_address] = false;
+ #else                                 /* (USB_CFG_HUB == USB_CFG_ENABLE) */
             p_instance_ctrl->device_address = RM_BLOCK_MEDIA_USB_INVALID_DEVICE_ADDRESS;
             p_instance_ctrl->initialized    = false;
+ #endif
             args.event = RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED;
 
             break;

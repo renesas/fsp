@@ -50,16 +50,34 @@ typedef enum e_adc_d_voltage_mode
     ADC_D_VOLTAGE_MODE_LOW_2    = 3    ///< Low voltage 2
 } adc_d_voltage_mode_t;
 
-/** Divider for Conversion Clock (fAD) */
+#if BSP_FEATURE_ADC_D_IS_ADC12
+
+/** Divider for ADC12 Conversion Clock (fAD) */
 typedef enum e_adc_d_clock_div
 {
-    ADC_D_CLOCK_DIV_32 = 0,            ///< ADC_D clock division ICLK/32
-    ADC_D_CLOCK_DIV_16 = 1,            ///< ADC_D clock division ICLK/16
-    ADC_D_CLOCK_DIV_8  = 2,            ///< ADC_D clock division ICLK/8
-    ADC_D_CLOCK_DIV_4  = 3,            ///< ADC_D clock division ICLK/4
-    ADC_D_CLOCK_DIV_2  = 4,            ///< ADC_D clock division ICLK/2
-    ADC_D_CLOCK_DIV_1  = 5,            ///< ADC_D clock division ICLK/1
+    ADC_D_CLOCK_DIV_32 = 0,            ///< ADC_D clock division PCLKB/32
+    ADC_D_CLOCK_DIV_16 = 1,            ///< ADC_D clock division PCLKB/16
+    ADC_D_CLOCK_DIV_8  = 2,            ///< ADC_D clock division PCLKB/8
+    ADC_D_CLOCK_DIV_4  = 3,            ///< ADC_D clock division PCLKB/4
+    ADC_D_CLOCK_DIV_2  = 4,            ///< ADC_D clock division PCLKB/2
+    ADC_D_CLOCK_DIV_1  = 5,            ///< ADC_D clock division PCLKB/1
 } adc_d_clock_div_t;
+
+#else
+
+/** Divider for ADC10 Conversion Clock (fAD) */
+typedef enum e_adc_d_clock_div
+{
+    ADC_D_CLOCK_DIV_64 = 0,            ///< ADC_D clock division PCLKB/64
+    ADC_D_CLOCK_DIV_32 = 1,            ///< ADC_D clock division PCLKB/32
+    ADC_D_CLOCK_DIV_16 = 2,            ///< ADC_D clock division PCLKB/16
+    ADC_D_CLOCK_DIV_8  = 3,            ///< ADC_D clock division PCLKB/8
+    ADC_D_CLOCK_DIV_6  = 4,            ///< ADC_D clock division PCLKB/6
+    ADC_D_CLOCK_DIV_5  = 5,            ///< ADC_D clock division PCLKB/5
+    ADC_D_CLOCK_DIV_4  = 6,            ///< ADC_D clock division PCLKB/4
+    ADC_D_CLOCK_DIV_2  = 7,            ///< ADC_D clock division PCLKB/2
+} adc_d_clock_div_t;
+#endif
 
 /** Selection trigger signal */
 typedef enum e_adc_d_trigger_source

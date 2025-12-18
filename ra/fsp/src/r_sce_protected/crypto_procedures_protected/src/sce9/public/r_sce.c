@@ -253,6 +253,7 @@ const sce_api_t g_sce_protected_on_sce =
  * @param[in] p_cfg Pointer to pin configuration structure.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              The error-detection self-test failed to terminate normally.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -267,9 +268,15 @@ const sce_api_t g_sce_protected_on_sce =
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
 {
+    sce_instance_ctrl_t * p_instance_ctrl = (sce_instance_ctrl_t *) p_ctrl;
+
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_cfg);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
 
-    sce_instance_ctrl_t * p_instance_ctrl = (sce_instance_ctrl_t *) p_ctrl;
     p_instance_ctrl->open = 1;
     FSP_PARAMETER_NOT_USED(p_cfg);
 
@@ -344,6 +351,7 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
  * @param[in] p_ctrl Pointer to control structure.
  *
  * @retval FSP_SUCCESS              Normal termination
+ * @retval FSP_ERR_ASSERTION        A required parameter is NULL.
  *
  * @note The pre-run state is any state.
  *       After the function runs the state transitions to SCE Disabled State.
@@ -351,6 +359,11 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
 fsp_err_t R_SCE_Close (sce_ctrl_t * const p_ctrl)
 {
     sce_instance_ctrl_t * p_instance_ctrl = (sce_instance_ctrl_t *) p_ctrl;
+
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+#endif
+
     p_instance_ctrl->open = 0;
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
 
@@ -384,6 +397,7 @@ fsp_err_t R_SCE_SoftwareReset (void)
  * @param[in,out] random Stores 4words (16 bytes) random data.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  *
@@ -392,6 +406,10 @@ fsp_err_t R_SCE_SoftwareReset (void)
  **********************************************************************************************************************/
 fsp_err_t R_SCE_RandomNumberGenerate (uint32_t * random)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(random);
+#endif
+
     return R_SCE_GenerateRandomNumberSub(random);
 }
 
@@ -404,6 +422,7 @@ fsp_err_t R_SCE_RandomNumberGenerate (uint32_t * random)
  * @param[in,out] wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  *
@@ -412,6 +431,10 @@ fsp_err_t R_SCE_RandomNumberGenerate (uint32_t * random)
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128_WrappedKeyGenerate (sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateAes128RandomKeyIndexSub(wrapped_key->value);
     if (FSP_SUCCESS == error_code)
@@ -439,6 +462,7 @@ fsp_err_t R_SCE_AES128_WrappedKeyGenerate (sce_aes_wrapped_key_t * wrapped_key)
  * @param[in,out] wrapped_key 256-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  *
@@ -447,6 +471,10 @@ fsp_err_t R_SCE_AES128_WrappedKeyGenerate (sce_aes_wrapped_key_t * wrapped_key)
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256_WrappedKeyGenerate (sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateAes256RandomKeyIndexSub(wrapped_key->value);
     if (FSP_SUCCESS == error_code)
@@ -470,6 +498,7 @@ fsp_err_t R_SCE_AES256_WrappedKeyGenerate (sce_aes_wrapped_key_t * wrapped_key)
  * @param[in,out] wrapped_key   128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -482,6 +511,13 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap (uint8_t               * initial_vector,
                                          sce_key_update_key_t  * key_update_key,
                                          sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_AES128;
 
@@ -513,6 +549,7 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap (uint8_t               * initial_vector,
  * @param[in,out] wrapped_key   256-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -525,6 +562,13 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (uint8_t               * initial_vector,
                                          sce_key_update_key_t  * key_update_key,
                                          sce_aes_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_AES256;
 
@@ -555,18 +599,28 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (uint8_t               * initial_vector,
  * @param[out] rfc3394_wrapped_key Wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128_RFC3394KeyWrap (sce_aes_wrapped_key_t * master_key,
-                                       uint32_t target_key_type,
+                                       uint32_t                target_key_type,
                                        sce_aes_wrapped_key_t * target_key,
-                                       uint32_t * rfc3394_wrapped_key)
+                                       uint32_t              * rfc3394_wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(master_key);
+    FSP_ASSERT(target_key);
+    FSP_ASSERT(rfc3394_wrapped_key);
+#endif
+
     return R_SCE_Aes128KeyWrapPrivate(
-            /* Casting uint32_t pointer is used for address. */
-            (uint32_t*)&master_key->value, &target_key_type, (uint32_t*)&target_key->value, rfc3394_wrapped_key);
+        /* Casting uint32_t pointer is used for address. */
+        (uint32_t *) &master_key->value,
+        &target_key_type,
+        (uint32_t *) &target_key->value,
+        rfc3394_wrapped_key);
 }
 
 /*******************************************************************************************************************//**
@@ -577,18 +631,28 @@ fsp_err_t R_SCE_AES128_RFC3394KeyWrap (sce_aes_wrapped_key_t * master_key,
  * @param[out] rfc3394_wrapped_key Wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256_RFC3394KeyWrap (sce_aes_wrapped_key_t * master_key,
-                                       uint32_t target_key_type,
+                                       uint32_t                target_key_type,
                                        sce_aes_wrapped_key_t * target_key,
-                                       uint32_t * rfc3394_wrapped_key)
+                                       uint32_t              * rfc3394_wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(master_key);
+    FSP_ASSERT(target_key);
+    FSP_ASSERT(rfc3394_wrapped_key);
+#endif
+
     return R_SCE_Aes256KeyWrapPrivate(
-            /* Casting uint32_t pointer is used for address. */
-            (uint32_t*)&master_key->value, &target_key_type, (uint32_t*)&target_key->value, rfc3394_wrapped_key);
+        /* Casting uint32_t pointer is used for address. */
+        (uint32_t *) &master_key->value,
+        &target_key_type,
+        (uint32_t *) &target_key->value,
+        rfc3394_wrapped_key);
 }
 
 /*******************************************************************************************************************//**
@@ -599,15 +663,22 @@ fsp_err_t R_SCE_AES256_RFC3394KeyWrap (sce_aes_wrapped_key_t * master_key,
  * @param[out] target_key          Key to be unwrapped.
  *
  * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
-                                         uint32_t target_key_type,
-                                         uint32_t * rfc3394_wrapped_key,
+                                         uint32_t                target_key_type,
+                                         uint32_t              * rfc3394_wrapped_key,
                                          sce_aes_wrapped_key_t * target_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(master_key);
+    FSP_ASSERT(rfc3394_wrapped_key);
+    FSP_ASSERT(target_key);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
 
     error_code = R_SCE_Aes128KeyUnWrapPrivate(master_key, &target_key_type, rfc3394_wrapped_key, target_key->value);
@@ -617,15 +688,16 @@ fsp_err_t R_SCE_AES128_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
         {
             target_key->type = SCE_KEY_INDEX_TYPE_AES128;
         }
-        else    /* if (SCE_KEYWRAP_AES128 == target_key_type) */
+        else                           /* if (SCE_KEYWRAP_AES128 == target_key_type) */
         {
-            target_key->type =SCE_KEY_INDEX_TYPE_AES256;
+            target_key->type = SCE_KEY_INDEX_TYPE_AES256;
         }
     }
     else
     {
         target_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
     return error_code;
 }
 
@@ -637,15 +709,22 @@ fsp_err_t R_SCE_AES128_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
  * @param[out] target_key          Key to be unwrapped.
  *
  * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
-                                         uint32_t target_key_type,
-                                         uint32_t * rfc3394_wrapped_key,
+                                         uint32_t                target_key_type,
+                                         uint32_t              * rfc3394_wrapped_key,
                                          sce_aes_wrapped_key_t * target_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(master_key);
+    FSP_ASSERT(rfc3394_wrapped_key);
+    FSP_ASSERT(target_key);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
 
     error_code = R_SCE_Aes256KeyUnWrapPrivate(master_key, &target_key_type, rfc3394_wrapped_key, target_key->value);
@@ -655,15 +734,16 @@ fsp_err_t R_SCE_AES256_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
         {
             target_key->type = SCE_KEY_INDEX_TYPE_AES128;
         }
-        else    /* if (SCE_KEYWRAP_AES128 == target_key_type) */
+        else                           /* if (SCE_KEYWRAP_AES128 == target_key_type) */
         {
-            target_key->type =SCE_KEY_INDEX_TYPE_AES256;
+            target_key->type = SCE_KEY_INDEX_TYPE_AES256;
         }
     }
     else
     {
         target_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
     return error_code;
 }
 
@@ -676,6 +756,7 @@ fsp_err_t R_SCE_AES256_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
  * @param[in,out] wrapped_key   HMAC-SHA256 wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -688,6 +769,13 @@ fsp_err_t R_SCE_SHA256HMAC_EncryptedKeyWrap (uint8_t                    * initia
                                              sce_key_update_key_t       * key_update_key,
                                              sce_hmac_sha_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_HMAC_SHA256;
 
@@ -720,6 +808,7 @@ fsp_err_t R_SCE_SHA256HMAC_EncryptedKeyWrap (uint8_t                    * initia
  * @param [in,out] wrapped_pair_key User key index for RSA 1024-bit public key and private key pair
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred. Key generation failed.
@@ -729,11 +818,15 @@ fsp_err_t R_SCE_SHA256HMAC_EncryptedKeyWrap (uint8_t                    * initia
  **********************************************************************************************************************/
 fsp_err_t R_SCE_RSA1024_WrappedKeyPairGenerate (sce_rsa1024_wrapped_pair_key_t * wrapped_pair_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_pair_key);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateRsa1024RandomKeyIndexSub(SCE_RSA_RETRY_COUNT_FOR_RSA_KEY_GENERATION,
                                        /* Casting uint32_t pointer is used for address. */
-                                                         (uint32_t *) &wrapped_pair_key->pub_key.value,
-                                                         (uint32_t *) &wrapped_pair_key->priv_key.value);
+                                                        (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                        (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_RSA1024_PUBLIC;
@@ -758,6 +851,7 @@ fsp_err_t R_SCE_RSA1024_WrappedKeyPairGenerate (sce_rsa1024_wrapped_pair_key_t *
  * @param [in,out] wrapped_pair_key User key index for RSA 2048-bit public key and private key pair
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred. Key generation failed.
@@ -767,11 +861,15 @@ fsp_err_t R_SCE_RSA1024_WrappedKeyPairGenerate (sce_rsa1024_wrapped_pair_key_t *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_RSA2048_WrappedKeyPairGenerate (sce_rsa2048_wrapped_pair_key_t * wrapped_pair_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_pair_key);
+#endif
+
     fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateRsa2048RandomKeyIndexSub(SCE_RSA_RETRY_COUNT_FOR_RSA_KEY_GENERATION,
                                        /* Casting uint32_t pointer is used for address. */
-                                                         (uint32_t *) &wrapped_pair_key->pub_key.value,
-                                                         (uint32_t *) &wrapped_pair_key->priv_key.value);
+                                                        (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                        (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_RSA2048_PUBLIC;
@@ -795,6 +893,7 @@ fsp_err_t R_SCE_RSA2048_WrappedKeyPairGenerate (sce_rsa2048_wrapped_pair_key_t *
  * @param[in,out] wrapped_key   1024-bit RSA public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -807,6 +906,13 @@ fsp_err_t R_SCE_RSA1024_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_key_update_key_t             * key_update_key,
                                                 sce_rsa1024_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA1024_PUBLIC;
 
@@ -838,6 +944,7 @@ fsp_err_t R_SCE_RSA1024_EncryptedPublicKeyWrap (uint8_t                         
  * @param[in,out] wrapped_key   1024-bit RSA private wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -850,6 +957,13 @@ fsp_err_t R_SCE_RSA1024_EncryptedPrivateKeyWrap (uint8_t                        
                                                  sce_key_update_key_t              * key_update_key,
                                                  sce_rsa1024_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA1024_PRIVATE;
 
@@ -881,6 +995,7 @@ fsp_err_t R_SCE_RSA1024_EncryptedPrivateKeyWrap (uint8_t                        
  * @param[in,out] wrapped_key   1024-bit RSA public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -893,6 +1008,13 @@ fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_key_update_key_t             * key_update_key,
                                                 sce_rsa2048_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA2048_PUBLIC;
 
@@ -924,6 +1046,7 @@ fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap (uint8_t                         
  * @param[in,out] wrapped_key   2048-bit RSA private wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -936,6 +1059,13 @@ fsp_err_t R_SCE_RSA2048_EncryptedPrivateKeyWrap (uint8_t                        
                                                  sce_key_update_key_t              * key_update_key,
                                                  sce_rsa2048_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA2048_PRIVATE;
 
@@ -967,6 +1097,7 @@ fsp_err_t R_SCE_RSA2048_EncryptedPrivateKeyWrap (uint8_t                        
  * @param[in,out] wrapped_key   3072-bit RSA public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -979,6 +1110,13 @@ fsp_err_t R_SCE_RSA3072_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_key_update_key_t             * key_update_key,
                                                 sce_rsa3072_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA3072_PUBLIC;
 
@@ -1010,6 +1148,7 @@ fsp_err_t R_SCE_RSA3072_EncryptedPublicKeyWrap (uint8_t                         
  * @param[in,out] wrapped_key   1024-bit RSA public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1022,6 +1161,13 @@ fsp_err_t R_SCE_RSA4096_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_key_update_key_t             * key_update_key,
                                                 sce_rsa4096_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA4096_PUBLIC;
 
@@ -1054,6 +1200,7 @@ fsp_err_t R_SCE_RSA4096_EncryptedPublicKeyWrap (uint8_t                         
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp192r1 public key and private key pair
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1063,6 +1210,10 @@ fsp_err_t R_SCE_RSA4096_EncryptedPublicKeyWrap (uint8_t                         
  **********************************************************************************************************************/
 fsp_err_t R_SCE_ECC_secp192r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t * wrapped_pair_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_pair_key);
+#endif
+
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -1071,9 +1222,9 @@ fsp_err_t R_SCE_ECC_secp192r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     curvetype  = change_endian_long(SCE_ECC_CURVE_TYPE_NIST);
     error_code = R_SCE_GenerateEccRandomKeyIndexSub(&curvetype,
                                        /* Casting uint32_t pointer is used for address. */
-                                                     &indata_cmd,
-                                                     (uint32_t *) &wrapped_pair_key->pub_key.value,
-                                                     (uint32_t *) &wrapped_pair_key->priv_key.value);
+                                                    &indata_cmd,
+                                                    (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                    (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P192_PUBLIC;
@@ -1098,6 +1249,7 @@ fsp_err_t R_SCE_ECC_secp192r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp224r1 public key and private key pair
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1107,6 +1259,10 @@ fsp_err_t R_SCE_ECC_secp192r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  **********************************************************************************************************************/
 fsp_err_t R_SCE_ECC_secp224r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t * wrapped_pair_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_pair_key);
+#endif
+
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -1115,9 +1271,9 @@ fsp_err_t R_SCE_ECC_secp224r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     curvetype  = change_endian_long(SCE_ECC_CURVE_TYPE_NIST);
     error_code = R_SCE_GenerateEccRandomKeyIndexSub(&curvetype,
                                        /* Casting uint32_t pointer is used for address. */
-                                                     &indata_cmd,
-                                                     (uint32_t *) &wrapped_pair_key->pub_key.value,
-                                                     (uint32_t *) &wrapped_pair_key->priv_key.value);
+                                                    &indata_cmd,
+                                                    (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                    (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P224_PUBLIC;
@@ -1142,6 +1298,7 @@ fsp_err_t R_SCE_ECC_secp224r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp256r1 public key and private key pair
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1151,6 +1308,10 @@ fsp_err_t R_SCE_ECC_secp224r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  **********************************************************************************************************************/
 fsp_err_t R_SCE_ECC_secp256r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t * wrapped_pair_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_pair_key);
+#endif
+
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -1159,9 +1320,9 @@ fsp_err_t R_SCE_ECC_secp256r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     curvetype  = change_endian_long(SCE_ECC_CURVE_TYPE_NIST);
     error_code = R_SCE_GenerateEccRandomKeyIndexSub(&curvetype,
                                        /* Casting uint32_t pointer is used for address. */
-                                                     &indata_cmd,
-                                                     (uint32_t *) &wrapped_pair_key->pub_key.value,
-                                                     (uint32_t *) &wrapped_pair_key->priv_key.value);
+                                                    &indata_cmd,
+                                                    (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                    (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
@@ -1186,6 +1347,7 @@ fsp_err_t R_SCE_ECC_secp256r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp384r1 public key and private key pair
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1195,6 +1357,10 @@ fsp_err_t R_SCE_ECC_secp256r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  **********************************************************************************************************************/
 fsp_err_t R_SCE_ECC_secp384r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t * wrapped_pair_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(wrapped_pair_key);
+#endif
+
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
 
@@ -1227,6 +1393,7 @@ fsp_err_t R_SCE_ECC_secp384r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * @param[in,out] wrapped_key   secp192r1 public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1239,6 +1406,13 @@ fsp_err_t R_SCE_ECC_secp192r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_key_update_key_t         * key_update_key,
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P192_PUBLIC;
 
@@ -1270,6 +1444,7 @@ fsp_err_t R_SCE_ECC_secp192r1_EncryptedPublicKeyWrap (uint8_t                   
  * @param[in,out] wrapped_key   secp224r1 public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1282,6 +1457,13 @@ fsp_err_t R_SCE_ECC_secp224r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_key_update_key_t         * key_update_key,
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P224_PUBLIC;
 
@@ -1313,6 +1495,7 @@ fsp_err_t R_SCE_ECC_secp224r1_EncryptedPublicKeyWrap (uint8_t                   
  * @param[in,out] wrapped_key   secp256r1 public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1325,6 +1508,13 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_key_update_key_t         * key_update_key,
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P256_PUBLIC;
 
@@ -1356,6 +1546,7 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (uint8_t                   
  * @param[in,out] wrapped_key   secp384r1 public wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1368,6 +1559,13 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_key_update_key_t         * key_update_key,
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P384_PUBLIC;
 
@@ -1399,6 +1597,7 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (uint8_t                   
  * @param[in,out] wrapped_key   secp192r1 private wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1411,6 +1610,13 @@ fsp_err_t R_SCE_ECC_secp192r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_key_update_key_t          * key_update_key,
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P192_PRIVATE;
 
@@ -1442,6 +1648,7 @@ fsp_err_t R_SCE_ECC_secp192r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @param[in,out] wrapped_key   secp224r1 private wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1454,6 +1661,13 @@ fsp_err_t R_SCE_ECC_secp224r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_key_update_key_t          * key_update_key,
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P224_PRIVATE;
 
@@ -1485,6 +1699,7 @@ fsp_err_t R_SCE_ECC_secp224r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @param[in,out] wrapped_key   secp256r1 private wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1497,6 +1712,13 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_key_update_key_t          * key_update_key,
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P256_PRIVATE;
 
@@ -1528,6 +1750,7 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @param[in,out] wrapped_key   secp384r1 private wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1540,6 +1763,13 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_key_update_key_t          * key_update_key,
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(key_update_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t     error_code = FSP_SUCCESS;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P384_PRIVATE;
 
@@ -1571,6 +1801,7 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @param[out]    wrapped_key                the user Key Generation Information (141 words) of RSA2048 bit
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1578,14 +1809,27 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_provisioning_key, uint8_t *initial_vector,
-        uint8_t *encrypted_key, sce_tls_ca_certification_public_wrapped_key_t *wrapped_key)
+fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall (
+    uint8_t                                       * encrypted_provisioning_key,
+    uint8_t                                       * initial_vector,
+    uint8_t                                       * encrypted_key,
+    sce_tls_ca_certification_public_wrapped_key_t * wrapped_key)
 {
-    fsp_err_t     error_code = FSP_SUCCESS;
-    uint32_t install_key_ring_index = SCE_INSTALL_KEY_RING_INDEX;
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(encrypted_provisioning_key);
+    FSP_ASSERT(initial_vector);
+    FSP_ASSERT(encrypted_key);
+    FSP_ASSERT(wrapped_key);
+#endif
+
+    fsp_err_t error_code             = FSP_SUCCESS;
+    uint32_t  install_key_ring_index = SCE_INSTALL_KEY_RING_INDEX;
     error_code = R_SCE_GenerateTlsRsaInstallDataSub(&install_key_ring_index,
-        /* Casting uint32_t pointer is used for address. */
-        (uint32_t*)encrypted_provisioning_key, (uint32_t*)initial_vector, (uint32_t*)encrypted_key, wrapped_key->value);
+                                       /* Casting uint32_t pointer is used for address. */
+                                                    (uint32_t *) encrypted_provisioning_key,
+                                                    (uint32_t *) initial_vector,
+                                                    (uint32_t *) encrypted_key,
+                                                    wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
         memcpy(S_INST, wrapped_key->value, sizeof(wrapped_key->value));
@@ -1595,6 +1839,7 @@ fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_pr
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
     return error_code;
 }
 
@@ -1605,6 +1850,7 @@ fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_pr
  * @param[in] ephemeral_ecdh_public_key ephemeral ECDH public key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -1612,13 +1858,19 @@ fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_pr
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate(sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key,
-        uint8_t *ephemeral_ecdh_public_key)
+fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate (
+    sce_tls_p256_ecc_wrapped_key_t * tls_p256_ecc_wrapped_key,
+    uint8_t                        * ephemeral_ecdh_public_key)
 {
-    fsp_err_t     error_code = FSP_SUCCESS;
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(tls_p256_ecc_wrapped_key);
+    FSP_ASSERT(ephemeral_ecdh_public_key);
+#endif
+
+    fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateTlsP256EccKeyIndexSub(tls_p256_ecc_wrapped_key->value,
-        /* Casting uint32_t pointer is used for address. */
-        (uint32_t*)ephemeral_ecdh_public_key);
+                                       /* Casting uint32_t pointer is used for address. */
+                                                     (uint32_t *) ephemeral_ecdh_public_key);
     if (FSP_SUCCESS == error_code)
     {
         tls_p256_ecc_wrapped_key->type = SCE_KEY_INDEX_TYPE_TLS_P256_ECC_KEY;
@@ -1627,6 +1879,7 @@ fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate(sce_tls_p256_e
     {
         tls_p256_ecc_wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
     return error_code;
 }
 
@@ -1704,6 +1957,7 @@ fsp_err_t R_SCE_FwIntegrityCheckPrivate (void)
  * This API Updates OEM key index (wrapped key).
  *
  * @retval FSP_SUCCESS
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT
  * @retval FSP_ERR_CRYPTO_SCE_FAIL
  **********************************************************************************************************************/

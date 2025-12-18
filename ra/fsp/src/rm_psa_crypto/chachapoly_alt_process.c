@@ -38,21 +38,84 @@
   #include "chachapoly_alt.h"
   #include "platform_alt.h"
 
+/*
+ * 32-bit integer manipulation macros (little endian)
+ */
+  #ifndef GET_UINT32_LE
+#define GET_UINT32_LE(n,b,i)                            \
+{                                                       \
+    (n) = ( (uint32_t) (b)[(i)    ]       )             \
+        | ( (uint32_t) (b)[(i) + 1] <<  8 )             \
+        | ( (uint32_t) (b)[(i) + 2] << 16 )             \
+        | ( (uint32_t) (b)[(i) + 3] << 24 );            \
+    }
+  #endif
+
+int mbedtls_internal_chachapoly_setkey(mbedtls_chachapoly_context *ctx,
+                                       const unsigned char key[HW_SCE_CHACHA20_KEY_BYTE_SIZE])
+{
+    FSP_ASSERT(ctx);
+    FSP_ASSERT(key);
+    int ret = 0;
+    const unsigned char * p_internal_key = key;
+
+    /*Store the user key using for Poly1305 operations.*/
+    ret = mbedtls_chacha20_setkey(&ctx->chacha20_ctx, key);
+    if(0U != ret)
+    {
+    	return ret;
+    }
+
+    /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
+    uint8_t encrypted_chachapoly_key[SIZE_CHACHA20_256BIT_KEYLEN_BITS_WRAPPED] = {0};
+
+    p_internal_key = encrypted_chachapoly_key;
+    ret            = (int) HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                                             SCE_OEM_CMD_CHACHA20_POLY_1305,
+                                                             NULL,
+                                                             NULL,
+                                                             key,
+                                                             (uint32_t *) p_internal_key);
+    if (0 == ret)
+    {
+        /* Store the encrypted key into the state */
+        for (uint32_t i = 0; i < SIZE_CHACHA20_256BIT_KEYLEN_WORDS_WRAPPED; i++)
+        {
+            GET_UINT32_LE(ctx->internal_key[i], p_internal_key, i << 2);
+        }
+    }
+
+    return ret;
+}
+
 int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
                                        const unsigned char      * input,
                                        unsigned char            * output,
                                        size_t                     size)
 {
     fsp_err_t ret = MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    uint32_t InData_Key_Type[1] = {change_endian_long(0x00000001)};
+    uint32_t InData_Key_Type[1] = {0x00000000};
     uint32_t InData_Cmd[1] = {0}; /* Encrypt */
     uint32_t init_size[1] = {UINT32_MAX};
     int32_t full_blocks = 0U;
     uint32_t remaining_bytes = (uint32_t) size;
     uint32_t offset_bytes = 0U;
-    uint32_t internal_state[CHACHA20_BLOCK_SIZE_WORDS];
-    unsigned char input_block[CHACHA20_BLOCK_SIZE_BYTES] = {0};
-    unsigned char output_block[CHACHA20_BLOCK_SIZE_BYTES] = {0};
+    uint32_t internal_state[HW_SCE_CHACHA20_BLOCK_WORD_SIZE];
+    unsigned char input_block[HW_SCE_CHACHA20_BLOCK_BYTE_SIZE] = {0};
+    unsigned char output_block[HW_SCE_CHACHA20_BLOCK_BYTE_SIZE] = {0};
+
+#ifdef MBEDTLS_CHACHA20_ALT
+    uint32_t internal_nonce[3] = {0};
+    memcpy(internal_nonce, &ctx->chacha20_ctx.state[13], 12);
+#else
+    uint32_t internal_nonce[3] =
+    {
+       change_endian_long(ctx->chacha20_ctx.state[13]),
+       change_endian_long(ctx->chacha20_ctx.state[14]),
+       change_endian_long(ctx->chacha20_ctx.state[15])
+    };
+#endif
+
 
     if (MBEDTLS_CHACHAPOLY_DECRYPT == ctx->mode)
     {
@@ -65,12 +128,12 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
         if (ctx->aad_len == 0U)
         {
             ret = HW_SCE_Chacha20Poly1305InitSub(&InData_Key_Type[0],
-                                                NULL,
-                                                &ctx->chacha20_ctx.state[4],
-                                                &InData_Cmd[0],
-                                                &ctx->chacha20_ctx.state[13],
-                                                (uint32_t *) &init_size[0],
-                                                (uint32_t *) &ctx->aad_len);
+                                                 &ctx->internal_key[0],
+                                                 NULL,
+                                                 &InData_Cmd[0],
+                                                 &internal_nonce[0],
+                                                 (uint32_t *) &init_size[0],
+                                                 (uint32_t *) &ctx->aad_len);
             if(FSP_SUCCESS != ret)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -80,12 +143,12 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
         else
         {
             ret = HW_SCE_Chacha20Poly1305InitSub(&InData_Key_Type[0],
-                                                NULL,
-                                                &ctx->chacha20_ctx.state[4],
-                                                &InData_Cmd[0],
-                                                &ctx->chacha20_ctx.state[13],
-                                                (uint32_t *) &init_size[0],
-                                                (uint32_t *) &ctx->aad_len);
+                                                 &ctx->internal_key[0],
+                                                 NULL,
+                                                 &InData_Cmd[0],
+                                                 &internal_nonce[0],
+                                                 (uint32_t *) &init_size[0],
+                                                 (uint32_t *) &ctx->aad_len);
             if(FSP_SUCCESS != ret)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -95,21 +158,21 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
         }
         break;
     case CHACHAPOLY_STATE_CIPHERTEXT:
-        if(ctx->ciphertext_len % 64 + size <= CHACHA20_BLOCK_SIZE_BYTES)
+        if(ctx->ciphertext_len % 64 + size <= HW_SCE_CHACHA20_BLOCK_BYTE_SIZE)
         {
             ctx->ciphertext_len += (uint32_t) size;
             memcpy(&ctx->chacha20_ctx.keystream8[ctx->internal_state[1]], input, size);
             ret = HW_SCE_Chacha20Poly1305ResumeSub(&InData_Key_Type[0],
-                                                    NULL,
-                                                    &ctx->chacha20_ctx.state[4],
-                                                    &InData_Cmd[0],
-                                                    &ctx->chacha20_ctx.state[13],
-                                                    &ctx->internal_state[0]);
+                                                   &ctx->internal_key[0],
+                                                   NULL,
+                                                   &InData_Cmd[0],
+                                                   &internal_nonce[0],
+                                                   &ctx->internal_state[0]);
             if(FSP_ERR_CRYPTO_SCE_PASS_2 != ret)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
             }
-            HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) &ctx->chacha20_ctx.keystream8[0], (uint32_t *) output_block, CHACHA20_BLOCK_SIZE_WORDS);
+            HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) &ctx->chacha20_ctx.keystream8[0], (uint32_t *) output_block, HW_SCE_CHACHA20_BLOCK_WORD_SIZE);
             memcpy(output, output_block, remaining_bytes);
             HW_SCE_Chacha20Poly1305SuspendSub(&internal_state[0]);
             return 0;
@@ -117,23 +180,23 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
         else
         {
             /* Use leftover keystream bytes */
-            offset_bytes = CHACHA20_BLOCK_SIZE_BYTES - (ctx->ciphertext_len % CHACHA20_BLOCK_SIZE_BYTES);
+            offset_bytes = HW_SCE_CHACHA20_BLOCK_BYTE_SIZE - (ctx->ciphertext_len % HW_SCE_CHACHA20_BLOCK_BYTE_SIZE);
             remaining_bytes -= offset_bytes;
-            memcpy(input_block, (uint32_t *) &ctx->chacha20_ctx.keystream8[0], CHACHA20_BLOCK_SIZE_BYTES - offset_bytes);
-            memcpy(input_block + CHACHA20_BLOCK_SIZE_BYTES - offset_bytes, input, offset_bytes);
+            memcpy(input_block, (uint32_t *) &ctx->chacha20_ctx.keystream8[0], HW_SCE_CHACHA20_BLOCK_BYTE_SIZE - offset_bytes);
+            memcpy(input_block + HW_SCE_CHACHA20_BLOCK_BYTE_SIZE - offset_bytes, input, offset_bytes);
 
             ret = HW_SCE_Chacha20Poly1305ResumeSub(&InData_Key_Type[0],
-                                                    NULL,
-                                                    &ctx->chacha20_ctx.state[4],
-                                                    &InData_Cmd[0],
-                                                    &ctx->chacha20_ctx.state[13],
-                                                    &ctx->internal_state[0]);
+                                                   &ctx->internal_key[0],
+                                                   NULL,
+                                                   &InData_Cmd[0],
+                                                   &internal_nonce[0],
+                                                   &ctx->internal_state[0]);
             if(FSP_ERR_CRYPTO_SCE_PASS_2 != ret)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
             }
-            HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) input_block, (uint32_t *) output_block, CHACHA20_BLOCK_SIZE_WORDS);
-            memcpy(output, output_block + CHACHA20_BLOCK_SIZE_BYTES - offset_bytes, offset_bytes);
+            HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) input_block, (uint32_t *) output_block, HW_SCE_CHACHA20_BLOCK_WORD_SIZE);
+            memcpy(output, output_block + HW_SCE_CHACHA20_BLOCK_BYTE_SIZE - offset_bytes, offset_bytes);
 
             ret = HW_SCE_Chacha20Poly1305SuspendSub(&ctx->internal_state[0]);
             if(FSP_SUCCESS != ret)
@@ -141,11 +204,11 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
             }
             ret = HW_SCE_Chacha20Poly1305ResumeSub(&InData_Key_Type[0],
-                                                    NULL,
-                                                    &ctx->chacha20_ctx.state[4],
-                                                    &InData_Cmd[0],
-                                                    &ctx->chacha20_ctx.state[13],
-                                                    &ctx->internal_state[0]);
+                                                   &ctx->internal_key[0],
+                                                   NULL,
+                                                   &InData_Cmd[0],
+                                                   &internal_nonce[0],
+                                                   &ctx->internal_state[0]);
         }
         break;
     default:
@@ -153,14 +216,14 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
     }
 
     /* Full blocks process */
-    full_blocks = (size - offset_bytes) / CHACHA20_BLOCK_SIZE_BYTES;
+    full_blocks = (size - offset_bytes) / HW_SCE_CHACHA20_BLOCK_BYTE_SIZE;
     if (full_blocks > 0)
     {
         uint32_t MAX_CNT = 0;
-        if (size - offset_bytes > full_blocks * CHACHA20_BLOCK_SIZE_BYTES) {
-            MAX_CNT = full_blocks * CHACHA20_BLOCK_SIZE_WORDS;
+        if (size - offset_bytes > full_blocks * HW_SCE_CHACHA20_BLOCK_BYTE_SIZE) {
+            MAX_CNT = full_blocks * HW_SCE_CHACHA20_BLOCK_WORD_SIZE;
         } else {
-            MAX_CNT = (full_blocks - 1) * CHACHA20_BLOCK_SIZE_WORDS;
+            MAX_CNT = (full_blocks - 1) * HW_SCE_CHACHA20_BLOCK_WORD_SIZE;
         }
         HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) (input + offset_bytes), (uint32_t *)  (output + offset_bytes), MAX_CNT);
         offset_bytes += MAX_CNT * 4;
@@ -173,11 +236,11 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
     ret = HW_SCE_Chacha20Poly1305ResumeSub(&InData_Key_Type[0],
-                                            NULL,
-                                            &ctx->chacha20_ctx.state[4],
-                                            &InData_Cmd[0],
-                                            &ctx->chacha20_ctx.state[13],
-                                            &ctx->internal_state[0]);
+                                           &ctx->internal_key[0],
+                                           NULL,
+                                           &InData_Cmd[0],
+                                           &internal_nonce[0],
+                                           &ctx->internal_state[0]);
     if(FSP_ERR_CRYPTO_SCE_PASS_2 != ret)
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -185,9 +248,9 @@ int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
 
     /* Last block process */
     memcpy(input_block, input + offset_bytes, remaining_bytes);
-    memset(&ctx->chacha20_ctx.keystream8[0], 0, CHACHA20_BLOCK_SIZE_BYTES);
+    memset(&ctx->chacha20_ctx.keystream8[0], 0, HW_SCE_CHACHA20_BLOCK_BYTE_SIZE);
     memcpy(&ctx->chacha20_ctx.keystream8[0], input + offset_bytes, remaining_bytes);
-    HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) input_block, (uint32_t *)  output_block, CHACHA20_BLOCK_SIZE_WORDS);
+    HW_SCE_Chacha20Poly1305UpdateSub((uint32_t *) input_block, (uint32_t *)  output_block, HW_SCE_CHACHA20_BLOCK_WORD_SIZE);
     memcpy(output + offset_bytes, output_block, remaining_bytes);
     HW_SCE_Chacha20Poly1305SuspendSub(&internal_state[0]);
 
@@ -200,26 +263,38 @@ int mbedtls_internal_chachapoly_finish(mbedtls_chachapoly_context * ctx,
                                        unsigned char mac[16])
 {
     fsp_err_t ret = MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    uint32_t InData_Key_Type[1] = {change_endian_long(0x00000001)};
+    uint32_t InData_Key_Type[1] = {0x00000000};
     uint32_t InData_Cmd[1] = {0};
-    uint32_t InData_TextLen[1] = {CHACHA20_BLOCK_SIZE_BYTES};
-    uint32_t internal_block[CHACHA20_BLOCK_SIZE_WORDS] = {0};
-    uint32_t internal_mac[CHACHA20_BLOCK_SIZE_WORDS] = {0};
+    uint32_t InData_TextLen[1] = {HW_SCE_CHACHA20_BLOCK_BYTE_SIZE};
+    uint32_t internal_block[HW_SCE_CHACHA20_BLOCK_WORD_SIZE] = {0};
+    uint32_t internal_mac[HW_SCE_CHACHA20_BLOCK_WORD_SIZE] = {0};
 
     ctx->internal_state[1] = (uint32_t) ctx->ciphertext_len % 64;
     ctx->internal_state[8] = (uint32_t) ctx->ciphertext_len;
+
+#ifdef MBEDTLS_CHACHA20_ALT
+    uint32_t internal_nonce[3] = {0};
+    memcpy(internal_nonce, &ctx->chacha20_ctx.state[13], 12);
+#else
+    uint32_t internal_nonce[3] =
+    {
+       change_endian_long(ctx->chacha20_ctx.state[13]),
+       change_endian_long(ctx->chacha20_ctx.state[14]),
+       change_endian_long(ctx->chacha20_ctx.state[15])
+    };
+#endif
 
     if(MBEDTLS_CHACHAPOLY_DECRYPT == ctx->mode)
     {
         InData_Cmd[0] = 1U; /* Decrypt */
         HW_SCE_Chacha20Poly1305ResumeSub (&InData_Key_Type[0],
+                                          &ctx->internal_key[0],
                                           NULL,
-                                          &ctx->chacha20_ctx.state[4],
                                           &InData_Cmd[0],
-                                          &ctx->chacha20_ctx.state[13],
+                                          &internal_nonce[0],
                                           &ctx->internal_state[0]);
         ret = HW_SCE_Chacha20Poly1305FinalSub((uint32_t *) &ctx->chacha20_ctx.keystream8[0],
-                                          	  (uint32_t *) mac,
+                                              (uint32_t *) mac,
                                               &internal_block[0],
                                               &internal_mac[0], change_endian_long(BYTES_TO_WORDS(ctx->internal_state[1])));
         if(FSP_SUCCESS != ret)
@@ -231,10 +306,10 @@ int mbedtls_internal_chachapoly_finish(mbedtls_chachapoly_context * ctx,
     {
         InData_Cmd[0] = 0U; /* Encrypt */
         HW_SCE_Chacha20Poly1305ResumeSub (&InData_Key_Type[0],
+                                          &ctx->internal_key[0],
                                           NULL,
-                                          &ctx->chacha20_ctx.state[4],
                                           &InData_Cmd[0],
-                                          &ctx->chacha20_ctx.state[13],
+                                          &internal_nonce[0],
                                           &ctx->internal_state[0]);
         ret = HW_SCE_Chacha20Poly1305FinalSub((uint32_t *) &ctx->chacha20_ctx.keystream8[0],
                                               &internal_mac[0],

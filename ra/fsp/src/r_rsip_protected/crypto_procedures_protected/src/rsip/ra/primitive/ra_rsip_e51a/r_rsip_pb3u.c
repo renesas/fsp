@@ -17,37 +17,20 @@
 
 void r_rsip_pb3u (const uint32_t InData_Text[], uint32_t OutData_Text[], uint32_t MAX_CNT)
 {
-    uint32_t iLoop = 0U;
-
-    r_rsip_func100(bswap_32big(0x16d182f6U),
-                   bswap_32big(0x2c530d59U),
-                   bswap_32big(0x78a62409U),
-                   bswap_32big(0xe1f98981U));
+    r_rsip_func100(bswap_32big(0x02fa6705U),
+                   bswap_32big(0x5ab474d0U),
+                   bswap_32big(0xe09d1923U),
+                   bswap_32big(0x618d45f9U));
 
     WR1_PROG(REG_1444H, 0x00020061U);
     WR1_PROG(REG_182CH, 0x00000020U);
     WR1_PROG(REG_1824H, 0x0d008906U);
     WR1_PROG(REG_1408H, 0x000c1000U);
 
-    WAIT_STS(REG_1444H, 31, 1);
-    WR4_ADDR(REG_1420H, &InData_Text[0]);
-    for (iLoop = 4U; iLoop < MAX_CNT; )
-    {
-        WAIT_STS(REG_1444H, 31, 1);
-        WR4_ADDR(REG_1420H, &InData_Text[iLoop]);
-        WAIT_STS(REG_1408H, 30, 1);
-        RD4_ADDR(REG_1420H, &OutData_Text[iLoop - 4]);
-        iLoop = iLoop + 4U;
-    }
+    r_rsip_func220(InData_Text, MAX_CNT, OutData_Text);
 
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WAIT_STS(REG_1408H, 30, 1);
-    RD4_ADDR(REG_1420H, &OutData_Text[iLoop - 4]);
-
-    r_rsip_func214();
-
-    r_rsip_func101(bswap_32big(0x3853b743U),
-                   bswap_32big(0x8c067e1cU),
-                   bswap_32big(0xfd83be99U),
-                   bswap_32big(0xe61afe38U));
+    r_rsip_func101(bswap_32big(0x22ae9ffcU),
+                   bswap_32big(0x3b8baaedU),
+                   bswap_32big(0x46803757U),
+                   bswap_32big(0x837ed581U));
 }

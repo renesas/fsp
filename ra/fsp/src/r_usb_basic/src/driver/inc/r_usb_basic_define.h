@@ -959,7 +959,7 @@ extern "C" {
  #define USB_RCV_MSG(ID, MESS)         (usb_cstd_rec_msg((uint8_t) (ID), (usb_msg_t **) (MESS), (usb_tm_t) (0U)))
  #define USB_TRCV_MSG(ID, MESS, TM)    (usb_cstd_rec_msg((uint8_t) (ID), (usb_msg_t **) (MESS), (usb_tm_t) (TM)))
 
- #define USB_PGET_BLK(ID, BLK)         (usb_cstd_pget_blk((uint8_t) (ID), (usb_utr_t **) (BLK)))
+ #define USB_PGET_BLK(ID, BLK, IP)     (usb_cstd_pget_blk((uint8_t) (ID), (usb_utr_t **) (BLK), (uint8_t) (IP)))
  #define USB_REL_BLK(ID, BLK)          (usb_cstd_rel_blk((uint8_t) (ID), (usb_utr_t *) (BLK)))
 
 /* Descriptor size */

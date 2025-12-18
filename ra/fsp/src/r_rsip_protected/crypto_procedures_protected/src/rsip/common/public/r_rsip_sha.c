@@ -292,8 +292,7 @@ fsp_err_t R_RSIP_SHA_Suspend (rsip_ctrl_t * const p_ctrl, rsip_sha_handle_t * co
         case RSIP_USER_HANDLE_STATE_UPDATE:
         {
             /* Read internal state */
-            rsip_ret = r_rsip_sha_hash_suspend(p_instance_ctrl->handle.sha.type,
-                                               p_instance_ctrl->handle.sha.internal_state);
+            rsip_ret = r_rsip_sha_hash_suspend(&p_instance_ctrl->handle.sha);
 
             /* Handle state transition */
             p_instance_ctrl->handle.sha.handle_state = RSIP_USER_HANDLE_STATE_RESUME;
@@ -1328,20 +1327,20 @@ static rsip_ret_t sha_update (rsip_ctrl_t * const p_ctrl, const uint8_t * p_mess
     {
         case RSIP_USER_HANDLE_STATE_INIT:
         {
-            ret = r_rsip_sha_hash_init_update(p_handle->type, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_sha_hash_init_update(p_handle, p_message, message_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_sha_hash_resume_update(p_handle->type, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_sha_hash_resume_update(p_handle, p_message, message_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_sha_hash_update(p_handle->type, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_sha_hash_update(p_handle, p_message, message_length);
         }
     }
 
@@ -1388,24 +1387,14 @@ static rsip_ret_t sha_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_digest)
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_sha_hash_resume_final(p_handle->type,
-                                               p_handle->buffer,
-                                               p_handle->buffered_length,
-                                               p_handle->total_length + p_handle->buffered_length,
-                                               p_digest,
-                                               p_handle->internal_state);
+            ret = r_rsip_sha_hash_resume_final(p_handle, p_digest);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_sha_hash_final(p_handle->type,
-                                        p_handle->buffer,
-                                        p_handle->buffered_length,
-                                        p_handle->total_length + p_handle->buffered_length,
-                                        p_digest,
-                                        p_handle->internal_state);
+            ret = r_rsip_sha_hash_final(p_handle, p_digest);
         }
     }
 
@@ -1434,21 +1423,21 @@ static rsip_ret_t hmac_update (rsip_ctrl_t * const p_ctrl, const uint8_t * p_mes
     {
         case RSIP_USER_HANDLE_STATE_INIT:
         {
-            ret = r_rsip_hmac_init_update(&p_handle->wrapped_key, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_hmac_init_update(p_handle, p_message, message_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
             ret =
-                r_rsip_hmac_resume_update(&p_handle->wrapped_key, p_message, message_length, p_handle->internal_state);
+                r_rsip_hmac_resume_update(p_handle, p_message, message_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_hmac_update(&p_handle->wrapped_key, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_hmac_update(p_handle, p_message, message_length);
         }
     }
 
@@ -1496,24 +1485,14 @@ static rsip_ret_t hmac_sign_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_mac)
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_hmac_resume_final(&p_handle->wrapped_key,
-                                           p_handle->buffer,
-                                           p_handle->buffered_length,
-                                           p_handle->total_length + p_handle->buffered_length,
-                                           p_mac,
-                                           p_handle->internal_state);
+            ret = r_rsip_hmac_resume_final(p_handle, p_mac);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_hmac_final(&p_handle->wrapped_key,
-                                    p_handle->buffer,
-                                    p_handle->buffered_length,
-                                    p_handle->total_length + p_handle->buffered_length,
-                                    p_mac,
-                                    p_handle->internal_state);
+            ret = r_rsip_hmac_final(p_handle, p_mac);
         }
     }
 
@@ -1552,26 +1531,14 @@ static rsip_ret_t hmac_verify_finish (rsip_ctrl_t * const p_ctrl, const uint8_t 
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_hmac_resume_verify(&p_handle->wrapped_key,
-                                            p_handle->buffer,
-                                            p_handle->buffered_length,
-                                            p_handle->total_length + p_handle->buffered_length,
-                                            p_mac,
-                                            mac_length,
-                                            p_handle->internal_state);
+            ret = r_rsip_hmac_resume_verify(p_handle, p_mac, mac_length);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_hmac_verify(&p_handle->wrapped_key,
-                                     p_handle->buffer,
-                                     p_handle->buffered_length,
-                                     p_handle->total_length + p_handle->buffered_length,
-                                     p_mac,
-                                     mac_length,
-                                     p_handle->internal_state);
+            ret = r_rsip_hmac_verify(p_handle, p_mac, mac_length);
         }
     }
 

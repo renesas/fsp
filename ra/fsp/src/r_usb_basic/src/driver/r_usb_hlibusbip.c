@@ -81,8 +81,8 @@ uint8_t g_usb_haud_iso_out_pipe[USB_NUM_USBIP] = {0};
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
  #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
-extern transfer_instance_t * g_p_usbx_transfer_tx;
-extern transfer_instance_t * g_p_usbx_transfer_rx;
+extern transfer_instance_t * g_p_usbx_transfer_tx[USB_NUM_USBIP];
+extern transfer_instance_t * g_p_usbx_transfer_rx[USB_NUM_USBIP];
  #endif                                /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 
 /******************************************************************************
@@ -391,7 +391,7 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
             if (0 == usb_dir)
             {
   #if (BSP_CFG_RTOS == 1)
-                if (0 != g_p_usbx_transfer_rx)
+                if (0 != g_p_usbx_transfer_rx[ptr->ip])
                 {
                     fifo_mode = USB_D0USE;
                 }
@@ -406,7 +406,7 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
             else
             {
   #if (BSP_CFG_RTOS == 1)
-                if (0 != g_p_usbx_transfer_tx)
+                if (0 != g_p_usbx_transfer_tx[ptr->ip])
                 {
                     fifo_mode = USB_D1USE;
                 }
@@ -969,6 +969,12 @@ void usb_hstd_data_end (usb_utr_t * ptr, uint16_t pipe, uint16_t status)
     uint16_t useport;
     uint8_t  ip;
 
+ #if (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_HAUD_USE)
+  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+    uint16_t dma_ch;
+  #endif
+ #endif                                /* (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_HAUD_USE) */
+
     if (USB_MAX_PIPE_NO < pipe)
     {
         return;                        /* Error */
@@ -1055,6 +1061,24 @@ void usb_hstd_data_end (usb_utr_t * ptr, uint16_t pipe, uint16_t status)
             break;
         }
     }
+
+ #if (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_HAUD_USE)
+    if ((pipe == g_usb_haud_iso_in_pipe[ip]) &&
+        (0 != g_usb_hstd_data_cnt[ip][pipe])) /* 0 Byte Data Received */
+    {
+        g_p_usb_hstd_pipe[ip][pipe]->tranlen = g_usb_hstd_data_cnt[ip][pipe];
+
+  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+        dma_ch = usb_cstd_dma_ref_ch_no(ptr, useport);
+        g_p_usb_hstd_pipe[ip][pipe]->p_tranadr = gp_usb_hstd_data_ptr[ptr->ip][pipe] + g_usb_cstd_dma_size[ip][dma_ch];
+  #else
+        g_p_usb_hstd_pipe[ip][pipe]->p_tranadr = gp_usb_hstd_data_ptr[ptr->ip][pipe];
+  #endif
+        usb_hstd_receive_start(ptr, pipe);
+
+        return;
+    }
+ #endif                                /* (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_HAUD_USE) */
 
     /* Call Back */
     if (USB_NULL != g_p_usb_hstd_pipe[ip][pipe])
@@ -2352,7 +2376,7 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
   #endif                               /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_HMSC_USE)
-   #if defined(USB_CFG_HCDC_USE)
+   #if (defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
     if ((pipe_no != g_usb_hcdc_bulk_in_pipe[USB_IP1]) && (pipe_no != g_usb_hcdc_bulk_out_pipe[USB_IP1]))
     {
     #if USB_CFG_DTC == USB_CFG_ENABLE

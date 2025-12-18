@@ -819,5 +819,5 @@ static uint8_t rm_rrh46410_checksum_calculate (uint8_t * const p_buf, uint32_t l
         p_data++;
     }
 
-    return ~checksum;
+    return (uint8_t) ~checksum;
 }

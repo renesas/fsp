@@ -541,6 +541,8 @@ fsp_err_t R_TML_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_inf
 /*******************************************************************************************************************//**
  * Get current timer status and store it in provided pointer p_status. Implements @ref timer_api_t::statusGet.
  *
+ * @note The counter value returned in p_status is always 0 because TML does not provide a readable counter register.
+ *
  * Example:
  * @snippet r_tml_example.c R_TML_StatusGet
  *

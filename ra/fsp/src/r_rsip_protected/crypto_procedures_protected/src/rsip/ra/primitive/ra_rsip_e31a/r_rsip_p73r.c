@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p73r (const uint32_t InData_HashType[], const uint32_t InData_State[])
 {
@@ -29,15 +32,11 @@ rsip_ret_t r_rsip_p73r (const uint32_t InData_HashType[], const uint32_t InData_
 
     WR1_PROG(REG_00F0H, 0x00000001U);
 
-    WR1_PROG(REG_0014H, 0x000000c7U);
-    WR1_PROG(REG_009CH, 0x80010000U);
-    WAIT_STS(REG_0014H, 31, 1);
+    r_rsip_func_sub014(0x000000c7U, 0x80010000U);
     WR1_PROG(REG_002CH, InData_HashType[0]);
     WR1_PROG(REG_0024H, 0x00000000U);
 
-    WR1_PROG(REG_0094H, 0x38000c00U);
-    WR1_PROG(REG_009CH, 0x00000080U);
-    WR1_PROG(REG_0040H, 0x00270000U);
+    r_rsip_func_sub016(0x38000c00U, 0x00000080U, 0x00270000U);
 
     r_rsip_func100(bswap_32big(0x909ac921U),
                    bswap_32big(0x00d2d1beU),
@@ -58,9 +57,7 @@ rsip_ret_t r_rsip_p73r (const uint32_t InData_HashType[], const uint32_t InData_
     {
         r_rsip_func100(bswap_32big(0x072e9c18U), bswap_32big(0xbf4fa3e0U), bswap_32big(0x83056207U),
                        bswap_32big(0x1b9aa55bU));
-        WR1_PROG(REG_0094H, 0x3420a800U);
-        WR1_PROG(REG_0094H, 0x00000007U);
-        WR1_PROG(REG_0094H, 0x2000b400U);
+        r_rsip_func_sub022(0x3420a800U, 0x00000007U, 0x2000b400U);
         WR1_PROG(REG_0094H, 0x00000006U);
 
         WR1_PROG(REG_0094H, 0x00007c00U);

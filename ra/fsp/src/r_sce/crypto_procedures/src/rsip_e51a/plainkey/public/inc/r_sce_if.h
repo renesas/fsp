@@ -176,6 +176,12 @@
  #define HW_SCE_RSA_2048_DATA_BYTE_SIZE                          (256U)
  #define HW_SCE_RSA_3072_DATA_BYTE_SIZE                          (96  * 4U)
  #define HW_SCE_RSA_4096_DATA_BYTE_SIZE                          (128 * 4U)
+ #define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE             (128U * 4U)
+ #define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE              (65U * 4U)
+ #define HW_SCE_RSA3072_RANDOM_PRIVATE_KEY_BYTE_SIZE             (192U * 4U)
+ #define HW_SCE_RSA3072_RANDOM_PUBLIC_KEY_BYTE_SIZE              (97U * 4U)
+ #define HW_SCE_RSA4096_RANDOM_PRIVATE_KEY_BYTE_SIZE             (256U * 4U)
+ #define HW_SCE_RSA4096_RANDOM_PUBLIC_KEY_BYTE_SIZE              (129U * 4U)
  
  /* RSA HASH type. */
  #define HW_SCE_RSA_HASH_MD5                                     (0x01)  /* MD5     */

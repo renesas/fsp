@@ -71,12 +71,17 @@ uint32_t        g_sha256hmacver_private_id;
  * @param[in,out] handle SHA handler (work area)
  *
  * @retval FSP_SUCCESS Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256_Init (sce_sha_md5_handle_t * handle)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+#endif
+
     memset(handle, 0, sizeof(sce_sha_md5_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -97,6 +102,7 @@ fsp_err_t R_SCE_SHA256_Init (sce_sha_md5_handle_t * handle)
  * @param[in]     message_length message data length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
@@ -107,6 +113,10 @@ fsp_err_t R_SCE_SHA256_Init (sce_sha_md5_handle_t * handle)
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256_Update (sce_sha_md5_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
     fsp_err_t ercd        = FSP_SUCCESS;
     uint32_t  length_rest = 0;
 
@@ -133,8 +143,8 @@ fsp_err_t R_SCE_SHA256_Update (sce_sha_md5_handle_t * handle, uint8_t * message,
         {
             ercd = R_SCE_Sha256UpdatePrivate(handle,
                                        /* Casting uint32_t pointer is used for address. */
-                                              (uint32_t *) (message + (SHA_BLOCK8_LEN - handle->buffering_length)),
-                                              ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN) >> 2);
+                                             (uint32_t *) (message + (SHA_BLOCK8_LEN - handle->buffering_length)),
+                                             ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN) >> 2);
             length_rest -= ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN);
         }
 
@@ -161,6 +171,7 @@ fsp_err_t R_SCE_SHA256_Update (sce_sha_md5_handle_t * handle, uint8_t * message,
  * @param[in,out] digest_length hash data length (32bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
@@ -171,6 +182,11 @@ fsp_err_t R_SCE_SHA256_Update (sce_sha_md5_handle_t * handle, uint8_t * message,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256_Final (sce_sha_md5_handle_t * handle, uint8_t * digest, uint32_t * digest_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(digest);
+    FSP_ASSERT(digest_length);
+#endif
     uint32_t  max_cnt_byte = 0;
     fsp_err_t ercd         = FSP_SUCCESS;
 
@@ -229,10 +245,10 @@ fsp_err_t R_SCE_SHA256_Final (sce_sha_md5_handle_t * handle, uint8_t * digest, u
 
     ercd = R_SCE_Sha256FinalPrivate(handle,
                                        /* Casting uint32_t pointer is used for address. */
-                                     (uint32_t *) (handle->sha_buffer),
-                                     max_cnt_byte >> 2,
-                                     (uint32_t *) (digest),
-                                     digest_length);
+                                    (uint32_t *) (handle->sha_buffer),
+                                    max_cnt_byte >> 2,
+                                    (uint32_t *) (digest),
+                                    digest_length);
     handle->all_received_length = 0;
     handle->buffering_length    = 0;
     memset(handle->sha_buffer, 0, sizeof(handle->sha_buffer));
@@ -249,6 +265,7 @@ fsp_err_t R_SCE_SHA256_Final (sce_sha_md5_handle_t * handle, uint8_t * digest, u
  * @param[in]     wrapped_key   MAC wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      An invalid MAC wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -258,6 +275,10 @@ fsp_err_t R_SCE_SHA256_Final (sce_sha_md5_handle_t * handle, uint8_t * digest, u
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256HMAC_GenerateInit (sce_hmac_sha_handle_t * handle, sce_hmac_sha_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
     memset(handle, 0, sizeof(sce_hmac_sha_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -279,6 +300,7 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateInit (sce_hmac_sha_handle_t * handle, sce_hma
  * @param[in]     message_length Message length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -287,6 +309,10 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateInit (sce_hmac_sha_handle_t * handle, sce_hma
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256HMAC_GenerateUpdate (sce_hmac_sha_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
     fsp_err_t ercd        = FSP_SUCCESS;
     uint32_t  length_rest = 0;
 
@@ -308,17 +334,17 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateUpdate (sce_hmac_sha_handle_t * handle, uint8
 
         /*Casting uint32_t pointer is used for address.*/
         ercd = R_SCE_Sha256HmacGenerateUpdatePrivate(handle,
-                                                      (uint32_t *) (handle->hmac_buffer),
-                                                      (SHA_BLOCK8_LEN) >> 2);
+                                                     (uint32_t *) (handle->hmac_buffer),
+                                                     (SHA_BLOCK8_LEN) >> 2);
         length_rest = message_length - (SHA_BLOCK8_LEN - handle->buffering_length);
         memset(handle->hmac_buffer, 0, sizeof(handle->hmac_buffer));
         if (length_rest >= SHA_BLOCK8_LEN)
         {
             ercd = R_SCE_Sha256HmacGenerateUpdatePrivate(handle,
                                        /* Casting uint32_t pointer is used for address. */
-                                                          (uint32_t *) (message +
-                                                                        (SHA_BLOCK8_LEN - handle->buffering_length)),
-                                                          ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN) >> 2);
+                                                         (uint32_t *) (message +
+                                                                       (SHA_BLOCK8_LEN - handle->buffering_length)),
+                                                         ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN) >> 2);
             length_rest -= ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN);
         }
 
@@ -343,6 +369,7 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateUpdate (sce_hmac_sha_handle_t * handle, uint8
  * @param[in,out] mac    HMAC area (32 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -352,6 +379,10 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateUpdate (sce_hmac_sha_handle_t * handle, uint8
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256HMAC_GenerateFinal (sce_hmac_sha_handle_t * handle, uint8_t * mac)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(mac);
+#endif
     uint32_t  max_cnt_byte = 0;
     fsp_err_t ercd         = FSP_SUCCESS;
     uint32_t  length_tmp   = 0;
@@ -428,6 +459,7 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateFinal (sce_hmac_sha_handle_t * handle, uint8_
  * @param[in]     wrapped_key   MAC wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      An invalid MAC wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -437,6 +469,10 @@ fsp_err_t R_SCE_SHA256HMAC_GenerateFinal (sce_hmac_sha_handle_t * handle, uint8_
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256HMAC_VerifyInit (sce_hmac_sha_handle_t * handle, sce_hmac_sha_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(wrapped_key);
+#endif
     memset(handle, 0, sizeof(sce_hmac_sha_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -457,6 +493,7 @@ fsp_err_t R_SCE_SHA256HMAC_VerifyInit (sce_hmac_sha_handle_t * handle, sce_hmac_
  * @param[in]     message_length Message length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -465,6 +502,10 @@ fsp_err_t R_SCE_SHA256HMAC_VerifyInit (sce_hmac_sha_handle_t * handle, sce_hmac_
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256HMAC_VerifyUpdate (sce_hmac_sha_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(message || (0 == message_length));
+#endif
     fsp_err_t ercd        = FSP_SUCCESS;
     uint32_t  length_rest = 0;
 
@@ -486,17 +527,17 @@ fsp_err_t R_SCE_SHA256HMAC_VerifyUpdate (sce_hmac_sha_handle_t * handle, uint8_t
 
         /*Casting uint32_t pointer is used for address.*/
         ercd = R_SCE_Sha256HmacVerifyUpdatePrivate(handle,
-                                                    (uint32_t *) (handle->hmac_buffer),
-                                                    (SHA_BLOCK8_LEN) >> 2);
+                                                   (uint32_t *) (handle->hmac_buffer),
+                                                   (SHA_BLOCK8_LEN) >> 2);
         length_rest = message_length - (SHA_BLOCK8_LEN - handle->buffering_length);
         memset(handle->hmac_buffer, 0, sizeof(handle->hmac_buffer));
         if (length_rest >= SHA_BLOCK8_LEN)
         {
             ercd = R_SCE_Sha256HmacVerifyUpdatePrivate(handle,
                                        /* Casting uint32_t pointer is used for address. */
-                                                        (uint32_t *) (message +
-                                                                      (SHA_BLOCK8_LEN - handle->buffering_length)),
-                                                        ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN) >> 2);
+                                                       (uint32_t *) (message +
+                                                                     (SHA_BLOCK8_LEN - handle->buffering_length)),
+                                                       ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN) >> 2);
             length_rest -= ((length_rest / SHA_BLOCK8_LEN) * SHA_BLOCK8_LEN);
         }
 
@@ -523,6 +564,7 @@ fsp_err_t R_SCE_SHA256HMAC_VerifyUpdate (sce_hmac_sha_handle_t * handle, uint8_t
  * @param[in]     mac_length HMAC length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -532,6 +574,10 @@ fsp_err_t R_SCE_SHA256HMAC_VerifyUpdate (sce_hmac_sha_handle_t * handle, uint8_t
  **********************************************************************************************************************/
 fsp_err_t R_SCE_SHA256HMAC_VerifyFinal (sce_hmac_sha_handle_t * handle, uint8_t * mac, uint32_t mac_length)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(mac);
+#endif
     uint32_t  max_cnt_byte        = 0;
     fsp_err_t ercd                = FSP_SUCCESS;
     uint32_t  length_tmp          = 0;

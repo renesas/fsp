@@ -154,6 +154,8 @@ extern bool rmac_phy_target_gpy111_is_support_link_partner_ability(rmac_phy_inst
 
 #endif
 
+void rmac_phy_easi_isr(void);
+
 /***********************************************************************************************************************
  * Private global variables and functions
  ***********************************************************************************************************************/
@@ -162,7 +164,7 @@ static bool rmac_phy_targets_is_support_link_partner_ability(rmac_phy_instance_c
                                                              uint32_t                   line_speed_duplex);
 static uint32_t r_rmac_phy_calculate_mpic(rmac_phy_instance_ctrl_t * p_instance_ctrl, uint32_t line_speed_duplex);
 static uint8_t  r_rmac_phy_get_operation_mode(rmac_phy_instance_ctrl_t * p_instance_ctrl);
-static void     r_rmac_phy_set_operation_mode(uint8_t channel, uint8_t mode);
+static void     r_rmac_phy_set_operation_mode(uint32_t channel, uint8_t mode);
 static void     r_rmac_phy_set_mii_type_configuration(rmac_phy_instance_ctrl_t * p_instance_ctrl, uint8_t port);
 
 /** RMAC_PHY HAL API mapping for Ethernet PHY Controller interface */
@@ -222,6 +224,8 @@ fsp_err_t R_RMAC_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t cons
 
     /* Initialize configuration of ethernet phy module. */
     p_instance_ctrl->p_ether_phy_cfg = p_cfg;
+    p_instance_ctrl->p_callback      = p_extend->p_callback;
+    p_instance_ctrl->p_context       = p_extend->p_context;
 
     /* ETHA IP should be CONFIG mode */
     RMAC_PHY_ERROR_RETURN(RMAC_PHY_ETHA_CONFIG_MODE == r_rmac_phy_get_operation_mode(p_instance_ctrl),
@@ -257,6 +261,23 @@ fsp_err_t R_RMAC_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t cons
         {
             p_reg_rmac       = (R_RMAC0_Type *) (R_RMAC0_BASE + (RMAC_REG_SIZE * i));
             p_reg_rmac->MPIC = r_rmac_phy_calculate_mpic(p_instance_ctrl, link_speed);
+
+            /* Enable frame preemption feature. */
+            if (p_extend->frame_preemption_enable)
+            {
+                r_rmac_phy_set_operation_mode(i, RMAC_PHY_ETHA_DISABLE_MODE);
+                r_rmac_phy_set_operation_mode(i, RMAC_PHY_ETHA_OPERATION_MODE);
+
+                p_reg_rmac->MLVC = R_RMAC0_MLVC_PASE_Msk;
+                if (p_extend->easi_irq[i] >= 0)
+                {
+                    p_reg_rmac->MMIE0 = R_RMAC0_MMIE0_LVSE_Msk | R_RMAC0_MMIE0_LVFE_Msk | R_RMAC0_MMIE0_VFRE_Msk;
+                    R_BSP_IrqCfgEnable(p_extend->easi_irq[i], p_extend->easi_ipl[i], p_instance_ctrl);
+                }
+
+                r_rmac_phy_set_operation_mode(i, RMAC_PHY_ETHA_DISABLE_MODE);
+                r_rmac_phy_set_operation_mode(i, RMAC_PHY_ETHA_CONFIG_MODE);
+            }
         }
     }
 
@@ -525,15 +546,19 @@ fsp_err_t R_RMAC_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
 fsp_err_t R_RMAC_PHY_LinkStatusGet (ether_phy_ctrl_t * const p_ctrl)
 {
     rmac_phy_instance_ctrl_t * p_instance_ctrl = (rmac_phy_instance_ctrl_t *) p_ctrl;
-    uint32_t  reg = 0;
-    fsp_err_t err = FSP_SUCCESS;
+    uint32_t                  reg              = 0;
+    fsp_err_t                 err              = FSP_SUCCESS;
+    rmac_phy_extended_cfg_t * p_extend;
+    R_RMAC0_Type            * p_reg_rmac = NULL;
 
 #if (RMAC_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_ether_phy_cfg->p_extend);
     RMAC_PHY_ERROR_RETURN(RMAC_PHY_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     RMAC_PHY_ERROR_RETURN(RMAC_PHY_INTERFACE_STATUS_INITIALIZED == p_instance_ctrl->interface_status,
                           FSP_ERR_NOT_INITIALIZED);
 #endif
+    p_extend = (rmac_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
 
     /* ETHA IP should be OPERATION mode */
     RMAC_PHY_ERROR_RETURN(RMAC_PHY_ETHA_OPERATION_MODE == r_rmac_phy_get_operation_mode(p_instance_ctrl),
@@ -553,6 +578,16 @@ fsp_err_t R_RMAC_PHY_LinkStatusGet (ether_phy_ctrl_t * const p_ctrl)
     {
         /* Link is up */
         err = FSP_SUCCESS;
+
+        /* Start verification for frame preemption. Send verify frame 3 times at the configured interval. */
+        if (p_extend->frame_preemption_enable)
+        {
+            p_reg_rmac        = (R_RMAC0_Type *) (R_RMAC0_BASE + (RMAC_REG_SIZE * p_instance_ctrl->phy_lsi_cfg_index));
+            p_reg_rmac->MLVC |=
+                ((R_RMAC0_MLVC_LVT_Msk & ((uint32_t) ((p_extend->frame_preemption_verification_interval - 1) <<
+                                                      R_RMAC0_MLVC_LVT_Pos))) |
+                 R_RMAC0_MLVC_PLV_Msk);
+        }
     }
 
     return err;
@@ -724,6 +759,57 @@ fsp_err_t R_RMAC_PHY_ChipSelect (ether_phy_ctrl_t * const p_ctrl, uint8_t port)
 
     /* Update the target PHY lSI. */
     p_instance_ctrl->phy_lsi_cfg_index = port;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref ether_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_RMAC_PHY_CallbackSet (ether_phy_ctrl_t * const          p_ctrl,
+                                  void (                          * p_callback)(ether_phy_callback_args_t *),
+                                  void * const                      p_context,
+                                  ether_phy_callback_args_t * const p_callback_memory)
+{
+    rmac_phy_instance_ctrl_t * p_instance_ctrl = (rmac_phy_instance_ctrl_t *) p_ctrl;
+
+    /* Check argument */
+#if (RMAC_PHY_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(RMAC_PHY_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if RMAC_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    ether_phy_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                            CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
+    p_instance_ctrl->p_callback = callback_is_secure ? p_callback :
+                                  (void (*)(ether_phy_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_instance_ctrl->p_callback = p_callback;
+#endif
+    p_instance_ctrl->p_context         = p_context;
+    p_instance_ctrl->p_callback_memory = p_callback_memory;
 
     return FSP_SUCCESS;
 }
@@ -1007,7 +1093,7 @@ static uint8_t r_rmac_phy_get_operation_mode (rmac_phy_instance_ctrl_t * p_insta
  *
  * @param[in] mode New operation mode
  ***********************************************************************************************************************/
-static void r_rmac_phy_set_operation_mode (uint8_t channel, uint8_t mode)
+static void r_rmac_phy_set_operation_mode (uint32_t channel, uint8_t mode)
 {
     R_ETHA0_Type * p_etha_reg =
         (R_ETHA0_Type *) (R_ETHA0_BASE + (ETHA_REG_SIZE * channel));
@@ -1062,3 +1148,70 @@ static void r_rmac_phy_set_mii_type_configuration (rmac_phy_instance_ctrl_t * p_
         }
     }
 }
+
+/***********************************************************************************************************************
+ * Interrupt handler for ETHA status interrupts that include frame preemption events.
+ ***********************************************************************************************************************/
+void rmac_phy_easi_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
+    ether_phy_callback_args_t callback_arg;
+    uint8_t        port = 0;
+    R_RMAC0_Type * p_reg_rmac;
+    uint32_t       status_mmis0;
+
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+    rmac_phy_instance_ctrl_t * p_instance_ctrl = (rmac_phy_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    rmac_phy_extended_cfg_t  * p_extend        = (rmac_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
+
+    /* Find the port that this interrupt occurred. */
+    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
+    {
+        if (p_extend->easi_irq[i] == irq)
+        {
+            port = i;
+        }
+    }
+
+    p_reg_rmac = (R_RMAC0_Type *) (R_RMAC0_BASE + (RMAC_REG_SIZE * port));
+
+    /* Get the monitoring status register value, which contains the link verification status. */
+    status_mmis0      = p_reg_rmac->MMIS0;
+    p_reg_rmac->MMIS0 = status_mmis0;
+
+    /* Clear pending interrupt flag. */
+    R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
+    if (NULL != p_instance_ctrl->p_callback)
+    {
+        callback_arg.channel   = p_instance_ctrl->p_ether_phy_cfg->channel;
+        callback_arg.port      = port;
+        callback_arg.p_context = p_instance_ctrl->p_context;
+
+        /* Timeout occurred while waiting for respond frame. */
+        if (status_mmis0 & R_RMAC0_MMIS0_LVFS_Msk)
+        {
+            callback_arg.event = ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_FAIL;
+            p_instance_ctrl->p_callback(&callback_arg);
+        }
+
+        /* Received verify frame. */
+        if (status_mmis0 & R_RMAC0_MMIS0_VFRS_Msk)
+        {
+            callback_arg.event = ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_RECEIVE;
+            p_instance_ctrl->p_callback(&callback_arg);
+        }
+
+        /* Received respond frame. Frame preemption verification is succeeded. */
+        if (status_mmis0 & R_RMAC0_MMIS0_LVSS_Msk)
+        {
+            callback_arg.event = ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_SUCCESS;
+            p_instance_ctrl->p_callback(&callback_arg);
+        }
+    }
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
+}                                      /* End of function ether_eint_isr() */

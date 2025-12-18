@@ -15,22 +15,14 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_p36a (const uint32_t InData_DataA[], uint32_t MAX_CNT)
 {
-    uint32_t iLoop = 0U;
+    r_rsip_func430(InData_DataA, MAX_CNT);
 
-    WR1_PROG(REG_0014H, 0x00020061U);
-    WR1_PROG(REG_00D4H, 0x00008000U);
-    WR1_PROG(REG_00D0H, 0x0e128456U);
-
-    for (iLoop = 0U; iLoop < MAX_CNT; )
-    {
-        WAIT_STS(REG_0014H, 31, 1);
-        WR4_ADDR(REG_002CH, &InData_DataA[iLoop]);
-        iLoop = iLoop + 4U;
-    }
-
-    r_rsip_func205();
-
-    r_rsip_func101(bswap_32big(0x82ef2609U), bswap_32big(0xecb40ef5U), bswap_32big(0x435b38d9U), bswap_32big(0x99b5d17dU));
+    r_rsip_func101(bswap_32big(0x82ef2609U),
+                   bswap_32big(0xecb40ef5U),
+                   bswap_32big(0x435b38d9U),
+                   bswap_32big(0x99b5d17dU));
 }

@@ -15,73 +15,81 @@
  ***********************************************************************************************************************/
 
 /** "ESWM" in ASCII.  Used to determine if the control block is open. */
-#define LAYER3_SWITCH_OPEN                                   (('E' << 24U) | ('S' << 16U) | ('W' << 8U) | ('M' << 0U))
+#define LAYER3_SWITCH_OPEN                                        (('E' << 24U) | ('S' << 16U) | ('W' << 8U) | \
+                                                                   ('M' << 0U))
 
-#define LAYER3_SWITCH_ETHA_REG_SIZE                          (R_ETHA1_BASE - R_ETHA0_BASE)
-#define LAYER3_SWITCH_RMAC_REG_SIZE                          (R_RMAC1_BASE - R_RMAC0_BASE)
-#define LAYER3_SWITCH_REGISTER_SIZE                          (32)
-#define LAYER3_SWITCH_QUEUE_ADDRESS_UPPER_MASK               (0xFF00000000)
-#define LAYER3_SWITCH_QUEUE_ADDRESS_UPPER_POSITION           (32)
-#define LAYER3_SWITCH_QUEUE_ADDRESS_LOWER_MASK               (0xFFFFFFFF)
+#define LAYER3_SWITCH_ETHA_REG_SIZE                               (R_ETHA1_BASE - R_ETHA0_BASE)
+#define LAYER3_SWITCH_RMAC_REG_SIZE                               (R_RMAC1_BASE - R_RMAC0_BASE)
+#define LAYER3_SWITCH_REGISTER_SIZE                               (32)
+#define LAYER3_SWITCH_QUEUE_ADDRESS_UPPER_MASK                    (0xFF00000000)
+#define LAYER3_SWITCH_QUEUE_ADDRESS_UPPER_POSITION                (32)
+#define LAYER3_SWITCH_QUEUE_ADDRESS_LOWER_MASK                    (0xFFFFFFFF)
 
-#define LAYER3_SWITCH_FWPBFC_REGISTER_OFFSET                 (0x10)
-#define LAYER3_SWITCH_FWPBFCSDC0_REGISTER_OFFSET             (0x10)
-#define LAYER3_SWITCH_INTERRUPT_REGISTER_OFFSET              (0x10)
-#define LAYER3_SWITCH_FWPC_REGISTER_OFFSET                   (0x10)
-#define LAYER3_SWITCH_PORT_CONFIG_REGISTER_OFFSET            (0x10)
-#define LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_REGISTOR_OFFSET    (0x08)
-#define LAYER3_SWITCH_TS_DESCRIPTOR_TIMER_REGISTOR_OFFSET    (0x04)
+#define LAYER3_SWITCH_FWPBFC_REGISTER_OFFSET                      (0x10)
+#define LAYER3_SWITCH_FWPBFCSDC0_REGISTER_OFFSET                  (0x10)
+#define LAYER3_SWITCH_INTERRUPT_REGISTER_OFFSET                   (0x10)
+#define LAYER3_SWITCH_FWPC_REGISTER_OFFSET                        (0x10)
+#define LAYER3_SWITCH_PORT_CONFIG_REGISTER_OFFSET                 (0x10)
+#define LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_REGISTOR_OFFSET         (0x08)
+#define LAYER3_SWITCH_TS_DESCRIPTOR_TIMER_REGISTOR_OFFSET         (0x04)
 
 /* VLAN tag bit position. */
-#define LAYER3_SWITCH_VLAN_TAG_DEI_POSITION                  (12UL)
-#define LAYER3_SWITCH_VLAN_TAG_PCP_POSITION                  (13UL)
+#define LAYER3_SWITCH_VLAN_TAG_DEI_POSITION                       (12UL)
+#define LAYER3_SWITCH_VLAN_TAG_PCP_POSITION                       (13UL)
 
 /* Definitions for forwarding feature. */
-#define LAYER3_SWITCH_MAC_ENTRY_MAX_NUM                      (0x7FFU)
-#define LAYER3_SWITCH_VLAN_ENTRY_MAX_NUM                     (0xFFFU)
-#define LAYER3_SWITCH_L3_ENTRY_MAX_NUM                       (0xFFU)
-#define LAYER3_SWITCH_L3_UPDATE_REMAPPING_MAX_NUM            (0x1FU)
-#define LAYER3_SWITCH_CLOCK_100MHZ                           (100U)
+#define LAYER3_SWITCH_MAC_ENTRY_MAX_NUM                           (0x7FFU)
+#define LAYER3_SWITCH_VLAN_ENTRY_MAX_NUM                          (0xFFFU)
+#define LAYER3_SWITCH_L3_ENTRY_MAX_NUM                            (0xFFU)
+#define LAYER3_SWITCH_L3_UPDATE_REMAPPING_MAX_NUM                 (0x1FU)
+#define LAYER3_SWITCH_CLOCK_100MHZ                                (100U)
 
 /* MFWD Register bitmask and position. */
-#define R_MFWD_FWIP6OC_IP6IPOM1_Pos                          (16UL)
-#define R_MFWD_FWIP6OC_IP6IPOM1_Msk                          (0x10000UL)
-#define R_MFWD_FWIP6OC_IP6IPO1_Pos                           (20UL)
-#define R_MFWD_FWIP6OC_IP6IPO1_Msk                           (0xf00000UL)
-#define R_MFWD_FWRFVC0_RFSV0_Pos                             (0UL)
-#define R_MFWD_FWRFVC0_RFSV0_Msk                             (0xffUL)
-#define R_MFWD_FWRFVC0_RFSV1_Pos                             (8UL)
-#define R_MFWD_FWRFVC0_RFSV1_Msk                             (0xff00UL)
+#define R_MFWD_FWIP6OC_IP6IPOM1_Pos                               (16UL)
+#define R_MFWD_FWIP6OC_IP6IPOM1_Msk                               (0x10000UL)
+#define R_MFWD_FWIP6OC_IP6IPO1_Pos                                (20UL)
+#define R_MFWD_FWIP6OC_IP6IPO1_Msk                                (0xf00000UL)
+#define R_MFWD_FWRFVC0_RFSV0_Pos                                  (0UL)
+#define R_MFWD_FWRFVC0_RFSV0_Msk                                  (0xffUL)
+#define R_MFWD_FWRFVC0_RFSV1_Pos                                  (8UL)
+#define R_MFWD_FWRFVC0_RFSV1_Msk                                  (0xff00UL)
 
 /* Bitmask for the CPU port (GWCA). */
-#define LAYER3_SWITCH_PORT_CPU_BITMASK                       (1 << BSP_FEATURE_ESWM_GWCA_PORT)
-#define LAYER3_SWITCH_EATASIGSC_MASK                         (R_ETHA0_EATASIGSC_TASIGS0_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS1_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS2_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS3_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS4_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS5_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS6_Msk | \
-                                                              R_ETHA0_EATASIGSC_TASIGS7_Msk)
+#define LAYER3_SWITCH_PORT_CPU_BITMASK                            (1 << BSP_FEATURE_ESWM_GWCA_PORT)
+#define LAYER3_SWITCH_EATASIGSC_MASK                              (R_ETHA0_EATASIGSC_TASIGS0_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS1_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS2_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS3_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS4_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS5_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS6_Msk | \
+                                                                   R_ETHA0_EATASIGSC_TASIGS7_Msk)
 
 /* Bitmask for unique number of timestamp. */
-#define LAYER3_SWITCH_TS_UNIQUE_NUMBER_BITMASK               (0xFF)
+#define LAYER3_SWITCH_TS_UNIQUE_NUMBER_BITMASK                    (0xFF)
 
 /* For CBS feature. */
-#define LAYER3_SWITCH_CBS_REQUEST_DELAY                      (50)
-#define LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET           (20)
-#define LAYER3_SWITCH_CBS_BITS_PER_BYTE                      (8)
-#define LAYER3_SWITCH_LINK_SPEED_100M                        (100000000)
-#define LAYER3_SWITCH_LINK_SPEED_1G                          (1000000000)
-#define LAYER3_SWITCH_MAXIMUM_FRAME_SIZE                     (1514U)
+#define LAYER3_SWITCH_CBS_REQUEST_DELAY                           (50)
+#define LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET                (20)
+#define LAYER3_SWITCH_CBS_BITS_PER_BYTE                           (8)
+#define LAYER3_SWITCH_LINK_SPEED_100M                             (100000000)
+#define LAYER3_SWITCH_LINK_SPEED_1G                               (1000000000)
+#define LAYER3_SWITCH_MAXIMUM_FRAME_SIZE                          (1514U)
+
+/* PSFP feature. Offset from FWPMFGC0 to FWPMFGC15. */
+#define LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET                (0x20)
+#define LAYER3_SWITCH_PSFP_MSDU_FILTER_REGISTER_OFFSET            (0x04)
+
+#define LAYER3_SWITCH_METER_FILTER_PCP_MAX_NUM                    (8)
+#define LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_BITMASK    (0xAAAAU)
 
 /* FRER feature. */
-#define LAYER3_SWITCH_FWSEQNGC_REGISTER_OFFSET               (0x08)
-#define LAYER3_SWITCH_FRER_CHECK_PERIOD_BITMASK              (0xFFFFUL)
-#define LAYER3_SWITCH_FRER_ENTRY_NUM_BITMASK                 (0x7FUL)
-#define LAYER3_SWITCH_FRER_SEQ_GENERATOR_NUM_BITMASK         (0x1FUL)
-#define LAYER3_SWITCH_FRER_SYSTEM_CLOCK_BITMASK              (0x3FFUL)
-#define LAYER3_SWITCH_SEQ_REG_MAX_NUM                        (32)
+#define LAYER3_SWITCH_FWSEQNGC_REGISTER_OFFSET                    (0x08)
+#define LAYER3_SWITCH_FRER_CHECK_PERIOD_BITMASK                   (0xFFFFUL)
+#define LAYER3_SWITCH_FRER_ENTRY_NUM_BITMASK                      (0x7FUL)
+#define LAYER3_SWITCH_FRER_SEQ_GENERATOR_NUM_BITMASK              (0x1FUL)
+#define LAYER3_SWITCH_FRER_SYSTEM_CLOCK_BITMASK                   (0x3FFUL)
+#define LAYER3_SWITCH_SEQ_REG_MAX_NUM                             (32)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -190,6 +198,21 @@ static void r_layer3_switch_configure_cbs(layer3_switch_instance_ctrl_t const * 
 static uint32_t r_layer3_switch_calculate_max_interference_size(uint8_t               queue_number,
                                                                 uint8_t const * const p_max_burst_num_list);
 
+/* PSFP feature. */
+static fsp_err_t r_layer3_switch_psfp_select_msdu_filter_id(layer3_switch_instance_ctrl_t        * p_instance_ctrl,
+                                                            uint32_t                             * p_msdu_filter_id,
+                                                            layer3_switch_psfp_msdu_filter_cfg_t * p_psfp_msdu_filter_cfg);
+
+static fsp_err_t r_layer3_switch_psfp_select_meter_filter_id(layer3_switch_instance_ctrl_t         * p_instance_ctrl,
+                                                             uint32_t                              * p_meter_filter_id,
+                                                             layer3_switch_psfp_meter_filter_cfg_t * p_psfp_meter_filter_cfg);
+static fsp_err_t r_layer3_switch_psfp_msdu_filter_init(layer3_switch_instance_ctrl_t               * p_instance_ctrl,
+                                                       uint32_t                                      msdu_filter_id,
+                                                       layer3_switch_table_entry_cfg_t const * const p_table_entry_cfg);
+static fsp_err_t r_layer3_switch_psfp_meter_filter_init(layer3_switch_instance_ctrl_t               * p_instance_ctrl,
+                                                        uint32_t                                      meter_filter_id,
+                                                        layer3_switch_table_entry_cfg_t const * const p_table_entry_cfg);
+
 /* FRER feature. */
 static fsp_err_t r_layer3_switch_frer_init(layer3_switch_instance_ctrl_t  * p_instance_ctrl,
                                            layer3_switch_frer_cfg_t const * p_frer_cfg);
@@ -214,6 +237,11 @@ static void r_layer3_switch_call_callback(void (* p_callback)(
 static fsp_err_t r_layer3_switch_create_tx_timestamp_queue(ether_switch_ctrl_t * const                        p_ctrl,
                                                            const layer3_switch_descriptor_queue_cfg_t * const p_queue_cfg,
                                                            uint32_t * const                                   p_ts_descriptor_queue_index);
+
+static void r_layer3_switch_enable_frame_preemption_feature(layer3_switch_instance_ctrl_t * p_instance_ctrl,
+                                                            uint8_t                         port,
+                                                            bool                            preemption_enable);
+static void r_layer3_switch_rmac_phy_interrupts_callback(ether_phy_callback_args_t * p_args);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -276,16 +304,34 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
     FSP_ERROR_RETURN((LAYER3_SWITCH_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
 
     /* Initialize parameters. */
-    p_instance_ctrl->p_cfg             = p_cfg;
-    p_instance_ctrl->p_callback        = p_cfg->p_callback;
-    p_instance_ctrl->p_gwca_reg        = R_GWCA0;
-    p_instance_ctrl->table_status      = LAYER3_SWITCH_TABLE_STATUS_UNINITIALIZED;
-    p_instance_ctrl->l3_entry_count    = 0;
-    p_instance_ctrl->l3_routing_number = 0;
+    p_instance_ctrl->p_cfg                         = p_cfg;
+    p_instance_ctrl->p_callback                    = p_cfg->p_callback;
+    p_instance_ctrl->p_gwca_reg                    = R_GWCA0;
+    p_instance_ctrl->table_status                  = LAYER3_SWITCH_TABLE_STATUS_UNINITIALIZED;
+    p_instance_ctrl->l3_entry_count                = 0;
+    p_instance_ctrl->l3_routing_number             = 0;
+    p_instance_ctrl->frame_preemption_available[0] = false;
+    p_instance_ctrl->frame_preemption_available[1] = false;
 
     for (uint8_t i = 0; i < BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM; i++)
     {
         p_instance_ctrl->ts_descriptor_queue_status_list[i] = LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_UNUSED;
+    }
+
+    /* Initialize PSFP parameters. */
+    for (uint8_t i = 0; i < BSP_FEATURE_ESWM_PSFP_MSDU_FILTER_MAX_NUM; i++)
+    {
+        p_instance_ctrl->psfp_msdu_filter_info_list[i].msdu_filter_hw_id      = 0;
+        p_instance_ctrl->psfp_msdu_filter_info_list[i].status                 = LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED;
+        p_instance_ctrl->psfp_msdu_filter_info_list[i].p_psfp_msdu_filter_cfg = NULL;
+    }
+
+    for (uint8_t i = 0; i < BSP_FEATURE_ESWM_PSFP_METER_FILTER_SINGLE_BUCKET_METERS_MAX_NUM; i++)
+    {
+        p_instance_ctrl->psfp_meter_filter_info_list[i].meter_filter_hw_id = 0;
+        p_instance_ctrl->psfp_meter_filter_info_list[i].status             =
+            LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED;
+        p_instance_ctrl->psfp_meter_filter_info_list[i].p_psfp_meter_filter_cfg = NULL;
     }
 
     /* Clear module stops. */
@@ -333,7 +379,7 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
     {
         if (NULL != p_extend->p_ether_phy_instances[channel])
         {
-            /* Set ETHA to CONFIG mode. */
+            /* Change ETHA to CONFIG mode. */
             r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_DISABLE);
             r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_CONFIG);
 
@@ -351,6 +397,9 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
                 *p_etha_eatdqdcn_reg = p_extend->ipv_queue_depth_list[channel][j] & R_ETHA0_EATDQDC0_DQD_Msk;
                 p_etha_eatdqdcn_reg += 1;
             }
+
+            /* Disable sending preemptable frames until verification is complete. */
+            r_layer3_switch_enable_frame_preemption_feature(p_instance_ctrl, channel, false);
 
             /* Enable Magic packet detection. */
             p_reg_rmac =
@@ -373,6 +422,12 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
         if (NULL != p_ether_phy)
         {
             p_ether_phy->p_api->open(p_ether_phy->p_ctrl, p_ether_phy->p_cfg);
+
+            /* Add callback for PHY interrupts. */
+            R_RMAC_PHY_CallbackSet(p_ether_phy->p_ctrl,
+                                   r_layer3_switch_rmac_phy_interrupts_callback,
+                                   p_instance_ctrl,
+                                   NULL);
         }
     }
 
@@ -382,7 +437,7 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
         p_ether_phy = p_extend->p_ether_phy_instances[channel];
         if (NULL != p_ether_phy)
         {
-            /* Set ETHA to OPERATION mode. */
+            /* Change ETHA to OPERATION mode. */
             r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_DISABLE);
             r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_OPERATION);
 
@@ -897,13 +952,13 @@ fsp_err_t R_LAYER3_SWITCH_ConfigurePort (ether_switch_ctrl_t * const p_ctrl,
     FSP_ERROR_RETURN(p_port_cfg, FSP_ERR_INVALID_POINTER);
 #endif
 
-    /* Set ETHA to CONFIG mode. */
+    /* Change ETHA to CONFIG mode. */
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_CONFIG);
 
     r_layer3_switch_configure_port(p_instance_ctrl, port, p_port_cfg);
 
-    /* Set ETHA to OPERATION mode. */
+    /* Change ETHA to OPERATION mode. */
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_OPERATION);
 
@@ -921,6 +976,7 @@ fsp_err_t R_LAYER3_SWITCH_ConfigurePort (ether_switch_ctrl_t * const p_ctrl,
  * @retval  FSP_ERR_WRITE_FAILED         A hardware error occurred while learning the entry.
  * @retval  FSP_ERR_INVALID_ARGUMENT     Target frame or entry type is invalid.
  * @retval  FSP_ERR_INVALID_MODE         VLAN feature is disabled and a VLAN entry is passed.
+ * @retval  FSP_ERR_BUFFER_EMPTY         PSFP MSDU or Meter filter ID is invalid.
  **********************************************************************************************************************/
 fsp_err_t R_LAYER3_SWITCH_AddTableEntry (ether_switch_ctrl_t * const                   p_ctrl,
                                          layer3_switch_frame_filter_t const * const    p_target_frame,
@@ -1346,6 +1402,54 @@ fsp_err_t R_LAYER3_SWITCH_EnableTAS (ether_switch_ctrl_t * const p_ctrl, uint8_t
 }                                      /* End of function R_LAYER3_SWITCH_EnableTAS() */
 
 /*******************************************************************************************************************//**
+ * Clear error status bit of throttle mode.
+ *
+ * @retval  FSP_SUCCESS                  Status bit cleared successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_LAYER3_SWITCH_PsfpClearErrorStatus (ether_switch_ctrl_t * const               p_ctrl,
+                                                layer3_switch_psfp_error_status_bitmask_t bitmasks)
+{
+    uint32_t target_bit_value = 0;
+    uint32_t write_value      = 0;
+    layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_ctrl;
+
+#if LAYER3_SWITCH_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(LAYER3_SWITCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Clear PSFP MSDU filter status. */
+    if (0 != bitmasks.msdu_filter_bitmask)
+    {
+        for (uint8_t i = 0; i < BSP_FEATURE_ESWM_PSFP_MSDU_FILTER_MAX_NUM; i++)
+        {
+            target_bit_value = (1UL & (bitmasks.msdu_filter_bitmask >> i));
+            write_value     |= (target_bit_value << p_instance_ctrl->psfp_msdu_filter_info_list[i].msdu_filter_hw_id);
+        }
+
+        R_MFWD->FWEIS2_b.PMFS = (uint16_t) write_value;
+    }
+
+    /* Clear PSFP Meter filter status. */
+    write_value = 0;
+
+    if (0 != bitmasks.meter_filter_bitmask)
+    {
+        for (uint8_t i = 0; i < BSP_FEATURE_ESWM_PSFP_METER_FILTER_SINGLE_BUCKET_METERS_MAX_NUM; i++)
+        {
+            target_bit_value = (1UL & (bitmasks.meter_filter_bitmask >> i));
+            write_value     |= (target_bit_value << p_instance_ctrl->psfp_meter_filter_info_list[i].meter_filter_hw_id);
+        }
+
+        R_MFWD->FWEIS5_b.PMRFS = write_value;
+    }
+
+    return FSP_SUCCESS;
+}                                      /* End of function R_LAYER3_SWITCH_PsfpClearErrorStatus() */
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup LAYER3_SWITCH)
  **********************************************************************************************************************/
 
@@ -1422,7 +1526,7 @@ static void r_layer3_switch_close_etha_ports (layer3_switch_instance_ctrl_t * p_
         p_ether_phy = p_extend->p_ether_phy_instances[i];
         if (NULL != p_ether_phy)
         {
-            /* Set ETHA to DISABLE mode. */
+            /* Change ETHA to DISABLE mode. */
             r_layer3_switch_update_etha_operation_mode(i, LAYER3_SWITCH_AGENT_MODE_DISABLE);
 
             /* Close a ETHER_PHY instance. */
@@ -2088,6 +2192,7 @@ static fsp_err_t r_layer3_switch_learn_l3_entry (layer3_switch_instance_ctrl_t  
     fsp_err_t err = FSP_SUCCESS;
     layer3_switch_extended_cfg_t * p_extend  = (layer3_switch_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     layer3_switch_stream_id_t      stream_id = {0};
+    uint32_t filter_id   = 0;
     uint32_t frer_number = 0;
     uint32_t routing_number;
 
@@ -2128,11 +2233,69 @@ static fsp_err_t r_layer3_switch_learn_l3_entry (layer3_switch_instance_ctrl_t  
                          (uint32_t) (stream_id.frame_format_code << R_MFWD_FWLTHTL0_LTHSLP0_Pos)) |
                         (uint32_t) (p_entry_cfg->security_enable << R_MFWD_FWLTHTL0_LTHSLL_Pos));
 
-        /* Configure FRER feature. */
-        R_MFWD->FWLTHTL6 = ((R_MFWD_FWLTHTL6_LTHFRERVL_Msk &
-                             (uint32_t) ((NULL != p_entry_cfg->p_frer_entry_cfg) << R_MFWD_FWLTHTL6_LTHFRERVL_Pos)) |
-                            (R_MFWD_FWLTHTL6_LTHFRERNL_Msk &
-                             (frer_number << R_MFWD_FWLTHTL6_LTHFRERNL_Pos)));
+        if (NULL != p_entry_cfg->p_psfp_msdu_filter_cfg)
+        {
+            err = r_layer3_switch_psfp_select_msdu_filter_id(p_instance_ctrl,
+                                                             &filter_id,
+                                                             p_entry_cfg->p_psfp_msdu_filter_cfg);
+
+            if (err == FSP_SUCCESS)
+            {
+                /* Initialize PSFP MSDU filter. */
+                err = r_layer3_switch_psfp_msdu_filter_init(p_instance_ctrl, filter_id, p_entry_cfg);
+
+                if (err == FSP_SUCCESS)
+                {
+                    /* Configure PSFP MDSU filter feature. */
+                    R_MFWD->FWLTHTL5 =
+                        (uint32_t) ((R_MFWD_FWLTHTL5_LTHMSDUNL_Msk &
+                                     (filter_id << R_MFWD_FWLTHTL5_LTHMSDUNL_Pos)) |
+                                    (R_MFWD_FWLTHTL5_LTHMSDUVL_Msk &
+                                     (uint32_t) ((NULL !=
+                                                  p_entry_cfg->p_psfp_msdu_filter_cfg) <<
+                                                 R_MFWD_FWLTHTL5_LTHMSDUVL_Pos)));
+                }
+            }
+        }
+
+        if (NULL != p_entry_cfg->p_psfp_meter_filter_cfg)
+        {
+            err = r_layer3_switch_psfp_select_meter_filter_id(p_instance_ctrl,
+                                                              &filter_id,
+                                                              p_entry_cfg->p_psfp_meter_filter_cfg);
+
+            if (err == FSP_SUCCESS)
+            {
+                /* Initialize PSFP Meter filter. */
+                err = r_layer3_switch_psfp_meter_filter_init(p_instance_ctrl, filter_id, p_entry_cfg);
+
+                if (err == FSP_SUCCESS)
+                {
+                    /* Configure FRER and PSFP Meter filter feature. */
+                    R_MFWD->FWLTHTL6 = ((R_MFWD_FWLTHTL6_LTHFRERVL_Msk &
+                                         (uint32_t) ((NULL !=
+                                                      p_entry_cfg->p_frer_entry_cfg) <<
+                                                     R_MFWD_FWLTHTL6_LTHFRERVL_Pos)) |
+                                        (R_MFWD_FWLTHTL6_LTHMTRNL_Msk &
+                                         (filter_id << R_MFWD_FWLTHTL6_LTHMTRNL_Pos)) |
+                                        (R_MFWD_FWLTHTL6_LTHMTRVL_Msk &
+                                         (uint32_t) ((NULL !=
+                                                      p_entry_cfg->p_psfp_meter_filter_cfg) <<
+                                                     R_MFWD_FWLTHTL6_LTHMTRVL_Pos)) |
+                                        (R_MFWD_FWLTHTL6_LTHFRERNL_Msk &
+                                         (frer_number << R_MFWD_FWLTHTL6_LTHFRERNL_Pos)));
+                }
+            }
+        }
+        else
+        {
+            /* Configure FRER feature. */
+            R_MFWD->FWLTHTL6 = ((R_MFWD_FWLTHTL6_LTHFRERVL_Msk &
+                                 (uint32_t) ((NULL !=
+                                              p_entry_cfg->p_frer_entry_cfg) << R_MFWD_FWLTHTL6_LTHFRERVL_Pos)) |
+                                (R_MFWD_FWLTHTL6_LTHFRERNL_Msk &
+                                 (frer_number << R_MFWD_FWLTHTL6_LTHFRERNL_Pos)));
+        }
 
         /* Configure routing number and source ports. */
         R_MFWD->FWLTHTL7 =
@@ -2164,17 +2327,21 @@ static fsp_err_t r_layer3_switch_learn_l3_entry (layer3_switch_instance_ctrl_t  
         R_MFWD->FWLTHTL9 = 0;
     }
 
-    /* Wait reset. */
-    FSP_HARDWARE_REGISTER_WAIT(R_MFWD->FWLTHTLR_b.LTHTL, 0);
+    if (err == FSP_SUCCESS)
+    {
+        /* Wait reset. */
+        FSP_HARDWARE_REGISTER_WAIT(R_MFWD->FWLTHTLR_b.LTHTL, 0);
 
-    /* Check learning result. */
-    if (0 == (R_MFWD->FWLTHTLR & (R_MFWD_FWLTHTLR_LTHLF_Msk | R_MFWD_FWLTHTLR_LTHLSF_Msk | R_MFWD_FWLTHTLR_LTHLEF_Msk)))
-    {
-        err = FSP_SUCCESS;
-    }
-    else
-    {
-        err = FSP_ERR_WRITE_FAILED;
+        /* Check learning result. */
+        if (0 ==
+            (R_MFWD->FWLTHTLR & (R_MFWD_FWLTHTLR_LTHLF_Msk | R_MFWD_FWLTHTLR_LTHLSF_Msk | R_MFWD_FWLTHTLR_LTHLEF_Msk)))
+        {
+            err = FSP_SUCCESS;
+        }
+        else
+        {
+            err = FSP_ERR_WRITE_FAILED;
+        }
     }
 
     if (err == FSP_SUCCESS)
@@ -2478,7 +2645,7 @@ static void r_layer3_switch_initialize_vlan_port (layer3_switch_instance_ctrl_t 
     if (port < BSP_FEATURE_ETHER_NUM_CHANNELS)
     {
         /* When port is external(ETHA).  */
-        /* Set ETHA to CONFIG mode. */
+        /* Change ETHA to CONFIG mode. */
         r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
         r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_CONFIG);
 
@@ -2487,7 +2654,7 @@ static void r_layer3_switch_initialize_vlan_port (layer3_switch_instance_ctrl_t 
         p_reg_etha->EAVCC = vcc_reg_value;
         p_reg_etha->EAVTC = vtc_reg_value;
 
-        /* Set ETHA to OPERATION mode. */
+        /* Change ETHA to OPERATION mode. */
         r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
         r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_OPERATION);
     }
@@ -3312,6 +3479,232 @@ static fsp_err_t r_layer3_switch_learn_frer_individual_recovery (layer3_switch_i
     return err;
 }                                      /* End of function r_layer3_switch_learn_frer_individual_recovery() */
 
+/*******************************************************************************************************************//**
+ * Select MSDU filter ID to use.
+ **********************************************************************************************************************/
+static fsp_err_t r_layer3_switch_psfp_select_msdu_filter_id (layer3_switch_instance_ctrl_t        * p_instance_ctrl,
+                                                             uint32_t                             * p_msdu_filter_id,
+                                                             layer3_switch_psfp_msdu_filter_cfg_t * p_psfp_msdu_filter_cfg)
+{
+    fsp_err_t err = FSP_ERR_BUFFER_EMPTY;
+
+    /* Set new PSFP MSDU filter. */
+    if (LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED ==
+        p_instance_ctrl->psfp_msdu_filter_info_list[p_psfp_msdu_filter_cfg->msdu_filter_id].status)
+    {
+        /* Decide which internal PSFP MSDU filter ID to use. */
+        for (uint8_t unused_id = 0;
+             unused_id < BSP_FEATURE_ESWM_PSFP_MSDU_FILTER_MAX_NUM;
+             unused_id++)
+        {
+            /* Use an unused PSFP MSDU filter ID. */
+            if (LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED ==
+                p_instance_ctrl->psfp_msdu_filter_info_list[unused_id].status)
+            {
+                *p_msdu_filter_id = unused_id;
+                err               = FSP_SUCCESS;
+                break;
+            }
+        }
+    }
+
+    return err;
+}                                      /* End of function r_layer3_switch_psfp_select_msdu_filter_id() */
+
+/*******************************************************************************************************************//**
+ * Select Meter filter ID to use.
+ **********************************************************************************************************************/
+static fsp_err_t r_layer3_switch_psfp_select_meter_filter_id (layer3_switch_instance_ctrl_t         * p_instance_ctrl,
+                                                              uint32_t                              * p_meter_filter_id,
+                                                              layer3_switch_psfp_meter_filter_cfg_t * p_psfp_meter_filter_cfg)
+{
+    fsp_err_t err = FSP_ERR_BUFFER_EMPTY;
+
+    uint32_t minimum_id = 0;
+    uint32_t maximum_id = 0;
+
+    /* Set new PSFP Meter filter. */
+    if (LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED ==
+        p_instance_ctrl->psfp_meter_filter_info_list[p_psfp_meter_filter_cfg->meter_filter_id].status)
+    {
+        /* Use single (green) bucket. */
+        if (0 == p_psfp_meter_filter_cfg->eir)
+        {
+            minimum_id = BSP_FEATURE_ESWM_PSFP_METER_FILTER_DOUBLE_BUCKET_METERS_MAX_NUM;
+            maximum_id = BSP_FEATURE_ESWM_PSFP_METER_FILTER_SINGLE_BUCKET_METERS_MAX_NUM;
+        }
+        /* Use double (green and yellow) bucket. */
+        else
+        {
+            minimum_id = 0;
+            maximum_id = BSP_FEATURE_ESWM_PSFP_METER_FILTER_DOUBLE_BUCKET_METERS_MAX_NUM;
+        }
+
+        /* Decide which internal PSFP Meter filter ID to use. */
+        for (uint32_t unused_id = minimum_id;
+             unused_id < maximum_id;
+             unused_id++)
+        {
+            /* Use an unused PSFP Meter filter ID. */
+            if (LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED ==
+                p_instance_ctrl->psfp_meter_filter_info_list[unused_id].status)
+            {
+                *p_meter_filter_id = unused_id;
+                err                = FSP_SUCCESS;
+                break;
+            }
+        }
+    }
+
+    return err;
+}                                      /* End of function r_layer3_switch_psfp_select_meter_filter_id() */
+
+/*******************************************************************************************************************//**
+ * Initialize PSFP MSDU filter.
+ **********************************************************************************************************************/
+static fsp_err_t r_layer3_switch_psfp_msdu_filter_init (layer3_switch_instance_ctrl_t               * p_instance_ctrl,
+                                                        uint32_t                                      msdu_filter_id,
+                                                        layer3_switch_table_entry_cfg_t const * const p_table_entry_cfg)
+{
+    volatile uint32_t * p_fwpmfgc_reg;
+
+    layer3_switch_psfp_msdu_filter_cfg_t * p_psfp_msdu_filter_cfg = p_table_entry_cfg->p_psfp_msdu_filter_cfg;
+
+    FSP_ERROR_RETURN(BSP_FEATURE_ESWM_PSFP_MSDU_FILTER_MAX_NUM > msdu_filter_id, FSP_ERR_BUFFER_EMPTY);
+
+    /* Select which FWPMFGC0 to FWPMFGC15 register to use. */
+    p_fwpmfgc_reg = (volatile uint32_t *) ((uint8_t *) &R_MFWD->FWPMFGC0 + \
+                                           (LAYER3_SWITCH_PSFP_MSDU_FILTER_REGISTER_OFFSET * msdu_filter_id));
+
+    /* Enable or disable the MSDU filter. */
+    R_MFWD->FWEIE2_b.PMFE = (1U << msdu_filter_id);
+
+    /* Configure the MSDU filter mode and maximum frame size. */
+    *p_fwpmfgc_reg = ((p_psfp_msdu_filter_cfg->maximum_frame_size << R_MFWD_FWPMFGC0_MSDUV_Pos) |
+                      ((uint32_t) p_psfp_msdu_filter_cfg->mode << R_MFWD_FWPMFGC0_MFM_Pos));
+
+    /* Allow first packet, then keep dropping. */
+    if ((LAYER3_SWITCH_MSDU_FILTER_THROTTLE_MODE == p_psfp_msdu_filter_cfg->mode) &&
+        ((R_MFWD->FWEIS2_b.PMFS & (1U << msdu_filter_id)) != 0))
+    {
+        /* Initialize FWEIS2_b.PMFS. */
+        R_MFWD->FWEIS2_b.PMFS |= (1U << msdu_filter_id);
+    }
+    /* Allow first packet, then stop dropping (default behavior). */
+    else
+    {
+        /* Do nothing */
+    }
+
+    /* Store internal MSDU filter ID. */
+    p_instance_ctrl->psfp_msdu_filter_info_list[p_psfp_msdu_filter_cfg->msdu_filter_id].msdu_filter_hw_id =
+        msdu_filter_id;
+    p_instance_ctrl->psfp_msdu_filter_info_list[p_psfp_msdu_filter_cfg->msdu_filter_id].status =
+        LAYER3_SWITCH_PSFP_FILTER_STATUS_USED;
+
+    /* Set configuration MSDU filter. */
+    p_instance_ctrl->psfp_msdu_filter_info_list[p_psfp_msdu_filter_cfg->msdu_filter_id].p_psfp_msdu_filter_cfg =
+        p_psfp_msdu_filter_cfg;
+
+    return FSP_SUCCESS;
+}                                      /* End of function r_layer3_switch_psfp_msdu_filter_init() */
+
+/*******************************************************************************************************************//**
+ * Initialize PSFP Meter filter setting.
+ **********************************************************************************************************************/
+static fsp_err_t r_layer3_switch_psfp_meter_filter_init (layer3_switch_instance_ctrl_t               * p_instance_ctrl,
+                                                         uint32_t                                      meter_filter_id,
+                                                         layer3_switch_table_entry_cfg_t const * const p_table_entry_cfg)
+{
+    uint16_t yellow_only_bitmask = 0;
+
+    volatile uint32_t * p_mfwd_fwpmtrfc_reg;
+    volatile uint32_t * p_mfwd_fwpmtrfm_reg;
+    volatile uint32_t * p_mfwd_fwpmtrcbsc_reg;
+    volatile uint32_t * p_mfwd_fwpmtrcirc_reg;
+    volatile uint32_t * p_mfwd_fwpmtrebsc_reg;
+    volatile uint32_t * p_mfwd_fwpmtreirc_reg;
+
+    layer3_switch_psfp_meter_filter_cfg_t * p_psfp_meter_filter_cfg = p_table_entry_cfg->p_psfp_meter_filter_cfg;
+
+    FSP_ERROR_RETURN(BSP_FEATURE_ESWM_PSFP_METER_FILTER_SINGLE_BUCKET_METERS_MAX_NUM > meter_filter_id,
+                     FSP_ERR_BUFFER_EMPTY);
+    FSP_ERROR_RETURN(LAYER3_SWITCH_METER_FILTER_PCP_MAX_NUM >= p_psfp_meter_filter_cfg->pcp_handling_policy,
+                     FSP_ERR_INVALID_ARGUMENT);
+
+    p_mfwd_fwpmtrfc_reg = (uint32_t *) ((uintptr_t) &R_MFWD->FWPMTRFC0 +
+                                        (meter_filter_id * LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET));
+
+    p_mfwd_fwpmtrfm_reg = (uint32_t *) ((uintptr_t) &R_MFWD->FWPMTRFM0 +
+                                        (meter_filter_id * LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET));
+
+    /* Disable Meter filter. */
+    *p_mfwd_fwpmtrfc_reg = 0;
+    FSP_HARDWARE_REGISTER_WAIT((*p_mfwd_fwpmtrfm_reg & R_MFWD_FWPMTRFM0_MTRARDN_Msk), 0);
+
+    /* Reset Meter status. If (ATS) throttle mode, stop rejecting frame. */
+    R_MFWD->FWEIS5_b.PMRFS |= (1U << meter_filter_id);
+
+    p_mfwd_fwpmtrcbsc_reg = (uint32_t *) ((uintptr_t) &R_MFWD->FWPMTRCBSC0 +
+                                          (meter_filter_id * LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET));
+
+    p_mfwd_fwpmtrcirc_reg = (uint32_t *) ((uintptr_t) &R_MFWD->FWPMTRCIRC0 +
+                                          (meter_filter_id * LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET));
+
+    *p_mfwd_fwpmtrcbsc_reg = R_MFWD_FWPMTRCBSC0_CBS_Msk & (p_psfp_meter_filter_cfg->cbs << R_MFWD_FWPMTRCBSC0_CBS_Pos);
+    *p_mfwd_fwpmtrcirc_reg = R_MFWD_FWPMTRCIRC0_CIR_Msk & (p_psfp_meter_filter_cfg->cir << R_MFWD_FWPMTRCIRC0_CIR_Pos);
+
+    if (BSP_FEATURE_ESWM_PSFP_METER_FILTER_DOUBLE_BUCKET_METERS_MAX_NUM > meter_filter_id)
+    {
+        p_mfwd_fwpmtrebsc_reg = (uint32_t *) ((uintptr_t) &R_MFWD->FWPMTREBSC0 +
+                                              (meter_filter_id * LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET));
+
+        p_mfwd_fwpmtreirc_reg = (uint32_t *) ((uintptr_t) &R_MFWD->FWPMTREIRC0 +
+                                              (meter_filter_id * LAYER3_SWITCH_PSFP_METER_FILTER_REG_OFFSET));
+
+        *p_mfwd_fwpmtrebsc_reg = R_MFWD_FWPMTREBSC0_EBS_Msk &
+                                 (p_psfp_meter_filter_cfg->ebs << R_MFWD_FWPMTREBSC0_EBS_Pos);
+        *p_mfwd_fwpmtreirc_reg = R_MFWD_FWPMTREIRC0_EIR_Msk &
+                                 (p_psfp_meter_filter_cfg->eir << R_MFWD_FWPMTREIRC0_EIR_Pos);
+
+        *p_mfwd_fwpmtrfc_reg |= (R_MFWD_FWPMTRFC0_MTRCF_Msk &
+                                 ((uint32_t) p_psfp_meter_filter_cfg->coupling_enable << R_MFWD_FWPMTRFC0_MTRCF_Pos));
+
+        /* Treat a frame as yellow when the PCP value is less than the upper limit. */
+        yellow_only_bitmask = (uint16_t) ((1 << ((p_psfp_meter_filter_cfg->pcp_handling_policy) * 2)) - 1);
+
+        if (LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_YELLOW == p_psfp_meter_filter_cfg->dei_handling_policy)
+        {
+            /* Treat a frame as yellow when the DEI is 1. */
+            yellow_only_bitmask |= LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_BITMASK;
+        }
+
+        *p_mfwd_fwpmtrfc_reg |=
+            (R_MFWD_FWPMTRFC0_MTRCM_Msk &
+             ((uint32_t) yellow_only_bitmask << R_MFWD_FWPMTRFC0_MTRCM_Pos));
+    }
+
+    *p_mfwd_fwpmtrfc_reg |= ((R_MFWD_FWPMTRFC0_MTRFE_Msk &
+                              (1U << R_MFWD_FWPMTRFC0_MTRFE_Pos)) |
+                             (R_MFWD_FWPMTRFC0_MTRFM_Msk &
+                              ((uint32_t) p_psfp_meter_filter_cfg->mode << R_MFWD_FWPMTRFC0_MTRFM_Pos)) |
+                             (R_MFWD_FWPMTRFC0_MTRFRFD_Msk &
+                              ((uint32_t) p_psfp_meter_filter_cfg->drop_red_frame << R_MFWD_FWPMTRFC0_MTRFRFD_Pos)));
+    R_MFWD->FWEIE5_b.PMRFE |= (1 << meter_filter_id);
+
+    /* Store internal Meter filter ID. */
+    p_instance_ctrl->psfp_meter_filter_info_list[p_psfp_meter_filter_cfg->meter_filter_id].meter_filter_hw_id =
+        meter_filter_id;
+    p_instance_ctrl->psfp_meter_filter_info_list[p_psfp_meter_filter_cfg->meter_filter_id].status =
+        LAYER3_SWITCH_PSFP_FILTER_STATUS_USED;
+
+    /* Set configuration Meter filter. */
+    p_instance_ctrl->psfp_meter_filter_info_list[p_psfp_meter_filter_cfg->meter_filter_id].p_psfp_meter_filter_cfg =
+        p_psfp_meter_filter_cfg;
+
+    return FSP_SUCCESS;
+}                                      /* End of function r_layer3_switch_psfp_meter_filter_init() */
+
 /*******************************************************************************************************************
  * Calls user callback for each ports.
  *
@@ -3398,6 +3791,88 @@ static void r_layer3_switch_call_callback (void (* p_callback)(
         *p_callback_memory = args;
     }
 }                                      /* End of function r_layer3_switch_call_callback() */
+
+/*******************************************************************************************************************//**
+ * Enables or disables frame preemption feature based on the preemption_enable parameter.
+ **********************************************************************************************************************/
+static void r_layer3_switch_enable_frame_preemption_feature (layer3_switch_instance_ctrl_t * p_instance_ctrl,
+                                                             uint8_t                         port,
+                                                             bool                            preemption_enable)
+{
+    layer3_switch_extended_cfg_t * p_extend   = (layer3_switch_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    R_ETHA0_Type                 * p_etha_reg =
+        (R_ETHA0_Type *) (R_ETHA0_BASE + (LAYER3_SWITCH_ETHA_REG_SIZE * port));
+    layer3_switch_agent_mode_t previous_mode = (layer3_switch_agent_mode_t) p_etha_reg->EAMS_b.OPS;
+
+    /* Change ETHA to CONFIG mode. */
+    if (LAYER3_SWITCH_AGENT_MODE_CONFIG != previous_mode)
+    {
+        r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
+        r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_CONFIG);
+    }
+
+    if (preemption_enable)
+    {
+        /* Enable sending preemptable frames. */
+        p_etha_reg->EATPEC = (p_extend->ipv_queue_preemptable_bitmask[port] << R_ETHA0_EATPEC_TTQ0_Pos) |
+                             (R_ETHA0_EATPEC_AFS_Msk &
+                              (uint32_t) (p_extend->frame_preemption_fragment_size[port] <<
+                                          R_ETHA0_EATPEC_AFS_Pos));
+    }
+    else
+    {
+        /* Disable sending preemptable frames. All TX queues will send express frames. */
+        p_etha_reg->EATPEC = 0;
+    }
+
+    /* Change ETHA to the previous mode. */
+    if (LAYER3_SWITCH_AGENT_MODE_CONFIG != previous_mode)
+    {
+        r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
+        r_layer3_switch_update_etha_operation_mode(port, previous_mode);
+    }
+
+    p_instance_ctrl->frame_preemption_available[port] = preemption_enable;
+}
+
+/*******************************************************************************************************************//**
+ * Callback for r_rmac_phy interrupts.
+ **********************************************************************************************************************/
+static void r_layer3_switch_rmac_phy_interrupts_callback (ether_phy_callback_args_t * p_args)
+{
+    layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_args->p_context;
+
+    switch (p_args->event)
+    {
+        /* Frame preemption is available. */
+        case ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_SUCCESS:
+        case ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_RECEIVE:
+        {
+            if (!p_instance_ctrl->frame_preemption_available[p_args->port])
+            {
+                r_layer3_switch_enable_frame_preemption_feature(p_instance_ctrl, (uint8_t) p_args->port, true);
+            }
+
+            break;
+        }
+
+        /* Frame preemption is not available. */
+        case ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_FAIL:
+        {
+            if (p_instance_ctrl->frame_preemption_available[p_args->port])
+            {
+                r_layer3_switch_enable_frame_preemption_feature(p_instance_ctrl, (uint8_t) p_args->port, false);
+            }
+
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+}
 
 /***********************************************************************************************************************
  * Function Name: layer3_switch_gwdi_isr

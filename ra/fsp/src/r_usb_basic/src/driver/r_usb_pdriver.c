@@ -771,7 +771,11 @@ static void usb_pstd_otg_mode_to_host (usb_utr_t * p_utr)
     usb_pstd_clr_pipe_table(p_utr->ip);
 
     /* Host Initialization  */
-    usb_hdriver_init(p_utr);
+
+    /* Since this fuction's second parameter
+     * only process usb HOST mode
+     * pass USB_NULL in this case */
+    usb_hdriver_init(p_utr, USB_NULL);
 
     g_usb_usbmode[p_utr->ip] = USB_MODE_HOST;
 
@@ -854,7 +858,11 @@ static void usb_pstd_otg_hnp_process (usb_utr_t * p_utr)
         _ux_device_stack_disconnect();
 
         /* Host Initialization  */
-        usb_hdriver_init(p_utr);
+
+        /* Since this fuction's second parameter
+         * only process usb HOST mode
+         * pass USB_NULL in this case */
+        usb_hdriver_init(p_utr, USB_NULL);
 
         if (USB_NO == g_is_usbx_otg_host_class_init[p_utr->ip])
         {
@@ -1680,7 +1688,7 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
     ptr->msghead = (usb_mh_t) USB_NULL;
     ptr->msginfo = USB_MSG_PCD_SUBMITUTR;
 
-    err = USB_PGET_BLK(1, &p_tran_data);
+    err = USB_PGET_BLK(1, &p_tran_data, ptr->ip);
     if (TX_SUCCESS != err)
     {
         USB_PRINTF0("### usb_pstd_transfer_start USB_PGET_BLK ERROR\n");

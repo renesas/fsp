@@ -111,6 +111,7 @@ uint32_t        g_ecdh256_private_id;
  * @param[in]     wrapped_key  Input wrapped key of secp192r1 private key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -125,6 +126,14 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureGenerate (sce_ecdsa_byte_data_t        
                                                    sce_ecdsa_byte_data_t         * signature,
                                                    sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -180,6 +189,7 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * @param[in]     wrapped_key  Input wrapped key of secp224r1 private key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -194,6 +204,13 @@ fsp_err_t R_SCE_ECDSA_secp224r1_SignatureGenerate (sce_ecdsa_byte_data_t        
                                                    sce_ecdsa_byte_data_t         * signature,
                                                    sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -248,6 +265,7 @@ fsp_err_t R_SCE_ECDSA_secp224r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * @param[in]     wrapped_key  Input wrapped key of secp256r1 private key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -262,6 +280,13 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureGenerate (sce_ecdsa_byte_data_t        
                                                    sce_ecdsa_byte_data_t         * signature,
                                                    sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -318,6 +343,7 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * @param[in]     wrapped_key  Input wrapped key of secp384r1 private key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -332,6 +358,13 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureGenerate (sce_ecdsa_byte_data_t        
                                                    sce_ecdsa_byte_data_t         * signature,
                                                    sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
     uint32_t  data_buff[(HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE / sizeof(uint32_t))] =
@@ -384,6 +417,7 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * @param[in]     wrapped_key  Input wrapped key of secp192r1 public key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -398,6 +432,13 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
                                                  sce_ecdsa_byte_data_t        * message_hash,
                                                  sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -452,6 +493,7 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  * @param[in]     wrapped_key  Input wrapped key of secp224r1 public key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -466,6 +508,13 @@ fsp_err_t R_SCE_ECDSA_secp224r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
                                                  sce_ecdsa_byte_data_t        * message_hash,
                                                  sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  indata_cmd;
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
@@ -519,6 +568,7 @@ fsp_err_t R_SCE_ECDSA_secp224r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  * @param[in]     wrapped_key  Input wrapped key of secp256r1 public key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -533,6 +583,13 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
                                                  sce_ecdsa_byte_data_t        * message_hash,
                                                  sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint32_t  data_buff[SCE_PRV_HASH_WORD_POS_ECDSA_P256 + (HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE / sizeof(uint32_t))] =
     {
@@ -582,6 +639,7 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  * @param[in]     wrapped_key  Input wrapped key of secp384r1 public key.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -596,6 +654,13 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
                                                  sce_ecdsa_byte_data_t        * message_hash,
                                                  sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
     uint32_t  data_buff[(HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE / sizeof(uint32_t))] =
@@ -638,6 +703,7 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  * @param[in]     use_key_id 0: key_id not used, 1: key_id used
  *
  * @retval FSP_SUCCESS                  Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER Input data is invalid.
  *
  * @note The pre-run state is SCE Enabled State.
@@ -645,6 +711,9 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  **********************************************************************************************************************/
 fsp_err_t R_SCE_ECDH_secp256r1_Init (sce_ecdh_handle_t * handle, uint32_t key_type, uint32_t use_key_id)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     if ((2 >= key_type) && (1 >= use_key_id))
     {
@@ -695,6 +764,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_Init (sce_ecdh_handle_t * handle, uint32_t key_ty
  *                                        Not output for ECDH.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -712,6 +782,14 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeySign (sce_ecdh_handle_t             * ha
                                               sce_ecdsa_byte_data_t         * signature,
                                               sce_ecc_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(ecc_public_wrapped_key || (0 == handle->key_type)); // 0 = ECDHE
+    FSP_ASSERT(ecc_private_wrapped_key);
+    FSP_ASSERT(public_key);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(wrapped_key);
+#endif
     uint32_t  indata_cmd    = 0;
     uint32_t  ecdh_key_type = 0;
     uint32_t  key_id        = 0;
@@ -745,15 +823,15 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeySign (sce_ecdh_handle_t             * ha
     }
 
     error_code = R_SCE_EcdhMakePublicKeyPrivate(&indata_cmd,
-                                                 &ecdh_key_type,
+                                                &ecdh_key_type,
                                        /* Casting uint32_t pointer is used for address. */
-                                                 (uint32_t *) &ecc_public_wrapped_key->value,
-                                                 (uint32_t *) &ecc_private_wrapped_key->value,
-                                                 &key_id,
+                                                (uint32_t *) &ecc_public_wrapped_key->value,
+                                                (uint32_t *) &ecc_private_wrapped_key->value,
+                                                &key_id,
                                        /* Casting uint32_t pointer is used for address. */
-                                                 (uint32_t *) public_key,
-                                                 (uint32_t *) signature->pdata,
-                                                 (uint32_t *) &wrapped_key->value);
+                                                (uint32_t *) public_key,
+                                                (uint32_t *) signature->pdata,
+                                                (uint32_t *) &wrapped_key->value);
     signature->data_length = HW_SCE_ECDSA_DATA_BYTE_SIZE;
     if (1 != handle->key_type)
     {
@@ -785,6 +863,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeySign (sce_ecdh_handle_t             * ha
  * @param[in,out] wrapped_key            wrapped key of ecc_public_wrapped_key
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -801,6 +880,13 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyVerify (sce_ecdh_handle_t            * h
                                                 sce_ecdsa_byte_data_t        * signature,
                                                 sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(ecc_public_wrapped_key);
+    FSP_ASSERT(public_key_data);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(wrapped_key);
+#endif
     st_read_public_key_t indata =
     {
         0
@@ -838,11 +924,11 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyVerify (sce_ecdh_handle_t            * h
 
     error_code = R_SCE_EcdhReadPublicKeyPrivate(&indata.cmd,
                                                                                    /* Casting uint32_t pointer is used for address. */
-                                                 (uint32_t *) &ecc_public_wrapped_key->value,
-                                                 (uint32_t *) indata.bytedata,
-                                                 (uint32_t *) signature->pdata,
-                                                 (uint32_t *)
-                                                 &wrapped_key->value);
+                                                (uint32_t *) &ecc_public_wrapped_key->value,
+                                                (uint32_t *) indata.bytedata,
+                                                (uint32_t *) signature->pdata,
+                                                (uint32_t *)
+                                                &wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
@@ -869,6 +955,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyVerify (sce_ecdh_handle_t            * h
  * @param[in,out] wrapped_key            wrapped key of public_key_data
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
@@ -877,11 +964,17 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyVerify (sce_ecdh_handle_t            * h
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  * @note Please note that this is slightly contrary to the protected mode policy as it omits signature verification.
-**********************************************************************************************************************/
-fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t            * handle,
-                                                             uint8_t                      * public_key_data,
-                                                             sce_ecc_public_wrapped_key_t * wrapped_key)
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature (sce_ecdh_handle_t            * handle,
+                                                              uint8_t                      * public_key_data,
+                                                              sce_ecc_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(public_key_data);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     st_read_public_key_t indata =
     {
         0
@@ -892,6 +985,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t  
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
     }
+
     if (handle->id != g_ecdh256_private_id)
     {
         return FSP_ERR_CRYPTO_SCE_PARAMETER;
@@ -902,24 +996,24 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t  
     if (1 == handle->flag_use_key_id)
     {
         indata.cmd = change_endian_long(1);
-        memcpy(indata.bytedata, public_key_data, 1 + HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE);  /* key_id || QeU copy */
-        indata.bytedata[1 + HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE] = SCE_HEX_80;    /* stop bit */
-        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 2] = 0x02;
-        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 1] = 0x08;   /* message length is 520bit */
+        memcpy(indata.bytedata, public_key_data, 1 + HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE); /* key_id || QeU copy */
+        indata.bytedata[1 + HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE] = SCE_HEX_80;             /* stop bit */
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 2]     = 0x02;
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 1]     = 0x08;                   /* message length is 520bit */
     }
     else
     {
         indata.cmd = change_endian_long(0);
-        memcpy(indata.bytedata, public_key_data, HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE);  /* QeU copy */
-        indata.bytedata[HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE] = SCE_HEX_80;    /* stop bit */
+        memcpy(indata.bytedata, public_key_data, HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE); /* QeU copy */
+        indata.bytedata[HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE] = SCE_HEX_80;             /* stop bit */
         indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 2] = 0x02;
-        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 1] = 0x00;   /* message length is 512bit */
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 1] = 0x00;                   /* message length is 512bit */
     }
 
     error_code = R_SCE_EcdhReadPublicKeyWithoutSignaturePrivate(&indata.cmd,
                                                                                    /* Casting uint32_t pointer is used for address. */
-                                                                 (uint32_t*)indata.bytedata,
-                                                                 (uint32_t*)&wrapped_key->value);
+                                                                (uint32_t *) indata.bytedata,
+                                                                (uint32_t *) &wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
@@ -928,6 +1022,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t  
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
     return error_code;
 }
 
@@ -951,6 +1046,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t  
  * @param[in,out] shared_secret_wrapped_key Wrapped key of shared secret Z calculated by ECDH key exchange
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -966,6 +1062,12 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
                                                       sce_ecc_private_wrapped_key_t * ecc_private_wrapped_key,
                                                       sce_ecdh_wrapped_key_t        * shared_secret_wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(ecc_public_wrapped_key);
+    FSP_ASSERT(ecc_private_wrapped_key);
+    FSP_ASSERT(shared_secret_wrapped_key);
+#endif
     uint32_t  ecdh_key_type = 0;
     fsp_err_t error_code    = FSP_SUCCESS;
 
@@ -985,9 +1087,9 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
 
     error_code = R_SCE_EcdhCalculateSharedSecretIndexPrivate(&ecdh_key_type,
                                        /* Casting uint32_t pointer is used for address. */
-                                                              (uint32_t *) &ecc_public_wrapped_key->value,
-                                                              (uint32_t *) &ecc_private_wrapped_key->value,
-                                                              (uint32_t *) &shared_secret_wrapped_key->value);
+                                                             (uint32_t *) &ecc_public_wrapped_key->value,
+                                                             (uint32_t *) &ecc_private_wrapped_key->value,
+                                                             (uint32_t *) &shared_secret_wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
         if (3 == handle->key_type)
@@ -1036,6 +1138,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
  *                                          (sce_aes_wrapped_key_t*) type.
  *
  * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -1055,12 +1158,20 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
                                               sce_hmac_sha_wrapped_key_t * salt_wrapped_key,
                                               sce_aes_wrapped_key_t      * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(handle);
+    FSP_ASSERT(shared_secret_wrapped_key);
+    FSP_ASSERT(other_info || (0 == other_info_length));
+    FSP_ASSERT(salt_wrapped_key || (0 == kdf_type)); /* 0: SHA-256 */
+    FSP_ASSERT(wrapped_key);
+#endif
+
     /* InData_PaddedMsg = AlgorithmID || PartyUInfo || PartyVInfo || 1 || 0padding || Message length(64bit)
      * Message length value = AlgorithmID bit length + PartyUInfo bit length + PartyVInfo bit length + 288bit
      * MAX_CNT(word) = 7 + 16n */
 
-    fsp_err_t error_code = FSP_SUCCESS;
-    st_key_derivation_t indata =
+    fsp_err_t           error_code = FSP_SUCCESS;
+    st_key_derivation_t indata     =
     {
         0
     };
@@ -1070,16 +1181,17 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
     }
-    handle->flag_call_init = 0;
-    handle->flag_call_make_public = 0;
-    handle->flag_call_read_public = 0;
+
+    handle->flag_call_init          = 0;
+    handle->flag_call_make_public   = 0;
+    handle->flag_call_read_public   = 0;
     handle->flag_call_shared_secret = 0;
     if (handle->id != g_ecdh256_private_id)
     {
         return FSP_ERR_CRYPTO_SCE_PARAMETER;
     }
 
-     if (3 == key_type)
+    if (3 == key_type)
     {
         if (2 == handle->key_type)
         {
@@ -1089,9 +1201,11 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
         else
         {
             wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
-            error_code = FSP_ERR_CRYPTO_SCE_FAIL;
+            error_code        = FSP_ERR_CRYPTO_SCE_FAIL;
         }
+
         memset(handle, 0, sizeof(sce_ecdh_handle_t));
+
         return error_code;
     }
 
@@ -1114,40 +1228,45 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
     {
         /* another block unnecessary */
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 4] = (uint8_t)((message_bit_length >> 24) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 4] = (uint8_t) ((message_bit_length >> 24) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 3] = (uint8_t)((message_bit_length >> 16) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 3] = (uint8_t) ((message_bit_length >> 16) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 2] = (uint8_t)((message_bit_length >> 8) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 2] = (uint8_t) ((message_bit_length >> 8) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 1] = (uint8_t)((message_bit_length) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 1] = (uint8_t) ((message_bit_length) & SCE_HEX_FF);
         indata.max_cnt_byte = SCE_PRV_OTHER_INFO_BYTE_LEN_2B;
     }
     else
     {
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 4] = (uint8_t)((message_bit_length >> 24) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 4] = (uint8_t) ((message_bit_length >> 24) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 3] = (uint8_t)((message_bit_length >> 16) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 3] = (uint8_t) ((message_bit_length >> 16) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 2] = (uint8_t)((message_bit_length >> 8) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 2] = (uint8_t) ((message_bit_length >> 8) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 1] = (uint8_t)((message_bit_length) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 1] = (uint8_t) ((message_bit_length) & SCE_HEX_FF);
         indata.max_cnt_byte = SCE_PRV_OTHER_INFO_BYTE_LEN_3B;
     }
 
     indata.keyindextype = change_endian_long(key_type);
     indata.kdftype      = change_endian_long(kdf_type);
 
-    error_code = R_SCE_EcdhKeyDerivationPrivate(&indata.keyindextype, shared_secret_wrapped_key->value, &indata.kdftype,
-            /* Casting uint32_t pointer is used for address. */
-            (uint32_t*)indata.paddedmsg, indata.max_cnt_byte >> 2, salt_wrapped_key->value, wrapped_key->value);
+    error_code = R_SCE_EcdhKeyDerivationPrivate(&indata.keyindextype,
+                                                shared_secret_wrapped_key->value,
+                                                &indata.kdftype,
+                                       /* Casting uint32_t pointer is used for address. */
+                                                (uint32_t *) indata.paddedmsg,
+                                                indata.max_cnt_byte >> 2,
+                                                salt_wrapped_key->value,
+                                                wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
         wrapped_key->type = s_key_index_type[key_type];

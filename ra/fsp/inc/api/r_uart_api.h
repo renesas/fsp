@@ -243,7 +243,6 @@ typedef struct st_uart_api
      */
     fsp_err_t (* receiveSuspend)(uart_ctrl_t * const p_ctrl);
 
-
     /** Resume RX operations for UART device.
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.

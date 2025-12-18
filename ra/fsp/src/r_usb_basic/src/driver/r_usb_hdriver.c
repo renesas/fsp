@@ -362,7 +362,7 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
     }
 
  #elif (BSP_CFG_RTOS == 1)             /* (BSP_CFG_RTOS == 0) */
-    err = USB_PGET_BLK(1, &p_tran_data);
+    err = USB_PGET_BLK(1, &p_tran_data, ptr->ip);
     if (TX_SUCCESS != err)
     {
         USB_PRINTF0("### usb_hstd_transfer_start_req USB_PGET_BLK ERROR %x\n");
@@ -470,7 +470,7 @@ usb_er_t usb_hstd_hcd_snd_mbx (usb_utr_t * ptr, uint16_t msginfo, uint16_t dat, 
     usb_hcdinfo_t * hp;
 
     /* Get memory pool blk */
-    err = USB_PGET_BLK(USB_HCD_MPL, &p_blf);
+    err = USB_PGET_BLK(USB_HCD_MPL, &p_blf, ptr->ip);
     if (USB_OK == err)
     {
         hp            = (usb_hcdinfo_t *) p_blf;
@@ -535,7 +535,7 @@ void usb_hstd_mgr_snd_mbx (usb_utr_t * ptr, uint16_t msginfo, uint16_t dat, uint
     usb_mgrinfo_t * mp;
 
     /* Get memory pool blk */
-    err = USB_PGET_BLK(USB_MGR_MPL, &p_blf);
+    err = USB_PGET_BLK(USB_MGR_MPL, &p_blf, ptr->ip);
     if (USB_OK == err)
     {
         mp          = (usb_mgrinfo_t *) p_blf;
@@ -1173,7 +1173,11 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
 /**********************************/
 /* Host InItialization Processing */
 /**********************************/
-                usb_hdriver_init(ptr);
+
+                /* Since this fuction's second parameter
+                 * only process usb HOST mode
+                 * pass USB_NULL in this case */
+                usb_hdriver_init(ptr, USB_NULL);
 
                 /* Setting USB relation register  */
                 hw_usb_hmodule_init(ptr->ip); /* MCU */
@@ -1521,7 +1525,7 @@ static void usb_hstd_clr_stall_result (usb_utr_t * ptr, uint16_t data1, uint16_t
     FSP_PARAMETER_NOT_USED(data2);
 
     /* Get memory pool blk */
-    err = USB_PGET_BLK(USB_HCD_MPL, &p_blf);
+    err = USB_PGET_BLK(USB_HCD_MPL, &p_blf, ptr->ip);
     if (USB_OK == err)
     {
         up          = (usb_utr_t *) p_blf;
@@ -2533,7 +2537,7 @@ usb_er_t usb_hstd_change_device_state (usb_utr_t * ptr, usb_cb_t complete, uint1
         default:
         {
             /* Get memory pool blk */
-            err = USB_PGET_BLK(USB_MGR_MPL, &p_blf);
+            err = USB_PGET_BLK(USB_MGR_MPL, &p_blf, ptr->ip);
             if (FSP_SUCCESS == err)
             {
                 USB_PRINTF2("*** member%d : msginfo=%d ***\n", member, msginfo);
@@ -2862,34 +2866,61 @@ void usb_hstd_device_information (usb_utr_t * ptr, uint16_t devaddr, uint16_t * 
  * Function Name   : usb_host_registration
  * Description     : sample registration.
  * Argument        : usb_utr_t    *ptr   : Pointer to usb_utr_t structure.
+ *                 : usb_class_t  type   : USB class type
  * Return          : none
  ******************************************************************************/
-void usb_host_registration (usb_utr_t * ptr)
+void usb_host_registration (usb_utr_t * ptr, usb_class_t type)
 {
     (void) *ptr;
+    (void) type;
 
  #if BSP_CFG_RTOS == 1
-    usb_host_usbx_registration(ptr);
- #else                                 /* BSP_CFG_RTOS == 1 */
-  #if defined(USB_CFG_HCDC_USE)
-    usb_hcdc_registration(ptr);
-  #endif                               /* defined(USB_CFG_HCDC_USE) */
+    usb_host_usbx_registration(ptr, type);
+ #else
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE) /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    if (USB_CLASS_HCDC == type)
+  #endif                                    /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    {
+  #if defined(USB_CFG_HCDC_USE)             /* defined(USB_CFG_HCDC_USE) */
+        usb_hcdc_registration(ptr);
+  #endif                                    /* defined(USB_CFG_HCDC_USE) */
+    }
 
-  #if defined(USB_CFG_HHID_USE)
-    usb_hhid_registration(ptr);
-  #endif                               /* defined(USB_CFG_HHID_USE) */
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE) /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    if (USB_CLASS_HHID == type)
+  #endif                                    /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    {
+  #if defined(USB_CFG_HHID_USE)             /* defined(USB_CFG_HHID_USE) */
+        usb_hhid_registration(ptr);
+  #endif                                    /* defined(USB_CFG_HHID_USE) */
+    }
 
-  #if defined(USB_CFG_HMSC_USE)
-    usb_hmsc_registration(ptr);
-  #endif                               /* defined(USB_CFG_HMSC_USE) */
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE) /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    if (USB_CLASS_HMSC == type)
+  #endif                                    /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    {
+  #if defined(USB_CFG_HMSC_USE)             /* defined(USB_CFG_HMSC_USE) */
+        usb_hmsc_registration(ptr);
+  #endif                                    /* defined(USB_CFG_HMSC_USE) */
+    }
 
-  #if defined(USB_CFG_HVND_USE)
-    usb_hvnd_registration(ptr);
-  #endif                               /* defined(USB_CFG_HVND_USE) */
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE) /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    if (USB_CLASS_HVND == type)
+  #endif                                    /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    {
+  #if defined(USB_CFG_HVND_USE)             /* defined(USB_CFG_HVND_USE) */
+        usb_hvnd_registration(ptr);
+  #endif                                    /* defined(USB_CFG_HVND_USE) */
+    }
 
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE) /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    if (USB_CLASS_HAUD == type)
+  #endif                                    /* USB_CFG_MULTIPORT == USB_CFG_ENABLE */
+    {
   #if defined(USB_CFG_HAUD_USE)
-    usb_haud_registration(ptr);
-  #endif                               /* defined(USB_CFG_HAUD_USE) */
+        usb_haud_registration(ptr);
+  #endif                                    /* defined(USB_CFG_HAUD_USE) */
+    }
  #endif /* BSP_CFG_RTOS == 1 */
 }
 

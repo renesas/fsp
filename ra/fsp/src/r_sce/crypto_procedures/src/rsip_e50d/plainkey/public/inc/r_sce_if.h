@@ -251,6 +251,13 @@
 /* Key update. */
  #define HW_SCE_UPDATE_KEY_RING_INDEX_WORD_SIZE                      (16U)
 
+/* For Chacha20-Poly1305 operation. */
+ #define HW_SCE_CHACHA20_BLOCK_BYTE_SIZE                    (64U)
+ #define HW_SCE_CHACHA20_BLOCK_WORD_SIZE                    (16U)
+ #define HW_SCE_CHACHA20_KEY_BYTE_SIZE                      (32U)
+ #define HW_SCE_CHACHA20_KEY_INDEX_WORD_SIZE                (13U)
+ #define HW_SCE_CHACHAPOLY_MAC_BYTE_SIZE                    (16U)
+ #define HW_SCE_CHACHAPOLY_AAD_BYTE_SIZE                    (256U)
 
 /* Firmware update. */
 #define HW_SCE_FIRMWARE_MAC_BYTE_SIZE           (16U)

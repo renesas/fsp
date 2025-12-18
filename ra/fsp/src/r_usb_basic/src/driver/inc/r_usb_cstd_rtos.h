@@ -120,7 +120,7 @@ extern rtos_mem_id_t * g_mpl_table[];
 /******************************************************************************
  * Exported global functions (to be accessed by other files)
  ******************************************************************************/
-usb_rtos_err_t usb_rtos_configuration(usb_mode_t usb_mode);
+usb_rtos_err_t usb_rtos_configuration(usb_cfg_t const * const p_cfg);
 usb_rtos_err_t usb_rtos_delete(uint8_t module_number);
 
  #endif                                /* #if (BSP_CFG_RTOS != 0) */

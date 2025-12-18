@@ -95,8 +95,8 @@ const rsip_key_injection_api_t g_rsip_key_injection_on_rsip =
     .AES128_InitialKeyWrap                     = R_RSIP_AES128_InitialKeyWrap,
     .AES192_InitialKeyWrap                     = R_RSIP_AES192_InitialKeyWrap,
     .AES256_InitialKeyWrap                     = R_RSIP_AES256_InitialKeyWrap,
-    .AES128_XTS_InitialKeyWrap                 = R_RSIP_AES128_XTS_InitialKeyWrap,
-    .AES256_XTS_InitialKeyWrap                 = R_RSIP_AES256_XTS_InitialKeyWrap,
+    .AES128_XTS_InitialKeyWrap                 = R_RSIP_AES128_XTS_InitialKeyWrap, // [Deprecated on RSIP-E31A]
+    .AES256_XTS_InitialKeyWrap                 = R_RSIP_AES256_XTS_InitialKeyWrap, // [Deprecated on RSIP-E31A]
     .ChaCha20_InitialKeyWrap                   = R_RSIP_ChaCha20_InitialKeyWrap,
     .RSA2048_InitialPrivateKeyWrap             = R_RSIP_RSA2048_InitialPrivateKeyWrap,
     .RSA3072_InitialPrivateKeyWrap             = R_RSIP_RSA3072_InitialPrivateKeyWrap,
@@ -328,6 +328,7 @@ fsp_err_t R_RSIP_AES256_InitialKeyWrap (rsip_key_injection_type_t const key_inje
 }
 
 /*******************************************************************************************************************//**
+ * [Deprecated on RSIP-E31A]
  * This API generates 128-bit AES-XTS key within the user routine.
  *
  * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -404,6 +405,7 @@ fsp_err_t R_RSIP_AES128_XTS_InitialKeyWrap (rsip_key_injection_type_t const key_
 }
 
 /*******************************************************************************************************************//**
+ * [Deprecated on RSIP-E31A]
  * This API generates 256-bit AES-XTS key within the user routine.
  *
  * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key

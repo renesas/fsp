@@ -47,12 +47,15 @@ typedef enum e_rmac_phy_frame_format
 /** RMAC PHY control block. DO NOT INITIALIZE.  Initialization occurs when @ref ether_phy_api_t::open is called. */
 typedef struct st_rmac_phy_instance_ctrl
 {
-    uint32_t                    open;             ///< Used to determine if the channel is configured
-    ether_phy_cfg_t const     * p_ether_phy_cfg;  ///< Pointer to initial configurations.
-    R_RMAC0_Type              * p_reg_rmac;       ///< Pointer to RMAC peripheral registers.
-    uint32_t                    local_advertise;  ///< Capabilities bitmap for local advertising.
-    rmac_phy_interface_status_t interface_status; ///< Initialized status of ETHER PHY interface.
-    uint8_t phy_lsi_cfg_index;                    ///< Index of the PHY LSI that is currently the target of operation
+    uint32_t                    open;                        ///< Used to determine if the channel is configured
+    ether_phy_cfg_t const     * p_ether_phy_cfg;             ///< Pointer to initial configurations.
+    R_RMAC0_Type              * p_reg_rmac;                  ///< Pointer to RMAC peripheral registers.
+    uint32_t                    local_advertise;             ///< Capabilities bitmap for local advertising.
+    rmac_phy_interface_status_t interface_status;            ///< Initialized status of ETHER PHY interface.
+    uint8_t phy_lsi_cfg_index;                               ///< Index of the PHY LSI that is currently the target of operation
+    void (* p_callback)(ether_phy_callback_args_t * p_args); ///< Callback provided when an ISR occurs.
+    void * p_context;
+    ether_phy_callback_args_t * p_callback_memory;
 } rmac_phy_instance_ctrl_t;
 
 /** RMAC PHY extended configuration. */
@@ -66,6 +69,12 @@ typedef struct st_rmac_phy_extended_cfg
     uint8_t                     mdio_capture_time;                                                                      ///< MDIO capture time adjustment
     ether_phy_lsi_cfg_t const * p_phy_lsi_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];                                     ///< Pointer list of PHY LSI configurations.
     uint8_t                     default_phy_lsi_cfg_index;                                                              ///< Index of the default PHY LSI condiguration.
+    bool      frame_preemption_enable;
+    uint32_t  frame_preemption_verification_interval;                                                                   ///< Interval for sending verify frame [ms].
+    IRQn_Type easi_irq[BSP_FEATURE_ETHER_NUM_CHANNELS];                                                                 ///< EASI interrupt number
+    uint32_t  easi_ipl[BSP_FEATURE_ETHER_NUM_CHANNELS];                                                                 ///< EASI interrupt priority
+    void (* p_callback)(ether_phy_callback_args_t * p_args);                                                            ///< Callback provided when an ISR occurs.
+    void * p_context;                                                                                                   ///< Placeholder for user data.
 } rmac_phy_extended_cfg_t;
 
 /**********************************************************************************************************************
@@ -105,6 +114,11 @@ fsp_err_t R_RMAC_PHY_LinkPartnerAbilityGet(ether_phy_ctrl_t * const p_ctrl,
 fsp_err_t R_RMAC_PHY_LinkStatusGet(ether_phy_ctrl_t * const p_ctrl);
 
 fsp_err_t R_RMAC_PHY_ChipSelect(ether_phy_ctrl_t * const p_ctrl, uint8_t port);
+
+fsp_err_t R_RMAC_PHY_CallbackSet(ether_phy_ctrl_t * const          p_ctrl,
+                                 void (                          * p_callback)(ether_phy_callback_args_t *),
+                                 void * const                      p_context,
+                                 ether_phy_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup RMAC_PHY)

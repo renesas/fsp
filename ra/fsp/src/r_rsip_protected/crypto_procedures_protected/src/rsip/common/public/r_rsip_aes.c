@@ -165,6 +165,7 @@ static void ccm_format(const uint8_t * nonce,
  *
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input AES-XTS key value is illegal.(Data Key == Tweak Key)
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
  *
  * @sa Section @ref r-rsip-protected-supported-algorithms "Supported Algorithms".
@@ -1436,6 +1437,7 @@ static fsp_err_t aes_finish (rsip_ctrl_t * p_ctrl)
  *
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input AES-XTS key value is illegal.(Data Key == Tweak Key)
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
  **********************************************************************************************************************/
 static fsp_err_t xts_init (rsip_ctrl_t              * p_ctrl,
@@ -1490,6 +1492,12 @@ static fsp_err_t xts_init (rsip_ctrl_t              * p_ctrl,
         case RSIP_RET_KEY_FAIL:
         {
             err = FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
             break;
         }
 

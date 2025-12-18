@@ -58,6 +58,9 @@ TX_TIMER g_usb2_otg_detach_timer;
 /******************************************************************************
  * Private global variables and functions
  ******************************************************************************/
+ #if ((BSP_CFG_RTOS != 0) && (USB_NUM_USBIP == 2))
+static uint8_t g_usb_rtos_is_create[2] = {USB_NO};
+ #endif
 
 /** Declare a task handler for the created tasks. **/
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -199,8 +202,8 @@ static uint8_t g_rtos_usb_hhid_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
 static uint8_t g_rtos_usb_hprn_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
   #endif                               /* defined(USB_CFG_HPRN_USE) */
 
-static TX_BLOCK_POOL g_usb_block_pool_hdl;
-static uint8_t       g_usb_rtos_fixed_memblk[((sizeof(usb_utr_t) + sizeof(void *)) * NUM_OF_BLOCK)];
+static TX_BLOCK_POOL g_usb_block_pool_hdl[USB_NUM_USBIP];
+static uint8_t       g_usb_rtos_fixed_memblk[USB_NUM_USBIP][((sizeof(usb_utr_t) + sizeof(void *)) * NUM_OF_BLOCK)];
 
 static uint8_t g_rtos_usb_pipe0_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
 static uint8_t g_rtos_usb_pipe_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
@@ -210,7 +213,7 @@ static uint8_t g_rtos_usb_pipe_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
  * Function Name: usb_rtos_configuration
  * Description  : Create mailboxes, memory pool using for the created tasks
  *                in usb system.
- * Arguments    : usb_mode_t usb_mode : USB_MODE_HOST or USB_MODE_PERI
+ * Arguments    : usb_cfg_t const * const p_cfg :  USB configuration
  * Return Value : UsbRtos_Success -
  *                   Successful.
  *                UsbRtos_Err_Init_Mbx -
@@ -218,422 +221,392 @@ static uint8_t g_rtos_usb_pipe_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
  *                UsbRtos_Err_Init_Mpl -
  *                   Failed in memory pool allocation.
  ******************************************************************************/
-usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
+usb_rtos_err_t usb_rtos_configuration (usb_cfg_t const * const p_cfg)
 {
     usb_rtos_err_t err = UsbRtos_Success;
     uint16_t       ip_loop;
     uint16_t       pipe_loop;
     uint16_t       addr_loop;
  #if (BSP_CFG_RTOS != 2)
-    FSP_PARAMETER_NOT_USED(usb_mode);
+    FSP_PARAMETER_NOT_USED(p_cfg);
  #endif
 
  #if (BSP_CFG_RTOS == 2)
     BaseType_t ret;
-    if (USB_MODE_HOST == usb_mode)
+    if (USB_MODE_HOST == p_cfg->usb_mode)
     {
+  #if (USB_NUM_USBIP == 2)
+        if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+  #endif
+        {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-        uint16_t i;
-        void   * tmptr = NULL;
+            uint16_t i;
+            void   * tmptr = NULL;
 
-        /** Create mailbox for each task. **/
-        /** USB HCD task **/
-        g_hcd_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hcd_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** Create mailbox for each task. **/
+            /** USB HCD task **/
+            g_hcd_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hcd_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB MGR task **/
-        g_mgr_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_mgr_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB MGR task **/
+            g_mgr_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_mgr_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB HUB task **/
-        g_hub_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hub_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB HUB task **/
+            g_hub_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hub_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Internal Communication mailbox **/
-        g_cls_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_cls_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Internal Communication mailbox **/
+            g_cls_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_cls_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
    #if defined(USB_CFG_HMSC_USE)
-        vSemaphoreCreateBinary(SemaphoreHandleRead);
+            vSemaphoreCreateBinary(SemaphoreHandleRead);
 
-        /** USB Host MSC **/
-        g_hmsc_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hmsc_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host MSC **/
+            g_hmsc_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hmsc_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Host MSC (for class request) **/
-        g_hmsc_req_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hmsc_req_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host MSC (for class request) **/
+            g_hmsc_req_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hmsc_req_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HCDC_USE)
 
-        /** USB Host CDC **/
-        g_hcdc_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hcdc_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host CDC **/
+            g_hcdc_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hcdc_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HCDC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
 
-        /** USB Host HID **/
-        g_hhid_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hhid_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host HID **/
+            g_hhid_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hhid_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HHID_USE) */
 
    #if defined(USB_CFG_HPRN_USE)
 
-        /** USB Host Printer **/
-        g_hprn_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL == g_hprn_mbx_hdl)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host Printer **/
+            g_hprn_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL == g_hprn_mbx_hdl)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HPRN_USE) */
 
-        /** Create memory pool using for each task **/
-        /** USB HCD task **/
-        g_hcd_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_hcd_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            /** Create memory pool using for each task **/
+            /** USB HCD task **/
+            g_hcd_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_hcd_mpl_hdl)
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
                 {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
+                        return err;
+                    }
+
+                    g_p_hcd_mpl[i] = tmptr;
+                    xQueueSend(g_hcd_mpl_hdl, &tmptr, 0);
                 }
-
-                g_p_hcd_mpl[i] = tmptr;
-                xQueueSend(g_hcd_mpl_hdl, &tmptr, 0);
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
-
-            return err;
-        }
-
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
-
-        /** USB MGR task **/
-        g_mgr_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_mgr_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            else
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
-                {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
-                }
-
-                g_p_mgr_mpl[i] = tmptr;
-                xQueueSend(g_mgr_mpl_hdl, &tmptr, 0);
+                return err;
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
 
-            return err;
-        }
-
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
-
-        /** USB HUB task **/
-        g_hub_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_hub_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            /** USB MGR task **/
+            g_mgr_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_mgr_mpl_hdl)
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
                 {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
+                        return err;
+                    }
+
+                    g_p_mgr_mpl[i] = tmptr;
+                    xQueueSend(g_mgr_mpl_hdl, &tmptr, 0);
                 }
-
-                g_p_hub_mpl[i] = tmptr;
-                xQueueSend(g_hub_mpl_hdl, &tmptr, 0);
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
-
-            return err;
-        }
-
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
-
-        /** USB Internal Communication **/
-        g_cls_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_cls_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            else
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
-                {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
-                }
-
-                g_p_cls_mpl[i] = tmptr;
-                xQueueSend(g_cls_mpl_hdl, &tmptr, 0);
+                return err;
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
 
-            return err;
-        }
+            /** USB HUB task **/
+            g_hub_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_hub_mpl_hdl)
+            {
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
+                {
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
+                        return err;
+                    }
+
+                    g_p_hub_mpl[i] = tmptr;
+                    xQueueSend(g_hub_mpl_hdl, &tmptr, 0);
+                }
+            }
+            else
+            {
+                err = UsbRtos_Err_Init_Mpl;
+
+                return err;
+            }
+
+            /** USB Internal Communication **/
+            g_cls_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_cls_mpl_hdl)
+            {
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
+                {
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
+
+                        return err;
+                    }
+
+                    g_p_cls_mpl[i] = tmptr;
+                    xQueueSend(g_cls_mpl_hdl, &tmptr, 0);
+                }
+            }
+            else
+            {
+                err = UsbRtos_Err_Init_Mpl;
+
+                return err;
+            }
 
    #if defined(USB_CFG_HMSC_USE)
 
-        /** USB Host MSC **/
-        g_hmsc_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_hmsc_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            /** USB Host MSC **/
+            g_hmsc_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_hmsc_mpl_hdl)
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
                 {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
+                        return err;
+                    }
+
+                    g_p_hmsc_mpl[i] = tmptr;
+                    xQueueSend(g_hmsc_mpl_hdl, &tmptr, 0);
                 }
-
-                g_p_hmsc_mpl[i] = tmptr;
-                xQueueSend(g_hmsc_mpl_hdl, &tmptr, 0);
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
-
-            return err;
-        }
-
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
-
-        /** USB Host MSC (for class request) **/
-        g_hmsc_req_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_hmsc_req_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            else
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
-                {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
-                }
-
-                g_p_hmsc_req_mpl[i] = tmptr;
-                xQueueSend(g_hmsc_req_mpl_hdl, &tmptr, 0);
+                return err;
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
 
-            return err;
-        }
+            /** USB Host MSC (for class request) **/
+            g_hmsc_req_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_hmsc_req_mpl_hdl)
+            {
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
+                {
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
+                        return err;
+                    }
+
+                    g_p_hmsc_req_mpl[i] = tmptr;
+                    xQueueSend(g_hmsc_req_mpl_hdl, &tmptr, 0);
+                }
+            }
+            else
+            {
+                err = UsbRtos_Err_Init_Mpl;
+
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HCDC_USE)
 
-        /** USB Host CDC **/
-        g_hcdc_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_hcdc_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            /** USB Host CDC **/
+            g_hcdc_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_hcdc_mpl_hdl)
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
                 {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
+                        return err;
+                    }
+
+                    g_p_hcdc_mpl[i] = tmptr;
+                    xQueueSend(g_hcdc_mpl_hdl, &tmptr, 0);
                 }
-
-                g_p_hcdc_mpl[i] = tmptr;
-                xQueueSend(g_hcdc_mpl_hdl, &tmptr, 0);
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
+            else
+            {
+                err = UsbRtos_Err_Init_Mpl;
 
-            return err;
-        }
-
-        if (UsbRtos_Err_Init_Mpl == err)
-        {
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HCDC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
 
-        /** USB Host HID **/
-        g_hhid_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-        if (NULL != g_hhid_mpl_hdl)
-        {
-            /* WAIT_LOOP */
-            for (i = 0; i < QUEUE_SIZE; i++)
+            /** USB Host HID **/
+            g_hhid_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+            if (NULL != g_hhid_mpl_hdl)
             {
-                tmptr = pvPortMalloc(sizeof(usb_utr_t));
-                if (NULL == tmptr)
+                /* WAIT_LOOP */
+                for (i = 0; i < QUEUE_SIZE; i++)
                 {
-                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
-                    err = UsbRtos_Err_Init_Mpl;
+                    tmptr = pvPortMalloc(sizeof(usb_utr_t));
+                    if (NULL == tmptr)
+                    {
+                        USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
+                        err = UsbRtos_Err_Init_Mpl;
 
-                    return err;
+                        return err;
+                    }
+
+                    g_p_hhid_mpl[i] = tmptr;
+                    xQueueSend(g_hhid_mpl_hdl, &tmptr, 0);
                 }
-
-                g_p_hhid_mpl[i] = tmptr;
-                xQueueSend(g_hhid_mpl_hdl, &tmptr, 0);
             }
-        }
-        else
-        {
-            err = UsbRtos_Err_Init_Mpl;
+            else
+            {
+                err = UsbRtos_Err_Init_Mpl;
 
-            return err;
-        }
-   #endif                                                     /* defined(USB_CFG_HHID_USE) */
+                return err;
+            }
+   #endif                                                         /* defined(USB_CFG_HHID_USE) */
 
-        /** USB Tasks Creation **/
-        ret = xTaskCreate((TaskFunction_t) usb_hstd_hcd_task, /** Entry function of USB HCD task  **/
-                          "HCD_TSK",                          /** Name of USB HCD task            **/
-                          HCD_STACK_SIZE,                     /** Stack size in words             **/
-                          NULL,                               /** Task's parameter                **/
-                          HCD_TSK_PRI,                        /** Task's priority                 **/
-                          &g_hcd_tsk_hdl);                    /** Task handler for use later      **/
-        if (pdPASS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            /** USB Tasks Creation **/
+            ret = xTaskCreate((TaskFunction_t) usb_hstd_hcd_task, /** Entry function of USB HCD task  **/
+                              "HCD_TSK",                          /** Name of USB HCD task            **/
+                              HCD_STACK_SIZE,                     /** Stack size in words             **/
+                              NULL,                               /** Task's parameter                **/
+                              HCD_TSK_PRI,                        /** Task's priority                 **/
+                              &g_hcd_tsk_hdl);                    /** Task handler for use later      **/
+            if (pdPASS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
 
    #if USB_CFG_HUB == USB_CFG_ENABLE
-        ret = xTaskCreate((TaskFunction_t) usb_hhub_task, /** Entry function of USB HUB task  **/
-                          "HUB_TSK",                      /** Name of USB HUB task            **/
-                          HUB_STACK_SIZE,                 /** Stack size in words             **/
-                          NULL,                           /** Task's parameter                **/
-                          HUB_TSK_PRI,                    /** Task's priority                 **/
-                          &g_hub_tsk_hdl);                /** Task handler for use later      **/
-        if (pdPASS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = xTaskCreate((TaskFunction_t) usb_hhub_task, /** Entry function of USB HUB task  **/
+                              "HUB_TSK",                      /** Name of USB HUB task            **/
+                              HUB_STACK_SIZE,                 /** Stack size in words             **/
+                              NULL,                           /** Task's parameter                **/
+                              HUB_TSK_PRI,                    /** Task's priority                 **/
+                              &g_hub_tsk_hdl);                /** Task handler for use later      **/
+            if (pdPASS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
-   #endif                                                     /* USB_CFG_HUB == USB_CFG_ENABLE */
+                return err;
+            }
+   #endif                                                         /* USB_CFG_HUB == USB_CFG_ENABLE */
 
-        ret = xTaskCreate((TaskFunction_t) usb_hstd_mgr_task, /** Entry function of USB MGR task  **/
-                          "MGR_TSK",                          /** Name of USB MGR task            **/
-                          MGR_STACK_SIZE,                     /** Stack size in words             **/
-                          NULL,                               /** Task's parameter                **/
-                          MGR_TSK_PRI,                        /** Task's priority                 **/
-                          &g_mgr_tsk_hdl);                    /** Task handler for use later      **/
-        if (pdPASS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = xTaskCreate((TaskFunction_t) usb_hstd_mgr_task, /** Entry function of USB MGR task  **/
+                              "MGR_TSK",                          /** Name of USB MGR task            **/
+                              MGR_STACK_SIZE,                     /** Stack size in words             **/
+                              NULL,                               /** Task's parameter                **/
+                              MGR_TSK_PRI,                        /** Task's priority                 **/
+                              &g_mgr_tsk_hdl);                    /** Task handler for use later      **/
+            if (pdPASS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
+        }
     }
     else
     {
@@ -693,30 +666,54 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
     }
 
   #if (USB_NUM_USBIP == 2)
-    if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
-    {
+    if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
   #endif                               /* (USB_NUM_USBIP == 2) */
-    /* WAIT_LOOP */
-    for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
     {
-        /** Create memory pool using for pipe process **/
         /* WAIT_LOOP */
-        for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
+        for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
         {
-            g_pipe0_hdl[ip_loop][addr_loop] = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-            if (NULL == g_pipe0_hdl[ip_loop][addr_loop])
+            /** Create memory pool using for pipe process **/
+            /* WAIT_LOOP */
+            for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
             {
-                err = UsbRtos_Err_Init_Mpl;
+                g_pipe0_hdl[ip_loop][addr_loop] = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+                if (NULL == g_pipe0_hdl[ip_loop][addr_loop])
+                {
+                    err = UsbRtos_Err_Init_Mpl;
 
-                return err;
+                    return err;
+                }
+            }
+
+            /* WAIT_LOOP */
+            for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
+            {
+                g_pipe_hdl[ip_loop][pipe_loop] = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+                if (NULL == g_pipe_hdl[ip_loop][pipe_loop])
+                {
+                    err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
+                }
             }
         }
+    }
 
-        /* WAIT_LOOP */
-        for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
+ #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
+    uint32_t ret;
+
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE)
+    if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+    {
+        for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
         {
-            g_pipe_hdl[ip_loop][pipe_loop] = xQueueCreate(QUEUE_SIZE, sizeof(void *));
-            if (NULL == g_pipe_hdl[ip_loop][pipe_loop])
+            ret =
+                tx_block_pool_create(&g_usb_block_pool_hdl[ip_loop],
+                                     "USB_MEM_BLOCK",
+                                     sizeof(usb_utr_t),
+                                     (void *) &g_usb_rtos_fixed_memblk[ip_loop][0],
+                                     (uint32_t) ((sizeof(usb_utr_t) + sizeof(void *)) * NUM_OF_BLOCK));
+            if (TX_SUCCESS != ret)
             {
                 err = UsbRtos_Err_Init_Mpl;
 
@@ -725,16 +722,11 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
         }
     }
 
-  #if (USB_NUM_USBIP == 2)
-}
-  #endif                               /* (USB_NUM_USBIP == 2) */
- #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
-    uint32_t ret;
-
-    ret = tx_block_pool_create(&g_usb_block_pool_hdl,
+  #else
+    ret = tx_block_pool_create(&g_usb_block_pool_hdl[p_cfg->module_number],
                                "USB_MEM_BLOCK",
                                sizeof(usb_utr_t),
-                               (void *) &g_usb_rtos_fixed_memblk[0],
+                               (void *) &g_usb_rtos_fixed_memblk[p_cfg->module_number][0],
                                (uint32_t) ((sizeof(usb_utr_t) + sizeof(void *)) * NUM_OF_BLOCK));
     if (TX_SUCCESS != ret)
     {
@@ -742,167 +734,173 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
         return err;
     }
+  #endif
 
   #if !defined(USB_CFG_OTG_USE)
-    if (USB_MODE_HOST == usb_mode)
+    if (USB_MODE_HOST == p_cfg->usb_mode)
   #endif                               /* !defined (USB_CFG_OTG_USE)*/
     {
+  #if (USB_NUM_USBIP == 2)
+        if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+  #endif
+        {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
-        /** Create mailbox for each task. **/
-        /** USB HCD task **/
-        ret =
-            tx_queue_create(&g_hcd_mbx_hdl, "USB_HCD_MBX", TX_1_ULONG, &g_rtos_usb_hcd_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** Create mailbox for each task. **/
+            /** USB HCD task **/
+            ret =
+                tx_queue_create(&g_hcd_mbx_hdl, "USB_HCD_MBX", TX_1_ULONG, &g_rtos_usb_hcd_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB MGR task **/
-        ret =
-            tx_queue_create(&g_mgr_mbx_hdl, "USB_MGR_MBX", TX_1_ULONG, &g_rtos_usb_mgr_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB MGR task **/
+            ret =
+                tx_queue_create(&g_mgr_mbx_hdl, "USB_MGR_MBX", TX_1_ULONG, &g_rtos_usb_mgr_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB HUB task **/
-        ret =
-            tx_queue_create(&g_hub_mbx_hdl, "USB_HUB_MBX", TX_1_ULONG, &g_rtos_usb_hub_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB HUB task **/
+            ret =
+                tx_queue_create(&g_hub_mbx_hdl, "USB_HUB_MBX", TX_1_ULONG, &g_rtos_usb_hub_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Internal Communication mailbox **/
-        ret =
-            tx_queue_create(&g_cls_mbx_hdl, "USB_CLS_MBX", TX_1_ULONG, &g_rtos_usb_cls_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Internal Communication mailbox **/
+            ret =
+                tx_queue_create(&g_cls_mbx_hdl, "USB_CLS_MBX", TX_1_ULONG, &g_rtos_usb_cls_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
    #if defined(USB_CFG_HMSC_USE)
-        ret = tx_semaphore_create(&SemaphoreHandleRead, "USB_HMSC_SEM", 1);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Sem;
+            ret = tx_semaphore_create(&SemaphoreHandleRead, "USB_HMSC_SEM", 1);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Sem;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Host MSC **/
-        ret =
-            tx_queue_create(&g_hmsc_mbx_hdl, "USB_HMSC_MBX", TX_1_ULONG, &g_rtos_usb_hmsc_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host MSC **/
+            ret =
+                tx_queue_create(&g_hmsc_mbx_hdl, "USB_HMSC_MBX", TX_1_ULONG, &g_rtos_usb_hmsc_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Host MSC (for class request) **/
-        ret =
-            tx_queue_create(&g_hmsc_req_mbx_hdl, "USB_HMSC_REQ_MBX", TX_1_ULONG, &g_rtos_usb_hmsc_req_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host MSC (for class request) **/
+            ret =
+                tx_queue_create(&g_hmsc_req_mbx_hdl, "USB_HMSC_REQ_MBX", TX_1_ULONG, &g_rtos_usb_hmsc_req_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HCDC_USE)
 
-        /** USB Host CDC **/
-        ret =
-            tx_queue_create(&g_hcdc_mbx_hdl, "USB_HCDC_MBX", TX_1_ULONG, &g_rtos_usb_hcdc_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host CDC **/
+            ret =
+                tx_queue_create(&g_hcdc_mbx_hdl, "USB_HCDC_MBX", TX_1_ULONG, &g_rtos_usb_hcdc_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HCDC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
 
-        /** USB Host HID **/
+            /** USB Host HID **/
 
-        ret =
-            tx_queue_create(&g_hhid_mbx_hdl, "USB_HHID_MBX", TX_1_ULONG, &g_rtos_usb_hhid_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            ret =
+                tx_queue_create(&g_hhid_mbx_hdl, "USB_HHID_MBX", TX_1_ULONG, &g_rtos_usb_hhid_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HHID_USE) */
 
    #if defined(USB_CFG_HPRN_USE)
 
-        /** USB Host Printer **/
-        ret =
-            tx_queue_create(&g_hprn_mbx_hdl, "USB_HPRN_MBX", TX_1_ULONG, &g_rtos_usb_hprn_mbx[0],
-                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host Printer **/
+            ret =
+                tx_queue_create(&g_hprn_mbx_hdl, "USB_HPRN_MBX", TX_1_ULONG, &g_rtos_usb_hprn_mbx[0],
+                                (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
-   #endif                                                    /* defined(USB_CFG_HPRN_USE) */
+                return err;
+            }
+   #endif                                                        /* defined(USB_CFG_HPRN_USE) */
 
-        ret = tx_thread_create(&g_hcd_tsk_hdl,               /** Pointer to a thread control block.              **/
-                               "HCD_TASK",                   /** Pointer to the name of the thread.              **/
-                               usb_hstd_hcd_task,            /** Entry function of USB HCD task                  **/
-                               (uint32_t) NULL,              /** Task's parameter                                **/
-                               (void *) &g_usb_hcd_stack[0], /** Starting address of the stack fs memory area.   **/
-                               HCD_STACK_SIZE,               /** Number bytes in the stack memory area.          **/
-                               HCD_TSK_PRI,                  /** Task's priority                                 **/
-                               HCD_TSK_PRI,                  /** Preempt Threashold                              **/
-                               TX_NO_TIME_SLICE,             /** Time Slice (Yes or No)                          **/
-                               TX_AUTO_START);               /** Auto Start (Yes or No)                          **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = tx_thread_create(&g_hcd_tsk_hdl,               /** Pointer to a thread control block.              **/
+                                   "HCD_TASK",                   /** Pointer to the name of the thread.              **/
+                                   usb_hstd_hcd_task,            /** Entry function of USB HCD task                  **/
+                                   (uint32_t) NULL,              /** Task's parameter                                **/
+                                   (void *) &g_usb_hcd_stack[0], /** Starting address of the stack fs memory area.   **/
+                                   HCD_STACK_SIZE,               /** Number bytes in the stack memory area.          **/
+                                   HCD_TSK_PRI,                  /** Task's priority                                 **/
+                                   HCD_TSK_PRI,                  /** Preempt Threashold                              **/
+                                   TX_NO_TIME_SLICE,             /** Time Slice (Yes or No)                          **/
+                                   TX_AUTO_START);               /** Auto Start (Yes or No)                          **/
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
 
-        ret = tx_thread_create(&g_mgr_tsk_hdl,               /** Pointer to a thread control block.              **/
-                               "MGR_TSK",                    /** Pointer to the name of the thread.              **/
-                               usb_hstd_mgr_task,            /** Entry function of USB HCD task                  **/
-                               (uint32_t) NULL,              /** Task's parameter                                **/
-                               (void *) &g_usb_mgr_stack[0], /** Starting address of the stack fs memory area.   **/
-                               MGR_STACK_SIZE,               /** Number bytes in the stack memory area.          **/
-                               MGR_TSK_PRI,                  /** Task's priority                                 **/
-                               MGR_TSK_PRI,                  /** Task's priority                                 **/
-                               TX_NO_TIME_SLICE,             /** Time Slice (Yes or No)                          **/
-                               TX_AUTO_START);               /** Auto Start (Yes or No)                          **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = tx_thread_create(&g_mgr_tsk_hdl,               /** Pointer to a thread control block.              **/
+                                   "MGR_TSK",                    /** Pointer to the name of the thread.              **/
+                                   usb_hstd_mgr_task,            /** Entry function of USB HCD task                  **/
+                                   (uint32_t) NULL,              /** Task's parameter                                **/
+                                   (void *) &g_usb_mgr_stack[0], /** Starting address of the stack fs memory area.   **/
+                                   MGR_STACK_SIZE,               /** Number bytes in the stack memory area.          **/
+                                   MGR_TSK_PRI,                  /** Task's priority                                 **/
+                                   MGR_TSK_PRI,                  /** Task's priority                                 **/
+                                   TX_NO_TIME_SLICE,             /** Time Slice (Yes or No)                          **/
+                                   TX_AUTO_START);               /** Auto Start (Yes or No)                          **/
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
+        }
     }
 
   #if defined(USB_CFG_OTG_USE)
@@ -943,41 +941,46 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
         }
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
-
-    /* WAIT_LOOP */
-    for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
+  #if (USB_NUM_USBIP == 2)
+    if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+  #endif
     {
-        /** Create memory pool using for pipe process **/
         /* WAIT_LOOP */
-        for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
+        for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
         {
-            ret = tx_queue_create(&g_pipe0_hdl[ip_loop][addr_loop],
-                                  "USB_PIPE0_MBX",
-                                  TX_1_ULONG,
-                                  &g_rtos_usb_pipe0_mbx[0],
-                                  (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-
-            if (TX_SUCCESS != ret)
+            /** Create memory pool using for pipe process **/
+            /* WAIT_LOOP */
+            for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
             {
-                err = UsbRtos_Err_Init_Mbx;
+                ret = tx_queue_create(&g_pipe0_hdl[ip_loop][addr_loop],
+                                      "USB_PIPE0_MBX",
+                                      TX_1_ULONG,
+                                      &g_rtos_usb_pipe0_mbx[0],
+                                      (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
 
-                return err;
+                if (TX_SUCCESS != ret)
+                {
+                    err = UsbRtos_Err_Init_Mbx;
+
+                    return err;
+                }
             }
-        }
 
-        /* WAIT_LOOP */
-        for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
-        {
-            ret = tx_queue_create(&g_pipe_hdl[ip_loop][pipe_loop],
-                                  "USB_PIPE_MBX",
-                                  TX_1_ULONG,
-                                  &g_rtos_usb_pipe_mbx[0],
-                                  (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
-            if (TX_SUCCESS != ret)
+            /* WAIT_LOOP */
+            for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
             {
-                err = UsbRtos_Err_Init_Mbx;
+                ret =
+                    tx_queue_create(&g_pipe_hdl[ip_loop][pipe_loop],
+                                    "USB_PIPE_MBX",
+                                    TX_1_ULONG,
+                                    &g_rtos_usb_pipe_mbx[0],
+                                    (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+                if (TX_SUCCESS != ret)
+                {
+                    err = UsbRtos_Err_Init_Mbx;
 
-                return err;
+                    return err;
+                }
             }
         }
     }
@@ -1047,6 +1050,10 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
   #endif                               /* defined (USB_CFG_OTG_USE) */
  #endif                                /* BSP_CFG_RTOS */
 
+ #if (USB_NUM_USBIP == 2)
+    g_usb_rtos_is_create[p_cfg->module_number] = USB_YES;
+ #endif
+
     return err;
 }                                      /* End of function usb_rtos_configuration() */
 
@@ -1068,130 +1075,137 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
     uint16_t       ip_loop;
     uint16_t       pipe_loop;
     uint16_t       addr_loop;
+ #if (USB_NUM_USBIP == 2)
+    g_usb_rtos_is_create[module_number] = USB_NO;
+ #endif
  #if (BSP_CFG_RTOS == 2)
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     uint16_t i;
   #endif                               /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
-
     if (USB_MODE_HOST == g_usb_usbmode[module_number])
     {
+  #if (USB_NUM_USBIP == 2)
+        if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+  #endif
+        {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
-        /** Delete mailbox for each task. **/
-        /** USB HCD task **/
-        vQueueDelete(g_hcd_mbx_hdl);
+            /** Delete mailbox for each task. **/
+            /** USB HCD task **/
+            vQueueDelete(g_hcd_mbx_hdl);
 
-        /** USB MGR task **/
-        vQueueDelete(g_mgr_mbx_hdl);
+            /** USB MGR task **/
+            vQueueDelete(g_mgr_mbx_hdl);
 
-        /** USB HUB task **/
-        vQueueDelete(g_hub_mbx_hdl);
+            /** USB HUB task **/
+            vQueueDelete(g_hub_mbx_hdl);
 
-        /** USB Internal Communication mailbox **/
-        vQueueDelete(g_cls_mbx_hdl);
+            /** USB Internal Communication mailbox **/
+            vQueueDelete(g_cls_mbx_hdl);
 
    #if defined(USB_CFG_HMSC_USE)
-        vSemaphoreDelete(SemaphoreHandleRead);
+            vSemaphoreDelete(SemaphoreHandleRead);
 
-        /** USB Host MSC **/
-        vQueueDelete(g_hmsc_mbx_hdl);
+            /** USB Host MSC **/
+            vQueueDelete(g_hmsc_mbx_hdl);
 
-        /** USB Host MSC (for class request) **/
-        vQueueDelete(g_hmsc_req_mbx_hdl);
+            /** USB Host MSC (for class request) **/
+            vQueueDelete(g_hmsc_req_mbx_hdl);
    #endif                              /* defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HCDC_USE)
 
-        /** USB Host CDC **/
-        vQueueDelete(g_hcdc_mbx_hdl);
+            /** USB Host CDC **/
+            vQueueDelete(g_hcdc_mbx_hdl);
    #endif                              /* defined(USB_CFG_HCDC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
 
-        /** USB Host HID **/
-        vQueueDelete(g_hhid_mbx_hdl);
+            /** USB Host HID **/
+            vQueueDelete(g_hhid_mbx_hdl);
    #endif                              /* defined(USB_CFG_HHID_USE) */
 
    #if defined(USB_CFG_HPRN_USE)
 
-        /** USB Host Printer **/
-        vQueueDelete(g_hprn_mbx_hdl);
+            /** USB Host Printer **/
+            vQueueDelete(g_hprn_mbx_hdl);
    #endif                              /* defined(USB_CFG_HPRN_USE) */
 
-        /** Delete memory pool using for each task **/
-        /** USB HCD task **/
-        vQueueDelete(g_hcd_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_hcd_mpl[i]);
-        }
+            /** Delete memory pool using for each task **/
+            /** USB HCD task **/
+            vQueueDelete(g_hcd_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_hcd_mpl[i]);
+            }
 
-        /** USB MGR task **/
-        vQueueDelete(g_mgr_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_mgr_mpl[i]);
-        }
+            /** USB MGR task **/
+            vQueueDelete(g_mgr_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_mgr_mpl[i]);
+            }
 
-        /** USB HUB task **/
-        vQueueDelete(g_hub_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_hub_mpl[i]);
-        }
+            /** USB HUB task **/
+            vQueueDelete(g_hub_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_hub_mpl[i]);
+            }
 
-        /** USB Internal Communication **/
-        vQueueDelete(g_cls_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_cls_mpl[i]);
-        }
+            /** USB Internal Communication **/
+            vQueueDelete(g_cls_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_cls_mpl[i]);
+            }
 
    #if defined(USB_CFG_HMSC_USE)
 
-        /** USB Host MSC **/
-        vQueueDelete(g_hmsc_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_hmsc_mpl[i]);
-        }
+            /** USB Host MSC **/
+            vQueueDelete(g_hmsc_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_hmsc_mpl[i]);
+            }
 
-        /** USB Host MSC (for class request) **/
-        vQueueDelete(g_hmsc_req_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_hmsc_req_mpl[i]);
-        }
+            /** USB Host MSC (for class request) **/
+            vQueueDelete(g_hmsc_req_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_hmsc_req_mpl[i]);
+            }
    #endif                              /* defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HCDC_USE)
 
-        /** USB Host CDC **/
-        vQueueDelete(g_hcdc_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_hcdc_mpl[i]);
-        }
+            /** USB Host CDC **/
+            vQueueDelete(g_hcdc_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_hcdc_mpl[i]);
+            }
    #endif                              /* defined(USB_CFG_HCDC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
 
-        /** USB Host HID **/
-        vQueueDelete(g_hhid_mpl_hdl);
-        for (i = 0; i < QUEUE_SIZE; i++)
-        {
-            vPortFree(g_p_hhid_mpl[i]);
-        }
+            /** USB Host HID **/
+            vQueueDelete(g_hhid_mpl_hdl);
+            for (i = 0; i < QUEUE_SIZE; i++)
+            {
+                vPortFree(g_p_hhid_mpl[i]);
+            }
    #endif                              /* defined(USB_CFG_HHID_USE) */
 
-        /** USB Tasks Creation **/
-        vTaskDelete(g_hcd_tsk_hdl);
+            /** USB Tasks Creation **/
+            vTaskDelete(g_hcd_tsk_hdl);
 
    #if USB_CFG_HUB == USB_CFG_ENABLE
-        vTaskDelete(g_hub_tsk_hdl);
+            vTaskDelete(g_hub_tsk_hdl);
    #endif                              /* USB_CFG_HUB == USB_CFG_ENABLE */
-        vTaskDelete(g_mgr_tsk_hdl);
+            vTaskDelete(g_mgr_tsk_hdl);
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
+        }
     }
     else
     {
@@ -1217,181 +1231,200 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
     }
 
   #if (USB_NUM_USBIP == 2)
-    if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
-    {
+    if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
   #endif                               /* (USB_NUM_USBIP == 2) */
-    /* WAIT_LOOP */
-    for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
     {
-        /** Delete memory pool using for pipe process **/
         /* WAIT_LOOP */
-        for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
+        for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
         {
-            vQueueDelete(g_pipe0_hdl[ip_loop][addr_loop]);
-        }
+            /** Delete memory pool using for pipe process **/
+            /* WAIT_LOOP */
+            for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
+            {
+                vQueueDelete(g_pipe0_hdl[ip_loop][addr_loop]);
+            }
 
-        /* WAIT_LOOP */
-        for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
+            /* WAIT_LOOP */
+            for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
+            {
+                vQueueDelete(g_pipe_hdl[ip_loop][pipe_loop]);
+            }
+        }
+    }                                  /* (USB_NUM_USBIP == 2) */
+
+ #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
+    uint32_t ret;
+    (void) module_number;
+
+  #if (USB_CFG_MULTIPORT == USB_CFG_ENABLE)
+    if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+    {
+        for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
         {
-            vQueueDelete(g_pipe_hdl[ip_loop][pipe_loop]);
+            ret = tx_block_pool_delete(&g_usb_block_pool_hdl[ip_loop]);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mpl;
+
+                return err;
+            }
         }
     }
 
-  #if (USB_NUM_USBIP == 2)
-}
-  #endif                               /* (USB_NUM_USBIP == 2) */
- #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
-    uint32_t ret;
-
-    (void) module_number;
-
-    ret = tx_block_pool_delete(&g_usb_block_pool_hdl);
+  #else
+    ret = tx_block_pool_delete(&g_usb_block_pool_hdl[module_number]);
     if (TX_SUCCESS != ret)
     {
         err = UsbRtos_Err_Init_Mpl;
 
         return err;
     }
+  #endif
 
   #if !defined(USB_CFG_OTG_USE)
     if (USB_MODE_HOST == g_usb_usbmode[module_number])
   #endif                               /* !defined (USB_CFG_OTG_USE)*/
     {
+  #if (USB_NUM_USBIP == 2)
+        if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+  #endif
+        {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
-        /** Delete mailbox for each task. **/
-        /** USB HCD task **/
-        ret = tx_queue_delete(&g_hcd_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** Delete mailbox for each task. **/
+            /** USB HCD task **/
+            ret = tx_queue_delete(&g_hcd_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB MGR task **/
-        ret = tx_queue_delete(&g_mgr_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB MGR task **/
+            ret = tx_queue_delete(&g_mgr_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB HUB task **/
-        ret = tx_queue_delete(&g_hub_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB HUB task **/
+            ret = tx_queue_delete(&g_hub_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Internal Communication mailbox **/
-        ret = tx_queue_delete(&g_cls_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Internal Communication mailbox **/
+            ret = tx_queue_delete(&g_cls_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
    #if defined(USB_CFG_HMSC_USE)
-        ret = tx_semaphore_delete(&SemaphoreHandleRead);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Sem;
+            ret = tx_semaphore_delete(&SemaphoreHandleRead);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Sem;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Host MSC **/
-        ret = tx_queue_delete(&g_hmsc_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host MSC **/
+            ret = tx_queue_delete(&g_hmsc_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
 
-        /** USB Host MSC (for class request) **/
-        ret = tx_queue_delete(&g_hmsc_req_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host MSC (for class request) **/
+            ret = tx_queue_delete(&g_hmsc_req_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HCDC_USE)
 
-        /** USB Host CDC **/
-        ret = tx_queue_delete(&g_hcdc_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host CDC **/
+            ret = tx_queue_delete(&g_hcdc_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HCDC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
 
-        /** USB Host HID **/
-        ret = tx_queue_delete(&g_hhid_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host HID **/
+            ret = tx_queue_delete(&g_hhid_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HHID_USE) */
 
    #if defined(USB_CFG_HPRN_USE)
 
-        /** USB Host Printer **/
-        ret = tx_queue_delete(&g_hprn_mbx_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Mbx;
+            /** USB Host Printer **/
+            ret = tx_queue_delete(&g_hprn_mbx_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Mbx;
 
-            return err;
-        }
+                return err;
+            }
    #endif                              /* defined(USB_CFG_HPRN_USE) */
 
-        ret = tx_thread_terminate(&g_hcd_tsk_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = tx_thread_terminate(&g_hcd_tsk_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
 
-        ret = tx_thread_delete(&g_hcd_tsk_hdl); /** Pointer to a thread control block.  **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = tx_thread_delete(&g_hcd_tsk_hdl); /** Pointer to a thread control block.  **/
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
 
-        ret = tx_thread_terminate(&g_mgr_tsk_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = tx_thread_terminate(&g_mgr_tsk_hdl);
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
 
-        ret = tx_thread_delete(&g_mgr_tsk_hdl); /** Task handler for use later      **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
+            ret = tx_thread_delete(&g_mgr_tsk_hdl); /** Task handler for use later      **/
+            if (TX_SUCCESS != ret)
+            {
+                err = UsbRtos_Err_Init_Tsk;
 
-            return err;
-        }
+                return err;
+            }
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
+        }
     }
 
   #if defined(USB_CFG_OTG_USE)
@@ -1429,31 +1462,36 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
 
-    /* WAIT_LOOP */
-    for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
+  #if (USB_NUM_USBIP == 2)
+    if (!(g_usb_rtos_is_create[0] || g_usb_rtos_is_create[1]))
+  #endif
     {
-        /** Delete memory pool using for pipe process **/
         /* WAIT_LOOP */
-        for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
+        for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
         {
-            ret = tx_queue_delete(&g_pipe0_hdl[ip_loop][addr_loop]);
-            if (TX_SUCCESS != ret)
+            /** Delete memory pool using for pipe process **/
+            /* WAIT_LOOP */
+            for (addr_loop = 0; addr_loop < USB_MAXDEVADDR; addr_loop++)
             {
-                err = UsbRtos_Err_Init_Mpl;
+                ret = tx_queue_delete(&g_pipe0_hdl[ip_loop][addr_loop]);
+                if (TX_SUCCESS != ret)
+                {
+                    err = UsbRtos_Err_Init_Mpl;
 
-                return err;
+                    return err;
+                }
             }
-        }
 
-        /* WAIT_LOOP */
-        for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
-        {
-            ret = tx_queue_delete(&g_pipe_hdl[ip_loop][pipe_loop]);
-            if (TX_SUCCESS != ret)
+            /* WAIT_LOOP */
+            for (pipe_loop = 0; pipe_loop < (USB_MAXPIPE_NUM + 1); pipe_loop++)
             {
-                err = UsbRtos_Err_Init_Mpl;
+                ret = tx_queue_delete(&g_pipe_hdl[ip_loop][pipe_loop]);
+                if (TX_SUCCESS != ret)
+                {
+                    err = UsbRtos_Err_Init_Mpl;
 
-                return err;
+                    return err;
+                }
             }
         }
     }
@@ -1676,9 +1714,10 @@ usb_er_t usb_cstd_isnd_msg (uint8_t id, usb_msg_t * mess)
  *               : usb_utr_t**  blk     : Memory block pointer.
  * Return          : usb_er_t             : USB_OK / USB_ERROR
  ******************************************************************************/
-usb_er_t usb_cstd_pget_blk (uint8_t id, usb_utr_t ** blk)
+usb_er_t usb_cstd_pget_blk (uint8_t id, usb_utr_t ** blk, uint8_t ip)
 {
  #if (BSP_CFG_RTOS == 2)
+    FSP_PARAMETER_NOT_USED(ip);
     BaseType_t    err;
     QueueHandle_t handle;
  #elif   (BSP_CFG_RTOS == 1)
@@ -1708,7 +1747,7 @@ usb_er_t usb_cstd_pget_blk (uint8_t id, usb_utr_t ** blk)
     }
 
  #elif (BSP_CFG_RTOS == 1)
-    err = tx_block_allocate(&g_usb_block_pool_hdl, (void **) blk, TX_NO_WAIT);
+    err = tx_block_allocate(&g_usb_block_pool_hdl[ip], (void **) blk, TX_NO_WAIT);
     if ((TX_SUCCESS == err) && (NULL != (*blk)))
     {
         result = USB_OK;

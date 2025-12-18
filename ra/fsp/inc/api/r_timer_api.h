@@ -81,6 +81,8 @@ typedef enum e_timer_compare_match
     TIMER_COMPARE_MATCH_H = 7U,        ///< Compare match H value
 } timer_compare_match_t;
 
+#ifndef BSP_OVERRIDE_TIMER_CALLBACK_ARGS_T
+
 /** Callback function parameter data */
 typedef struct st_timer_callback_args
 {
@@ -92,9 +94,13 @@ typedef struct st_timer_callback_args
     uint32_t capture;
 } timer_callback_args_t;
 
+#endif
+
 /** Timer control block.  Allocate an instance specific control block to pass into the timer API calls.
  */
 typedef void timer_ctrl_t;
+
+#ifndef BSP_OVERRIDE_TIMER_STATE_T
 
 /** Possible status values returned by @ref timer_api_t::statusGet. */
 typedef enum e_timer_state
@@ -103,6 +109,9 @@ typedef enum e_timer_state
     TIMER_STATE_COUNTING = 1,          ///< Timer is running
     TIMER_STATE_UNKNOWN  = 2           ///< Timer state could not be defined
 } timer_state_t;
+
+#endif
+
 #ifndef BSP_OVERRIDE_TIMER_MODE_T
 
 /** Timer operational modes */
@@ -164,12 +173,16 @@ typedef struct st_timer_info
     uint32_t period_counts;
 } timer_info_t;
 
+#ifndef BSP_OVERRIDE_TIMER_STATUS_T
+
 /** Current timer status. */
 typedef struct st_timer_status
 {
     uint32_t      counter;             ///< Current counter value
     timer_state_t state;               ///< Current timer state (running or stopped)
 } timer_status_t;
+
+#endif
 
 /** User configuration structure, used in open function */
 typedef struct st_timer_cfg

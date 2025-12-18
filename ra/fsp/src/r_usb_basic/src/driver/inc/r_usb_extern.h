@@ -74,6 +74,7 @@ extern uint32_t  g_usb_hstd_data_cnt_pipe0[];                  /* PIPE0 Control 
 extern uint16_t  g_usb_hstd_hs_enable[];                       /* Hi-speed enable */
 extern uint8_t   g_usb_pipe_host[USB_MAX_PIPE_POS_HOST];       /* Pipe number of USB Host transfer.(Read pipe/Write pipe) */
  #if defined(USB_CFG_HCDC_USE)
+  #include "r_usb_hcdc_cfg.h"
 extern uint8_t g_usb_hcdc_bulk_in_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hcdc_bulk_out_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hcdc_int_in_pipe[USB_NUM_USBIP];
@@ -84,6 +85,7 @@ extern uint8_t g_usb_hcdc2_int_in_pipe[USB_NUM_USBIP];
   #endif
  #endif                                /* defined(USB_CFG_HCDC_USE) */
  #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_hhid_cfg.h"
 extern uint8_t g_usb_hhid_int_in_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hhid_int_out_pipe[USB_NUM_USBIP];
   #if (USB_CFG_HHID_MULTI == USB_CFG_ENABLE)
@@ -92,6 +94,7 @@ extern uint8_t g_usb_hhid3_int_in_pipe[USB_NUM_USBIP];
   #endif
  #endif                                /* defined(USB_CFG_HHID_USE) */
  #if defined(USB_CFG_HPRN_USE)
+  #include "r_usb_hprn_cfg.h"
 extern uint8_t g_usb_hprn_bulk_in_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hprn_bulk_out_pipe[USB_NUM_USBIP];
   #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
@@ -477,7 +480,7 @@ usb_er_t usb_hstd_clr_feature(usb_utr_t * ptr, uint16_t addr, uint16_t epnum, us
 void     usb_hstd_suspend(usb_utr_t * ptr);
 void     usb_hstd_bus_int_disable(usb_utr_t * ptr);
 void     usb_class_request_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
-void     usb_host_registration(usb_utr_t * ptr);
+void     usb_host_registration(usb_utr_t * ptr, usb_class_t type);
 void     usb_hstd_connect_err_event_set(uint16_t ip_no);
 
 /* r_usb_hcontrolrw.c */
@@ -498,7 +501,7 @@ void usb_hstd_ls_connect_function(usb_utr_t * ptr);
 void usb_hstd_attach_function(void);
 void usb_hstd_ovrcr0function(usb_utr_t * ptr);
 
-void usb_hdriver_init(usb_utr_t * ptr);
+void usb_hdriver_init(usb_utr_t * ptr, usb_class_t type);
 void usb_class_driver_start(usb_utr_t * ptr);
 
  #if (BSP_CFG_RTOS != 0)
@@ -636,7 +639,7 @@ void      usb_cstd_set_task_pri(uint8_t tasknum, uint8_t pri);
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-usb_er_t usb_cstd_pget_blk(uint8_t id, usb_utr_t ** blk);
+usb_er_t usb_cstd_pget_blk(uint8_t id, usb_utr_t ** blk, uint8_t ip);
 usb_er_t usb_cstd_rel_blk(uint8_t id, usb_utr_t * blk);
 
 /* r_usb_hscheduler.c */
@@ -808,6 +811,10 @@ extern void usb_haud_write_complete(usb_utr_t * mess, uint16_t devadr, uint16_t 
 extern void usb_haud_registration(usb_utr_t * ptr);
 extern void usb_haud_task(usb_vp_int_t stacd);
 extern void usb_haud_driver_start(usb_utr_t * ptr);
+extern void usb_haud_audio20_clock_source_descriptor_get(usb_utr_t * ptr,
+                                                         uint8_t     terminal_link,
+                                                         uint8_t     ep_direction,
+                                                         uint8_t  ** csd);
 
 #endif                                 /* defined(USB_CFG_HAUD_USE) */
 
@@ -863,7 +870,7 @@ void usb_cstd_pipe0_msg_forward(usb_utr_t * ptr, uint16_t dev_addr);
 void usb_cstd_usbx_callback(usb_event_info_t * p_api_event, usb_hdl_t cur_task, usb_onoff_t usb_state);
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-void usb_host_usbx_registration(usb_utr_t * p_utr);
+void usb_host_usbx_registration(usb_utr_t * p_utr, usb_class_t type);
 void usb_host_usbx_attach_init(uint8_t module_number);
 
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */

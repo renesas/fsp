@@ -15,6 +15,8 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_func101 (uint32_t ARG1, uint32_t ARG2, uint32_t ARG3, uint32_t ARG4)
 {
     WR1_PROG(REG_00D0H, 0x0a0701e5U);

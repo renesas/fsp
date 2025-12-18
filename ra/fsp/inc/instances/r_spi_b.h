@@ -35,6 +35,13 @@ typedef enum e_spi_b_ssl_mode
     SPI_B_SSL_MODE_CLK_SYN             ///< Clock Synchronous operation (3-wire method)
 } spi_b_ssl_mode_t;
 
+/** Burst Transfer Without Delay. */
+typedef enum e_spi_b_burst_transfer_without_delay
+{
+    SPI_B_BURST_TRANSFER_WITH_DELAY,   ///< Interframe delay
+    SPI_B_BURST_TRANSFER_WITHOUT_DELAY ///< No interframe delay
+} spi_b_burst_transfer_without_delay_t;
+
 /** Transmit Only (Half Duplex), or Full Duplex. */
 typedef enum e_spi_b_communication
 {
@@ -111,18 +118,19 @@ typedef struct
 /** Extended SPI interface configuration */
 typedef struct st_spi_b_extended_cfg
 {
-    spi_b_ssl_mode_t               spi_clksyn;         ///< Select SPI or Clock Synchronous mode operation
-    spi_b_communication_t          spi_comm;           ///< Select full-duplex or transmit-only communication
-    spi_b_ssl_polarity_t           ssl_polarity;       ///< Select SSLn signal polarity
-    spi_b_ssl_select_t             ssl_select;         ///< Select which slave to use: 0-SSL0, 1-SSL1, 2-SSL2, 3-SSL3
-    spi_b_mosi_idle_value_fixing_t mosi_idle;          ///< Select MOSI idle fixed value and selection
-    spi_b_parity_t                 parity;             ///< Select parity and enable/disable parity
-    spi_b_byte_swap_t              byte_swap;          ///< Select byte swap mode
-    spi_b_clock_source_t           clock_source;       ///< Communication clock source (TCLK).
-    rspck_div_setting_t            spck_div;           ///< Register values for configuring the SPI Clock Divider.
-    spi_b_delay_count_t            spck_delay;         ///< SPI Clock Delay Register Setting
-    spi_b_delay_count_t            ssl_negation_delay; ///< SPI Slave Select Negation Delay Register Setting
-    spi_b_delay_count_t            next_access_delay;  ///< SPI Next-Access Delay Register Setting
+    spi_b_ssl_mode_t                     spi_clksyn;             ///< Select SPI or Clock Synchronous mode operation
+    spi_b_communication_t                spi_comm;               ///< Select full-duplex or transmit-only communication
+    spi_b_ssl_polarity_t                 ssl_polarity;           ///< Select SSLn signal polarity
+    spi_b_ssl_select_t                   ssl_select;             ///< Select which slave to use: 0-SSL0, 1-SSL1, 2-SSL2, 3-SSL3
+    spi_b_mosi_idle_value_fixing_t       mosi_idle;              ///< Select MOSI idle fixed value and selection
+    spi_b_parity_t                       parity;                 ///< Select parity and enable/disable parity
+    spi_b_byte_swap_t                    byte_swap;              ///< Select byte swap mode
+    spi_b_clock_source_t                 clock_source;           ///< Communication clock source (TCLK).
+    rspck_div_setting_t                  spck_div;               ///< Register values for configuring the SPI Clock Divider.
+    spi_b_delay_count_t                  spck_delay;             ///< SPI Clock Delay Register Setting
+    spi_b_delay_count_t                  ssl_negation_delay;     ///< SPI Slave Select Negation Delay Register Setting
+    spi_b_delay_count_t                  next_access_delay;      ///< SPI Next-Access Delay Register Setting
+    spi_b_burst_transfer_without_delay_t burst_interframe_delay; ///< SPI Between Burst Transfer Frames Delay Select
 } spi_b_extended_cfg_t;
 
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref spi_api_t::open is called. */

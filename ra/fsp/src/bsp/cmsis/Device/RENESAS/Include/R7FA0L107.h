@@ -1069,12 +1069,10 @@ typedef struct
             __IOM uint16_t PIM   : 1;  /*!< [5..5] Pin Input Buffer Selection                                         */
             __IOM uint16_t NCODR : 1;  /*!< [6..6] N-channel Open-drain Control                                       */
             uint16_t             : 1;
-            __IOM uint16_t PSEL  : 4;  /*!< [11..8] Peripheral Select.These bits select the peripheral function.
-                                        *   For individual pin functions, see the associated tables
-                                        *   in I/O Ports chapter.                                                     */
-            uint16_t            : 2;
-            __IOM uint16_t ISEL : 1;   /*!< [14..14] IRQ Input Enable                                                 */
-            __IOM uint16_t PMC  : 1;   /*!< [15..15] Pin Mode Control                                                 */
+            __IOM uint16_t PSEL  : 4;  /*!< [11..8] Peripheral Select                                                 */
+            uint16_t             : 2;
+            __IOM uint16_t ISEL  : 1;  /*!< [14..14] IRQ Input Enable                                                 */
+            __IOM uint16_t PMC   : 1;  /*!< [15..15] Pin Mode Control                                                 */
         } PmnPFS_b;
     };
 } R_PFS_PORT_PIN_Type;                 /*!< Size = 2 (0x2)                                                            */
@@ -3435,14 +3433,14 @@ typedef struct                         /*!< (@ 0x40006000) R_ICU Structure      
         {
             __IOM uint32_t IWDTED : 1;     /*!< [0..0] IWDT Interrupt Software Standby/Snooze Mode Returns Enable         */
             __IOM uint32_t LVD1ED : 1;     /*!< [1..1] LVD1 Interrupt Software Standby/Snooze Mode Returns Enable         */
-            __IOM uint32_t IRQ0ED : 1;     /*!< [2..2] IRQ0ED                                                             */
-            __IOM uint32_t IRQ1ED : 1;     /*!< [3..3] IRQ1ED                                                             */
-            __IOM uint32_t IRQ2ED : 1;     /*!< [4..4] IRQ2ED                                                             */
-            __IOM uint32_t IRQ3ED : 1;     /*!< [5..5] IRQ3ED                                                             */
-            __IOM uint32_t IRQ4ED : 1;     /*!< [6..6] IRQ4ED                                                             */
-            __IOM uint32_t IRQ5ED : 1;     /*!< [7..7] IRQ5ED                                                             */
-            __IOM uint32_t IRQ6ED : 1;     /*!< [8..8] IRQ6ED                                                             */
-            __IOM uint32_t IRQ7ED : 1;     /*!< [9..9] IRQ7ED                                                             */
+            __IOM uint32_t IRQ0ED : 1;     /*!< [2..2] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ1ED : 1;     /*!< [3..3] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ2ED : 1;     /*!< [4..4] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ3ED : 1;     /*!< [5..5] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ4ED : 1;     /*!< [6..6] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ5ED : 1;     /*!< [7..7] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ6ED : 1;     /*!< [8..8] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t IRQ7ED : 1;     /*!< [9..9] IRQ Interrupt Software Standby/Snooze Mode Returns Enable          */
             __IOM uint32_t DTCED  : 1;     /*!< [10..10] DTC Transfer Complete Interrupt Snooze Mode Returns
                                             *   Enable                                                                    */
             uint32_t                 : 7;

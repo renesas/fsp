@@ -15,6 +15,8 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_p41u (const uint32_t InData_Text[], uint32_t MAX_CNT)
 {
     uint32_t iLoop = 0U;
@@ -31,5 +33,8 @@ void r_rsip_p41u (const uint32_t InData_Text[], uint32_t MAX_CNT)
 
     r_rsip_func205();
 
-    r_rsip_func101(bswap_32big(0x04e5ba36U), bswap_32big(0xee8c8825U), bswap_32big(0x3641f6b7U), bswap_32big(0x329c333fU));
+    r_rsip_func101(bswap_32big(0x9b448c7eU),
+                   bswap_32big(0x05e2e955U),
+                   bswap_32big(0xbcdd8f50U),
+                   bswap_32big(0x41f2b166U));
 }

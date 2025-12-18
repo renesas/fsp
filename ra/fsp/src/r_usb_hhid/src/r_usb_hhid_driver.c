@@ -89,7 +89,7 @@ static void usb_hhid_check_result (usb_utr_t * ptr, uint16_t unused, uint16_t st
     FSP_PARAMETER_NOT_USED(status);
 
     /* Get mem pool blk */
-    if (USB_PGET_BLK(USB_HHID_MPL, &p_blf) == USB_OK)
+    if (USB_PGET_BLK(USB_HHID_MPL, &p_blf, ptr->ip) == USB_OK)
     {
         cp          = (usb_clsinfo_t *) p_blf;
         cp->msghead = (usb_mh_t) USB_NULL;
@@ -959,7 +959,7 @@ void usb_hhid_class_check (usb_utr_t * ptr, uint16_t ** table)
 
 #else                                  /* (BSP_CFG_RTOS) */
     /* Get mem block from pool. */
-    if (USB_PGET_BLK(USB_HHID_MPL, &p_blf) == USB_OK)
+    if (USB_PGET_BLK(USB_HHID_MPL, &p_blf, ptr->ip) == USB_OK)
     {
         cp          = (usb_clsinfo_t *) p_blf;
         cp->msghead = (usb_mh_t) USB_NULL;

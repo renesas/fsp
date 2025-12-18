@@ -579,22 +579,6 @@ rsip_ret_t r_rsip_wrapper_p6f_hmacsha512_256 (const uint32_t InData_IV[],
     return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
 }
 
-rsip_ret_t r_rsip_wrapper_p75i (const rsip_wrapped_key_t * p_wrapped_key,
-                                const uint32_t             InData_HashType[],
-                                const uint32_t             InData_MsgLen[])
-{
-    return r_rsip_p75i((uint32_t *) p_wrapped_key->p_value, InData_HashType, InData_MsgLen,
-                       r_rsip_byte_to_word_convert(RSIP_BYTE_SIZE_WRAPPED_KEY(p_wrapped_key->type)));
-}
-
-rsip_ret_t r_rsip_wrapper_p75r (const rsip_wrapped_key_t * p_wrapped_key,
-                                const uint32_t             InData_HashType[],
-                                const uint32_t             InData_State[])
-{
-    return r_rsip_p75r((uint32_t *) p_wrapped_key->p_value, InData_HashType, InData_State,
-                       r_rsip_byte_to_word_convert(RSIP_BYTE_SIZE_WRAPPED_KEY(p_wrapped_key->type)));
-}
-
 rsip_ret_t r_rsip_wrapper_p8f_aes128 (const uint32_t InData_KeyIndex[],
                                       const uint32_t InData_WrappedKeyType[],
                                       const uint32_t InData_WrappedKeyIndex[],

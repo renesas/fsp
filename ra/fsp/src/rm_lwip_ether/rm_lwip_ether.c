@@ -373,6 +373,9 @@ static void rm_lwip_ether_input (rm_lwip_ether_instance_t * p_lwip_instance)
                                      NULL,
                                      (uint16_t) p_ether_instance->p_cfg->ether_buffer_size);
 
+        /* Set the maximum buffer size when reading. */
+        read_buffer_length = p_ether_instance->p_cfg->ether_buffer_size;
+
         if (ETHER_ZEROCOPY_ENABLE == p_ether_instance->p_cfg->zerocopy)
         {
             err = p_ether_instance->p_api->read(p_ether_instance->p_ctrl, &p_pbuf->payload, &read_buffer_length);

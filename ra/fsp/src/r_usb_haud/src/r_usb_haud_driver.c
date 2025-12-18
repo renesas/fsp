@@ -344,5 +344,134 @@ void usb_haud_driver_start (usb_utr_t * ptr)
  ******************************************************************************/
 
 /******************************************************************************
+ * Function Name   : usb_haud_audio20_clock_source_descriptor_get
+ * Description     : Find the Clock Source Descriptor
+ * Arguments       : usb_utr_t  *ptr          : Pointer to usb_utr_t structure
+ *                 : uint8_t    terminal_link : Terminal Link ID
+ *                 : uint8_t    ep_direction  : Transfer direction of End Point
+ *                 : uint8_t    **csd         : Pointer to Clock Source Descriptor
+ * Return          : none
+ ******************************************************************************/
+void usb_haud_audio20_clock_source_descriptor_get (usb_utr_t * ptr,
+                                                   uint8_t     terminal_link,
+                                                   uint8_t     ep_direction,
+                                                   uint8_t  ** csd)
+{
+    uint8_t * descriptor;
+    uint32_t  total_descriptor_length;
+    uint32_t  descriptor_length;
+    uint32_t  descriptor_type;
+    uint8_t   cs_id = 0;
+
+    *csd = NULL;
+
+    if (NULL != g_p_usb_haud_config_table[ptr->ip])
+    {
+        /* First, Get the Audio Control Input/Output Terminal Descriptor 2.0 */
+
+        descriptor = g_p_usb_haud_config_table[ptr->ip];
+
+        total_descriptor_length = *(descriptor + 2);
+
+        while (total_descriptor_length)
+        {
+            descriptor_length = *descriptor;
+            descriptor_type   = *(descriptor + 1);
+
+            switch (descriptor_type)
+            {
+                case USB_HAUD_CS_INTERFACE:
+                {
+                    if (USB_EP_DIR_OUT == ep_direction)
+                    {
+                        if ((USB_HAUD_AUDIO20_AC_INPUT_TERMINAL == descriptor[2]) && /* bDescriptorSubType */
+                            (terminal_link == descriptor[3]))                        /* bTerminalID */
+                        {
+                            cs_id = descriptor[7];                                   /* bCSourceID */
+                            break;
+                        }
+                    }
+
+                    if (USB_EP_DIR_IN == ep_direction)
+                    {
+                        if ((USB_HAUD_AUDIO20_AC_OUTPUT_TERMINAL == descriptor[2]) && /* bDescriptorSubType */
+                            (terminal_link == descriptor[3]))                         /* bTerminalID */
+                        {
+                            cs_id = descriptor[8];                                    /* bCSourceID */
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (0 != cs_id)
+            {
+                break;
+            }
+
+            if (descriptor_length > total_descriptor_length)
+            {
+                return;
+            }
+
+            descriptor              += descriptor_length;
+            total_descriptor_length -= descriptor_length;
+
+            if (0 == total_descriptor_length)
+            {
+                if (0 == cs_id)
+                {
+
+                    /* bCSourceID was not found. */
+                    return;
+                }
+            }
+        }
+
+        /* Then, Get the Audio Clock Source Descriptor 2.0 */
+
+        descriptor = g_p_usb_haud_config_table[ptr->ip];
+
+        total_descriptor_length = *(descriptor + 2);
+
+        while (total_descriptor_length)
+        {
+            descriptor_length = *descriptor;
+            descriptor_type   = *(descriptor + 1);
+
+            switch (descriptor_type)
+            {
+                case USB_HAUD_CS_INTERFACE:
+                {
+                    if ((USB_HAUD_AUDIO20_AC_CLOCK_SOURCE == descriptor[2]) && /* bDescriptorSubType */
+                        (cs_id == descriptor[3]))                              /* bClockID */
+                    {
+                        *csd = descriptor;                                     /* bCSourceID */
+                        break;
+                    }
+                }
+            }
+
+            if (NULL != *csd)
+            {
+                break;
+            }
+
+            if (descriptor_length > total_descriptor_length)
+            {
+                return;
+            }
+
+            descriptor              += descriptor_length;
+            total_descriptor_length -= descriptor_length;
+        }
+    }
+}
+
+/******************************************************************************
+ * End of function usb_haud_audio20_clock_source_descriptor_get()
+ ******************************************************************************/
+
+/******************************************************************************
  * End  Of File
  ******************************************************************************/

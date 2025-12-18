@@ -15,8 +15,13 @@
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_pdcu (const uint32_t InData_PaddedMsg[], uint32_t MAX_CNT)
 {
     r_rsip_func000(InData_PaddedMsg, MAX_CNT);
-    r_rsip_func101(bswap_32big(0x52cc5c35U), bswap_32big(0x2d523679U), bswap_32big(0x560361e9U), bswap_32big(0x99a5c085U));
+    r_rsip_func101(bswap_32big(0x52cc5c35U),
+                   bswap_32big(0x2d523679U),
+                   bswap_32big(0x560361e9U),
+                   bswap_32big(0x99a5c085U));
 }

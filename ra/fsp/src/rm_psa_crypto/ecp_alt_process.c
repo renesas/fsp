@@ -314,7 +314,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     uint32_t   indata_key_type = 0;
     uint8_t    padding         = 0U;
 
-  #if !(BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_SCE9_SUPPORTED)
+  #if !(BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
     if ((bool) (grp->vendor_ctx) == false)
     {
 

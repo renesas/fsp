@@ -33,6 +33,10 @@ FSP_HEADER
 fsp_err_t R_USB_HAUD_DeviceInfoGet(usb_ctrl_t * const       p_api_ctrl,
                                    usb_haud_device_info_t * p_info,
                                    uint8_t                  device_address);
+fsp_err_t R_USB_HAUD_ClockSourceGet(usb_ctrl_t * const    p_api_ctrl,
+                                    usb_haud_sampling_t * p_info,
+                                    uint8_t               direction,
+                                    uint8_t               device_address);
 fsp_err_t R_USB_HAUD_AlternateNumberGet(usb_ctrl_t * const    p_api_ctrl,
                                         usb_haud_sampling_t * p_info,
                                         uint8_t               direction,

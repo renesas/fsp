@@ -217,7 +217,7 @@ static void usb_hcdc_check_result (usb_utr_t * mess, uint16_t data1, uint16_t da
     (void) data2;
 
     /* Get mem pool blk */
-    if (USB_PGET_BLK(USB_HCDC_MPL, &p_blf) == USB_OK)
+    if (USB_PGET_BLK(USB_HCDC_MPL, &p_blf, mess->ip) == USB_OK)
     {
         ptr          = (usb_clsinfo_t *) p_blf;
         ptr->msginfo = USB_MSG_CLS_CHECKREQUEST;
@@ -412,7 +412,7 @@ void usb_hcdc_configured (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     usb_hcdc_set_pipe_registration(ptr, devadr); /* Host CDC Pipe registration */
     ctrl.module_number  = ptr->ip;               /* Module number setting */
     ctrl.device_address = (uint8_t) devadr;
-#if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+#if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
     ctrl.type = (usb_class_t) USB_CLASS_HCDC;
 #else
     ctrl.type = (usb_class_t) USB_CLASS_INTERNAL_HCDC;
@@ -441,7 +441,7 @@ void usb_hcdc_detach (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     usb_hstd_clr_pipe_table(ptr->ip, devadr);
     ctrl.module_number  = ptr->ip;     /* Module number setting */
     ctrl.device_address = (uint8_t) devadr;
-#if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+#if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
     ctrl.type = (usb_class_t) USB_CLASS_HCDC;
 #endif
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
@@ -738,7 +738,7 @@ void usb_hcdc_class_check (usb_utr_t * ptr, uint16_t ** table)
     g_usb_hcdc_smpl_class_seq[ptr->ip] = USB_SEQ_0; /* Initialize sequence number for enumeration */
 
     /* Get mem block from pool. */
-    if (USB_PGET_BLK(USB_HCDC_MPL, &p_blf) == USB_OK)
+    if (USB_PGET_BLK(USB_HCDC_MPL, &p_blf, ptr->ip) == USB_OK)
     {
         cp          = p_blf;
         cp->msginfo = USB_MSG_CLS_CHECKREQUEST; /* Set message information: Check request */

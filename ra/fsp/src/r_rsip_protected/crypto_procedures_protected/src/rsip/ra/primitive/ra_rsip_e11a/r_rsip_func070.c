@@ -10,38 +10,28 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
 
+RSIP_PRV_PRIMITIVE_FUNC
+
 void r_rsip_func070 (const uint32_t ARG1[])
 {
-    WR1_PROG(REG_0094H, 0x30003000U);
-    WR1_PROG(REG_0094H, 0x00050020U);
-    WR1_PROG(REG_0094H, 0x0000b420U);
-    WR1_PROG(REG_0094H, 0x01d5611fU);
-    WR1_PROG(REG_0094H, 0x00030040U);
-    WR1_PROG(REG_0094H, 0x0000b420U);
-    WR1_PROG(REG_0094H, 0x0128ed2dU);
-    WR1_PROG(REG_0094H, 0x00070040U);
-    WR1_PROG(REG_0094H, 0x0000b420U);
+    r_rsip_func_sub016(0x30003000U, 0x00050020U, 0x0000b420U);
+    r_rsip_func_sub016(0x01d5611fU, 0x00030040U, 0x0000b420U);
+    r_rsip_func_sub016(0x0128ed2dU, 0x00070040U, 0x0000b420U);
     WR1_PROG(REG_0094H, 0x011d7735U);
     WR1_PROG(REG_0094H, 0x00000080U);
 
     WR1_PROG(REG_00D0H, 0x300710c4U);
-    WR1_PROG(REG_009CH, 0x81010020U);
-    WR1_PROG(REG_0000H, 0x00490005U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
+    r_rsip_func_sub003(0x81010020U, 0x00490005U);
 
     WR1_PROG(REG_00A0H, 0x20010000U);
     WR1_PROG(REG_00B0H, 0x00001405U);
-    WR1_PROG(REG_0014H, 0x00002fc1U);
-    WR1_PROG(REG_00D4H, 0x00000b00U);
-    WR1_PROG(REG_00D0H, 0xf7049d07U);
-
-    WAIT_STS(REG_0014H, 31, 1);
+    r_rsip_func_sub008(0x00002fc1U, 0x00000b00U, 0xf7049d07U);
     WR4_ADDR(REG_002CH, &ARG1[20]);
     WAIT_STS(REG_0014H, 31, 1);
     WR4_ADDR(REG_002CH, &ARG1[24]);
@@ -98,8 +88,5 @@ void r_rsip_func070 (const uint32_t ARG1[])
     WAIT_STS(REG_0014H, 31, 1);
     WR4_ADDR(REG_002CH, &ARG1[68]);
 
-    WR1_PROG(REG_00D0H, 0x8c100005U);
-    WR1_PROG(REG_0000H, 0x00410011U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
+    r_rsip_func_sub006(0x8c100005U, 0x00410011U);
 }

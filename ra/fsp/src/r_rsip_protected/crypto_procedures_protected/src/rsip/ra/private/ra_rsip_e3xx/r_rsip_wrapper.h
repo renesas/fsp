@@ -163,6 +163,32 @@
 #define RSIP_PRV_FUNC_NAME_EDDSA_SIGN_EDWARDS25519                          r_rsip_wrapper_p18_edwards25519
 #define RSIP_PRV_FUNC_NAME_EDDSA_VERIFY_EDWARDS25519                        r_rsip_wrapper_p19_edwards25519
 
+#define RSIP_PRV_FUNC_NAME_SHA1SHA2_INIT                                    r_rsip_p73i
+#define RSIP_PRV_FUNC_NAME_SHA1SHA2_RESUME                                  r_rsip_p73r
+#define RSIP_PRV_FUNC_NAME_SHA1SHA2_UPDATE                                  r_rsip_p73u
+#define RSIP_PRV_FUNC_NAME_SHA1SHA2_SUSPEND                                 r_rsip_p73s
+#define RSIP_PRV_FUNC_NAME_SHA1SHA2_FINAL                                   r_rsip_p73f
+
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA1SHA2_INIT                               r_rsip_p75i
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA1SHA2_RESUME                             r_rsip_p75r
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA1SHA2_UPDATE                             r_rsip_p75u
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA1SHA2_SUSPEND                            r_rsip_p75s
+#define RSIP_PRV_FUNC_NAME_HMAC_SHA1SHA2_FINAL                              r_rsip_p75f
+
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_INIT                                r_rsip_pefi
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_RESUME                              r_rsip_pefr
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_ENC_UPDATE                          r_rsip_pefe
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_UPDATE                              r_rsip_pefu
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_SUSPEND                             r_rsip_pefs
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_FINAL                               r_rsip_peff
+
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_INIT                           r_rsip_pe5i
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_RESUME                         r_rsip_pe5r
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_ENC_UPDATE                     r_rsip_pe5e
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_UPDATE                         r_rsip_pe5u
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_SUSPEND                        r_rsip_pe5s
+#define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_FINAL                          r_rsip_pe5f
+
 #define RSIP_PRV_FUNC_NAME_KEY_GENERATE_HMAC_SHA256                         r_rsip_p0b
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_HMAC_SHA256                         r_rsip_wrapper_p6f_hmacsha256
 
@@ -369,12 +395,6 @@ rsip_ret_t r_rsip_wrapper_p6f_hmacsha512_224(const uint32_t InData_IV[],
 rsip_ret_t r_rsip_wrapper_p6f_hmacsha512_256(const uint32_t InData_IV[],
                                              const uint32_t InData_InstData[],
                                              uint32_t       OutData_KeyIndex[]);
-rsip_ret_t r_rsip_wrapper_p75i(const rsip_wrapped_key_t * p_wrapped_key,
-                               const uint32_t             InData_HashType[],
-                               const uint32_t             InData_MsgLen[]);
-rsip_ret_t r_rsip_wrapper_p75r(const rsip_wrapped_key_t * p_wrapped_key,
-                               const uint32_t             InData_HashType[],
-                               const uint32_t             InData_State[]);
 rsip_ret_t r_rsip_wrapper_p8f_aes128(const uint32_t InData_KeyIndex[],
                                      const uint32_t InData_WrappedKeyType[],
                                      const uint32_t InData_WrappedKeyIndex[],

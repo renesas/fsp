@@ -213,27 +213,36 @@ fsp_err_t R_VIN_CaptureStart (capture_ctrl_t * const p_api_ctrl, uint8_t * const
     FSP_ERROR_RETURN(VIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(!R_VIN->MC_b.ME, FSP_ERR_INVALID_STATE);
     FSP_ERROR_RETURN(!R_VIN->FC_b.CC, FSP_ERR_INVALID_STATE);
- #if !defined(VIN_CFG_USE_RUNTIME_BUFFER)
-    FSP_ERROR_RETURN(!p_buffer, FSP_ERR_UNSUPPORTED);
- #endif
 #else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
 
     capture_cfg_t const * const p_cfg    = p_ctrl->p_cfg;
     vin_extended_cfg_t const  * p_extend = p_cfg->p_extend;
+#if VIN_CFG_PARAM_CHECKING_ENABLE
+    if (!p_extend->output_ctrl.use_runtime_buffer && (NULL != p_buffer))
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
+#endif
 
     /*----------------------------------------------------------------------------------------------------
      * Set Capture buffers if not provided by configuration
      *  - Note: It is highly recommended to configure capture buffers via FSP configuration tool
      *----------------------------------------------------------------------------------------------------*/
-#if defined(VIN_CFG_USE_RUNTIME_BUFFER)
-    R_VIN->MB1 = (uint32_t) p_buffer;
-    R_VIN->MB2 = (uint32_t) p_buffer;
-    R_VIN->MB3 = (uint32_t) p_buffer;
-#else
-    FSP_PARAMETER_NOT_USED(p_buffer);
+    if (p_extend->output_ctrl.use_runtime_buffer)
+    {
+#if VIN_CFG_PARAM_CHECKING_ENABLE
+        FSP_ASSERT(p_buffer);
 #endif
+        R_VIN->MB1 = (uint32_t) p_buffer;
+        R_VIN->MB2 = (uint32_t) p_buffer;
+        R_VIN->MB3 = (uint32_t) p_buffer;
+    }
+    else
+    {
+        FSP_PARAMETER_NOT_USED(p_buffer);
+    }
 
     /* Start VIN */
     R_VIN->MC_b.ST = 0x1;              // Initialize the internal state of VIN

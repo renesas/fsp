@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p21 (const uint32_t InData_HV[],
                        const uint32_t InData_IV[],
@@ -35,13 +38,9 @@ rsip_ret_t r_rsip_p21 (const uint32_t InData_HV[],
                    bswap_32big(0x78402dabU),
                    bswap_32big(0xfc5c992aU),
                    bswap_32big(0x4eabf806U));
-    WR1_PROG(REG_0014H, 0x000003c1U);
-    WR1_PROG(REG_00D0H, 0x080000a5U);
-    WAIT_STS(REG_0014H, 31, 1);
+    r_rsip_func_sub019(0x000003c1U, 0x080000a5U);
     WR4_ADDR(REG_002CH, &InData_HV[0]);
-    WR1_PROG(REG_0014H, 0x000003c1U);
-    WR1_PROG(REG_00D0H, 0x08000055U);
-    WAIT_STS(REG_0014H, 31, 1);
+    r_rsip_func_sub019(0x000003c1U, 0x08000055U);
     WR4_ADDR(REG_002CH, &InData_IV[0]);
 
     WR1_PROG(REG_0014H, 0x00020061U);
@@ -56,10 +55,7 @@ rsip_ret_t r_rsip_p21 (const uint32_t InData_HV[],
 
     r_rsip_func205();
 
-    WR1_PROG(REG_0014H, 0x000000a1U);
-    WR1_PROG(REG_00D0H, 0x0c100104U);
-    WAIT_STS(REG_0014H, 31, 1);
-    WR1_PROG(REG_002CH, bswap_32big(0x00000000U));
+    r_rsip_func_sub008(0x000000a1U, 0x0c100104U, 0x00000000U);
 
     r_rsip_func100(bswap_32big(0x23ba16fdU),
                    bswap_32big(0x5b1bab0aU),

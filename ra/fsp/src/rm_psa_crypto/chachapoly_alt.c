@@ -101,7 +101,7 @@ int mbedtls_chachapoly_setkey(mbedtls_chachapoly_context *ctx,
 {
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
 
-    ret = mbedtls_chacha20_setkey(&ctx->chacha20_ctx, key);
+    ret = mbedtls_internal_chachapoly_setkey(ctx, key);
 
     return ret;
 }
@@ -162,7 +162,7 @@ int mbedtls_chachapoly_update_aad(mbedtls_chachapoly_context *ctx,
         return 0;
     }
 
-    if (ctx->aad_len + aad_len > SIZE_CHACHAPOLY_IN_DATA_AAD_LEN_BYTES) {
+    if (ctx->aad_len + aad_len > HW_SCE_CHACHAPOLY_AAD_BYTE_SIZE) {
         return MBEDTLS_ERR_CHACHAPOLY_BAD_STATE;
     }
 

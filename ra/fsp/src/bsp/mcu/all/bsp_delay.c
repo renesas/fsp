@@ -39,7 +39,9 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- *              Delay for at least the specified duration in units and return.
+ *              Delay for at least the specified duration in units and return. It is recommended to only use this
+ *              function for short delays since it can be inaccurate and it can block the CPU from executing
+ *              other tasks.
  * @param[in]   delay  The number of 'units' to delay.
  * @param[in]   units  The 'base' (bsp_delay_units_t) for the units specified. Valid values are:
  *              BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS, BSP_DELAY_UNITS_MICROSECONDS.@n
@@ -50,16 +52,19 @@
  *              ~ (83 * BSP_DELAY_LOOP_CYCLES) or 332 ns.
  *              A delay of 2 us therefore requires 2000ns/332ns or 6 loops.
  *
- *              The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate.
- *              @120MHz:  ((0xFFFFFFFF loops * 4 cycles /loop) / 120000000) = 143 seconds.
- *              @32MHz:  ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000) = 536 seconds
+ * @note The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate.
+ *       - @120MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 120000000)  = 143 seconds.
+ *       - @32MHz:  ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000)   = 536 seconds.
+ *       - @1GHz:   ((0xFFFFFFFF loops * 1 cycles /loop) / 1000000000) = 4.29 seconds.
  *
- *              Note that requests for very large delays will be affected by rounding in the calculations and the actual delay
- *              achieved may be slightly longer. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.
+ * @note Number of cycles per loop is defined based on the CPU core in the following macro: BSP_DELAY_LOOP_CYCLES
  *
- *              Note also that if the calculations result in a loop_cnt of zero, the bsp_prv_software_delay_loop() function is not called
- *              at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the
- *              overhead associated with executing the code to just get to this point has certainly satisfied the requested delay.
+ * @note Requests for very large delays will be affected by rounding in the calculations and the actual delay
+ *       achieved may be slightly longer. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.
+ *
+ * @note If the calculations result in a loop_cnt of zero, the bsp_prv_software_delay_loop() function is not called
+ *       at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the
+ *       overhead associated with executing the code to just get to this point has certainly satisfied the requested delay.
  *
  * @note This function calls bsp_cpu_clock_get() which ultimately calls R_CGC_SystemClockFreqGet() and therefore requires
  *       that the BSP has already initialized the CGC (which it does as part of the Sysinit).
@@ -77,11 +82,8 @@
  *       bsp_prv_software_delay_loop() directly. In this case, use BSP_DELAY_LOOP_CYCLES or BSP_DELAY_LOOPS_CALCULATE()
  *       to convert a calculated delay cycle count to a number of software delay loops.
  *
- * @note Delays may be longer than expected when compiler optimization is turned off.
- *
- * @warning The delay will be longer than specified on CM23 devices when the core clock is greater than 32 MHz. Setting
- *          BSP_DELAY_LOOP_CYCLES to 6 will improve accuracy at 48 MHz but will result in shorter than expected delays
- *          at lower speeds.
+ * @note Delay timing may be significantly affected by compiler optimization levels. Higher levels of optimization will
+ *       result in more accurate software delays.
  **********************************************************************************************************************/
 
 void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)

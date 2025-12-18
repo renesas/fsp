@@ -138,7 +138,7 @@ extern usb_compliance_cb_t * g_usb_compliance_callback[USB_NUM_USBIP];
 
  #if (BSP_CFG_RTOS == 1)
 extern UX_DEVICE * g_p_usbx_device[USB_NUM_USBIP];
-UX_CONFIGURATION * g_p_usbx_configuration;
+UX_CONFIGURATION * g_p_usbx_configuration[USB_NUM_USBIP];
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
@@ -281,7 +281,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                                                  UX_CONFIGURATION_DESCRIPTOR_ENTRIES,
                                                  (uint8_t *) &configuration->ux_configuration_descriptor);
 
-                    g_p_usbx_configuration = configuration;
+                    g_p_usbx_configuration[ptr->ip] = configuration;
 
                     break;
                 }
@@ -345,7 +345,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                                 flg             = 1; /* break; */
                             }
 
-                            usbx_status = _ux_host_stack_interfaces_scan(g_p_usbx_configuration,
+                            usbx_status = _ux_host_stack_interfaces_scan(g_p_usbx_configuration[ptr->ip],
                                                                          (uint8_t *) g_usb_hstd_config_descriptor[ptr->
                                                                                                                   ip]);
                         }
@@ -562,7 +562,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
     uint32_t           usbx_status = UX_ERROR;
   #endif                               /* BSP_CFG_RTOS == 1 */
 
-  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
     uint32_t composite_cdc_check = 0;
     uint32_t composite_msc_check = 0;
   #endif
@@ -645,7 +645,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                                                  UX_CONFIGURATION_DESCRIPTOR_ENTRIES,
                                                  (uint8_t *) &configuration->ux_configuration_descriptor);
 
-                    g_p_usbx_configuration = configuration;
+                    g_p_usbx_configuration[ptr->ip] = configuration;
   #endif                               /* BSP_CFG_RTOS == 1 */
 
                     break;
@@ -707,7 +707,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
   #if (BSP_CFG_RTOS != 0)
                             if (USB_OK == retval)
                             {
-   #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+   #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
                                 if (USB_IFCLS_CDC == driver->ifclass)
                                 {
                                     composite_cdc_check = 1;
@@ -732,7 +732,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                             }
 
    #if (BSP_CFG_RTOS == 1)
-                            usbx_status = _ux_host_stack_interfaces_scan(g_p_usbx_configuration,
+                            usbx_status = _ux_host_stack_interfaces_scan(g_p_usbx_configuration[ptr->ip],
                                                                          (uint8_t *) g_usb_hstd_config_descriptor[ptr->
                                                                                                                   ip]);
    #endif                              /* BSP_CFG_RTOS == 1 */
@@ -747,9 +747,12 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                                 usb_shstd_reg_pointer[ptr->ip] = md;
                                 flg = 1; /* break; */
    #if defined(USB_CFG_HAUD_USE)
-                                driver->devaddr = g_usb_hstd_device_addr[ptr->ip];
-                                g_usb_hstd_enum_seq[ptr->ip]++;
-   #endif                                /* defined(USB_CFG_HAUD_USE) */
+                                if (g_usb_hstd_device_drv[ptr->ip][md].ifclass == USB_IFCLS_AUD)
+                                {
+                                    driver->devaddr = g_usb_hstd_device_addr[ptr->ip];
+                                    g_usb_hstd_enum_seq[ptr->ip]++;
+                                }
+   #endif                              /* defined(USB_CFG_HAUD_USE) */
                             }
   #endif /* (BSP_CFG_RTOS != 0) */
                         }
@@ -866,7 +869,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                             }
   #endif                               /* defined(USB_CFG_OTG_USE) */
 
-  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
                             if (USB_IFCLS_CDC == driver->ifclass)
                             {
                                 composite_cdc_check = 1;
@@ -2615,7 +2618,7 @@ void usb_hstd_mgr_task (void * stacd)
     uint16_t            connect_speed;
     uint16_t            result = 0;
     usb_instance_ctrl_t ctrl;
- #if defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE)
+ #if defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE)
     usb_cfg_t * p_cfg = USB_NULL;
  #endif                                /* defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) */
  #if (BSP_CFG_RTOS == 0)
@@ -3062,7 +3065,7 @@ void usb_hstd_mgr_task (void * stacd)
                                 /*USB_BC_ATTACH(ptr, g_usb_hstd_device_addr[ptr->ip], (uint16_t)g_usb_hstd_bc[ptr->ip].state); */
                                 if (USB_BC_STATE_CDP == g_usb_hstd_bc[ptr->ip].state)
                                 {
-  #if defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE)
                                     if (ptr->ip)
                                     {
    #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)

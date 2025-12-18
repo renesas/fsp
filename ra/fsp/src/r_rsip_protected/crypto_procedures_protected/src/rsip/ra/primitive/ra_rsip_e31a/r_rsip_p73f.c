@@ -10,10 +10,13 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+RSIP_PRV_PRIMITIVE_FUNC
 
 rsip_ret_t r_rsip_p73f (const uint32_t InData_Msg[], uint32_t MAX_CNT, uint32_t OutData_MsgDigest[])
 {
@@ -45,17 +48,9 @@ rsip_ret_t r_rsip_p73f (const uint32_t InData_Msg[], uint32_t MAX_CNT, uint32_t 
                    bswap_32big(0xac08db0eU),
                    bswap_32big(0x5f410eadU),
                    bswap_32big(0xc3c5be3eU));
-    WR1_PROG(REG_0094H, 0x38008800U);
-    WR1_PROG(REG_0094H, 0x00000003U);
-    WR1_PROG(REG_0094H, 0x1000b400U);
-    WR1_PROG(REG_0094H, 0x00000001U);
-
-    WR1_PROG(REG_0094H, 0x38008800U);
-    WR1_PROG(REG_0094H, 0x00000004U);
-    WR1_PROG(REG_0094H, 0x1000b400U);
-    WR1_PROG(REG_0094H, 0x00000002U);
-
-    WR1_PROG(REG_0094H, 0x00007c00U);
+    r_rsip_func_sub022(0x38008800U, 0x00000003U, 0x1000b400U);
+    r_rsip_func_sub022(0x00000001U, 0x38008800U, 0x00000004U);
+    r_rsip_func_sub022(0x1000b400U, 0x00000002U, 0x00007c00U);
     WR1_PROG(REG_0040H, 0x00600000U);
 
     if (RD1_MASK(REG_0044H, 0xffffffffU) == 0x00000001U)

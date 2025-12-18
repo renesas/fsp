@@ -425,6 +425,7 @@ fsp_err_t R_RSIP_RandomNumberGenerate (rsip_ctrl_t * const p_ctrl, uint8_t * con
  *
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              A generated AES-XTS key is illegal.(Data Key == Tweak Key)
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
  *
  * @sa Section @ref r-rsip-protected-supported-algorithms "Supported Algorithms".
@@ -466,6 +467,12 @@ fsp_err_t R_RSIP_KeyGenerate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t * c
         case RSIP_RET_RESOURCE_CONFLICT:
         {
             err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
             break;
         }
 

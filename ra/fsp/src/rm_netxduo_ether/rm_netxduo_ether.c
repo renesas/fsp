@@ -584,7 +584,7 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
 
         /* Get a pointer to the packet received. */
         uint8_t * p_buffer_out;
-        uint32_t  length;
+        uint32_t  length = p_ether_instance->p_cfg->ether_buffer_size;
         err = p_ether_instance->p_api->read(p_ether_instance->p_ctrl, &p_buffer_out, &length);
         if (FSP_SUCCESS != err)
         {
@@ -677,7 +677,7 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
             /* Store pointer to the newly allocated NetX Packet at the index where it was written into the r_ether buffer descriptor. */
             p_nx_buffers[index] = p_nx_packet;
 #else
-            uint32_t length;
+            uint32_t length = p_ether_instance->p_cfg->ether_buffer_size;
             err = p_ether_instance->p_api->read(p_ether_instance->p_ctrl, p_nx_packet->nx_packet_prepend_ptr, &length);
             if (FSP_SUCCESS != err)
             {

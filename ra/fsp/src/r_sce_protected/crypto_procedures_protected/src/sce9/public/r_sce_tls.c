@@ -61,21 +61,26 @@
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_RootCertificateVerify(uint32_t public_key_type, uint8_t *certificate,
-        uint32_t certificate_length, uint32_t public_key_n_start_position, uint32_t public_key_n_end_position,
-        uint32_t public_key_e_start_position, uint32_t public_key_e_end_position, uint8_t *signature,
-        uint32_t *encrypted_root_public_key)
+fsp_err_t R_SCE_TLS_RootCertificateVerify (uint32_t   public_key_type,
+                                           uint8_t  * certificate,
+                                           uint32_t   certificate_length,
+                                           uint32_t   public_key_n_start_position,
+                                           uint32_t   public_key_n_end_position,
+                                           uint32_t   public_key_e_start_position,
+                                           uint32_t   public_key_e_end_position,
+                                           uint8_t  * signature,
+                                           uint32_t * encrypted_root_public_key)
 {
     uint32_t information[4] =
     {
         0
     };
-    uint32_t certificate_length_sub = 0;
+    uint32_t certificate_length_sub  = 0;
     uint32_t certificate_length_sub2 = 0;
-    uint32_t public_key_type_sub = 0;
+    uint32_t public_key_type_sub     = 0;
 
-    public_key_type_sub = change_endian_long(public_key_type);
-    certificate_length_sub = change_endian_long(certificate_length);
+    public_key_type_sub     = change_endian_long(public_key_type);
+    certificate_length_sub  = change_endian_long(certificate_length);
     certificate_length_sub2 = (certificate_length + 3) / 4;
     certificate_length_sub2 = change_endian_long(certificate_length_sub2);
 
@@ -85,15 +90,14 @@ fsp_err_t R_SCE_TLS_RootCertificateVerify(uint32_t public_key_type, uint8_t *cer
     information[3] = change_endian_long(public_key_e_end_position);
 
     return R_SCE_TlsRootCertificateVerificationSub(
-    /* Casting uint32_t pointer is used for address. */
-    /* uint32_t *InData_Sel_PubKeyType,       */&public_key_type_sub,
-    /* uint32_t *InData_Certificates,         */(uint32_t *) (certificate),
-    /* uint32_t *InData_CertificatesLength,   */&certificate_length_sub,
-    /* uint32_t *InData_Signature,            */(uint32_t *) (signature),
-    /* uint32_t *InData_CertificatesInfo,     */information,
-    /* uint32_t length,                       */certificate_length_sub2,
-    /* uint32_t *OutData_PubKey,              */encrypted_root_public_key);
-
+        /* Casting uint32_t pointer is used for address. */
+        /* uint32_t *InData_Sel_PubKeyType,       */ &public_key_type_sub,
+        /* uint32_t *InData_Certificates,         */ (uint32_t *) (certificate),
+        /* uint32_t *InData_CertificatesLength,   */ &certificate_length_sub,
+        /* uint32_t *InData_Signature,            */ (uint32_t *) (signature),
+        /* uint32_t *InData_CertificatesInfo,     */ information,
+        /* uint32_t length,                       */ certificate_length_sub2,
+        /* uint32_t *OutData_PubKey,              */ encrypted_root_public_key);
 }
 
 /*******************************************************************************************************************//**
@@ -119,21 +123,27 @@ fsp_err_t R_SCE_TLS_RootCertificateVerify(uint32_t public_key_type, uint8_t *cer
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_CertificateVerify(uint32_t public_key_type, uint32_t *encrypted_input_public_key,
-        uint8_t *certificate, uint32_t certificate_length, uint8_t *signature, uint32_t public_key_n_start_position,
-        uint32_t public_key_n_end_position, uint32_t public_key_e_start_position, uint32_t public_key_e_end_position,
-        uint32_t *encrypted_output_public_key)
+fsp_err_t R_SCE_TLS_CertificateVerify (uint32_t   public_key_type,
+                                       uint32_t * encrypted_input_public_key,
+                                       uint8_t  * certificate,
+                                       uint32_t   certificate_length,
+                                       uint8_t  * signature,
+                                       uint32_t   public_key_n_start_position,
+                                       uint32_t   public_key_n_end_position,
+                                       uint32_t   public_key_e_start_position,
+                                       uint32_t   public_key_e_end_position,
+                                       uint32_t * encrypted_output_public_key)
 {
     uint32_t information[4] =
     {
         0
     };
-    uint32_t certificate_length_sub = 0;
+    uint32_t certificate_length_sub  = 0;
     uint32_t certificate_length_sub2 = 0;
-    uint32_t tmp_public_key_type = 0;
+    uint32_t tmp_public_key_type     = 0;
 
-    tmp_public_key_type = change_endian_long(public_key_type);
-    certificate_length_sub = change_endian_long(certificate_length);
+    tmp_public_key_type     = change_endian_long(public_key_type);
+    certificate_length_sub  = change_endian_long(certificate_length);
     certificate_length_sub2 = (certificate_length + 3) / 4;
     certificate_length_sub2 = change_endian_long(certificate_length_sub2);
 
@@ -144,14 +154,14 @@ fsp_err_t R_SCE_TLS_CertificateVerify(uint32_t public_key_type, uint32_t *encryp
 
     /* Casting uint32_t pointer is used for address. */
     return R_SCE_TlsCertificateVerificationSub(
-    /* uint32_t *InData_Sel_PubKeyType,       */&tmp_public_key_type,
-    /* uint32_t *InData_PubKey,               */encrypted_input_public_key,
-    /* uint32_t *InData_TBSCertificate,       */(uint32_t *) certificate,
-    /* uint32_t *InData_TBSCertificateLength, */&certificate_length_sub,
-    /* uint32_t *InData_Signature,            */(uint32_t *) signature,
-    /* uint32_t *InData_TBSCertificatesInfo,  */information,
-    /* uint32_t length,                       */certificate_length_sub2,
-    /* uint32_t *OutData_PubKey);             */encrypted_output_public_key);
+        /* uint32_t *InData_Sel_PubKeyType,       */ &tmp_public_key_type,
+        /* uint32_t *InData_PubKey,               */ encrypted_input_public_key,
+        /* uint32_t *InData_TBSCertificate,       */ (uint32_t *) certificate,
+        /* uint32_t *InData_TBSCertificateLength, */ &certificate_length_sub,
+        /* uint32_t *InData_Signature,            */ (uint32_t *) signature,
+        /* uint32_t *InData_TBSCertificatesInfo,  */ information,
+        /* uint32_t length,                       */ certificate_length_sub2,
+        /* uint32_t *OutData_PubKey);             */ encrypted_output_public_key);
 }
 
 /*******************************************************************************************************************//**
@@ -167,7 +177,7 @@ fsp_err_t R_SCE_TLS_CertificateVerify(uint32_t public_key_type, uint32_t *encryp
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForRSA2048(uint32_t *sce_pre_master_secret)
+fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForRSA2048 (uint32_t * sce_pre_master_secret)
 {
     return R_SCE_TlsGeneratePreMasterSecretSub(sce_pre_master_secret);
 }
@@ -190,17 +200,22 @@ fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForRSA2048(uint32_t *sce_pre_master_s
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t select_cipher_suite, uint32_t *sce_pre_master_secret,
-        uint8_t *client_random, uint8_t *server_random, uint32_t *sce_master_secret)
+fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t   select_cipher_suite,
+                                          uint32_t * sce_pre_master_secret,
+                                          uint8_t  * client_random,
+                                          uint8_t  * server_random,
+                                          uint32_t * sce_master_secret)
 {
     uint32_t cipher_suite_sub = 0;
 
     cipher_suite_sub = change_endian_long(select_cipher_suite);
 
-    return R_SCE_TlsGenerateMasterSecretSub(&cipher_suite_sub, sce_pre_master_secret,
-            /* Casting uint32_t pointer is used for address. */
-            (uint32_t *) (client_random), (uint32_t *) (server_random), sce_master_secret);
-
+    return R_SCE_TlsGenerateMasterSecretSub(&cipher_suite_sub,
+                                            sce_pre_master_secret,
+                                       /* Casting uint32_t pointer is used for address. */
+                                            (uint32_t *) (client_random),
+                                            (uint32_t *) (server_random),
+                                            sce_master_secret);
 }
 
 /*******************************************************************************************************************//**
@@ -219,12 +234,14 @@ fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t select_cipher_suite, uint32_t
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_PreMasterSecretEncryptWithRSA2048(uint32_t *encrypted_public_key,
-        uint32_t *sce_pre_master_secret, uint8_t *encrypted_pre_master_secret)
+fsp_err_t R_SCE_TLS_PreMasterSecretEncryptWithRSA2048 (uint32_t * encrypted_public_key,
+                                                       uint32_t * sce_pre_master_secret,
+                                                       uint8_t  * encrypted_pre_master_secret)
 {
-    return R_SCE_TlsEncryptPreMasterSecretSub(encrypted_public_key, sce_pre_master_secret,
-        /* Casting uint32_t pointer is used for address. */
-        (uint32_t *) encrypted_pre_master_secret);
+    return R_SCE_TlsEncryptPreMasterSecretSub(encrypted_public_key,
+                                              sce_pre_master_secret,
+                                       /* Casting uint32_t pointer is used for address. */
+                                              (uint32_t *) encrypted_pre_master_secret);
 }
 
 /*******************************************************************************************************************//**
@@ -251,53 +268,59 @@ fsp_err_t R_SCE_TLS_PreMasterSecretEncryptWithRSA2048(uint32_t *encrypted_public
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *sce_master_secret,
-        uint8_t *client_random, uint8_t *server_random, uint8_t* nonce_explicit,
-        sce_hmac_sha_wrapped_key_t *client_mac_wrapped_key, sce_hmac_sha_wrapped_key_t *server_mac_wrapped_key,
-        sce_aes_wrapped_key_t *client_crypto_wrapped_key, sce_aes_wrapped_key_t *server_crypto_wrapped_key,
-        uint8_t *client_initial_vector, uint8_t *server_initial_vector)
+fsp_err_t R_SCE_TLS_SessionKeyGenerate (uint32_t                     select_cipher_suite,
+                                        uint32_t                   * sce_master_secret,
+                                        uint8_t                    * client_random,
+                                        uint8_t                    * server_random,
+                                        uint8_t                    * nonce_explicit,
+                                        sce_hmac_sha_wrapped_key_t * client_mac_wrapped_key,
+                                        sce_hmac_sha_wrapped_key_t * server_mac_wrapped_key,
+                                        sce_aes_wrapped_key_t      * client_crypto_wrapped_key,
+                                        sce_aes_wrapped_key_t      * server_crypto_wrapped_key,
+                                        uint8_t                    * client_initial_vector,
+                                        uint8_t                    * server_initial_vector)
 {
     FSP_PARAMETER_NOT_USED(client_initial_vector);
     FSP_PARAMETER_NOT_USED(server_initial_vector);
 
-    fsp_err_t error_code = FSP_SUCCESS;
-    uint32_t cipher_suite = 0;
+    fsp_err_t error_code   = FSP_SUCCESS;
+    uint32_t  cipher_suite = 0;
 
     cipher_suite = change_endian_long(select_cipher_suite);
 
     /* Casting uint32_t pointer is used for address. */
     error_code = R_SCE_TlsGenerateSessionKeySub(
-    /* uint32_t *InData_Sel_CipherSuite,            */&cipher_suite,
-    /* uint32_t *InData_MasterSecret,               */sce_master_secret,
-    /* uint32_t *InData_ClientRandom,               */(uint32_t *) (client_random),
-    /* uint32_t *InData_ServerRandom,               */(uint32_t *) (server_random),
-    /* uint32_t *InData_NonceExplicit,              */(uint32_t *) (nonce_explicit),
-    /* uint32_t *OutData_ClientMACKeyOperationCode, */(uint32_t *) client_mac_wrapped_key->value,
-    /* uint32_t *OutData_ServerMACKeyOperationCode, */(uint32_t *) server_mac_wrapped_key->value,
-    /* uint32_t *OutData_ClientEncKeyOperationCode, */(uint32_t *) client_crypto_wrapped_key->value,
-    /* uint32_t *OutData_ServerEncKeyOperationCode, */(uint32_t *) server_crypto_wrapped_key->value,
-    /* uint32_t OutLen);                            */0);
+        /* uint32_t *InData_Sel_CipherSuite,            */ &cipher_suite,
+        /* uint32_t *InData_MasterSecret,               */ sce_master_secret,
+        /* uint32_t *InData_ClientRandom,               */ (uint32_t *) (client_random),
+        /* uint32_t *InData_ServerRandom,               */ (uint32_t *) (server_random),
+        /* uint32_t *InData_NonceExplicit,              */ (uint32_t *) (nonce_explicit),
+        /* uint32_t *OutData_ClientMACKeyOperationCode, */ (uint32_t *) client_mac_wrapped_key->value,
+        /* uint32_t *OutData_ServerMACKeyOperationCode, */ (uint32_t *) server_mac_wrapped_key->value,
+        /* uint32_t *OutData_ClientEncKeyOperationCode, */ (uint32_t *) client_crypto_wrapped_key->value,
+        /* uint32_t *OutData_ServerEncKeyOperationCode, */ (uint32_t *) server_crypto_wrapped_key->value,
+        /* uint32_t OutLen);                            */ 0);
 
     if (FSP_SUCCESS == error_code)
     {
         if (SCE_TLS_RSA_WITH_AES_128_CBC_SHA == select_cipher_suite)
         {
-            client_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
-            server_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
+            client_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
+            server_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
             client_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_FOR_TLS;
             server_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_FOR_TLS;
         }
         else if (SCE_TLS_RSA_WITH_AES_256_CBC_SHA == select_cipher_suite)
         {
-            client_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
-            server_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
+            client_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
+            server_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_HMAC_SHA1_FOR_TLS;
             client_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES256_FOR_TLS;
             server_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES256_FOR_TLS;
         }
         else if (SCE_TLS_RSA_WITH_AES_256_CBC_SHA256 == select_cipher_suite)
         {
-            client_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS;
-            server_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS;
+            client_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS;
+            server_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS;
             client_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES256_FOR_TLS;
             server_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES256_FOR_TLS;
         }
@@ -319,17 +342,19 @@ fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *s
                 client_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS;
                 server_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS;
             }
+
             client_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_FOR_TLS;
             server_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_FOR_TLS;
         }
     }
     else
     {
-        client_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
-        server_mac_wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+        client_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_INVALID;
+        server_mac_wrapped_key->type    = SCE_KEY_INDEX_TYPE_INVALID;
         client_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
         server_crypto_wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
     return error_code;
 }
 
@@ -340,7 +365,7 @@ fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *s
  * @param[in]     sce_master_secret  master secret data.
  * @param[in]     hand_shake_hash    TLS hand shake message SHA256 HASH value.
  * @param[out]    verify_data        verify data.
-
+ *
  * @retval FSP_SUCCESS                          Normal termination
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -350,8 +375,10 @@ fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *s
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_VerifyDataGenerate(uint32_t select_verify_data, uint32_t *sce_master_secret,
-        uint8_t *hand_shake_hash, uint8_t *verify_data)
+fsp_err_t R_SCE_TLS_VerifyDataGenerate (uint32_t   select_verify_data,
+                                        uint32_t * sce_master_secret,
+                                        uint8_t  * hand_shake_hash,
+                                        uint8_t  * verify_data)
 {
     uint32_t tmp_select_verify_data = 0;
 
@@ -359,10 +386,10 @@ fsp_err_t R_SCE_TLS_VerifyDataGenerate(uint32_t select_verify_data, uint32_t *sc
 
     /* Casting uint32_t pointer is used for address. */
     return R_SCE_TlsGenerateVerifyDataSub(
-    /* uint32_t *InData_Sel_VerifyData, */&tmp_select_verify_data,
-    /* uint32_t *InData_MasterSecret,   */sce_master_secret,
-    /* uint32_t *InData_HandShakeHash,  */(uint32_t *) (hand_shake_hash),
-    /* uint32_t *OutData_VerifyData);   */(uint32_t *) (verify_data));
+        /* uint32_t *InData_Sel_VerifyData, */ &tmp_select_verify_data,
+        /* uint32_t *InData_MasterSecret,   */ sce_master_secret,
+        /* uint32_t *InData_HandShakeHash,  */ (uint32_t *) (hand_shake_hash),
+        /* uint32_t *OutData_VerifyData);   */ (uint32_t *) (verify_data));
 }
 
 /*******************************************************************************************************************//**
@@ -385,26 +412,29 @@ fsp_err_t R_SCE_TLS_VerifyDataGenerate(uint32_t select_verify_data, uint32_t *sc
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_ServerKeyExchangeVerify(uint32_t public_key_type, uint8_t *client_random,
-        uint8_t *server_random, uint8_t *server_ephemeral_ecdh_public_key, uint8_t *server_key_exchange_signature,
-        uint32_t *encrypted_public_key, uint32_t *encrypted_ephemeral_ecdh_public_key)
+fsp_err_t R_SCE_TLS_ServerKeyExchangeVerify (uint32_t   public_key_type,
+                                             uint8_t  * client_random,
+                                             uint8_t  * server_random,
+                                             uint8_t  * server_ephemeral_ecdh_public_key,
+                                             uint8_t  * server_key_exchange_signature,
+                                             uint32_t * encrypted_public_key,
+                                             uint32_t * encrypted_ephemeral_ecdh_public_key)
 {
     uint32_t tmp_public_key_type = 0;
-    uint32_t tmp_compless_type = 0;
+    uint32_t tmp_compless_type   = 0;
 
     tmp_public_key_type = change_endian_long(public_key_type);
 
     /* Casting uint32_t pointer is used for address. */
     return R_SCE_TlsServersEphemeralEcdhPublicKeyRetrievesSub(
-    /* uint32_t *InData_Sel_PubKeyType,   */&tmp_public_key_type,
-    /* uint32_t *InData_ClientRandom,     */(uint32_t*)client_random,
-    /* uint32_t *InData_ServerRandom,     */(uint32_t*)server_random,
-    /* uint32_t *InData_Sel_CompressType, */&tmp_compless_type,
-    /* uint32_t *InData_SKE_Message,      */(uint32_t*)server_ephemeral_ecdh_public_key,
-    /* uint32_t *InData_SKE_Signature,    */(uint32_t*)server_key_exchange_signature,
-    /* uint32_t *InData_PubKey,           */encrypted_public_key,
-    /* uint32_t *OutData_EphemeralPubKey  */encrypted_ephemeral_ecdh_public_key
-    );
+        /* uint32_t *InData_Sel_PubKeyType,   */ &tmp_public_key_type,
+        /* uint32_t *InData_ClientRandom,     */ (uint32_t *) client_random,
+        /* uint32_t *InData_ServerRandom,     */ (uint32_t *) server_random,
+        /* uint32_t *InData_Sel_CompressType, */ &tmp_compless_type,
+        /* uint32_t *InData_SKE_Message,      */ (uint32_t *) server_ephemeral_ecdh_public_key,
+        /* uint32_t *InData_SKE_Signature,    */ (uint32_t *) server_key_exchange_signature,
+        /* uint32_t *InData_PubKey,           */ encrypted_public_key,
+        /* uint32_t *OutData_EphemeralPubKey  */ encrypted_ephemeral_ecdh_public_key);
 }
 
 /*******************************************************************************************************************//**
@@ -423,14 +453,14 @@ fsp_err_t R_SCE_TLS_ServerKeyExchangeVerify(uint32_t public_key_type, uint8_t *c
  *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
-fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1(uint32_t *encrypted_public_key,
-    sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key, uint32_t *sce_pre_master_secret)
+fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1 (uint32_t                       * encrypted_public_key,
+                                                             sce_tls_p256_ecc_wrapped_key_t * tls_p256_ecc_wrapped_key,
+                                                             uint32_t                       * sce_pre_master_secret)
 {
     return R_SCE_TlsGeneratePreMasterSecretWithEccP256KeySub(
-    /* uint32_t *InData_PubKey,               */encrypted_public_key,
-    /* uint32_t *InData_KeyIndex,             */tls_p256_ecc_wrapped_key->value,
-    /* uint32_t *OutData_PreMasterSecretIndex */sce_pre_master_secret
-    );
+        /* uint32_t *InData_PubKey,               */ encrypted_public_key,
+        /* uint32_t *InData_KeyIndex,             */ tls_p256_ecc_wrapped_key->value,
+        /* uint32_t *OutData_PreMasterSecretIndex */ sce_pre_master_secret);
 }
 
 /*******************************************************************************************************************//**

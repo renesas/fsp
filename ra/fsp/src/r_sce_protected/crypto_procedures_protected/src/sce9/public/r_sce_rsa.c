@@ -114,6 +114,7 @@ static uint8_t gs_rsa_sig_sha256_prefix[] =
  * @param[in]     hash_type    Only HW_SCE_RSA_HASH_SHA256 is supported
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -128,6 +129,13 @@ fsp_err_t R_SCE_RSASSA_PKCS1024_SignatureGenerate (sce_rsa_byte_data_t          
                                                    sce_rsa1024_private_wrapped_key_t * wrapped_key,
                                                    uint8_t                             hash_type)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint8_t   data_buff[HW_SCE_RSA_1024_DATA_BYTE_SIZE] =
     {
@@ -174,6 +182,7 @@ fsp_err_t R_SCE_RSASSA_PKCS1024_SignatureGenerate (sce_rsa_byte_data_t          
  * @param[in] hash_type    Only HW_SCE_RSA_HASH_SHA256 is supported
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -189,6 +198,13 @@ fsp_err_t R_SCE_RSASSA_PKCS1024_SignatureVerify (sce_rsa_byte_data_t            
                                                  sce_rsa1024_public_wrapped_key_t * wrapped_key,
                                                  uint8_t                            hash_type)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint8_t   data_buff[HW_SCE_RSA_1024_DATA_BYTE_SIZE] =
     {
@@ -199,6 +215,11 @@ fsp_err_t R_SCE_RSASSA_PKCS1024_SignatureVerify (sce_rsa_byte_data_t            
         0
     };
     uint32_t data_ptr = 0;
+
+    if (signature->data_length > HW_SCE_RSA_1024_DATA_BYTE_SIZE)
+    {
+        return FSP_ERR_CRYPTO_SCE_PARAMETER;
+    }
 
     data_ptr = HW_SCE_RSA_1024_DATA_BYTE_SIZE - signature->data_length;
     memcpy(data_buff + data_ptr, signature->pdata, signature->data_length);
@@ -241,6 +262,7 @@ fsp_err_t R_SCE_RSASSA_PKCS1024_SignatureVerify (sce_rsa_byte_data_t            
  * @param[in]     wrapped_key Inputs the 1024-bit RSA public wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Incorrect wrapped key was input.
@@ -253,6 +275,14 @@ fsp_err_t R_SCE_RSAES_PKCS1024_Encrypt (sce_rsa_byte_data_t              * plain
                                         sce_rsa_byte_data_t              * cipher,
                                         sce_rsa1024_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain->pdata);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
+
     fsp_err_t ercd = FSP_SUCCESS;
     uint8_t   input_data_arry[HW_SCE_RSA_1024_DATA_BYTE_SIZE] =
     {
@@ -329,6 +359,7 @@ fsp_err_t R_SCE_RSAES_PKCS1024_Encrypt (sce_rsa_byte_data_t              * plain
  * @param[in]     wrapped_key Inputs the 1024-bit RSA private wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Incorrect wrapped key was input.
@@ -342,6 +373,13 @@ fsp_err_t R_SCE_RSAES_PKCS1024_Decrypt (sce_rsa_byte_data_t               * ciph
                                         sce_rsa_byte_data_t               * plain,
                                         sce_rsa1024_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher->pdata);
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t ercd = FSP_SUCCESS;
     uint8_t   input_data_arry[HW_SCE_RSA_1024_DATA_BYTE_SIZE] =
     {
@@ -453,6 +491,7 @@ fsp_err_t R_SCE_RSAES_PKCS1024_Decrypt (sce_rsa_byte_data_t               * ciph
  * @param[in]     hash_type    Only HW_SCE_RSA_HASH_SHA256 is supported
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -467,6 +506,13 @@ fsp_err_t R_SCE_RSASSA_PKCS2048_SignatureGenerate (sce_rsa_byte_data_t          
                                                    sce_rsa2048_private_wrapped_key_t * wrapped_key,
                                                    uint8_t                             hash_type)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint8_t   data_buff[HW_SCE_RSA_2048_DATA_BYTE_SIZE] =
     {
@@ -513,6 +559,7 @@ fsp_err_t R_SCE_RSASSA_PKCS2048_SignatureGenerate (sce_rsa_byte_data_t          
  * @param[in] hash_type    Only HW_SCE_RSA_HASH_SHA256 is supported
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -528,6 +575,13 @@ fsp_err_t R_SCE_RSASSA_PKCS2048_SignatureVerify (sce_rsa_byte_data_t            
                                                  sce_rsa2048_public_wrapped_key_t * wrapped_key,
                                                  uint8_t                            hash_type)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint8_t   data_buff[HW_SCE_RSA_2048_DATA_BYTE_SIZE] =
     {
@@ -538,6 +592,11 @@ fsp_err_t R_SCE_RSASSA_PKCS2048_SignatureVerify (sce_rsa_byte_data_t            
         0
     };
     uint32_t data_ptr = 0;
+
+    if (signature->data_length > HW_SCE_RSA_2048_DATA_BYTE_SIZE)
+    {
+        return FSP_ERR_CRYPTO_SCE_PARAMETER;
+    }
 
     data_ptr = HW_SCE_RSA_2048_DATA_BYTE_SIZE - signature->data_length;
     memcpy(data_buff + data_ptr, signature->pdata, signature->data_length);
@@ -587,6 +646,7 @@ fsp_err_t R_SCE_RSASSA_PKCS2048_SignatureVerify (sce_rsa_byte_data_t            
  * @param[in] hash_type    Only HW_SCE_RSA_HASH_SHA256 is supported
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -603,6 +663,13 @@ fsp_err_t R_SCE_RSASSA_PKCS3072_SignatureVerify (sce_rsa_byte_data_t            
                                                  sce_rsa3072_public_wrapped_key_t * wrapped_key,
                                                  uint8_t                            hash_type)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint8_t   data_buff[HW_SCE_RSA_3072_DATA_BYTE_SIZE] =
     {
@@ -613,6 +680,11 @@ fsp_err_t R_SCE_RSASSA_PKCS3072_SignatureVerify (sce_rsa_byte_data_t            
         0
     };
     uint32_t data_ptr = 0;
+
+    if (signature->data_length > HW_SCE_RSA_3072_DATA_BYTE_SIZE)
+    {
+        return FSP_ERR_CRYPTO_SCE_PARAMETER;
+    }
 
     data_ptr = HW_SCE_RSA_3072_DATA_BYTE_SIZE - signature->data_length;
     memcpy(data_buff + data_ptr, signature->pdata, signature->data_length);
@@ -662,6 +734,7 @@ fsp_err_t R_SCE_RSASSA_PKCS3072_SignatureVerify (sce_rsa_byte_data_t            
  * @param[in] hash_type    Only HW_SCE_RSA_HASH_SHA256 is supported
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -678,6 +751,13 @@ fsp_err_t R_SCE_RSASSA_PKCS4096_SignatureVerify (sce_rsa_byte_data_t            
                                                  sce_rsa4096_public_wrapped_key_t * wrapped_key,
                                                  uint8_t                            hash_type)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(signature);
+    FSP_ASSERT(signature->pdata);
+    FSP_ASSERT(message_hash);
+    FSP_ASSERT(message_hash->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t error_code = FSP_SUCCESS;
     uint8_t   data_buff[HW_SCE_RSA_4096_DATA_BYTE_SIZE] =
     {
@@ -688,6 +768,11 @@ fsp_err_t R_SCE_RSASSA_PKCS4096_SignatureVerify (sce_rsa_byte_data_t            
         0
     };
     uint32_t data_ptr = 0;
+
+    if (signature->data_length > HW_SCE_RSA_4096_DATA_BYTE_SIZE)
+    {
+        return FSP_ERR_CRYPTO_SCE_PARAMETER;
+    }
 
     data_ptr = HW_SCE_RSA_4096_DATA_BYTE_SIZE - signature->data_length;
     memcpy(data_buff + data_ptr, signature->pdata, signature->data_length);
@@ -730,6 +815,7 @@ fsp_err_t R_SCE_RSASSA_PKCS4096_SignatureVerify (sce_rsa_byte_data_t            
  * @param[in]     wrapped_key Inputs the 2048-bit RSA public wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Incorrect wrapped key was input.
@@ -742,6 +828,13 @@ fsp_err_t R_SCE_RSAES_PKCS2048_Encrypt (sce_rsa_byte_data_t              * plain
                                         sce_rsa_byte_data_t              * cipher,
                                         sce_rsa2048_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain->pdata);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t ercd = FSP_SUCCESS;
     uint8_t   input_data_arry[HW_SCE_RSA_2048_DATA_BYTE_SIZE] =
     {
@@ -818,6 +911,7 @@ fsp_err_t R_SCE_RSAES_PKCS2048_Encrypt (sce_rsa_byte_data_t              * plain
  * @param[in]     wrapped_key Inputs the 1024-bit RSA private wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Incorrect wrapped key was input.
@@ -831,6 +925,13 @@ fsp_err_t R_SCE_RSAES_PKCS2048_Decrypt (sce_rsa_byte_data_t               * ciph
                                         sce_rsa_byte_data_t               * plain,
                                         sce_rsa2048_private_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain->pdata);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t ercd = FSP_SUCCESS;
     uint8_t   input_data_arry[HW_SCE_RSA_2048_DATA_BYTE_SIZE] =
     {
@@ -935,6 +1036,7 @@ fsp_err_t R_SCE_RSAES_PKCS2048_Decrypt (sce_rsa_byte_data_t               * ciph
  * @param[in]     wrapped_key Inputs the 3072-bit RSA public wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Incorrect wrapped key was input.
@@ -948,6 +1050,13 @@ fsp_err_t R_SCE_RSAES_PKCS3072_Encrypt (sce_rsa_byte_data_t              * plain
                                         sce_rsa_byte_data_t              * cipher,
                                         sce_rsa3072_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain->pdata);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t ercd = FSP_SUCCESS;
     uint8_t   input_data_arry[HW_SCE_RSA_3072_DATA_BYTE_SIZE] =
     {
@@ -1021,6 +1130,7 @@ fsp_err_t R_SCE_RSAES_PKCS3072_Encrypt (sce_rsa_byte_data_t              * plain
  * @param[in]     wrapped_key Inputs the 4096-bit RSA public wrapped key.
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Incorrect wrapped key was input.
@@ -1034,6 +1144,13 @@ fsp_err_t R_SCE_RSAES_PKCS4096_Encrypt (sce_rsa_byte_data_t              * plain
                                         sce_rsa_byte_data_t              * cipher,
                                         sce_rsa4096_public_wrapped_key_t * wrapped_key)
 {
+#if SCE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(plain);
+    FSP_ASSERT(plain->pdata);
+    FSP_ASSERT(cipher);
+    FSP_ASSERT(cipher->pdata);
+    FSP_ASSERT(wrapped_key);
+#endif
     fsp_err_t ercd = FSP_SUCCESS;
     uint8_t   input_data_arry[HW_SCE_RSA_4096_DATA_BYTE_SIZE] =
     {

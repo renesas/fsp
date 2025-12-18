@@ -14,14 +14,15 @@
 #include "r_pqc_api.h"
 #include "r_sha_api.h"
 
-#define PQC_BUF_BYTESIZE    (15664U)
-#define PQC_SHA_BYTESIZE    (224U)
+/* The addition of `PQC_SIZE_MLKEM1024_ENCAPKEY` here is to accomodate the addition of the encapsulation key in PQC-Lib needed for key import/export */
+#define PQC_BUF_BYTESIZE    (PQC_BUFSIZE_USECASE_ALL+PQC_SIZE_MLKEM1024_ENCAPKEY)
+#define PQC_SHA_BYTESIZE    (232U)
 #define PQC_MLKEM_DKD_LEN_CALC_VAL      (0xCU)
 #define PQC_MLKEM_N                     (256U)
 #define PQC_MLKEM_512_ENCAPS_POS        ((PQC_MLKEM_DKD_LEN_CALC_VAL * 2 * PQC_MLKEM_N) / 8U) /* k=2 */
 #define PQC_MLKEM_768_ENCAPS_POS        ((PQC_MLKEM_DKD_LEN_CALC_VAL * 3 * PQC_MLKEM_N) / 8U) /* k=3 */
-#define PQC_MLKEM_512_ENCAPS_KEY_LEN    (800U)
-#define PQC_MLKEM_768_ENCAPS_KEY_LEN    (1184U)
+#define PQC_MLKEM_1024_ENCAPS_POS       ((PQC_MLKEM_DKD_LEN_CALC_VAL * 4 * PQC_MLKEM_N) / 8U) /* k=4 */ 
+#define PSA_TO_PQC_RET(status) ((PSA_SUCCESS == (status)) ? PQC_RET_OK : PQC_RET_INTERNALERR)
 
 static uint32_t pqc_buf[PQC_BUF_BYTESIZE / 4];
 static uint32_t sha_buf[PQC_SHA_BYTESIZE / 4];
@@ -78,10 +79,27 @@ void pqc_initialize_hash(st_pqc_mlkem_ctx_t * ctx, mbedtls_mlkem_bits_t bits)
         return;
     }
 
-    if (MBEDTLS_MLKEM_512 == bits) {
-        ctx->algo_params = PQC_ALGO_MLKEM512;
-    } else { // (MBEDTLS_MLKEM_768 == bits)
-        ctx->algo_params = PQC_ALGO_MLKEM768;
+    switch (bits)
+    {
+        case MBEDTLS_MLKEM_512:
+        {
+            ctx->algo_params = PQC_ALGO_MLKEM512;
+            break;
+        }
+        case MBEDTLS_MLKEM_768:
+        {
+            ctx->algo_params = PQC_ALGO_MLKEM768;
+            break;
+        }
+        case MBEDTLS_MLKEM_1024:
+        {
+            ctx->algo_params = PQC_ALGO_MLKEM1024;
+            break;
+        }
+        default:
+        {
+            return;
+        }
     }
 
     ctx->p_buf = pqc_buf;
@@ -144,7 +162,7 @@ uint32_t pqc_sha3_accel_init (void * const p_hash_ctx)
     pqc_hash_ctx_t *ctx = (pqc_hash_ctx_t*)p_hash_ctx;
     ctx->hash_buf_len = PSA_HASH_LENGTH(ctx->alg);
     psa_status_t status = psa_hash_setup(&ctx->hash_operation, ctx->alg);
-    return (PSA_SUCCESS == status) ? PQC_RET_OK : PQC_RET_INTERNALERR;
+    return PSA_TO_PQC_RET(status);
 }
 
 uint32_t pqc_sha3_accel_update (void * const p_hash_ctx,
@@ -153,7 +171,7 @@ uint32_t pqc_sha3_accel_update (void * const p_hash_ctx,
 {
     pqc_hash_ctx_t *ctx = (pqc_hash_ctx_t*)p_hash_ctx;
     psa_status_t status = psa_hash_update(&ctx->hash_operation, (uint8_t*)p_data, (size_t)data_len);
-    return (PSA_SUCCESS == status) ? PQC_RET_OK : PQC_RET_INTERNALERR;
+    return PSA_TO_PQC_RET(status);
 }
 
 uint32_t pqc_sha3_accel_final (void * const p_hash_ctx,
@@ -162,7 +180,7 @@ uint32_t pqc_sha3_accel_final (void * const p_hash_ctx,
 {
     pqc_hash_ctx_t *ctx = (pqc_hash_ctx_t*)p_hash_ctx;
     psa_status_t status = psa_hash_finish(&ctx->hash_operation, (uint8_t*)p_md, ctx->hash_buf_len, (size_t*)p_md_len);
-    return (PSA_SUCCESS == status) ? PQC_RET_OK : PQC_RET_INTERNALERR;
+    return PSA_TO_PQC_RET(status);
 }
 #endif /* MBEDTLS_SHA3_C */
 
@@ -199,9 +217,27 @@ static int mbedtls_mlkem_get_ek_from_decaps_key(const mbedtls_mlkem_bits_t bits,
                                                 const mbedtls_mlkem_data_t * const p_decaps_key,
                                                 mbedtls_mlkem_data_t * p_encaps_key)
 {
-    uint32_t ek_pos = (MBEDTLS_MLKEM_512 == bits) ? PQC_MLKEM_512_ENCAPS_POS : PQC_MLKEM_768_ENCAPS_POS;
+    uint32_t ek_pos = 0;
+    if (MBEDTLS_MLKEM_512 == bits)
+    {
+        ek_pos = PQC_MLKEM_512_ENCAPS_POS;
+        p_encaps_key->key_len = PQC_SIZE_MLKEM512_ENCAPKEY;
+    }
+    else if (MBEDTLS_MLKEM_768 == bits)
+    {
+        ek_pos = PQC_MLKEM_768_ENCAPS_POS;
+        p_encaps_key->key_len = PQC_SIZE_MLKEM768_ENCAPKEY;
+    }
+    else if (MBEDTLS_MLKEM_1024 == bits)
+    {
+        ek_pos = PQC_MLKEM_1024_ENCAPS_POS;
+        p_encaps_key->key_len = PQC_SIZE_MLKEM1024_ENCAPKEY;
+    }
+    else
+    {
+        return MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
+    }
     p_encaps_key->key_data = p_decaps_key->key_data + (ek_pos / 4U);
-    p_encaps_key->key_len = ((MBEDTLS_MLKEM_512 == bits) ? PQC_MLKEM_512_ENCAPS_KEY_LEN : PQC_MLKEM_768_ENCAPS_KEY_LEN);
 
     return 0;
 }

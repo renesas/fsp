@@ -246,7 +246,7 @@ void usb_hmsc_strg_specified_path (usb_utr_t * mess)
     usb_er_t    err;
 
     /* Get mem pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HSTRG_MPL, &pblf))
+    if (USB_OK == USB_PGET_BLK(USB_HSTRG_MPL, &pblf, mess->ip))
     {
         pblf->msginfo = g_usb_hmsc_strg_process[mess->ip];
         pblf->keyword = mess->keyword;
@@ -553,7 +553,7 @@ uint16_t usb_hmsc_strg_drive_search (usb_utr_t * ptr, uint16_t addr, usb_cb_t co
     g_usb_hmsc_drive_search_seq[ptr->ip] = USB_SEQ_0;
 
     /* Get mem pool blk */
-    if (USB_OK == USB_PGET_BLK(USB_HSTRG_MPL, &p_blf))
+    if (USB_OK == USB_PGET_BLK(USB_HSTRG_MPL, &p_blf, ptr->ip))
     {
         p_blf->msginfo  = USB_MSG_HMSC_STRG_DRIVE_SEARCH;
         p_blf->keyword  = addr;

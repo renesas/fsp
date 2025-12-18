@@ -2554,22 +2554,29 @@
  * Address definition depends on the toolchain for optimization.
  *
  * GNU Toolchain: variable with const keyword
- * - REG_1420H-REG_143CH: gs_rsip_addr_1420h + offset (imm5)
- * - REG_1440H-REG_145CH: gs_rsip_addr_1440h + offset (imm5)
- * - REG_1600H-REG_161CH: gs_rsip_addr_1600h + offset (imm5)
- * - REG_0000H-REG_0FFCH: gs_rsip_addr_0000h + offset (imm12)
- * - REG_1000H-REG_1FFCH: gs_rsip_addr_1000h + offset (imm12) (except the above)
- * - REG_2000H-REG_24FCH: gs_rsip_addr_2000h + offset (imm12)
+ * - Common
+ *   - REG_0000H-REG_0FFCH: g_rsip_addr_0000h + offset (imm12)
+ * - if (5U == RSIP_PRV_ADDR_TYPE)
+ *   - REG_1420H-REG_143CH: g_rsip_addr_1420h + offset (imm5)
+ *   - REG_1440H-REG_145CH: g_rsip_addr_1440h + offset (imm5)
+ *   - REG_1600H-REG_161CH: g_rsip_addr_1600h + offset (imm5)
+ *   - REG_1000H-REG_1FFCH: g_rsip_addr_1000h + offset (imm12) (except the above)
+ *   - REG_2000H-REG_24FCH: g_rsip_addr_2000h + offset (imm12)
  *
  * Other toolchains: #define preprocessor
  */
-#if defined(__GNUC__)
- #define RSIP_PRV_ADDR_0000H       gs_rsip_addr_0000h
- #define RSIP_PRV_ADDR_1000H       gs_rsip_addr_1000h
- #define RSIP_PRV_ADDR_2000H       gs_rsip_addr_2000h
- #define RSIP_PRV_ADDR_1420H       gs_rsip_addr_1420h
- #define RSIP_PRV_ADDR_1440H       gs_rsip_addr_1440h
- #define RSIP_PRV_ADDR_1600H       gs_rsip_addr_1600h
+#if defined(__ARM_ARCH) && defined(__GNUC__)
+ #define RSIP_PRV_ADDR_0000H       g_rsip_addr_0000h
+#else
+ #define RSIP_PRV_ADDR_0000H       RSIP_PRV_ADDR_VAL_0000H
+#endif
+
+#if defined(__ARM_ARCH) && defined(__GNUC__) && (5U == RSIP_PRV_ADDR_TYPE)
+ #define RSIP_PRV_ADDR_1000H       g_rsip_addr_1000h
+ #define RSIP_PRV_ADDR_2000H       g_rsip_addr_2000h
+ #define RSIP_PRV_ADDR_1420H       g_rsip_addr_1420h
+ #define RSIP_PRV_ADDR_1440H       g_rsip_addr_1440h
+ #define RSIP_PRV_ADDR_1600H       g_rsip_addr_1600h
 
  #undef REG_1420H
  #undef REG_1424H
@@ -2623,10 +2630,9 @@
  #define REG_161CH                (*(volatile uint32_t *) (RSIP_PRV_ADDR_1600H + 0x1CU))
 
 #else
- #define RSIP_PRV_ADDR_0000H      RSIP_PRV_ADDR_VAL_0000H
  #define RSIP_PRV_ADDR_1000H      RSIP_PRV_ADDR_VAL_1000H
  #define RSIP_PRV_ADDR_2000H      RSIP_PRV_ADDR_VAL_2000H
-#endif                                 /* defined(__GNUC__) */
+#endif                                 /* defined(__ARM_ARCH) && defined(__GNUC__) && (5U == RSIP_PRV_ADDR_TYPE) */
 
 /* Register value */
 #define RSIP_PRV_CMD_REG_0018H    (0x00CB00CBU)
@@ -2642,15 +2648,18 @@
  * Exported global variables
  **********************************************************************************************************************/
 
-#if defined(__GNUC__)
-extern uintptr_t const gs_rsip_addr_0000h;
-extern uintptr_t const gs_rsip_addr_1000h;
-extern uintptr_t const gs_rsip_addr_2000h;
+#if defined(__ARM_ARCH) && defined(__GNUC__)
+extern uintptr_t const g_rsip_addr_0000h;
+#endif
 
-extern uintptr_t const gs_rsip_addr_1420h;
-extern uintptr_t const gs_rsip_addr_1440h;
-extern uintptr_t const gs_rsip_addr_1600h;
-#endif                                 /* defined(__GNUC__) */
+#if defined(__ARM_ARCH) && defined(__GNUC__) && (5U == RSIP_PRV_ADDR_TYPE)
+extern uintptr_t const g_rsip_addr_1000h;
+extern uintptr_t const g_rsip_addr_2000h;
+
+extern uintptr_t const g_rsip_addr_1420h;
+extern uintptr_t const g_rsip_addr_1440h;
+extern uintptr_t const g_rsip_addr_1600h;
+#endif                                 /* defined(__ARM_ARCH) && defined(__GNUC__) && (5U == RSIP_PRV_ADDR_TYPE) */
 
 /**********************************************************************************************************************
  * Public Function Prototypes

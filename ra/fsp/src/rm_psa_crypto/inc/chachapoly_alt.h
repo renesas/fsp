@@ -9,8 +9,8 @@
 #ifndef MBEDTLS_CHACHAPOLY_ALT_H
  #define MBEDTLS_CHACHAPOLY_ALT_H
  #include "mbedtls/private_access.h"
-
  #include "mbedtls/build_info.h"
+ #include "hw_sce_ra_private.h"
 
  #include <stdint.h>
  #include <stddef.h>
@@ -23,8 +23,6 @@ extern "C" {
 #include "mbedtls/poly1305.h"
 #include "mbedtls/chacha20.h"
 
-#define SIZE_CHACHAPOLY_IN_DATA_AAD_LEN_BYTES (256U)
-#define SIZE_CHACHAPOLY_IN_DATA_TAG_LEN_BYTES (16U)
 #define CHACHAPOLY_STATE_INIT       (0)
 #define CHACHAPOLY_STATE_AAD        (1)
 #define CHACHAPOLY_STATE_CIPHERTEXT (2)   /* Encrypting or decrypting */
@@ -40,16 +38,19 @@ typedef struct mbedtls_chachapoly_context
     mbedtls_chachapoly_mode_t mode;                             /**< Cipher mode (encrypt or decrypt). */
 
     /*Internal parameters*/
+    uint32_t internal_key[SIZE_CHACHA20_256BIT_KEYLEN_WORDS_WRAPPED];
     uint32_t internal_state[16];
-    uint8_t indata_aad[SIZE_CHACHAPOLY_IN_DATA_AAD_LEN_BYTES];
+    uint8_t indata_aad[HW_SCE_CHACHAPOLY_AAD_BYTE_SIZE];
 }mbedtls_chachapoly_context;
 
+int mbedtls_internal_chachapoly_setkey(mbedtls_chachapoly_context *ctx,
+                                       const unsigned char key[HW_SCE_CHACHA20_KEY_BYTE_SIZE]);
 int mbedtls_internal_chachapoly_update(mbedtls_chachapoly_context * ctx,
                                        const unsigned char      * input,
                                        unsigned char            * output,
                                        size_t                     size);
 int mbedtls_internal_chachapoly_finish(mbedtls_chachapoly_context * ctx,
-                                       unsigned char mac[16]);
+                                       unsigned char mac[HW_SCE_CHACHAPOLY_MAC_BYTE_SIZE]);
 
 #ifdef __cplusplus
 }

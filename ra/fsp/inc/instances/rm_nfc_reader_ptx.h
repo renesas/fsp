@@ -17,6 +17,10 @@
  **********************************************************************************************************************/
 #include "ptx_IOT_READER.h"
 #include "ptxNDEF.h"
+#include "ptxNativeTag_T2T.h"
+#include "ptxNativeTag_T3T.h"
+#include "ptxNativeTag_T4T.h"
+#include "ptxNativeTag_T5T.h"
 #include "ptxPLAT_GPIO.h"
 #include "ptxPLAT_SPI.h"
 #include "ptxPLAT_TIMER.h"
@@ -33,6 +37,111 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+/** NFC Native-tag Optional Parameters for Read Operation */
+typedef union u_nfc_reader_ptx_native_tag_read_params
+{
+    struct
+    {
+        uint8_t t2t_block_number;                     ///< Type 2 tag block number for Native-Tag Read/Write functions
+    };
+    struct
+    {
+        ptxNativeTag_T3T_Services_t t3t_service_info; ///< Type 3 tag service code information for Native-Tag Check/Update functions
+        ptxNativeTag_T3T_Blocks_t   t3t_block_info;   ///< Type 3 tag block information for Native-Tag Check/Update functions
+        uint8_t * t3t_nfcid2;                         ///< Type 3 tag NFCID2 identifier for Native-Tag Check/Update functions
+        uint8_t   t3t_nfcid2_len;                     ///< Type 3 tag NFCID2 identifier length for Native-Tag Check/Update functions
+    };
+    struct
+    {
+        uint32_t t4t_file_offset;                     ///< Type 4 tag file offset for Native-Tag Read/Update (and ODO) functions
+        uint8_t  t4t_data_num_bytes;                  ///< Type 4 tag number of expected response bytes for Native-Tag Read (and ODO) functions
+    };
+    struct
+    {
+        uint8_t  t5t_option_flag;                     ///< Type 5 tag command option flag for Native-Tag Read/Write/Select/Lock/Sleep functions
+        uint16_t t5t_block_number;                    ///< Type 5 tag starting block number for Native-Tag Read function
+        uint8_t  t5t_num_blocks;                      ///< Type 5 tag number of blocks to read for Native-Tag Read function
+    };
+} nfc_reader_ptx_native_tag_read_params_t;
+
+/** NFC Native-tag Optional Parameters for Write Operation */
+typedef union u_nfc_reader_ptx_native_tag_write_params
+{
+    struct
+    {
+        uint8_t t2t_block_number;                     ///< Type 2 tag block number for Native-Tag Read/Write functions
+    };
+    struct
+    {
+        ptxNativeTag_T3T_Services_t t3t_service_info; ///< Type 3 tag service code information for Native-Tag Check/Update functions
+        ptxNativeTag_T3T_Blocks_t   t3t_block_info;   ///< Type 3 tag block information for Native-Tag Check/Update functions
+        uint8_t * t3t_nfcid2;                         ///< Type 3 tag NFCID2 identifier for Native-Tag Check/Update functions
+        uint8_t   t3t_nfcid2_len;                     ///< Type 3 tag NFCID2 identifier length for Native-Tag Check/Update functions
+    };
+    struct
+    {
+        uint32_t t4t_file_offset;                     ///< Type 4 tag file offset for Native-Tag Read/Update (and ODO) functions
+    };
+    struct
+    {
+        uint16_t t5t_block_number;                    ///< Type 5 tag starting block number for Native-Tag Write function
+        uint8_t  t5t_option_flag;                     ///< Type 5 tag command option flag for Native-Tag Read/Write/Select/Lock/Sleep functions
+    };
+} nfc_reader_ptx_native_tag_write_params_t;
+
+/** NFC Native-tag Optional Parameters for Select Operation */
+typedef union u_nfc_reader_ptx_native_tag_select_params
+{
+    struct
+    {
+        uint8_t t2t_sector_number;     ///< Type 2 tag sector number for Native-Tag Select function
+    };
+    struct
+    {
+        uint32_t t4t_file_offset;      ///< Type 4 tag file offset for Native-Tag Read/Update (and ODO) functions
+        uint8_t  t4t_apdu_byte_1;      ///< Type 4 tag APDU (command header) first byte for Native-Tag Select function
+        uint8_t  t4t_apdu_byte_2;      ///< Type 4 tag APDU (command header) second byte for Native-Tag Select function
+        uint8_t  t4t_expected_len;     ///< Type 4 tag expected length of response for Native-Tag Select function
+    };
+    struct
+    {
+        uint8_t   t5t_option_flag;     ///< Type 5 tag command option flag for Native-Tag Read/Write/Select/Lock/Sleep functions
+        uint8_t * t5t_uid;             ///< Type 5 tag UID identifier for Native-Tag Select/Sleep functions
+        uint8_t   t5t_uid_len;         ///< Type 5 tag UID identifier length for Native-Tag Select/Sleep functions
+    };
+} nfc_reader_ptx_native_tag_select_params_t;
+
+/** NFC Native-tag Optional Parameters for Lock Operation */
+typedef union u_nfc_reader_ptx_native_tag_lock_params
+{
+    struct
+    {
+        uint8_t  t5t_option_flag;      ///< Type 5 tag command option flag for Native-Tag Read/Write/Select/Lock/Sleep functions
+        uint16_t t5t_block_number;     ///< Type 5 tag starting block number for Native-Tag Lock function
+    };
+} nfc_reader_ptx_native_tag_lock_params_t;
+
+/** NFC Native-tag Optional Parameters for Sleep Operation */
+typedef union u_nfc_reader_ptx_native_tag_sleep_params
+{
+    struct
+    {
+        uint8_t   t5t_option_flag;     ///< Type 5 tag command option flag for Native-Tag Read/Write/Select/Lock/Sleep functions
+        uint8_t * t5t_uid;             ///< Type 5 tag UID identifier for Native-Tag Select/Sleep functions
+        uint8_t   t5t_uid_len;         ///< Type 5 tag UID identifier length for Native-Tag Select/Sleep functions
+    };
+} nfc_reader_ptx_native_tag_sleep_params_t;
+
+/** NFC Native-tag Tag Type Flag */
+typedef enum e_nfc_reader_ptx_native_tag_type
+{
+    NFC_READER_PTX_NATIVE_TAG_TYPE_NONE = 0,         ///< No tag was selected for Native-Tag add-on APIs
+    NFC_READER_PTX_NATIVE_TAG_TYPE_T2T  = (1U << 0), ///< Type 2 tag bit mask for Native-Tag add-on APIs
+    NFC_READER_PTX_NATIVE_TAG_TYPE_T3T  = (1U << 1), ///< Type 3 tag bit mask for Native-Tag add-on APIs
+    NFC_READER_PTX_NATIVE_TAG_TYPE_T4T  = (1U << 2), ///< Type 4 tag bit mask for Native-Tag add-on APIs
+    NFC_READER_PTX_NATIVE_TAG_TYPE_T5T  = (1U << 3), ///< Type 5 tag bit mask for Native-Tag add-on APIs
+} nfc_reader_ptx_native_tag_type_t;
 
 /** NFC NDEF data exchange flags */
 typedef enum e_nfc_reader_ptx_ndef_read_write
@@ -109,7 +218,21 @@ typedef struct st_nfc_reader_ptx_instance_ctrl
     uint8_t                ndef_work_buf[NFC_READER_PTX_NDEF_WORK_BUF_SIZE]; ///< Buffer for NDEF internal data exchange.
     uint32_t               open;                                             ///< Flag to indicate if NFC has been opened.
     uint32_t               ndef_open;                                        ///< Flag to indicate if NFC NDEF has been initialized.
+    uint32_t               native_tag_open;                                  ///< Flag to indicate if NFC Native-Tag has been initialized.
     nfc_reader_ptx_state_t state_flag;                                       ///< Flag to track Idle/discovered/activated.
+
+#if (RM_NFC_READER_NATIVE_TAG_SUPPORT)
+    ptxNativeTag_T2T_t            t2t_comp;                                  ///< Type 2 tag component for Native-Tag add-on API
+    ptxNativeTag_T2T_InitParams_t t2t_params;                                ///< Type 2 tag parameters for Native-Tag add-on API component
+    ptxNativeTag_T3T_t            t3t_comp;                                  ///< Type 3 tag component for Native-Tag add-on API
+    ptxNativeTag_T3T_InitParams_t t3t_params;                                ///< Type 3 tag parameters for Native-Tag add-on API component
+    ptxNativeTag_T4T_t            t4t_comp;                                  ///< Type 3 tag component for Native-Tag add-on API
+    ptxNativeTag_T4T_InitParams_t t4t_params;                                ///< Type 3 tag parameters for Native-Tag add-on API component
+    ptxNativeTag_T5T_t            t5t_comp;                                  ///< Type 3 tag component for Native-Tag add-on API
+    ptxNativeTag_T5T_InitParams_t t5t_params;                                ///< Type 3 tag parameters for Native-Tag add-on API component
+
+    uint8_t enabled_tag_mask;                                                ///< Bitmask of which tag types were initialized
+#endif
 
     nfc_reader_ptx_cfg_t const * p_cfg;                                      ///< Pointer to p_cfg for NFC.
 } nfc_reader_ptx_instance_ctrl_t;
@@ -149,6 +272,29 @@ fsp_err_t RM_NFC_READER_PTX_NDEF_DataExchange(nfc_reader_ptx_instance_ctrl_t * c
                                               uint32_t                               message_length,
                                               nfc_reader_ptx_ndef_read_write_t       ndef_read_write_flag);
 fsp_err_t RM_NFC_READER_PTX_NDEF_Lock(nfc_reader_ptx_instance_ctrl_t * const p_ctrl);
+fsp_err_t RM_NFC_READER_PTX_Native_Tag_Init(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                            nfc_reader_ptx_data_info_t * const     p_data_info,
+                                            uint8_t                                tag_select);
+fsp_err_t RM_NFC_READER_PTX_Native_Tag_Read(nfc_reader_ptx_instance_ctrl_t * const          p_ctrl,
+                                            nfc_reader_ptx_native_tag_read_params_t * const p_read_params,
+                                            nfc_reader_ptx_native_tag_type_t                tag_type,
+                                            nfc_reader_ptx_data_info_t * const              p_data_info);
+fsp_err_t RM_NFC_READER_PTX_Native_Tag_Write(nfc_reader_ptx_instance_ctrl_t * const           p_ctrl,
+                                             nfc_reader_ptx_native_tag_write_params_t * const p_write_params,
+                                             nfc_reader_ptx_native_tag_type_t                 tag_type,
+                                             nfc_reader_ptx_data_info_t * const               p_data_info);
+fsp_err_t RM_NFC_READER_PTX_Native_Tag_Select(nfc_reader_ptx_instance_ctrl_t * const            p_ctrl,
+                                              nfc_reader_ptx_native_tag_select_params_t * const p_select_params,
+                                              nfc_reader_ptx_native_tag_type_t                  tag_type,
+                                              nfc_reader_ptx_data_info_t * const                p_data_info);
+fsp_err_t RM_NFC_READER_PTX_Native_Tag_Lock(nfc_reader_ptx_instance_ctrl_t * const          p_ctrl,
+                                            nfc_reader_ptx_native_tag_lock_params_t * const p_lock_params,
+                                            nfc_reader_ptx_native_tag_type_t                tag_type,
+                                            nfc_reader_ptx_data_info_t * const              p_data_info);
+fsp_err_t RM_NFC_READER_PTX_Native_Tag_Sleep(nfc_reader_ptx_instance_ctrl_t * const           p_ctrl,
+                                             nfc_reader_ptx_native_tag_sleep_params_t * const p_sleep_params,
+                                             nfc_reader_ptx_native_tag_type_t                 tag_type,
+                                             nfc_reader_ptx_data_info_t * const               p_data_info);
 
 fsp_err_t RM_NFC_READER_PTX_Close(nfc_reader_ptx_instance_ctrl_t * const p_ctrl);
 

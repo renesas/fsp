@@ -112,7 +112,11 @@ typedef long SLONG;
  #endif
 
  #ifndef UX_MAX_CLASS_DRIVER
-  #define UX_MAX_CLASS_DRIVER                    2
+  #if (BSP_FEATURE_USB_HAS_USBFS == 1) && (BSP_FEATURE_USB_HAS_USBHS == 1)
+   #define UX_MAX_CLASS_DRIVER                   4
+  #else
+   #define UX_MAX_CLASS_DRIVER                   2
+  #endif
  #endif
 
  #ifndef UX_MAX_SLAVE_CLASS_DRIVER
@@ -120,7 +124,11 @@ typedef long SLONG;
  #endif
 
  #ifndef UX_MAX_HCD
-  #define UX_MAX_HCD                             2
+  #if (BSP_FEATURE_USB_HAS_USBFS == 1) && (BSP_FEATURE_USB_HAS_USBHS == 1)
+   #define UX_MAX_HCD                            4
+  #else
+   #define UX_MAX_HCD                            2
+  #endif
  #endif
 
  #ifndef UX_MAX_DEVICES
@@ -180,7 +188,7 @@ typedef long SLONG;
  #endif
 
  #ifndef UX_HOST_CLASS_STORAGE_MAX_MEDIA
-  #define UX_HOST_CLASS_STORAGE_MAX_MEDIA        2
+  #define UX_HOST_CLASS_STORAGE_MAX_MEDIA        3
  #endif
 
  #ifndef UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH

@@ -276,6 +276,55 @@ fsp_err_t HW_SCE_HRK_RSA_3072KeyGenerate (uint32_t   num_tries,
     return err;
 }
 
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+fsp_err_t HW_SCE_RSA_3072KeyGenerate(uint32_t   num_tries,
+                                     uint32_t * OutData_PrivateKey,
+                                     uint32_t * OutData_N,
+                                     uint32_t * OutData_DomainParam);
+
+fsp_err_t HW_SCE_RSA_3072KeyGenerate (uint32_t   num_tries,
+                                      uint32_t * OutData_PrivateKey,
+                                      uint32_t * OutData_N,
+                                      uint32_t * OutData_DomainParam)
+
+{
+    fsp_err_t err = FSP_SUCCESS;
+    uint32_t  local_private_key[HW_SCE_RSA3072_RANDOM_PRIVATE_KEY_BYTE_SIZE / 4U] = {0};
+    uint32_t  local_public_key[HW_SCE_RSA3072_RANDOM_PUBLIC_KEY_BYTE_SIZE / 4U]   = {0};
+
+    uint32_t local_dummy[RM_PSA_CRYPTO_DUMMY_KEY_BYTES / 4U];
+    uint32_t indata_key_type = SCE_OEM_KEY_TYPE_PLAIN;
+
+    /* P.Q are the prime 1 and 2 fields that are in some cases generated when the private key is generated.
+     * This was the case with W1D; but this information is not provided on the RA6M4.
+     * There is no functional issue since the procedures do not require it for operation,
+     * however mbedCrypto requires these fields to be non-zero in order for the private key_export to work.
+     * These dummy values are placed into those fields to get past the non-zero check. */
+    uint8_t dummy_P_Q[24] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+
+    err =
+        HW_SCE_GenerateRsa3072RandomKeyIndexSub(&indata_key_type,
+                                                num_tries,
+                                                local_dummy,
+                                                (uint32_t *) local_public_key,
+                                                local_dummy,
+                                                (uint32_t *) local_private_key);
+
+    if (FSP_SUCCESS == err)
+    {
+        /* Private key in RSIP returns with a pair of (N, D)
+         * MbedTLS only cares about the D component (see how mbedtls_rsa_gen_key handles p_rsa_private_exponent) */
+        memcpy(OutData_PrivateKey, &local_private_key[HW_SCE_RSA_3072_KEY_N_LENGTH_BYTE_SIZE / 4],
+               sizeof(local_private_key) / 2);
+        memcpy(OutData_N, local_public_key, sizeof(local_public_key));
+        memcpy((uint8_t *) OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
+    }
+
+    return err;
+}
+
+   #endif
+
 fsp_err_t HW_SCE_RSA_3072PrivateKeyDecrypt(const uint32_t * InData_Text,
                                            const uint32_t * InData_PrivateKey,
                                            const uint32_t * InData_N,
@@ -364,11 +413,12 @@ fsp_err_t HW_SCE_HRK_RSA_4096KeyGenerate (uint32_t   num_tries,
     uint8_t dummy_P_Q[24] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
 
     err =
-        HW_SCE_RSA4096_KeyPairGenerateSub(&indata_key_type,
-                                          num_tries,
-                                          (uint32_t *) &key_pair_index.pub_key.value.key_n,
-                                          (uint32_t *) &key_pair_index.priv_key.value,
-                                          local_dummy);
+        HW_SCE_GenerateRsa4096RandomKeyIndexSub(&indata_key_type,
+                                                num_tries,
+                                                (uint32_t *) &key_pair_index.pub_key.value,
+                                                (uint32_t *) &key_pair_index.pub_key.value.key_n,
+                                                (uint32_t *) &key_pair_index.priv_key.value,
+                                                local_dummy);
 
     if (FSP_SUCCESS == err)
     {
@@ -379,6 +429,55 @@ fsp_err_t HW_SCE_HRK_RSA_4096KeyGenerate (uint32_t   num_tries,
 
     return err;
 }
+
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+fsp_err_t HW_SCE_RSA_4096KeyGenerate(uint32_t   num_tries,
+                                     uint32_t * OutData_PrivateKey,
+                                     uint32_t * OutData_N,
+                                     uint32_t * OutData_DomainParam);
+
+fsp_err_t HW_SCE_RSA_4096KeyGenerate (uint32_t   num_tries,
+                                      uint32_t * OutData_PrivateKey,
+                                      uint32_t * OutData_N,
+                                      uint32_t * OutData_DomainParam)
+
+{
+    fsp_err_t err = FSP_SUCCESS;
+    uint32_t  local_private_key[HW_SCE_RSA4096_RANDOM_PRIVATE_KEY_BYTE_SIZE / 4U] = {0};
+    uint32_t  local_public_key[HW_SCE_RSA4096_RANDOM_PUBLIC_KEY_BYTE_SIZE / 4U]   = {0};
+
+    uint32_t local_dummy[RM_PSA_CRYPTO_DUMMY_KEY_BYTES / 4U];
+    uint32_t indata_key_type = SCE_OEM_KEY_TYPE_PLAIN;
+
+    /* P.Q are the prime 1 and 2 fields that are in some cases generated when the private key is generated.
+     * This was the case with W1D; but this information is not provided on the RA6M4.
+     * There is no functional issue since the procedures do not require it for operation,
+     * however mbedCrypto requires these fields to be non-zero in order for the private key_export to work.
+     * These dummy values are placed into those fields to get past the non-zero check. */
+    uint8_t dummy_P_Q[24] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+
+    err =
+        HW_SCE_GenerateRsa4096RandomKeyIndexSub(&indata_key_type,
+                                                num_tries,
+                                                local_dummy,
+                                                (uint32_t *) local_public_key,
+                                                local_dummy,
+                                                (uint32_t *) local_private_key);
+
+    if (FSP_SUCCESS == err)
+    {
+        /* Private key in RSIP returns with a pair of (N, D)
+         * MbedTLS only cares about the D component (see how mbedtls_rsa_gen_key handles p_rsa_private_exponent) */
+        memcpy(OutData_PrivateKey, &local_private_key[HW_SCE_RSA_4096_KEY_N_LENGTH_BYTE_SIZE / 4],
+               sizeof(local_private_key) / 2);
+        memcpy(OutData_N, local_public_key, sizeof(local_public_key));
+        memcpy((uint8_t *) OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
+    }
+
+    return err;
+}
+
+   #endif
 
 fsp_err_t HW_SCE_HRK_RSA_4096PrivateKeyDecrypt(const uint32_t * InData_Text,
                                                const uint32_t * InData_KeyIndex,
@@ -548,7 +647,7 @@ fsp_err_t HW_SCE_RSA_2048KeyGenerate (uint32_t   num_tries,
 
 {
     fsp_err_t err = FSP_SUCCESS;
-  #if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
+  #if (BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
     uint32_t local_private_key[HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE / 4U] = {0};
     uint32_t local_public_key[HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE / 4U]   = {0};
 
@@ -572,7 +671,15 @@ fsp_err_t HW_SCE_RSA_2048KeyGenerate (uint32_t   num_tries,
 
     if (FSP_SUCCESS == err)
     {
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+
+        /* Unlike SCE module, private key in RSIP returns with a pair of (N, D)
+         * MbedTLS only cares about the D component (see how mbedtls_rsa_gen_key handles p_rsa_private_exponent) */
+        memcpy(OutData_PrivateKey, &local_private_key[HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE / 4],
+               sizeof(local_private_key) / 2);
+   #else
         memcpy(OutData_PrivateKey, local_private_key, sizeof(local_private_key));
+   #endif
         memcpy(OutData_N, local_public_key, sizeof(local_public_key));
         memcpy((uint8_t *) OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
     }
@@ -685,7 +792,7 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
         }
         else
         {
-   #if !BSP_FEATURE_RSIP_SCE7_SUPPORTED
+   #if !(BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
             ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
    #endif
             private_key_size_bytes = RSA_MODULUS_SIZE_BYTES(2048);
@@ -698,17 +805,43 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
     #if RM_PSA_CRYPTO_CFG_RSA3K_KEYGEN_ENABLED
     else if (nbits == RSA_3072_BITS)
     {
-        p_hw_sce_rsa_generatekey = HW_SCE_HRK_RSA_3072KeyGenerate;
-        private_key_size_bytes   = sizeof(sce_rsa3072_private_key_index_t);
-        public_key_size_bytes    = RSA_MODULUS_SIZE_BYTES(3072);
+        if (true == (bool) ctx->vendor_ctx)
+        {
+            p_hw_sce_rsa_generatekey = HW_SCE_HRK_RSA_3072KeyGenerate;
+            private_key_size_bytes   = sizeof(sce_rsa3072_private_key_index_t);
+        }
+
+     #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+
+        /* Only RSIP-E51A supports RSA 3072 plaintext key generation */
+        else
+        {
+            p_hw_sce_rsa_generatekey = HW_SCE_RSA_3072KeyGenerate;
+            private_key_size_bytes   = RSA_MODULUS_SIZE_BYTES(3072);
+        }
+     #endif
+        public_key_size_bytes = RSA_MODULUS_SIZE_BYTES(3072);
     }
     #endif
     #if RM_PSA_CRYPTO_CFG_RSA4K_KEYGEN_ENABLED
     else if (nbits == RSA_4096_BITS)
     {
-        p_hw_sce_rsa_generatekey = HW_SCE_HRK_RSA_4096KeyGenerate;
-        private_key_size_bytes   = sizeof(sce_rsa4096_private_key_index_t);
-        public_key_size_bytes    = RSA_MODULUS_SIZE_BYTES(4096);
+        if (true == (bool) ctx->vendor_ctx)
+        {
+            p_hw_sce_rsa_generatekey = HW_SCE_HRK_RSA_4096KeyGenerate;
+            private_key_size_bytes   = sizeof(sce_rsa4096_private_key_index_t);
+        }
+
+     #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+
+        /* Only RSIP-E51A supports RSA 4096 plaintext key generation */
+        else
+        {
+            p_hw_sce_rsa_generatekey = HW_SCE_RSA_4096KeyGenerate;
+            private_key_size_bytes   = RSA_MODULUS_SIZE_BYTES(4096);
+        }
+     #endif
+        public_key_size_bytes = RSA_MODULUS_SIZE_BYTES(4096);
     }
     #endif
    #endif

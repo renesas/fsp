@@ -97,6 +97,7 @@ void r_rsip_func202(void);
 void r_rsip_func214(void);
 void r_rsip_func215(void);
 void r_rsip_func216(void);
+void r_rsip_func220(const uint32_t ARG1[], uint32_t ARG2, uint32_t ARG3[]);
 void r_rsip_func302(void);
 void r_rsip_func303(void);
 void r_rsip_func304(void);
@@ -124,6 +125,11 @@ void r_rsip_func405(void);
 void r_rsip_func406(const uint32_t ARG1[]);
 void r_rsip_func407(const uint32_t ARG1[]);
 void r_rsip_func408(void);
+void r_rsip_func420(void);
+void r_rsip_func421(void);
+void r_rsip_func422(const uint32_t ARG1[], uint32_t ARG2);
+void r_rsip_func423(uint32_t ARG1[], uint32_t ARG2);
+void r_rsip_func424(void);
 void r_rsip_func501(uint32_t ARG1[], uint32_t ARG2);
 
 rsip_ret_t r_rsip_p47i(const uint32_t InData_Cmd[],
@@ -464,12 +470,19 @@ rsip_ret_t r_rsip_pe1(const uint32_t InData_Sel_KeyType[],
                       const uint32_t InData_CertificatePubKey[],
                       const uint32_t InData_EncCertificateInfo[],
                       uint32_t       OutData_KeyIndex[]);
-rsip_ret_t r_rsip_pe2(const uint32_t InData_PubKeyType[],
+rsip_ret_t r_rsip_pe2(const uint32_t InData_CurveType[],
+                      const uint32_t InData_PubKeyType[],
                       const uint32_t InData_PubKey[],
                       const uint32_t InData_KeyIndex[],
                       const uint32_t InData_DomainParam[],
                       uint32_t       OutData_EncSecret[]);
-rsip_ret_t r_rsip_p4e(const uint32_t InData_PubKeyType[],
+rsip_ret_t r_rsip_p4e(const uint32_t InData_CurveType[],
+                      const uint32_t InData_PubKeyType[],
+                      const uint32_t InData_PubKey[],
+                      const uint32_t InData_KeyIndex[],
+                      const uint32_t InData_DomainParam[],
+                      uint32_t       OutData_EncSecret[]);
+rsip_ret_t r_rsip_p5e(const uint32_t InData_PubKeyType[],
                       const uint32_t InData_PubKey[],
                       const uint32_t InData_KeyIndex[],
                       const uint32_t InData_DomainParam[],
@@ -479,14 +492,20 @@ rsip_ret_t r_rsip_p4f(const uint32_t InData_PubKeyType[],
                       const uint32_t InData_KeyIndex[],
                       const uint32_t InData_DomainParam[],
                       uint32_t       OutData_EncSecret[]);
-rsip_ret_t r_rsip_pe3(const uint32_t InData_HashType[], const uint32_t InData_EncSecret[], uint32_t OutData_EncMsg[]);
-rsip_ret_t r_rsip_pe4(const uint32_t InData_HashType[], const uint32_t InData_EncSecret[], uint32_t OutData_KeyIndex[]);
-rsip_ret_t r_rsip_pe5e(const uint32_t InData_EncMsg[], uint32_t MAX_CNT2);
+rsip_ret_t r_rsip_pe3(const uint32_t InData_HashType[],
+                      const uint32_t InData_CurveType[],
+                      const uint32_t InData_EncSecret[],
+                      uint32_t       OutData_EncMsg[]);
+rsip_ret_t r_rsip_pe4(const uint32_t InData_HashType[],
+                      const uint32_t InData_CurveType[],
+                      const uint32_t InData_EncSecret[],
+                      uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_pe5e(const uint32_t InData_EncMsg[], const uint32_t InData_EncMsgLength[]);
 rsip_ret_t r_rsip_pe5f(const uint32_t InData_Msg[],
                        const uint32_t InData_EncMsg[],
+                       const uint32_t InData_EncMsgLength[],
                        uint32_t       OutData_KDFInfo[],
-                       uint32_t       MAX_CNT,
-                       uint32_t       MAX_CNT2);
+                       uint32_t       MAX_CNT);
 rsip_ret_t r_rsip_pe5i(const uint32_t InData_KeyType[],
                        const uint32_t InData_KeyIndex[],
                        const uint32_t InData_HashType[],
@@ -512,12 +531,19 @@ rsip_ret_t r_rsip_pe7(const uint32_t InData_HashType[],
                       uint32_t       OutData_KeyIndex[],
                       uint32_t       OutData_EncIV[]);
 rsip_ret_t r_rsip_peef(uint32_t OutData_EncCertificateInfo[]);
-rsip_ret_t r_rsip_peei(const uint32_t InData_KeyIndex[],
+rsip_ret_t r_rsip_peei(const uint32_t InData_CurveType[],
+                       const uint32_t InData_KeyIndex[],
                        const uint32_t InData_MsgDgst[],
                        const uint32_t InData_Signature[],
                        const uint32_t InData_DomainParam[]);
 rsip_ret_t r_rsip_p51f(uint32_t OutData_EncCertificateInfo[]);
-rsip_ret_t r_rsip_p51i(const uint32_t InData_KeyIndex[],
+rsip_ret_t r_rsip_p51i(const uint32_t InData_CurveType[],
+                       const uint32_t InData_KeyIndex[],
+                       const uint32_t InData_MsgDgst[],
+                       const uint32_t InData_Signature[],
+                       const uint32_t InData_DomainParam[]);
+rsip_ret_t r_rsip_p5ff(uint32_t OutData_EncCertificateInfo[]);
+rsip_ret_t r_rsip_p5fi(const uint32_t InData_KeyIndex[],
                        const uint32_t InData_MsgDgst[],
                        const uint32_t InData_Signature[],
                        const uint32_t InData_DomainParam[]);

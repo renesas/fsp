@@ -59,19 +59,8 @@ typedef enum e_three_phase_buffer_mode
 /** Struct for passing duty cycle values to @ref three_phase_api_t::dutyCycleSet */
 typedef struct st_three_phase_duty_cycle
 {
-    /**
-     * Duty cycle.
-     * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
-     *       this value sets the duty cycle count that is transferred to GTCCRA/B at the trough.
-     */
-    uint32_t duty[3];
-
-    /**
-     * Double-buffer for duty cycle values.
-     * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
-     *       this value sets the duty cycle count that is transferred to GTCCRA/B at the crest.
-     */
-    uint32_t duty_buffer[3];
+    uint32_t duty[3];                  ///< Duty cycle
+    uint32_t duty_buffer[3];           ///< Double-buffer for duty cycle values
 } three_phase_duty_cycle_t;
 
 /** Three-Phase control block.  Allocate an instance specific control block to pass into the timer API calls.
@@ -83,7 +72,7 @@ typedef struct st_three_phase_cfg
 {
     three_phase_buffer_mode_t buffer_mode;        ///< Single or double-buffer mode
 
-    /* Pointers to GPT instance structs */
+    /* Pointers to instance structs */
     timer_instance_t const * p_timer_instance[3]; ///< Pointer to the timer instance structs
     three_phase_channel_t    callback_ch;         ///< Channel to enable callback when using three_phase_api_t::callbackSet
 
@@ -134,7 +123,7 @@ typedef struct st_three_phase_api
     /** Specify callback function and optional context pointer and working memory pointer.
      *
      * @param[in]   p_ctrl                   Control block set in @ref three_phase_api_t::open call.
-     * @param[in]   p_callback               Callback function to register with GPT U-channel
+     * @param[in]   p_callback               Callback function to register with timer channel
      * @param[in]   p_context                Pointer to send to callback function
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
@@ -150,7 +139,7 @@ typedef struct st_three_phase_api
 } three_phase_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */
-typedef struct st_gpt_three_phase_instance
+typedef struct st_three_phase_instance
 {
     three_phase_ctrl_t      * p_ctrl;  ///< Pointer to the control structure for this instance
     three_phase_cfg_t const * p_cfg;   ///< Pointer to the configuration structure for this instance
