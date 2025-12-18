@@ -537,3 +537,4 @@ BSP_WEAK_REFERENCE uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourc
     return ulResult;
 }
 
+
