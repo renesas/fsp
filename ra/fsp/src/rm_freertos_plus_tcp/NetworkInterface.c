@@ -360,7 +360,11 @@ static BaseType_t prvNetworkInterfaceInput (NetworkInterface_t * pxInterface) {
 
     pxBufferDescriptor = pxGetNetworkBufferWithDescriptor((size_t) MAXIMUM_ETHERNET_FRAME_SIZE, 0);
 
-    if (NULL != pxBufferDescriptor)
+    if( NULL == pxBufferDescriptor )
+    { /* no buffer available */
+		iptraceETHERNET_RX_EVENT_LOST();
+    }
+	else
     {
 #if (ipconfigIPv4_BACKWARD_COMPATIBLE == 0)
         rm_freertos_plus_tcp_instance_t * p_freertos_plus_tcp_instance = pxInterface->pvArgument;
@@ -369,17 +373,9 @@ static BaseType_t prvNetworkInterfaceInput (NetworkInterface_t * pxInterface) {
 #endif
 
         ether_instance_t * p_ether_instance = p_freertos_plus_tcp_instance->p_cfg->p_ether_instance;
-
-        /* Set the maximum buffer size when reading. */
-        xBytesReceived = p_ether_instance->p_cfg->ether_buffer_size;
-        err            = p_ether_instance->p_api->read(p_ether_instance->p_ctrl,
-                                                       (void *) pxBufferDescriptor->pucEthernetBuffer,
-                                                       &xBytesReceived);
-
-        if (FSP_SUCCESS != err)
-        {
-            xBytesReceived = 0;
-        }
+        err = p_ether_instance->p_api->read(p_ether_instance->p_ctrl,
+                                            (void *) pxBufferDescriptor->pucEthernetBuffer,
+                                            &xBytesReceived);
 
         pxBufferDescriptor->xDataLength = (size_t) xBytesReceived;
         pxBufferDescriptor->pxInterface = pxInterface;
@@ -387,27 +383,42 @@ static BaseType_t prvNetworkInterfaceInput (NetworkInterface_t * pxInterface) {
             FreeRTOS_MatchingEndpoint(pxInterface, pxBufferDescriptor->pucEthernetBuffer);
 
         /* When driver received any data. */
-        if ((FSP_SUCCESS == err) || (FSP_ERR_ETHER_ERROR_NO_DATA == err))
-        {
-            if ((pxBufferDescriptor->pxEndPoint != NULL) &&
-                (eConsiderFrameForProcessing(pxBufferDescriptor->pucEthernetBuffer) == eProcessBuffer))
-            {
-                /* The event about to be sent to the TCP/IP is an Rx event. */
-                xRxEvent.eEventType = eNetworkRxEvent;
+        if( (FSP_ERR_ETHER_ERROR_NO_DATA) == err || (FSP_ERR_ETHER_ERROR_FILTERING == err) )
+        { /* no data or multicast message discarded */
+            vReleaseNetworkBufferAndDescriptor(pxBufferDescriptor);
+        	xResult = pdPASS; /* message has been handled */
+        }
+        else if ((FSP_SUCCESS == err) && (NULL != pxBufferDescriptor->pxEndPoint))
+		{ /* When driver received any data. */
+			switch( eConsiderFrameForProcessing(pxBufferDescriptor->pucEthernetBuffer) )
+           	{
+				case eProcessBuffer:
+					/* The event about to be sent to the TCP/IP is an Rx event. */
+					xRxEvent.eEventType = eNetworkRxEvent;
 
-                /* pvData is used to point to the network buffer descriptor that
-                 * now references the received data. */
-                xRxEvent.pvData = (void *) pxBufferDescriptor;
+					/* pvData is used to point to the network buffer descriptor that
+					 * now references the received data. */
+					xRxEvent.pvData = (void *) pxBufferDescriptor;
 
-                /* Send the data to the TCP/IP stack. */
-                if (pdPASS == xSendEventStructToIPTask(&xRxEvent, 0))
-                {
-                    /* The message was successfully sent to the TCP/IP stack.
-                     * Call the standard trace macro to log the occurrence. */
-                    iptraceNETWORK_INTERFACE_RECEIVE();
-                    xResult = pdPASS;
-                }
-            }
+					/* Send the data to the TCP/IP stack. */
+					if (pdPASS == xSendEventStructToIPTask(&xRxEvent, 0))
+					{
+						/* The message was successfully sent to the TCP/IP stack.
+						 * Call the standard trace macro to log the occurrence. */
+						iptraceNETWORK_INTERFACE_RECEIVE();
+						xResult = pdPASS; /* message has been handled */
+					}
+					break;
+
+				case eReleaseBuffer:
+					/* message not flagged for processing */
+		            vReleaseNetworkBufferAndDescriptor(pxBufferDescriptor);
+					xResult = pdPASS; /* message has been handled */
+					break;
+
+				default:
+					break;
+			}
         }
 
         if (pdPASS != xResult)
@@ -422,9 +433,6 @@ static BaseType_t prvNetworkInterfaceInput (NetworkInterface_t * pxInterface) {
 }
 
 static void prvRXHandlerTask (void * pvParameters) {
-    BaseType_t xResult = pdFALSE;
-
-    /* Avoid compiler warning about unreferenced parameter. */
 
     for ( ; ; )
     {
@@ -432,10 +440,14 @@ static void prvRXHandlerTask (void * pvParameters) {
          * has been received.  */
         ulTaskNotifyTake(pdFALSE, portMAX_DELAY);
 
-        do
+        for ( ; ; )
         {
-            xResult = prvNetworkInterfaceInput(pvParameters);
-        } while (pdFAIL != xResult);
+            if( pdTRUE == prvNetworkInterfaceInput(pvParameters) ) break;
+            /* unable to allocate buffer or queue event
+             * - allow other (likely lower priority) threads to run and
+             *   clear buffer/queue space before trying again */
+            vTaskDelay(1); /* minimum delay before checking again */
+        }
     }
 }
 
@@ -524,3 +536,5 @@ BSP_WEAK_REFERENCE uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourc
 
     return ulResult;
 }
+
+
