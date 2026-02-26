@@ -18,6 +18,13 @@ var searchData=
   ['kdfsharesume',['kdfShaResume',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a557b6057ec71018ec785a94999f7c0f5',1,'rsip_api_t']]],
   ['kdfshasuspend',['kdfShaSuspend',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ae2a64a9f49b3a6ff30fa07c100f9a5bd',1,'rsip_api_t']]],
   ['kdfshaupdate',['kdfShaUpdate',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a1ad206a480a305b766059e47851bc553',1,'rsip_api_t']]],
+  ['ke_5fclosed_5floop',['ke_closed_loop',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#a3f39a8bb2e069b04a40a4acd374caf16',1,'motor_tuner_pm_ke_t']]],
+  ['ke_5fmax',['ke_max',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#ac8f4da726432b73757cd1e20d6df18a3',1,'motor_tuner_pm_ke_t']]],
+  ['ke_5fmin',['ke_min',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#a3d399d7b31e80f6cc9713426d9fdde37',1,'motor_tuner_pm_ke_t']]],
+  ['ke_5fopen',['ke_open',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#af0d5b08bb79538998267be647ee8a078',1,'motor_tuner_pm_ke_t']]],
+  ['ke_5fover_5fid',['ke_over_id',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#a3162fcb030d249665a237cfc8bf426f2',1,'motor_tuner_pm_ke_t']]],
+  ['ke_5fstatus',['ke_status',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#a072d1f55e27a2a89b914e9201c8626c3',1,'motor_tuner_pm_ke_t']]],
+  ['ke_5fsub_5fseq',['ke_sub_seq',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#a88b54f2ebc71deefd13c9b35a4c87736',1,'motor_tuner_pm_ke_t']]],
   ['keep_5falive_5fseconds',['keep_alive_seconds',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a1c0e120b8c6cf61e31c43c560a0daea9',1,'mqtt_onchip_da16xxx_cfg_t']]],
   ['key_5fex_5fparam',['key_ex_param',['../group___g_a_p___a_p_i.html#a4310ea81141b8ddc7089e186aeb6bf66',1,'st_ble_gap_peer_key_info_evt_t']]],
   ['key_5fid',['key_id',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a156a9d174f4f72ea949a1d60b7425761',1,'sce_ecdh_handle_t']]],
@@ -28,5 +35,6 @@ var searchData=
   ['keypairgenerate',['keyPairGenerate',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#adb39feed00019b84f803f21cc862037d',1,'rsip_api_t']]],
   ['keys',['keys',['../group___g_a_p___a_p_i.html#a92ff8aaef443b5cde52a35cffc3846c8',1,'st_ble_gap_key_ex_param_t']]],
   ['keystream_5fbytes_5fused',['keystream_bytes_used',['../structmbedtls__chacha20__context.html#ae50a9c2dee34270257435b29ead74f7c',1,'mbedtls_chacha20_context']]],
-  ['keyupdatekeywrap',['KeyUpdateKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af240f4f39e5eeb5514616b5be0ab1bb3',1,'sce_key_injection_api_t']]]
+  ['keyupdatekeywrap',['KeyUpdateKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af240f4f39e5eeb5514616b5be0ab1bb3',1,'sce_key_injection_api_t']]],
+  ['knownparamset',['knownParamSet',['../group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a5fb3db545c611088e2fe518922bdec0f',1,'motor_tuner_api_t']]]
 ];

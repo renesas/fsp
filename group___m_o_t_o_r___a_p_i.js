@@ -4,8 +4,6 @@ var group___m_o_t_o_r___a_p_i =
       [ "p_context", "group___m_o_t_o_r___a_p_i.html#ad6f4078c81efb8b023832f872ac7c00c", null ]
     ] ],
     [ "motor_cfg_t", "group___m_o_t_o_r___a_p_i.html#structmotor__cfg__t", [
-      [ "p_motor_speed_instance", "group___m_o_t_o_r___a_p_i.html#ad1924f7221c500ace77bd913065e562c", null ],
-      [ "p_motor_current_instance", "group___m_o_t_o_r___a_p_i.html#a0ae55525171d53b3af836447acd89a2c", null ],
       [ "p_callback", "group___m_o_t_o_r___a_p_i.html#ae536e6047fc24a66029c045ea2b68329", null ],
       [ "p_extend", "group___m_o_t_o_r___a_p_i.html#a75477023c88ecddf93fbba478a9fdbd1", null ]
     ] ],
@@ -40,7 +38,8 @@ var group___m_o_t_o_r___a_p_i =
       [ "MOTOR_CALLBACK_EVENT_ADC_FORWARD", "group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa60ba673a4e3ba46bebd4dc5b9d93efe5", null ],
       [ "MOTOR_CALLBACK_EVENT_ADC_BACKWARD", "group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fad3bbf782551ecf14ebbfc34579301f1e", null ],
       [ "MOTOR_CALLBACK_EVENT_CYCLE_FORWARD", "group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa4e89a9f0a169b2a378fd0c3fe203e85a", null ],
-      [ "MOTOR_CALLBACK_EVENT_CYCLE_BACKWARD", "group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa65375dae7509728b82f6897f65b577f1", null ]
+      [ "MOTOR_CALLBACK_EVENT_CYCLE_BACKWARD", "group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa65375dae7509728b82f6897f65b577f1", null ],
+      [ "MOTOR_CALLBACK_EVENT_ERROR", "group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa95b5085bb8a1ab148e4ef9e7e2fa207c", null ]
     ] ],
     [ "motor_wait_stop_flag_t", "group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e", [
       [ "MOTOR_WAIT_STOP_FLAG_CLEAR", "group___m_o_t_o_r___a_p_i.html#gga164300ede2cb4269d8b16f991b4d995eae95f69c38c6a9052b84be80912966390", null ],

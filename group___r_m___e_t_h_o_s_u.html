@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -286,19 +286,19 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>Selects if code for parameter checking is to be included in the build. </td></tr>
 <tr class="tree_none">
-<td>Debug log level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Ethos-U log level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-RM_ETHOSU_LOG_LEVEL_OFF</li>
+Disabled</li>
 <li>
-RM_ETHOSU_LOG_LEVEL_ERROR</li>
+Error</li>
 <li>
-RM_ETHOSU_LOG_LEVEL_WARNING</li>
+Warning</li>
 <li>
-RM_ETHOSU_LOG_LEVEL_INFO</li>
+Info</li>
 <li>
-RM_ETHOSU_LOG_LEVEL_DEBUG</li>
+Debug</li>
 </ul>
-</td><td>RM_ETHOSU_LOG_LEVEL_OFF </td><td>Defines ethosu log level. </td></tr>
+</td><td>Disabled </td><td>Defines Ethos-U log level. </td></tr>
 </table>
  <h2>Configurations for AI &gt; Arm Ethos-U Core Driver Wrapper (rm_ethosu)</h2>
 This module can be added to the Stacks tab via New Stack &gt; AI &gt; Arm Ethos-U Core Driver Wrapper (rm_ethosu).<br />
@@ -310,7 +310,23 @@ This module can be added to the Stacks tab via New Stack &gt; AI &gt; Arm Ethos-
 <tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function that will be called from the interrupt service routine (ISR). </td></tr>
 <tr class="tree_none">
-<td>NPU Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the NPU interrupt priority. </td></tr>
+<td>NPU Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Ethos-U interrupt priority. </td></tr>
+<tr class="tree_none">
+<td>Enable Secure Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Set Ethos-U NPU secure mode. </td></tr>
+<tr class="tree_none">
+<td>Enable Privilege Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Set Ethos-U NPU privilege mode. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm_ethosu-clock-configuration"></a>
@@ -318,50 +334,74 @@ Clock Configuration</h2>
 <p>The NPU clock is configurable on the clocks tab.</p>
 <h1><a class="anchor" id="rm_ethosu-notes"></a>
 Usage Notes</h1>
-<p>Here are the steps to create an AI application in e2studio. Please refer to the example code for details.</p>
-<h2>Getting Started: Creating an AI Project with NPU stacks</h2>
-<p>Start by creating a new C++ project in e&sup2; studio. On the Stacks tab, add New Stack &gt; AI &gt; TFLM Core Lib. On the BSP tab, stack and heap need to be configured. On the Clocks tab, NPU clock needs to be configured. Generate the project content. Please note an Ethos-U core driver instance will be automatically created. It will be used by RM_ETHOSU API to initialize/deinitialize Ethos-U driver.The application must also use the same instance to call other Ethos-U core driver API if needed.</p>
-<h2>Getting Started: Confirming operators used in the model</h2>
-<p>Users can use tools like Netron to find out what operators are used by the model (.tflite). If there are operators not yet supported by Ethos-U55, then they need to be run on MCU. There are two types of kernels: optimized kernel based on CMSIS-NN, and reference kernel. Optimized kernel (CMSIS-NN kernel) should always be preferred on ARM MCUs. Please refer to <code><a href="https://github.com/tensorflow/tflite-micro/blob/main/tensorflow/lite/micro/docs/optimized_kernel_implementations.md">https://github.com/tensorflow/tflite-micro/blob/main/tensorflow/lite/micro/docs/optimized_kernel_implementations.md</a></code> for more information.</p>
-<h2>Getting Started: Learning inference process framework</h2>
-<p>Users can refer to inference process <code><a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-software/-/tree/main/applications">https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-software/-/tree/main/applications</a></code> for how to integrate TFLM inference functions, e.g parsing model, creating interpreter, allocating tensors and running inference. Please note by default lots of operators are registered to micro_op_resolver in micro_mutable_all_ops_resolver.h. What operators are needed should be determined by your model.</p>
-<h2>Getting Started: Defining functions and PMU events for MCU performance profiling</h2>
-<p><code>ticks_per_second()</code> and <code>GetCurrentTimeTicks()</code> need to be defined for MCU profiling. Here is an example </p><div class="fragment"><div class="line">namespace tflite {</div><div class="line"></div><div class="line">    uint32_t ticks_per_second();</div><div class="line">    uint32_t GetCurrentTimeTicks();</div><div class="line"></div><div class="line">    uint32_t ticks_per_second() { return US_IN_SECOND; }</div><div class="line"></div><div class="line">    uint32_t GetCurrentTimeTicks() {</div><div class="line"></div><div class="line">        static bool is_initialized = false;</div><div class="line"></div><div class="line">        if (!is_initialized) {</div><div class="line">            ARM_PMU_Enable();</div><div class="line">            DCB-&gt;DEMCR |= DCB_DEMCR_TRCENA_Msk;</div><div class="line"></div><div class="line">            ARM_PMU_CYCCNT_Reset();</div><div class="line">            ARM_PMU_CNTR_Enable(PMU_CNTENSET_CCNTR_ENABLE_Msk);</div><div class="line"></div><div class="line">            is_initialized = true;</div><div class="line">        }</div><div class="line"></div><div class="line">        return ARM_PMU_Get_CCNTR();</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><p> There are 4 PMU event counters. Each can be used to monitor an event, e.g </p><div class="fragment"><div class="line">#define ETHOSU_PMU_EVENT_0 ETHOSU_PMU_CYCLE</div><div class="line">#define ETHOSU_PMU_EVENT_1 ETHOSU_PMU_NPU_ACTIVE</div></div><!-- fragment --><h2>Getting Started: Overriding weak functions in application</h2>
-<p>There are weak functions that need to be overridden if necessary. </p><table class="doxtable">
+<p>Below are the steps to create an AI application that uses a tflite model. If you have a model geneated by RUHMI framework, the TFLM Core lib is not required, and the project type doesn't need to be C++. Please refer to RHUMI framework for more information <code><a href="https://github.com/renesas/ruhmi-framework-mcu">https://github.com/renesas/ruhmi-framework-mcu</a></code>.</p>
+<h2>Getting Started: Create an AI project</h2>
+<p>Start by creating a new C++ project in e&sup2; studio. On the BSP tab, stack and heap need to be configured. On the Clocks tab, NPU clock needs to be configured. On the Stacks tab, add New Stack &gt; AI &gt; Google TFLM Core Lib.</p>
+<h2>Getting Started: Configure C++ Build Settings</h2>
+<p>To build Google TFLM Core Lib, C++17 is recommended. Lower versions may not be supported. Also Run-Time Type Information and exceptions need to be disabled.</p>
+<table class="doxtable">
 <tr>
-<th>Module </th><th>Function </th><th>Description  </th></tr>
+<th>Toolchain </th><th>C++ Settings  </th></tr>
 <tr>
-<td>NPU Driver</td><td><code>ethosu_flush_dcache</code> </td><td>Flush/clean the data cache by address and size. Passing NULL as p argument expects the whole cache to be flushed. </td></tr>
+<td>GCC/LLVM </td><td>-fno-rtti, -fno-exceptions </td></tr>
 <tr>
-<td>NPU Driver</td><td><code>ethosu_invalidate_dcache</code> </td><td>Invalidate the data cache by address and size. Passing NULL as p argument expects the whole cache to be invalidated. </td></tr>
+<td>ARMCC </td><td>-D__ARMCC_USING_STANDARDLIB=1 </td></tr>
 <tr>
-<td>NPU Driver</td><td><code>ethosu_mutex_create</code> </td><td>define mutex API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_mutex_destroy</code> </td><td>define mutex API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_mutex_lock</code> </td><td>define mutex API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_mutex_unlock</code> </td><td>define mutex API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_semaphore_create</code> </td><td>define semaphore API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_semaphore_destroy</code> </td><td>define semaphore API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_semaphore_take</code> </td><td>define semaphore API based on RTOS </td></tr>
-<tr>
-<td>NPU Driver</td><td><code>ethosu_semaphore_give</code> </td><td>define semaphore API based on RTOS </td></tr>
-<tr>
-<td>NPU Core</td><td><code>ethosu_inference_begin</code> </td><td>Callback invoked just before the inference is started. </td></tr>
-<tr>
-<td>NPU Core</td><td><code>ethosu_inference_end</code> </td><td>Callback invoked just after the inference has completed. </td></tr>
+<td>IAR </td><td>-DARM_MATH_AUTOVECTORIZE=1, -DFLATBUFFERS_USE_STD_OPTIONAL=0 </td></tr>
 </table>
+<p>Please note</p><ol type="1">
+<li>-DTF_LITE_STATIC_MEMORY need to be defined if dynamic memory allocation is not supported.</li>
+</ol>
+<h2>Getting Started: Know your model</h2>
+<p>Users can use tools like Netron to find out what operators are used by the model. If there are operators not yet supported by Ethos-U55, they must be run on MCU. It is also possible to run a model on MCU only if the model is not optimized for NPU support.</p>
+<p>There are two types of MCU kernels: optimized kernel based on CMSIS-NN, and reference kernel. Optimized kernel (CMSIS-NN kernel) should always be preferred on ARM MCUs. Please refer to <code><a href="https://github.com/tensorflow/tflite-micro/blob/main/tensorflow/lite/micro/docs/optimized_kernel_implementations.md">https://github.com/tensorflow/tflite-micro/blob/main/tensorflow/lite/micro/docs/optimized_kernel_implementations.md</a></code> for more information.</p>
+<h2>Getting Started: Implement inference process framework</h2>
+<p>Users can refer to <code><a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-software/-/tree/main/applications">https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-software/-/tree/main/applications</a></code> for how to integrate TFLM inference functions, e.g parsing model, creating interpreter, allocating tensors and running inference. Please note by default lots of operators are registered to micro_op_resolver in micro_mutable_all_ops_resolver.h. Only operators used in your model need to be registered.</p>
 <h2>Getting Started: Creating AI inference</h2>
-<p>Create inference job and run, e.g </p><div class="fragment"><div class="line">InferenceJob job(std::string(modelName),</div><div class="line">                DataPtr(networkModelData, networkModelDataLen),</div><div class="line">                {DataPtr(inputData, inputDataLen)},</div><div class="line">                {DataPtr(outputData, outputDataLen)},</div><div class="line">                {DataPtr(expectedOutputData, expectedOutputDataLen)},</div><div class="line">                numBytesToPrint);</div><div class="line"></div><div class="line">// Run job</div><div class="line">bool failed = inferenceProcess.runJob(job);</div></div><!-- fragment --> <h2><a class="anchor" id="rm_ethosu-limitations"></a>
+<p>Create inference job and run, e.g </p><div class="fragment"><div class="line">InferenceJob job(std::string(modelName),</div><div class="line">                DataPtr(networkModelData, networkModelDataLen),</div><div class="line">                {DataPtr(inputData, inputDataLen)},</div><div class="line">                {DataPtr(outputData, outputDataLen)},</div><div class="line">                {DataPtr(expectedOutputData, expectedOutputDataLen)},</div><div class="line">                numBytesToPrint);</div><div class="line"></div><div class="line">// Run job</div><div class="line">bool failed = inferenceProcess.runJob(job);</div></div><!-- fragment --><h2>Getting Started: Profile performance</h2>
+<p><code>Ethos-U Profiler</code> stack has the components for performance profiling, e.g ethos-u monitor, event recoder. Users will have to implement <code>ticks_per_second()</code> and <code>GetCurrentTimeTicks()</code> for this purpose. Here is an example </p><div class="fragment"><div class="line">namespace tflite {</div><div class="line"></div><div class="line">    uint32_t ticks_per_second();</div><div class="line">    uint32_t GetCurrentTimeTicks();</div><div class="line"></div><div class="line">    uint32_t ticks_per_second() { return US_IN_SECOND; }</div><div class="line"></div><div class="line">    uint32_t GetCurrentTimeTicks() {</div><div class="line"></div><div class="line">        static bool is_initialized = false;</div><div class="line"></div><div class="line">        if (!is_initialized) {</div><div class="line">            ARM_PMU_Enable();</div><div class="line">            DCB-&gt;DEMCR |= DCB_DEMCR_TRCENA_Msk;</div><div class="line"></div><div class="line">            ARM_PMU_CYCCNT_Reset();</div><div class="line">            ARM_PMU_CNTR_Enable(PMU_CNTENSET_CCNTR_ENABLE_Msk);</div><div class="line"></div><div class="line">            is_initialized = true;</div><div class="line">        }</div><div class="line"></div><div class="line">        return ARM_PMU_Get_CCNTR();</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>Ethos-U Profiler</code> stack is not required. Users can use a timer for performance profiling.</dd></dl>
+<h2>Getting Started: Overwrite weak functions</h2>
+<p>Below weak functions shall be overwritten by the application as needed.</p>
+<table class="doxtable">
+<tr>
+<th>Function </th><th>Description  </th></tr>
+<tr>
+<td><code>ethosu_mutex_create</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_mutex_destroy</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_mutex_lock</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_mutex_unlock</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_semaphore_create</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_semaphore_destroy</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_semaphore_take</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_semaphore_give</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td><code>ethosu_inference_begin</code> </td><td>Callback invoked just before the inference is started. </td></tr>
+<tr>
+<td><code>ethosu_inference_end</code> </td><td>Callback invoked just after the inference is completed. </td></tr>
+</table>
+<p>Below weak functions are overwritten in the rm_ethosu driver </p><table class="doxtable">
+<tr>
+<th>Function </th><th>Description  </th></tr>
+<tr>
+<td><code>ethosu_flush_dcache</code> </td><td>Flush/clean the data cache by address and size. Passing NULL as p argument expects the whole cache to be flushed. </td></tr>
+<tr>
+<td><code>ethosu_invalidate_dcache</code> </td><td>Invalidate the data cache by address and size. Passing NULL as p argument expects the whole cache to be invalidated. </td></tr>
+</table>
+<p>Please refer to <a href="https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md">https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md</a> for more information.</p>
+<h2><a class="anchor" id="rm_ethosu-limitations"></a>
 Limitations</h2>
-<p>Users have to implement weak functions if needed. Please refer to <a href="https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md">https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md</a> for further information.</p>
-<p>Users have to update linker script if they want to save AI model and data to external memories.</p>
-<p>OFS2 must be enabled to configure NPU secure and privilege attributes.</p>
-<p>When used as non-secure, please make sure OFS2 NPU attributes are the same in secure and non-secure projects.</p>
+<ul>
+<li>e2studio project type must be C++ when tflite-micro is used</li>
+<li>Stack <code>Ethos-U Profiler</code> can only be used with the tflite-micro</li>
+<li>OFS2 must be enabled to configure NPU secure and privilege attributes. When used as non-secure, please make sure OFS2 NPU attributes are the same in secure and non-secure projects.</li>
+</ul>
 <h1><a class="anchor" id="rm_ethosu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -529,7 +569,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

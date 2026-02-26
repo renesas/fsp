@@ -1,0 +1,687 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___i_n_t_e_r_f_a_c_e_s.html">Motor</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for Motor Algorithm functions. </p>
+<h1><a class="anchor" id="MOTOR_ALGORITHM_API_Summary"></a>
+Summary</h1>
+<p>The Motor Algorithm provides Motor functionality. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__algorithm__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a></td></tr>
+<tr class="separator:structmotor__algorithm__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__algorithm__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__api__t">motor_algorithm_api_t</a></td></tr>
+<tr class="separator:structmotor__algorithm__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__algorithm__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__instance__t">motor_algorithm_instance_t</a></td></tr>
+<tr class="separator:structmotor__algorithm__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf61a0f93747ec53648bcefb4ce86c31e"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a></td></tr>
+<tr class="separator:gaf61a0f93747ec53648bcefb4ce86c31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gad1cde5f2848fede2a870e3f2e5b1793b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gad1cde5f2848fede2a870e3f2e5b1793b">motor_algorithm_event_t</a> </td></tr>
+<tr class="separator:gad1cde5f2848fede2a870e3f2e5b1793b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c52c3212282d11bdc4e0919737382c3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> </td></tr>
+<tr class="separator:ga8c52c3212282d11bdc4e0919737382c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__algorithm__cfg__t" id="structmotor__algorithm__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__algorithm__cfg__t">&#9670;&nbsp;</a></span>motor_algorithm_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_algorithm_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor algorithm configuration structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afd328ede7b3ca362b70ac7d51eaf761a"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__instance__t">motor_hal_driver_instance_t</a> <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_motor_hal_driver_instance</td>
+<td class="fielddoc">
+Motor driver access module instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa848cfa9287b713b329c2b61cd27d517"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__instance__t">motor_sensor_instance_t</a> const  *</td>
+<td class="fieldname">
+p_motor_sensor_instance</td>
+<td class="fielddoc">
+Motor angle sensor module instance (Slot 1) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3cd210acba231aa8b19019ec2c22bfc5"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__instance__t">motor_sensor_instance_t</a> const  *</td>
+<td class="fieldname">
+p_motor_sensor_instance2</td>
+<td class="fielddoc">
+Motor angle sensor module instance (Slot 2) </td></tr>
+<tr><td class="fieldtype">
+<a id="a47928549354b4e36aae594197f5c8d1d"></a><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__instance__t">timer_instance_t</a> const  *</td>
+<td class="fieldname">
+p_timer_instance</td>
+<td class="fielddoc">
+Timer instance for outer loop control. </td></tr>
+<tr><td class="fieldtype">
+<a id="a16d96e4163708de835da20ea50b0061a"></a>void const  *</td>
+<td class="fieldname">
+p_extend</td>
+<td class="fielddoc">
+Pointer to extended configuration. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__algorithm__api__t" id="structmotor__algorithm__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__algorithm__api__t">&#9670;&nbsp;</a></span>motor_algorithm_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_algorithm_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor algorithm API structure </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a93bae59cf26791c33fd665c866661c74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a93bae59cf26791c33fd665c866661c74">open</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a93bae59cf26791c33fd665c866661c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a309673eea77a79d79329a562c6d20d43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a309673eea77a79d79329a562c6d20d43">close</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a309673eea77a79d79329a562c6d20d43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb84050547b445450192fe143db5270"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a3fb84050547b445450192fe143db5270">reset</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a3fb84050547b445450192fe143db5270"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14bb42d28c05496775fdf30dcedb93f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a14bb42d28c05496775fdf30dcedb93f6">run</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a14bb42d28c05496775fdf30dcedb93f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c2d5668e8a7734f76a5b86782474520"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a9c2d5668e8a7734f76a5b86782474520">stop</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a9c2d5668e8a7734f76a5b86782474520"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a482623276d02413f0ed864ed462db3ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a482623276d02413f0ed864ed462db3ff">controlModeGet</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> *p_control_mode)</td></tr>
+<tr class="separator:a482623276d02413f0ed864ed462db3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9e52a05ee08e9cdd01614209f46c4c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#af9e52a05ee08e9cdd01614209f46c4c6">controlModeSet</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> control_mode)</td></tr>
+<tr class="separator:af9e52a05ee08e9cdd01614209f46c4c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a113baa564e7a6646840df4802ae44e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a113baa564e7a6646840df4802ae44e16">statusGet</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, uint8_t *const p_status)</td></tr>
+<tr class="separator:a113baa564e7a6646840df4802ae44e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43f0aeb667aa20573cefb7022da8d193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a43f0aeb667aa20573cefb7022da8d193">parameterUpdate</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a43f0aeb667aa20573cefb7022da8d193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74ba40bd7f05d4a9fb9a7acf13522d74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#a74ba40bd7f05d4a9fb9a7acf13522d74">errorGet</a> )(<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, uint32_t *p_error_flags)</td></tr>
+<tr class="separator:a74ba40bd7f05d4a9fb9a7acf13522d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a93bae59cf26791c33fd665c866661c74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93bae59cf26791c33fd665c866661c74">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::open) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize the motor algorithm module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a309673eea77a79d79329a562c6d20d43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a309673eea77a79d79329a562c6d20d43">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::close) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close (Finish) the motor algorithm module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3fb84050547b445450192fe143db5270"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb84050547b445450192fe143db5270">&#9670;&nbsp;</a></span>reset</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::reset) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reset(Stop) the motor algorithm module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a14bb42d28c05496775fdf30dcedb93f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14bb42d28c05496775fdf30dcedb93f6">&#9670;&nbsp;</a></span>run</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::run) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Activate the motor algorithm.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9c2d5668e8a7734f76a5b86782474520"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c2d5668e8a7734f76a5b86782474520">&#9670;&nbsp;</a></span>stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::stop) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inactivate the motor algorithm.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a482623276d02413f0ed864ed462db3ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a482623276d02413f0ed864ed462db3ff">&#9670;&nbsp;</a></span>controlModeGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::controlModeGet) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> *p_control_mode)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get control mode</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_control_mode</td><td>Pointer to control mode data across multiple modules. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af9e52a05ee08e9cdd01614209f46c4c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9e52a05ee08e9cdd01614209f46c4c6">&#9670;&nbsp;</a></span>controlModeSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::controlModeSet) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> control_mode)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set control mode</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">control_mode</td><td>Control mode value across multiple modules. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a113baa564e7a6646840df4802ae44e16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a113baa564e7a6646840df4802ae44e16">&#9670;&nbsp;</a></span>statusGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::statusGet) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, uint8_t *const p_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get status</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a43f0aeb667aa20573cefb7022da8d193"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43f0aeb667aa20573cefb7022da8d193">&#9670;&nbsp;</a></span>parameterUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::parameterUpdate) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a74ba40bd7f05d4a9fb9a7acf13522d74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74ba40bd7f05d4a9fb9a7acf13522d74">&#9670;&nbsp;</a></span>errorGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_algorithm_api_t::errorGet) (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, uint32_t *p_error_flags)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get error info.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_error_flags</td><td>Pointer to error info. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structmotor__algorithm__instance__t" id="structmotor__algorithm__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__algorithm__instance__t">&#9670;&nbsp;</a></span>motor_algorithm_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_algorithm_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of motor algorithm interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a047d1d16dfa2236ee44cdfc21da603e0"></a><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a78eba271f858327f35c9fc7305db00a5"></a><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a251709b08558f51a1e4d3888ccb0bb81"></a><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__api__t">motor_algorithm_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="gaf61a0f93747ec53648bcefb4ce86c31e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf61a0f93747ec53648bcefb4ce86c31e">&#9670;&nbsp;</a></span>motor_algorithm_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Control block for motor algorithm </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gad1cde5f2848fede2a870e3f2e5b1793b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1cde5f2848fede2a870e3f2e5b1793b">&#9670;&nbsp;</a></span>motor_algorithm_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gad1cde5f2848fede2a870e3f2e5b1793b">motor_algorithm_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Events that can trigger a callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad1cde5f2848fede2a870e3f2e5b1793baa28ac2e4e3af70ba683f97235e6b57ed"></a>MOTOR_ALGORITHM_EVENT_INNER&#160;</td><td class="fielddoc"><p>Event forward current control. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1cde5f2848fede2a870e3f2e5b1793ba3f1ed92ea46b01e0da10fca8834d0e3f"></a>MOTOR_ALGORITHM_EVENT_OUTER&#160;</td><td class="fielddoc"><p>Event set speed control output data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1cde5f2848fede2a870e3f2e5b1793ba7b72b4fce0c992660f7c781037202029"></a>MOTOR_ALGORITHM_EVENT_TRAJECTORY&#160;</td><td class="fielddoc"><p>Event set speed control trajectory data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1cde5f2848fede2a870e3f2e5b1793ba27551f2baebdba704ed6cf70e9feaf78"></a>MOTOR_ALGORITHM_EVENT_ERROR&#160;</td><td class="fielddoc"><p>Event error detected. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga8c52c3212282d11bdc4e0919737382c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8c52c3212282d11bdc4e0919737382c3">&#9670;&nbsp;</a></span>motor_algorithm_control_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Control mode for pm foc </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8c52c3212282d11bdc4e0919737382c3a5223177c007d3ba071e5adf28fdf7b4e"></a>MOTOR_ALGORITHM_CONTROL_MODE_NONE&#160;</td><td class="fielddoc"><p>Not configured control mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8c52c3212282d11bdc4e0919737382c3ad213d7c331daa2e68529df137bc3a7bf"></a>MOTOR_ALGORITHM_CONTROL_MODE_SPEED&#160;</td><td class="fielddoc"><p>Speed control mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

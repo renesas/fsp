@@ -12,6 +12,7 @@ var searchData=
   ['lwip_20mqtt',['lwIP MQTT',['../group___l_w_i_p___m_q_t_t.html',1,'']]],
   ['lwip_20netbiosns',['lwIP NETBIOSNS',['../group___l_w_i_p___n_e_t_b_i_o_s_n_s.html',1,'']]],
   ['lwip_20smtp',['lwIP SMTP',['../group___l_w_i_p___s_m_t_p.html',1,'']]],
+  ['lwip_20sntp',['lwIP SNTP',['../group___l_w_i_p___s_n_t_p.html',1,'']]],
   ['levelx_20nor_20port_20_28rm_5flevelx_5fnor_5fspi_29',['LevelX NOR Port (rm_levelx_nor_spi)',['../group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html',1,'']]],
   ['littlefs_20interface',['LittleFS Interface',['../group___r_m___l_i_t_t_l_e_f_s___a_p_i.html',1,'']]],
   ['littlefs_20on_20flash_20_28rm_5flittlefs_5fflash_29',['LittleFS on Flash (rm_littlefs_flash)',['../group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html',1,'']]],

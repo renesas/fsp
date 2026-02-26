@@ -1,0 +1,932 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor Trajectory Linear middleware (rm_motor_trajectory_linear)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor Trajectory Linear middleware (rm_motor_trajectory_linear)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaefc2909301c6f1c30acf96a2bb2ed8a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaefc2909301c6f1c30acf96a2bb2ed8a5">RM_MOTOR_TRAJECTORY_LINEAR_Open</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__cfg__t">motor_trajectory_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:gaefc2909301c6f1c30acf96a2bb2ed8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures. Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ab15446f7d4792efecc68f19976672151">motor_trajectory_api_t::open</a>.  <a href="#gaefc2909301c6f1c30acf96a2bb2ed8a5">More...</a><br /></td></tr>
+<tr class="separator:gaefc2909301c6f1c30acf96a2bb2ed8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c37bca317a95f763986eaf7433539e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga9c37bca317a95f763986eaf7433539e2">RM_MOTOR_TRAJECTORY_LINEAR_Close</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga9c37bca317a95f763986eaf7433539e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified. Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#affdcec54eee7bdb7e38e2eaa3b8cf9e0">motor_trajectory_api_t::close</a>.  <a href="#ga9c37bca317a95f763986eaf7433539e2">More...</a><br /></td></tr>
+<tr class="separator:ga9c37bca317a95f763986eaf7433539e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38ac9b7f6bcbfeb6069915650641b632"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga38ac9b7f6bcbfeb6069915650641b632">RM_MOTOR_TRAJECTORY_LINEAR_Reset</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga38ac9b7f6bcbfeb6069915650641b632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the configurations Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#adf7d52a51fd26594818d958cae8b15f3">motor_trajectory_api_t::reset</a>.  <a href="#ga38ac9b7f6bcbfeb6069915650641b632">More...</a><br /></td></tr>
+<tr class="separator:ga38ac9b7f6bcbfeb6069915650641b632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6240521091b0cad12b5de3c5cb34ba4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaa6240521091b0cad12b5de3c5cb34ba4">RM_MOTOR_TRAJECTORY_LINEAR_TargetSet</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a> *p_target, <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gac06b52edb167327246488fea7c2df266">motor_trajectory_command_status_t</a> *const p_cmd_status)</td></tr>
+<tr class="memdesc:gaa6240521091b0cad12b5de3c5cb34ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target set Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#a69fb4ec3ba812d7378ef446c868437c2">motor_trajectory_api_t::targetSet</a>.  <a href="#gaa6240521091b0cad12b5de3c5cb34ba4">More...</a><br /></td></tr>
+<tr class="separator:gaa6240521091b0cad12b5de3c5cb34ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73fdffb547b5486befa4bc2d4fc64aa5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga73fdffb547b5486befa4bc2d4fc64aa5">RM_MOTOR_TRAJECTORY_LINEAR_StatusGet</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gaa0ba22da6abcbe283c01b1fca53d14b3">motor_trajectory_state_t</a> *const p_state)</td></tr>
+<tr class="memdesc:ga73fdffb547b5486befa4bc2d4fc64aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status get Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#aeac1eb46f825d999068b5f17be076468">motor_trajectory_api_t::statusGet</a>.  <a href="#ga73fdffb547b5486befa4bc2d4fc64aa5">More...</a><br /></td></tr>
+<tr class="separator:ga73fdffb547b5486befa4bc2d4fc64aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59cd2481bd205b92fb9a610082c3a3e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga59cd2481bd205b92fb9a610082c3a3e9">RM_MOTOR_TRAJECTORY_LINEAR_BypassModeSet</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ga9efb9e1cac7684ac480ecd4c550eb6ec">motor_trajectory_bypass_mode_t</a> bypass_mode)</td></tr>
+<tr class="memdesc:ga59cd2481bd205b92fb9a610082c3a3e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets bypass mode Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ac0f96c2b9fd72fcc2ca9a891d6575f2d">motor_trajectory_api_t::bypassModeSet</a>.  <a href="#ga59cd2481bd205b92fb9a610082c3a3e9">More...</a><br /></td></tr>
+<tr class="separator:ga59cd2481bd205b92fb9a610082c3a3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98e031305f8494f8b3cf658bb2dbecda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga98e031305f8494f8b3cf658bb2dbecda">RM_MOTOR_TRAJECTORY_LINEAR_Callback</a> (<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__callback__args__t">motor_trajectory_callback_args_t</a> *const p_args)</td></tr>
+<tr class="memdesc:ga98e031305f8494f8b3cf658bb2dbecda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called by the algorithm layer to get the next reference value.  <a href="#ga98e031305f8494f8b3cf658bb2dbecda">More...</a><br /></td></tr>
+<tr class="separator:ga98e031305f8494f8b3cf658bb2dbecda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Motor Trajectory Linear on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html">Motor Trajectory Interface</a>. </p>
+<h1><a class="anchor" id="rm_motor_trajectory_linear-overview"></a>
+Overview</h1>
+<p>The Motor Trajectory Linear module provides linear trajectory generation for motor control applications. It calculates smooth reference values that transition linearly from the current position/speed to a target value at a specified slew rate.</p>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-features"></a>
+Features</h2>
+<p>The Motor Trajectory Linear module has the following key features:</p>
+<ul>
+<li>Linear trajectory generation with configurable slew rate</li>
+<li>Command queuing support (one command can be queued while another is in progress)</li>
+<li>Immediate command execution with the IMMEDIATE flag</li>
+<li>Bypass mode for direct reference value pass-through</li>
+<li>Force alignment support for synchronization</li>
+<li>Direction (CW/CCW) and acceleration/deceleration state tracking</li>
+<li>User callback notification when trajectory completes</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-states"></a>
+Trajectory States</h2>
+<p>The trajectory module operates in the following states:</p>
+<table class="doxtable">
+<tr>
+<th>State </th><th>Description  </th></tr>
+<tr>
+<td>TRAJECTORY_STATE_IDLE </td><td>No trajectory is active. Ready to accept new commands. </td></tr>
+<tr>
+<td>TRAJECTORY_STATE_IN_PROGRESS </td><td>A trajectory is currently being executed. </td></tr>
+<tr>
+<td>TRAJECTORY_STATE_QUEUED </td><td>A trajectory is in progress and another command is queued. </td></tr>
+</table>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-command-status"></a>
+Command Status</h2>
+<p>When setting a target, the following status values indicate how the command was processed:</p>
+<table class="doxtable">
+<tr>
+<th>Status </th><th>Description  </th></tr>
+<tr>
+<td>MOTOR_TRAJECTORY_CMD_ACCEPTED_IMMEDIATE </td><td>Command was accepted and started immediately. </td></tr>
+<tr>
+<td>MOTOR_TRAJECTORY_CMD_QUEUED </td><td>Command was queued (will execute after current trajectory completes). </td></tr>
+<tr>
+<td>MOTOR_TRAJECTORY_CMD_REJECTED </td><td>Command was rejected (queue is full or invalid parameters). </td></tr>
+</table>
+<h1><a class="anchor" id="rm_motor_trajectory_linear-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_motor_trajectory_linear</h2>
+The following build time configurations are defined in fsp_cfg/rm_motor_trajectory_linear_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Motor &gt; Advanced Motor Middleware &gt; Motor Trajectory Module (rm_motor_trajectory_linear)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Advanced Motor Middleware &gt; Motor Trajectory Module (rm_motor_trajectory_linear).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor0_trajectory_linear </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use custom trajectory</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+true</li>
+<li>
+false</li>
+</ul>
+</td><td>false </td><td>Allows the controller to follow a linear trajectory provided by the user. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bypass Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+true</li>
+<li>
+false</li>
+</ul>
+</td><td>false </td><td>Trajectory bypass control flag. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Force alignment</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+true</li>
+<li>
+false</li>
+</ul>
+</td><td>false </td><td>Force alignment control flag. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Outer control period (sec)</td><td>Must be a valid non-negative value.</td><td>0.0005 </td><td>Control period, same as the outer loop period of the algorithm layer. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupt  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-build-time-config"></a>
+Build Time Configurations for rm_motor_trajectory_linear</h2>
+<p>The following build time configurations are available for this module:</p>
+<table class="doxtable">
+<tr>
+<th>Configuration </th><th>Description </th><th>Default  </th></tr>
+<tr>
+<td>Parameter Checking </td><td>Enables parameter checking for API functions. </td><td>Enabled </td></tr>
+</table>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-config"></a>
+Configurations for Motor Trajectory Linear</h2>
+<table class="doxtable">
+<tr>
+<th>Configuration </th><th>Description  </th></tr>
+<tr>
+<td>Cycle Time (seconds) </td><td>The time interval between callback invocations. Used to calculate trajectory progression. </td></tr>
+<tr>
+<td>Bypass Mode </td><td>When enabled, the reference value is passed through without trajectory calculation. </td></tr>
+<tr>
+<td>Force Align </td><td>When enabled, forces alignment to a specified value. </td></tr>
+</table>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not use I/O pins.</p>
+<h1><a class="anchor" id="rm_motor_trajectory_linear-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-callback"></a>
+Callback Function</h2>
+<p>The trajectory module requires periodic callback invocations from the motor control algorithm layer. The callback function <a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga98e031305f8494f8b3cf658bb2dbecda">RM_MOTOR_TRAJECTORY_LINEAR_Callback</a> should be called at regular intervals (matching the configured cycle time) to:</p>
+<ul>
+<li>Calculate the next reference value based on the current trajectory</li>
+<li>Update direction and acceleration/deceleration states</li>
+<li>Handle trajectory completion and queued command transitions</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-parameters"></a>
+Trajectory Parameters</h2>
+<p>Linear trajectory parameters are defined using the <a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a> structure. The helper macro <a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga5d320d5c9abf7b56a09db7ad16a2f2fa">MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</a> can be used for convenient initialization: </p><pre class="fragment">motor_trajectory_linear_params_t linear_params = MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT(100.0F, 10.0F);
+</pre><p>Where:</p>
+<ul>
+<li>First parameter: Target value (e.g., target speed in RPM or target position)</li>
+<li>Second parameter: Slew rate (rate of change per second)</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-immediate"></a>
+Immediate Command Execution</h2>
+<p>To execute a command immediately (aborting any current trajectory and clearing the queue), set the IMMEDIATE flag in the command_flags: </p><pre class="fragment">motor_trajectory_linear_params_t linear_params = MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT(100.0F, 10.0F);
+linear_params.base.command_flags = MOTOR_TRAJECTORY_COMMAND_STATUS_FLAG_IMMEDIATE;
+</pre><h2><a class="anchor" id="rm_motor_trajectory_linear-bypass-mode"></a>
+Bypass Mode</h2>
+<p>Bypass mode can be enabled to pass the current reference value through without trajectory calculation. This is useful when:</p>
+<ul>
+<li>Direct control of the reference value is needed</li>
+<li>The trajectory module should be temporarily disabled</li>
+</ul>
+<p>Enable bypass mode using <a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga59cd2481bd205b92fb9a610082c3a3e9">RM_MOTOR_TRAJECTORY_LINEAR_BypassModeSet</a> : </p><pre class="fragment">err = RM_MOTOR_TRAJECTORY_LINEAR_BypassModeSet(&amp;g_motor_trajectory_ctrl, true);
+</pre><h2><a class="anchor" id="rm_motor_trajectory_linear-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the Motor Trajectory Linear module:</p>
+<ul>
+<li>Only one command can be queued at a time. If a command is already queued, subsequent commands will be rejected until the queue is cleared.</li>
+<li>The trajectory calculation assumes a constant cycle time. Variations in callback timing may affect trajectory accuracy.</li>
+<li>The module uses single-precision floating-point arithmetic.</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_trajectory_linear-examples"></a>
+Examples</h1>
+<h2><a class="anchor" id="rm_motor_trajectory_linear-basic-example"></a>
+Basic Example</h2>
+<p>This is a basic example of minimal use of the motor trajectory linear in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_trajectory_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaefc2909301c6f1c30acf96a2bb2ed8a5">RM_MOTOR_TRAJECTORY_LINEAR_Open</a>(&amp;g_motor_trajectory_ctrl, &amp;g_motor_trajectory_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga9c37bca317a95f763986eaf7433539e2">RM_MOTOR_TRAJECTORY_LINEAR_Close</a>(&amp;g_motor_trajectory_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm_motor_trajectory_linear-advanced-example"></a>
+Advanced Example</h2>
+<p>This example demonstrates setting targets, getting status, resetting, and configuring bypass mode.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_trajectory_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                         err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gaa0ba22da6abcbe283c01b1fca53d14b3">motor_trajectory_state_t</a>          state;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gac06b52edb167327246488fea7c2df266">motor_trajectory_command_status_t</a> cmd_status;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaefc2909301c6f1c30acf96a2bb2ed8a5">RM_MOTOR_TRAJECTORY_LINEAR_Open</a>(&amp;g_motor_trajectory_ctrl, &amp;g_motor_trajectory_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set target using linear trajectory parameters */</span></div><div class="line">    <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a> linear_params = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga5d320d5c9abf7b56a09db7ad16a2f2fa">MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</a>(100.0F, 10.0F);</div><div class="line"></div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a> target =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#aa467c5ea47a5de18715b3f74086aaa23">p_params</a> = (<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__params__base__t">motor_trajectory_params_base_t</a> <span class="keyword">const</span> *) &amp;linear_params,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaa6240521091b0cad12b5de3c5cb34ba4">RM_MOTOR_TRAJECTORY_LINEAR_TargetSet</a>(&amp;g_motor_trajectory_ctrl, &amp;target, &amp;cmd_status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the current trajectory state. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga73fdffb547b5486befa4bc2d4fc64aa5">RM_MOTOR_TRAJECTORY_LINEAR_StatusGet</a>(&amp;g_motor_trajectory_ctrl, &amp;state);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the trajectory module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga38ac9b7f6bcbfeb6069915650641b632">RM_MOTOR_TRAJECTORY_LINEAR_Reset</a>(&amp;g_motor_trajectory_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set bypass mode. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga59cd2481bd205b92fb9a610082c3a3e9">RM_MOTOR_TRAJECTORY_LINEAR_BypassModeSet</a>(&amp;g_motor_trajectory_ctrl, <span class="keyword">true</span>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga9c37bca317a95f763986eaf7433539e2">RM_MOTOR_TRAJECTORY_LINEAR_Close</a>(&amp;g_motor_trajectory_ctrl);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm_motor_trajectory_linear-callback-example"></a>
+Callback Integration Example</h2>
+<p>This example shows how to integrate the trajectory callback with a motor control loop:</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Motor control periodic interrupt handler */</span></div><div class="line"><span class="keywordtype">void</span> motor_control_isr (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    <span class="keywordtype">float</span>     reference_value = 0.0F;</div><div class="line"></div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__callback__args__t">motor_trajectory_callback_args_t</a> args =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ab70292951e98d8adae0f141b37dc9038">p_reference</a> = &amp;reference_value,</div><div class="line">        .force_align = <span class="keyword">false</span>,</div><div class="line">        .align_value = 0.0F,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Call trajectory callback to get next reference value */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga98e031305f8494f8b3cf658bb2dbecda">RM_MOTOR_TRAJECTORY_LINEAR_Callback</a>(&amp;g_motor_trajectory_ctrl, &amp;args);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Use reference_value for motor control */</span></div><div class="line">        set_motor_speed_reference(reference_value);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm_motor_trajectory_linear-queued-example"></a>
+Queued Command Example</h2>
+<p>This example demonstrates command queuing behavior:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> trajectory_queued_command_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gac06b52edb167327246488fea7c2df266">motor_trajectory_command_status_t</a> cmd_status;</div><div class="line"></div><div class="line">    <span class="comment">/* First command - will be accepted immediately */</span></div><div class="line">    <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a> first_target = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga5d320d5c9abf7b56a09db7ad16a2f2fa">MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</a>(100.0F, 10.0F);</div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a>        target1      =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#aa467c5ea47a5de18715b3f74086aaa23">p_params</a> = (<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__params__base__t">motor_trajectory_params_base_t</a> <span class="keyword">const</span> *) &amp;first_target,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaa6240521091b0cad12b5de3c5cb34ba4">RM_MOTOR_TRAJECTORY_LINEAR_TargetSet</a>(&amp;g_motor_trajectory_ctrl, &amp;target1, &amp;cmd_status);</div><div class="line"></div><div class="line">    <span class="comment">/* cmd_status will be MOTOR_TRAJECTORY_COMMAND_STATUS_ACCEPTED_IMMEDIATE */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Second command - will be queued */</span></div><div class="line">    <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a> second_target = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga5d320d5c9abf7b56a09db7ad16a2f2fa">MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</a>(200.0F, 20.0F);</div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a>        target2       =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#aa467c5ea47a5de18715b3f74086aaa23">p_params</a> = (<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__params__base__t">motor_trajectory_params_base_t</a> <span class="keyword">const</span> *) &amp;second_target,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaa6240521091b0cad12b5de3c5cb34ba4">RM_MOTOR_TRAJECTORY_LINEAR_TargetSet</a>(&amp;g_motor_trajectory_ctrl, &amp;target2, &amp;cmd_status);</div><div class="line"></div><div class="line">    <span class="comment">/* cmd_status will be MOTOR_TRAJECTORY_COMMAND_STATUS_QUEUED */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Third command - will be rejected (queue full) */</span></div><div class="line">    <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a> third_target = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga5d320d5c9abf7b56a09db7ad16a2f2fa">MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</a>(300.0F, 30.0F);</div><div class="line">    <a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a>        target3      =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#aa467c5ea47a5de18715b3f74086aaa23">p_params</a> = (<a class="code" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__params__base__t">motor_trajectory_params_base_t</a> <span class="keyword">const</span> *) &amp;third_target,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#gaa6240521091b0cad12b5de3c5cb34ba4">RM_MOTOR_TRAJECTORY_LINEAR_TargetSet</a>(&amp;g_motor_trajectory_ctrl, &amp;target3, &amp;cmd_status);</div><div class="line"></div><div class="line">    <span class="comment">/* cmd_status will be MOTOR_TRAJECTORY_COMMAND_STATUS_REJECTED */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__trajectory__linear__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__extended__cfg__t">motor_trajectory_linear_extended_cfg_t</a></td></tr>
+<tr class="separator:structmotor__trajectory__linear__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__trajectory__linear__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a></td></tr>
+<tr class="separator:structmotor__trajectory__linear__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__trajectory__linear__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__ctrl__t">motor_trajectory_linear_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__trajectory__linear__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5d320d5c9abf7b56a09db7ad16a2f2fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ga5d320d5c9abf7b56a09db7ad16a2f2fa">MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</a>(in_target,  in_slew_rate)</td></tr>
+<tr class="separator:ga5d320d5c9abf7b56a09db7ad16a2f2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__trajectory__linear__extended__cfg__t" id="structmotor__trajectory__linear__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__trajectory__linear__extended__cfg__t">&#9670;&nbsp;</a></span>motor_trajectory_linear_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_trajectory_linear_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration for linear trajectory </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8196deebf4c95ce0944a98aa7ab1edfe"></a>float</td>
+<td class="fieldname">
+cycle_time_sec</td>
+<td class="fielddoc">
+Cycle time in seconds. </td></tr>
+<tr><td class="fieldtype">
+<a id="a66735c721507285b1b2aa0c13016686a"></a>bool</td>
+<td class="fieldname">
+bypass_mode</td>
+<td class="fielddoc">
+Bypass mode flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab99b47ab34ee22a12d1b0d4a4565c6d2"></a>bool</td>
+<td class="fieldname">
+force_align</td>
+<td class="fielddoc">
+Force alignment flag. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__trajectory__linear__params__t" id="structmotor__trajectory__linear__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__trajectory__linear__params__t">&#9670;&nbsp;</a></span>motor_trajectory_linear_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_trajectory_linear_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Parameters for linear trajectories (inherits base structure) </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a95aea56ab4ad9ea671d3057bc593e8dd"></a><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__params__base__t">motor_trajectory_params_base_t</a></td>
+<td class="fieldname">
+base</td>
+<td class="fielddoc">
+Base structure (placed first) </td></tr>
+<tr><td class="fieldtype">
+<a id="a7de967c21e44458409ddbdc0d1595e33"></a>float</td>
+<td class="fieldname">
+target</td>
+<td class="fielddoc">
+Target value. </td></tr>
+<tr><td class="fieldtype">
+<a id="af0f5bd5e50188d770d71ea03b79eab0b"></a>float</td>
+<td class="fieldname">
+slew_rate</td>
+<td class="fielddoc">
+Acceleration rate. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__trajectory__linear__ctrl__t" id="structmotor__trajectory__linear__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__trajectory__linear__ctrl__t">&#9670;&nbsp;</a></span>motor_trajectory_linear_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_trajectory_linear_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Trajectory Control Structure </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a7ee9f217eb45eaec7e599f03884af9d1"><td class="memItemLeft" align="right" valign="top"><a id="a7ee9f217eb45eaec7e599f03884af9d1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a7ee9f217eb45eaec7e599f03884af9d1">open</a></td></tr>
+<tr class="memdesc:a7ee9f217eb45eaec7e599f03884af9d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:a7ee9f217eb45eaec7e599f03884af9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b615d53e1c948124d6b5923496646d"><td class="memItemLeft" align="right" valign="top"><a id="ac4b615d53e1c948124d6b5923496646d"></a>
+<a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gaa0ba22da6abcbe283c01b1fca53d14b3">motor_trajectory_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ac4b615d53e1c948124d6b5923496646d">state</a></td></tr>
+<tr class="memdesc:ac4b615d53e1c948124d6b5923496646d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state. <br /></td></tr>
+<tr class="separator:ac4b615d53e1c948124d6b5923496646d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1acaaac357b2c35f9269dd7ede3a2fa8"><td class="memItemLeft" align="right" valign="top"><a id="a1acaaac357b2c35f9269dd7ede3a2fa8"></a>
+<a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a1acaaac357b2c35f9269dd7ede3a2fa8">current_target</a></td></tr>
+<tr class="memdesc:a1acaaac357b2c35f9269dd7ede3a2fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current target parameters. <br /></td></tr>
+<tr class="separator:a1acaaac357b2c35f9269dd7ede3a2fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9269cd6094823153d8a54271dc63dc03"><td class="memItemLeft" align="right" valign="top"><a id="a9269cd6094823153d8a54271dc63dc03"></a>
+<a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#structmotor__trajectory__linear__params__t">motor_trajectory_linear_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a9269cd6094823153d8a54271dc63dc03">queued_target</a></td></tr>
+<tr class="memdesc:a9269cd6094823153d8a54271dc63dc03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Next target parameters queued. <br /></td></tr>
+<tr class="separator:a9269cd6094823153d8a54271dc63dc03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c2d2e2dd491dbd9ee3da02ae4a1fa0d"><td class="memItemLeft" align="right" valign="top"><a id="a1c2d2e2dd491dbd9ee3da02ae4a1fa0d"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a1c2d2e2dd491dbd9ee3da02ae4a1fa0d">current_reference</a></td></tr>
+<tr class="memdesc:a1c2d2e2dd491dbd9ee3da02ae4a1fa0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current reference value. <br /></td></tr>
+<tr class="separator:a1c2d2e2dd491dbd9ee3da02ae4a1fa0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93d109d3f3226ff17f66e14623d96413"><td class="memItemLeft" align="right" valign="top"><a id="a93d109d3f3226ff17f66e14623d96413"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a93d109d3f3226ff17f66e14623d96413">current_reference_prev</a></td></tr>
+<tr class="memdesc:a93d109d3f3226ff17f66e14623d96413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current reference previous value. <br /></td></tr>
+<tr class="separator:a93d109d3f3226ff17f66e14623d96413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac271f814061d926639ada3cff62863e9"><td class="memItemLeft" align="right" valign="top"><a id="ac271f814061d926639ada3cff62863e9"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ac271f814061d926639ada3cff62863e9">initial_value</a></td></tr>
+<tr class="memdesc:ac271f814061d926639ada3cff62863e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial value (value at start) <br /></td></tr>
+<tr class="separator:ac271f814061d926639ada3cff62863e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ae2bf8cb0c37fc117f72c99844b5a33"><td class="memItemLeft" align="right" valign="top"><a id="a3ae2bf8cb0c37fc117f72c99844b5a33"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a3ae2bf8cb0c37fc117f72c99844b5a33">last_callback_time</a></td></tr>
+<tr class="memdesc:a3ae2bf8cb0c37fc117f72c99844b5a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time of previous callback. <br /></td></tr>
+<tr class="separator:a3ae2bf8cb0c37fc117f72c99844b5a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a809774417611caddc8b0cf2e6d20608b"><td class="memItemLeft" align="right" valign="top"><a id="a809774417611caddc8b0cf2e6d20608b"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a809774417611caddc8b0cf2e6d20608b">cycle_time_sec</a></td></tr>
+<tr class="memdesc:a809774417611caddc8b0cf2e6d20608b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycle time (seconds) <br /></td></tr>
+<tr class="separator:a809774417611caddc8b0cf2e6d20608b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073ca16245d9f620192fa51e4001c7a1"><td class="memItemLeft" align="right" valign="top"><a id="a073ca16245d9f620192fa51e4001c7a1"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a073ca16245d9f620192fa51e4001c7a1">p_user_callback</a> )(void *p_args)</td></tr>
+<tr class="memdesc:a073ca16245d9f620192fa51e4001c7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback function. <br /></td></tr>
+<tr class="separator:a073ca16245d9f620192fa51e4001c7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb5a1b76637d0121e973af67dc22c384"><td class="memItemLeft" align="right" valign="top"><a id="afb5a1b76637d0121e973af67dc22c384"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#afb5a1b76637d0121e973af67dc22c384">p_user_callback_args</a></td></tr>
+<tr class="memdesc:afb5a1b76637d0121e973af67dc22c384"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback arguments. <br /></td></tr>
+<tr class="separator:afb5a1b76637d0121e973af67dc22c384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e11d1d431042f3bb481567484534d10"><td class="memItemLeft" align="right" valign="top"><a id="a9e11d1d431042f3bb481567484534d10"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a9e11d1d431042f3bb481567484534d10">bypass_mode</a></td></tr>
+<tr class="memdesc:a9e11d1d431042f3bb481567484534d10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bypass mode flag. <br /></td></tr>
+<tr class="separator:a9e11d1d431042f3bb481567484534d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6ee792d14558f975282dcbf994d9a1b"><td class="memItemLeft" align="right" valign="top"><a id="ab6ee792d14558f975282dcbf994d9a1b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ab6ee792d14558f975282dcbf994d9a1b">force_align</a></td></tr>
+<tr class="memdesc:ab6ee792d14558f975282dcbf994d9a1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force alignment flag and alignment value. <br /></td></tr>
+<tr class="separator:ab6ee792d14558f975282dcbf994d9a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b2781e38de12c4a53d5f31a7ea8a58"><td class="memItemLeft" align="right" valign="top"><a id="a29b2781e38de12c4a53d5f31a7ea8a58"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a29b2781e38de12c4a53d5f31a7ea8a58">align_value</a></td></tr>
+<tr class="memdesc:a29b2781e38de12c4a53d5f31a7ea8a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force alignment flag and alignment value. <br /></td></tr>
+<tr class="separator:a29b2781e38de12c4a53d5f31a7ea8a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49eebd6ab43d3fd09132deee21b8bb0"><td class="memItemLeft" align="right" valign="top"><a id="ae49eebd6ab43d3fd09132deee21b8bb0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#ae49eebd6ab43d3fd09132deee21b8bb0">accel_state</a></td></tr>
+<tr class="memdesc:ae49eebd6ab43d3fd09132deee21b8bb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acceleration/Deceleration state. <br /></td></tr>
+<tr class="separator:ae49eebd6ab43d3fd09132deee21b8bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83176890f313c940e770de31734a2f37"><td class="memItemLeft" align="right" valign="top"><a id="a83176890f313c940e770de31734a2f37"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a83176890f313c940e770de31734a2f37">direction</a></td></tr>
+<tr class="memdesc:a83176890f313c940e770de31734a2f37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation direction CW/CCW. <br /></td></tr>
+<tr class="separator:a83176890f313c940e770de31734a2f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c499819c97e573e6bc64cf71ba6b86b"><td class="memItemLeft" align="right" valign="top"><a id="a0c499819c97e573e6bc64cf71ba6b86b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___l_i_n_e_a_r.html#a0c499819c97e573e6bc64cf71ba6b86b">current_time_ms</a></td></tr>
+<tr class="memdesc:a0c499819c97e573e6bc64cf71ba6b86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current time in milliseconds. <br /></td></tr>
+<tr class="separator:a0c499819c97e573e6bc64cf71ba6b86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga5d320d5c9abf7b56a09db7ad16a2f2fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d320d5c9abf7b56a09db7ad16a2f2fa">&#9670;&nbsp;</a></span>MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MOTOR_TRAJECTORY_LINEAR_PARAMS_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">in_target, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">in_slew_rate&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialization Helper Macros </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaefc2909301c6f1c30acf96a2bb2ed8a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaefc2909301c6f1c30acf96a2bb2ed8a5">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__cfg__t">motor_trajectory_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens and configures. Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ab15446f7d4792efecc68f19976672151">motor_trajectory_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Motor Driver successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9c37bca317a95f763986eaf7433539e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9c37bca317a95f763986eaf7433539e2">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified. Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#affdcec54eee7bdb7e38e2eaa3b8cf9e0">motor_trajectory_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga38ac9b7f6bcbfeb6069915650641b632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga38ac9b7f6bcbfeb6069915650641b632">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets the configurations Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#adf7d52a51fd26594818d958cae8b15f3">motor_trajectory_api_t::reset</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa6240521091b0cad12b5de3c5cb34ba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa6240521091b0cad12b5de3c5cb34ba4">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_TargetSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_TargetSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a> *&#160;</td>
+          <td class="paramname"><em>p_target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gac06b52edb167327246488fea7c2df266">motor_trajectory_command_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_cmd_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Target set Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#a69fb4ec3ba812d7378ef446c868437c2">motor_trajectory_api_t::targetSet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid argument. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga73fdffb547b5486befa4bc2d4fc64aa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga73fdffb547b5486befa4bc2d4fc64aa5">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gaa0ba22da6abcbe283c01b1fca53d14b3">motor_trajectory_state_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Status get Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#aeac1eb46f825d999068b5f17be076468">motor_trajectory_api_t::statusGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga59cd2481bd205b92fb9a610082c3a3e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga59cd2481bd205b92fb9a610082c3a3e9">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_BypassModeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_BypassModeSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ga9efb9e1cac7684ac480ecd4c550eb6ec">motor_trajectory_bypass_mode_t</a>&#160;</td>
+          <td class="paramname"><em>bypass_mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets bypass mode Implements <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#ac0f96c2b9fd72fcc2ca9a891d6575f2d">motor_trajectory_api_t::bypassModeSet</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bypass_mode</td><td>True to enable bypass mode, false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga98e031305f8494f8b3cf658bb2dbecda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98e031305f8494f8b3cf658bb2dbecda">&#9670;&nbsp;</a></span>RM_MOTOR_TRAJECTORY_LINEAR_Callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_TRAJECTORY_LINEAR_Callback </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0">motor_trajectory_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__callback__args__t">motor_trajectory_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback function called by the algorithm layer to get the next reference value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_args</td><td>Pointer to the control structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -10,6 +10,7 @@ var searchData=
   ['transfer',['Transfer',['../group___r_e_n_e_s_a_s___t_r_a_n_s_f_e_r___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['transfer',['Transfer',['../group___r_e_n_e_s_a_s___t_r_a_n_s_f_e_r___m_o_d_u_l_e_s.html',1,'']]],
   ['trustzone',['TrustZone',['../group___r_e_n_e_s_a_s___t_r_u_s_t_z_o_n_e___m_o_d_u_l_e_s.html',1,'']]],
+  ['the_20tuner_20core_20foc_20module',['The tuner core FOC module',['../group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html',1,'']]],
   ['tinycrypt_20h_2fw_20acceleration_20_28rm_5ftinycrypt_5fport_29',['TinyCrypt H/W Acceleration (rm_tinycrypt_port)',['../group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html',1,'']]],
   ['timer_2c_20simultaneous_20channel_20_28r_5ftau_5fpwm_29',['Timer, Simultaneous Channel (r_tau_pwm)',['../group___t_a_u___p_w_m.html',1,'']]],
   ['three_2dphase_20interface',['Three-Phase Interface',['../group___t_h_r_e_e___p_h_a_s_e___a_p_i.html',1,'']]],

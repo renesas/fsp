@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -304,6 +304,21 @@ A user-defined callback function can be registered (in the <a class="el" href="g
 <p><a class="anchor" id="um_rtc_set_time_error_adjustment"></a> The error adjustment is reset every time RTC is reconfigured or time is set.</p>
 <dl class="section note"><dt>Note</dt><dd>RTC driver configurations do not do error adjustment internally while initiliazing the driver. Application must make calls to the error adjustment APIs for desired adjustment. See "Time Error Adjustment
        Function" in the RTC section of the relevant hardware manual for more details on this feature.</dd></dl>
+<h2><a class="anchor" id="r-rtc-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA2</td><td>RA2A1, RA2A2, RA2E1, RA2E3, RA2L1, RA2L2 </td></tr>
+<tr>
+<td>RA4</td><td>RA4C1, RA4E1, RA4E2, RA4L1, RA4M1, RA4M2, RA4M3, RA4W1 </td></tr>
+<tr>
+<td>RA6</td><td>RA6E1, RA6E2, RA6M1, RA6M2, RA6M3, RA6M4, RA6M5 </td></tr>
+<tr>
+<td>RA8</td><td>RA8D1, RA8D2, RA8E1, RA8E2, RA8M1, RA8M2, RA8P1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-rtc-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_rtc</h2>
@@ -1023,7 +1038,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

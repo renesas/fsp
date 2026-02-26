@@ -1,0 +1,1109 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor control middleware (rm_motor_control)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor control middleware (rm_motor_control)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga3eff1349c2d3811106e0946fc3969c40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga3eff1349c2d3811106e0946fc3969c40">RM_MOTOR_CONTROL_Open</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#structmotor__cfg__t">motor_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga3eff1349c2d3811106e0946fc3969c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fbb5aa851f6b0a062a8ec0b348aeec5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4fbb5aa851f6b0a062a8ec0b348aeec5">RM_MOTOR_CONTROL_Close</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga4fbb5aa851f6b0a062a8ec0b348aeec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified Motor Control block. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#aba9111b5b1123cf8a2c329a4cf1b468b">motor_api_t::close</a>.  <a href="#ga4fbb5aa851f6b0a062a8ec0b348aeec5">More...</a><br /></td></tr>
+<tr class="separator:ga4fbb5aa851f6b0a062a8ec0b348aeec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f334f7c68ed8f614a683f1105db8a97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga6f334f7c68ed8f614a683f1105db8a97">RM_MOTOR_CONTROL_Reset</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga6f334f7c68ed8f614a683f1105db8a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset Motor Control block. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a73d4de514894759ab5917709b1399208">motor_api_t::reset</a>.  <a href="#ga6f334f7c68ed8f614a683f1105db8a97">More...</a><br /></td></tr>
+<tr class="separator:ga6f334f7c68ed8f614a683f1105db8a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d15a641901779ed36f1af90ac993805"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga5d15a641901779ed36f1af90ac993805">RM_MOTOR_CONTROL_Run</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga5d15a641901779ed36f1af90ac993805"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run Motor (Start motor rotation). Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a416c0231593f36a73ccc5a892adacfdf">motor_api_t::run</a>.  <a href="#ga5d15a641901779ed36f1af90ac993805">More...</a><br /></td></tr>
+<tr class="separator:ga5d15a641901779ed36f1af90ac993805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga620d8f3a2df2266f1b066e99e5b2646c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga620d8f3a2df2266f1b066e99e5b2646c">RM_MOTOR_CONTROL_Stop</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga620d8f3a2df2266f1b066e99e5b2646c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop Motor (Stop motor rotation). Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a051b819e5c9013e881d1ed831d733c2f">motor_api_t::stop</a>.  <a href="#ga620d8f3a2df2266f1b066e99e5b2646c">More...</a><br /></td></tr>
+<tr class="separator:ga620d8f3a2df2266f1b066e99e5b2646c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b755ced235ddf147dd57a5590af7fba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4b755ced235ddf147dd57a5590af7fba">RM_MOTOR_CONTROL_ErrorSet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629">motor_error_t</a> const error)</td></tr>
+<tr class="memdesc:ga4b755ced235ddf147dd57a5590af7fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set error information. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a1f302c2b7f82f4aa52b44be05a575eaf">motor_api_t::errorSet</a>.  <a href="#ga4b755ced235ddf147dd57a5590af7fba">More...</a><br /></td></tr>
+<tr class="separator:ga4b755ced235ddf147dd57a5590af7fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb116695687b0c387577dcfc81cf1c28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabb116695687b0c387577dcfc81cf1c28">RM_MOTOR_CONTROL_SpeedSet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, float const speed_rpm)</td></tr>
+<tr class="memdesc:gabb116695687b0c387577dcfc81cf1c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set speed reference[rpm]. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#af4635002c9229fddac19e06d05fb3207">motor_api_t::speedSet</a>.  <a href="#gabb116695687b0c387577dcfc81cf1c28">More...</a><br /></td></tr>
+<tr class="separator:gabb116695687b0c387577dcfc81cf1c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf798bcd005d9bc371261cbe8564c0152"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaf798bcd005d9bc371261cbe8564c0152">RM_MOTOR_CONTROL_StatusGet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, uint8_t *const p_status)</td></tr>
+<tr class="memdesc:gaf798bcd005d9bc371261cbe8564c0152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current control status. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a292e940165b226b56d83a0b3e9a20a8c">motor_api_t::statusGet</a>.  <a href="#gaf798bcd005d9bc371261cbe8564c0152">More...</a><br /></td></tr>
+<tr class="separator:gaf798bcd005d9bc371261cbe8564c0152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74c76a0c4e3ea25c3d643f20336605f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga74c76a0c4e3ea25c3d643f20336605f0">RM_MOTOR_CONTROL_SpeedGet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, float *const p_speed_rpm)</td></tr>
+<tr class="memdesc:ga74c76a0c4e3ea25c3d643f20336605f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get rotational speed. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a9cdbead2d65894e3243ea33fbfcb89cb">motor_api_t::speedGet</a>.  <a href="#ga74c76a0c4e3ea25c3d643f20336605f0">More...</a><br /></td></tr>
+<tr class="separator:ga74c76a0c4e3ea25c3d643f20336605f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf5b6af4cf2479e5c249eb25c308f809"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaaf5b6af4cf2479e5c249eb25c308f809">RM_MOTOR_CONTROL_ErrorCheck</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, uint16_t *const p_error)</td></tr>
+<tr class="memdesc:gaaf5b6af4cf2479e5c249eb25c308f809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the occurunce of Error. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888">motor_api_t::errorCheck</a>.  <a href="#gaaf5b6af4cf2479e5c249eb25c308f809">More...</a><br /></td></tr>
+<tr class="separator:gaaf5b6af4cf2479e5c249eb25c308f809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f5b3b0691d7d4085c6b09c9646e685d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga8f5b3b0691d7d4085c6b09c9646e685d">RM_MOTOR_CONTROL_PositionSet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a> const *const p_position)</td></tr>
+<tr class="memdesc:ga8f5b3b0691d7d4085c6b09c9646e685d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position reference. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">motor_api_t::positionSet</a>.  <a href="#ga8f5b3b0691d7d4085c6b09c9646e685d">More...</a><br /></td></tr>
+<tr class="separator:ga8f5b3b0691d7d4085c6b09c9646e685d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa45aad999a3929442422b2a57a182c9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaa45aad999a3929442422b2a57a182c9c">RM_MOTOR_CONTROL_WaitStopFlagGet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e">motor_wait_stop_flag_t</a> *const p_flag)</td></tr>
+<tr class="memdesc:gaa45aad999a3929442422b2a57a182c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get wait stop flag. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a429db729202458c2b375023fb5822c39">motor_api_t::waitStopFlagGet</a>.  <a href="#gaa45aad999a3929442422b2a57a182c9c">More...</a><br /></td></tr>
+<tr class="separator:gaa45aad999a3929442422b2a57a182c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b335506348260ed37cf8c1e237f8c96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga3b335506348260ed37cf8c1e237f8c96">RM_MOTOR_CONTROL_FunctionSelect</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0">motor_function_select_t</a> const function)</td></tr>
+<tr class="memdesc:ga3b335506348260ed37cf8c1e237f8c96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select function. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a1191b1ba3d266297f524cd67b9504705">motor_api_t::functionSelect</a>.  <a href="#ga3b335506348260ed37cf8c1e237f8c96">More...</a><br /></td></tr>
+<tr class="separator:ga3b335506348260ed37cf8c1e237f8c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90f864eb09544eeb3043f19855e5ac64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga90f864eb09544eeb3043f19855e5ac64">RM_MOTOR_CONTROL_TargetSet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a> *p_target, <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gac06b52edb167327246488fea7c2df266">motor_trajectory_command_status_t</a> *const p_cmd_status)</td></tr>
+<tr class="memdesc:ga90f864eb09544eeb3043f19855e5ac64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target set.  <a href="#ga90f864eb09544eeb3043f19855e5ac64">More...</a><br /></td></tr>
+<tr class="separator:ga90f864eb09544eeb3043f19855e5ac64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___a_p_i.html">Motor Interface</a>. </p>
+<h1><a class="anchor" id="rm_motor_control-overview"></a>
+Overview</h1>
+<p>The Motor Control module provides a high-level interface for controlling motor rotation. It manages the motor state machine, handles speed control, and provides error detection and recovery mechanisms.</p>
+<h2><a class="anchor" id="rm_motor_control-features"></a>
+Features</h2>
+<p>The Motor Control HAL module has the following key features:</p><ul>
+<li>State machine management for motor control (STOP, RUN, ERROR states)</li>
+<li>Speed reference setting and actual speed monitoring</li>
+<li>Error detection and handling with automatic state transitions</li>
+<li>Integration with motor algorithm layer (PM FOC)</li>
+<li>Optional trajectory control support</li>
+<li>Callback mechanism for event notification</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_control-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_motor_control</h2>
+The following build time configurations are defined in fsp_cfg/rm_motor_control_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Motor &gt; Advanced Motor Middleware &gt; Motor Control Module (rm_motor_control)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Advanced Motor Middleware &gt; Motor Control Module (rm_motor_control).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor0_control </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm_motor_control-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not directly use I/O pins. Pin configuration is handled by the underlying motor algorithm and driver modules.</p>
+<h1><a class="anchor" id="rm_motor_control-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm_motor_control-state-machine"></a>
+State Machine</h2>
+<p>The motor control module uses a state machine with three states:</p><ul>
+<li><b>STOP</b>: Motor is stopped and not rotating</li>
+<li><b>RUN</b>: Motor is active and rotating</li>
+<li><b>ERROR</b>: An error has been detected</li>
+</ul>
+<p>State transitions are triggered by the following events:</p><ul>
+<li><b>EVENT_STOP</b>: Transitions to STOP state (from RUN)</li>
+<li><b>EVENT_RUN</b>: Transitions to RUN state (from STOP)</li>
+<li><b>EVENT_ERROR</b>: Transitions to ERROR state (from any state)</li>
+<li><b>EVENT_RESET</b>: Transitions to STOP state (from ERROR)</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_control-error-handling"></a>
+Error Handling</h2>
+<p>When an error is detected, the motor control module:</p><ol type="1">
+<li>Stores the error information</li>
+<li>Transitions to ERROR state</li>
+<li>Resets the motor algorithm layer</li>
+<li>Invokes the user callback (if registered)</li>
+</ol>
+<p>To recover from an error:</p><ol type="1">
+<li>Clear the error condition</li>
+<li>Call <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga6f334f7c68ed8f614a683f1105db8a97">RM_MOTOR_CONTROL_Reset</a> to return to STOP state</li>
+<li>Call <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga5d15a641901779ed36f1af90ac993805">RM_MOTOR_CONTROL_Run</a> to restart motor rotation</li>
+</ol>
+<h2><a class="anchor" id="rm_motor_control-callback-events"></a>
+Callback Events</h2>
+<p>The following callback events are supported:</p><ul>
+<li><b>MOTOR_CALLBACK_EVENT_SPEED_BACKWARD</b>: Speed control cycle completed</li>
+<li><b>MOTOR_CALLBACK_EVENT_CURRENT_BACKWARD</b>: Current control cycle completed</li>
+<li><b>MOTOR_CALLBACK_EVENT_ERROR</b>: Error detected</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_control-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the Motor Control module:</p>
+<ul>
+<li>The module must be opened before any other API functions are called.</li>
+<li>Speed reference should be set after calling <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga5d15a641901779ed36f1af90ac993805">RM_MOTOR_CONTROL_Run</a>.</li>
+<li><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga6f334f7c68ed8f614a683f1105db8a97">RM_MOTOR_CONTROL_Reset</a> is only valid when the motor is in ERROR state.</li>
+<li>Position control functions (<a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga8f5b3b0691d7d4085c6b09c9646e685d">RM_MOTOR_CONTROL_PositionSet</a>, <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaa45aad999a3929442422b2a57a182c9c">RM_MOTOR_CONTROL_WaitStopFlagGet</a>, <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga3b335506348260ed37cf8c1e237f8c96">RM_MOTOR_CONTROL_FunctionSelect</a>) return FSP_ERR_UNSUPPORTED.</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_control-examples"></a>
+Examples</h1>
+<h2><a class="anchor" id="rm_motor_control-basic-example"></a>
+Basic Example</h2>
+<p>This is a basic example of minimal use of the motor control in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga3eff1349c2d3811106e0946fc3969c40">RM_MOTOR_CONTROL_Open</a>(&amp;g_motor_control_ctrl, &amp;g_motor_control_cfg);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start motor rotation. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga5d15a641901779ed36f1af90ac993805">RM_MOTOR_CONTROL_Run</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set speed reference. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabb116695687b0c387577dcfc81cf1c28">RM_MOTOR_CONTROL_SpeedSet</a>(&amp;g_motor_control_ctrl, 1000.0F);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get current speed. */</span></div><div class="line">    <span class="keywordtype">float</span> speed_rpm = 0.0F;</div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga74c76a0c4e3ea25c3d643f20336605f0">RM_MOTOR_CONTROL_SpeedGet</a>(&amp;g_motor_control_ctrl, &amp;speed_rpm);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get motor status. */</span></div><div class="line">    uint8_t status = 0;</div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaf798bcd005d9bc371261cbe8564c0152">RM_MOTOR_CONTROL_StatusGet</a>(&amp;g_motor_control_ctrl, &amp;status);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Check for errors. */</span></div><div class="line">    uint16_t error = 0;</div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaaf5b6af4cf2479e5c249eb25c308f809">RM_MOTOR_CONTROL_ErrorCheck</a>(&amp;g_motor_control_ctrl, &amp;error);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set error information. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4b755ced235ddf147dd57a5590af7fba">RM_MOTOR_CONTROL_ErrorSet</a>(&amp;g_motor_control_ctrl, MOTOR_ERROR_NONE);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Stop motor rotation. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga620d8f3a2df2266f1b066e99e5b2646c">RM_MOTOR_CONTROL_Stop</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Reset motor control. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga6f334f7c68ed8f614a683f1105db8a97">RM_MOTOR_CONTROL_Reset</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4fbb5aa851f6b0a062a8ec0b348aeec5">RM_MOTOR_CONTROL_Close</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm_motor_control-complete-example"></a>
+Complete Example</h2>
+<p>This example demonstrates a complete motor control sequence including initialization, running, and error handling.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;rm_motor_control.h&quot;</span></div><div class="line"></div><div class="line"><span class="comment">/* Motor control instance */</span></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___m_o_t_o_r___a_p_i.html#structmotor__instance__t">motor_instance_t</a> g_motor0;</div><div class="line"></div><div class="line"><span class="comment">/* Error handler callback */</span></div><div class="line"><span class="keywordtype">void</span> motor_callback (<a class="code" href="group___m_o_t_o_r___a_p_i.html#structmotor__callback__args__t">motor_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;event)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49faef6ca479160b8fd475e43562f299ddd0">MOTOR_CALLBACK_EVENT_SPEED_BACKWARD</a>:</div><div class="line"></div><div class="line">            <span class="comment">/* Speed control processing completed */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa35e5fdaa0fe059631e03b7a6f6a6e218">MOTOR_CALLBACK_EVENT_CURRENT_BACKWARD</a>:</div><div class="line"></div><div class="line">            <span class="comment">/* Current control processing completed */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_o_t_o_r___a_p_i.html#gga77fae675142bf911c9275a73e748a49fa95b5085bb8a1ab148e4ef9e7e2fa207c">MOTOR_CALLBACK_EVENT_ERROR</a>:</div><div class="line"></div><div class="line">            <span class="comment">/* Error detected - handle appropriately */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> motor_control_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    uint8_t   status;</div><div class="line">    <span class="keywordtype">float</span>     speed_rpm;</div><div class="line">    uint16_t  error;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the motor control module */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga3eff1349c2d3811106e0946fc3969c40">RM_MOTOR_CONTROL_Open</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>, g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a9fc20e5fb7fc19705da5b1135ac871bc">p_cfg</a>);</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle error */</span></div><div class="line">        <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Start motor rotation */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga5d15a641901779ed36f1af90ac993805">RM_MOTOR_CONTROL_Run</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>);</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle error */</span></div><div class="line">        <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set target speed to 1000 RPM */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabb116695687b0c387577dcfc81cf1c28">RM_MOTOR_CONTROL_SpeedSet</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>, 1000.0F);</div><div class="line"></div><div class="line">    <span class="comment">/* Main loop */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Check for errors */</span></div><div class="line">        err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaaf5b6af4cf2479e5c249eb25c308f809">RM_MOTOR_CONTROL_ErrorCheck</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>, &amp;error);</div><div class="line">        <span class="keywordflow">if</span> (MOTOR_ERROR_NONE != error)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Error detected - stop and reset */</span></div><div class="line">            <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga620d8f3a2df2266f1b066e99e5b2646c">RM_MOTOR_CONTROL_Stop</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>);</div><div class="line">            <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga6f334f7c68ed8f614a683f1105db8a97">RM_MOTOR_CONTROL_Reset</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Get current status */</span></div><div class="line">        <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaf798bcd005d9bc371261cbe8564c0152">RM_MOTOR_CONTROL_StatusGet</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>, &amp;status);</div><div class="line"></div><div class="line">        <span class="comment">/* Get current speed */</span></div><div class="line">        <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga74c76a0c4e3ea25c3d643f20336605f0">RM_MOTOR_CONTROL_SpeedGet</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>, &amp;speed_rpm);</div><div class="line"></div><div class="line">        <span class="comment">/* Application processing */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the module */</span></div><div class="line">    <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4fbb5aa851f6b0a062a8ec0b348aeec5">RM_MOTOR_CONTROL_Close</a>(g_motor0.<a class="code" href="group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a">p_ctrl</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__control__statemachine__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#structmotor__control__statemachine__t">motor_control_statemachine_t</a></td></tr>
+<tr class="separator:structmotor__control__statemachine__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__control__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#structmotor__control__extended__cfg__t">motor_control_extended_cfg_t</a></td></tr>
+<tr class="separator:structmotor__control__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__control__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#structmotor__control__instance__ctrl__t">motor_control_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__control__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gafa2f3b5d702156315547d16195a60f8d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gafa2f3b5d702156315547d16195a60f8d">motor_control_status_t</a> </td></tr>
+<tr class="separator:gafa2f3b5d702156315547d16195a60f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe2a1a2baa655607e2d85cb3b44dd670"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabe2a1a2baa655607e2d85cb3b44dd670">motor_control_event_t</a> </td></tr>
+<tr class="separator:gabe2a1a2baa655607e2d85cb3b44dd670"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__control__statemachine__t" id="structmotor__control__statemachine__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__control__statemachine__t">&#9670;&nbsp;</a></span>motor_control_statemachine_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_control_statemachine_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor control state machine structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3ace0669abdfbc0836d48110967f040c"></a><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gafa2f3b5d702156315547d16195a60f8d">motor_control_status_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+Current system status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a933ed7b2e417afd88a5a1b335d906791"></a><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gafa2f3b5d702156315547d16195a60f8d">motor_control_status_t</a></td>
+<td class="fieldname">
+status_next</td>
+<td class="fielddoc">
+Next system status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9e48d98d7f19c12898d859c5933d208d"></a><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabe2a1a2baa655607e2d85cb3b44dd670">motor_control_event_t</a></td>
+<td class="fieldname">
+current_event</td>
+<td class="fielddoc">
+Current event index. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8d1b1174ac92651ff28597718ef150f9"></a>uint16_t</td>
+<td class="fieldname">
+error_status</td>
+<td class="fielddoc">
+Error information. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__control__extended__cfg__t" id="structmotor__control__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__control__extended__cfg__t">&#9670;&nbsp;</a></span>motor_control_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_control_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor Extended Control congig structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a9bb5771732524bee5a18b0be1d350ef8"></a><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__instance__t">motor_algorithm_instance_t</a> const  *</td>
+<td class="fieldname">
+p_motor_algorithm_instance</td>
+<td class="fielddoc">
+Vector Control Instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="aabaca7df089de3f62c821b7938a429fe"></a><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__instance__t">motor_trajectory_instance_t</a> <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_motor_trajectory_instance</td>
+<td class="fielddoc">
+Trajectory Control Instance. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__control__instance__ctrl__t" id="structmotor__control__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__control__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_control_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_control_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor control instance control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4e27309e5eae75436029a2c283fc7b18"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Module open flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a76d5fb4427de4cef627a61d3ae6c26d7"></a>uint32_t</td>
+<td class="fieldname">
+error_info</td>
+<td class="fielddoc">
+Happened error. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad3da14ff7ed40b7ed917c004c66fef13"></a><a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#structmotor__control__statemachine__t">motor_control_statemachine_t</a></td>
+<td class="fieldname">
+state_machine</td>
+<td class="fielddoc">
+State machine structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae65d339b5bf8bd1b76fcbc1fe15a39fa"></a>float</td>
+<td class="fieldname">
+speed_ref_rpm_setpoint</td>
+<td class="fielddoc">
+Speed reference setpoint [rpm]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1c8a2b4cc0eb29f31b73c740531f2b25"></a>float</td>
+<td class="fieldname">
+speed_rpm</td>
+<td class="fielddoc">
+Actual speed [rpm]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a865a28cfff3c023601af623d160c2185"></a><a class="el" href="group___m_o_t_o_r___a_p_i.html#structmotor__cfg__t">motor_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer of configuration structure. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gafa2f3b5d702156315547d16195a60f8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa2f3b5d702156315547d16195a60f8d">&#9670;&nbsp;</a></span>motor_control_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gafa2f3b5d702156315547d16195a60f8d">motor_control_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Motor control status </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggafa2f3b5d702156315547d16195a60f8da432e6eee59f696af47d519e6a684452d"></a>MOTOR_CONTROL_STATUS_STOP&#160;</td><td class="fielddoc"><p>Motor control stop state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafa2f3b5d702156315547d16195a60f8da3721c74bb07b4a29ab5d4ef47f924862"></a>MOTOR_CONTROL_STATUS_RUN&#160;</td><td class="fielddoc"><p>Motor control run state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafa2f3b5d702156315547d16195a60f8da2a1b92e3abda04a9ea67bbcd75c343cc"></a>MOTOR_CONTROL_STATUS_ERROR&#160;</td><td class="fielddoc"><p>Motor control error state. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gabe2a1a2baa655607e2d85cb3b44dd670"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabe2a1a2baa655607e2d85cb3b44dd670">&#9670;&nbsp;</a></span>motor_control_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabe2a1a2baa655607e2d85cb3b44dd670">motor_control_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Motor control event </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggabe2a1a2baa655607e2d85cb3b44dd670adc0d0a7082dcc45b3eea87519d946ce0"></a>MOTOR_CONTROL_EVENT_STOP&#160;</td><td class="fielddoc"><p>Stop event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggabe2a1a2baa655607e2d85cb3b44dd670aeda47d66fdc58daf3d2ef4058f999123"></a>MOTOR_CONTROL_EVENT_RUN&#160;</td><td class="fielddoc"><p>Run event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggabe2a1a2baa655607e2d85cb3b44dd670aa1da1060509b54c877ac1fa4fc034cca"></a>MOTOR_CONTROL_EVENT_ERROR&#160;</td><td class="fielddoc"><p>Error event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggabe2a1a2baa655607e2d85cb3b44dd670aeeef2b815791b0fa30940d36585a5448"></a>MOTOR_CONTROL_EVENT_RESET&#160;</td><td class="fielddoc"><p>Reset event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga3eff1349c2d3811106e0946fc3969c40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3eff1349c2d3811106e0946fc3969c40">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#structmotor__cfg__t">motor_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure the MOTOR in register start mode. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a95a2ccb7727a5081979dc59fd3cdd728">motor_api_t::open</a>.</p>
+<p>This function should only be called once as MOTOR configuration registers can only be written to once so subsequent calls will have no effect.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga3eff1349c2d3811106e0946fc3969c40">RM_MOTOR_CONTROL_Open</a>(&amp;g_motor_control_ctrl, &amp;g_motor_control_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>MOTOR successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Configuration parameter error.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga4fbb5aa851f6b0a062a8ec0b348aeec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4fbb5aa851f6b0a062a8ec0b348aeec5">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified Motor Control block. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#aba9111b5b1123cf8a2c329a4cf1b468b">motor_api_t::close</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4fbb5aa851f6b0a062a8ec0b348aeec5">RM_MOTOR_CONTROL_Close</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga6f334f7c68ed8f614a683f1105db8a97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6f334f7c68ed8f614a683f1105db8a97">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset Motor Control block. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a73d4de514894759ab5917709b1399208">motor_api_t::reset</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Reset motor control. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga6f334f7c68ed8f614a683f1105db8a97">RM_MOTOR_CONTROL_Reset</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga5d15a641901779ed36f1af90ac993805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d15a641901779ed36f1af90ac993805">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_Run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_Run </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run Motor (Start motor rotation). Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a416c0231593f36a73ccc5a892adacfdf">motor_api_t::run</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start motor rotation. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga5d15a641901779ed36f1af90ac993805">RM_MOTOR_CONTROL_Run</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga620d8f3a2df2266f1b066e99e5b2646c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga620d8f3a2df2266f1b066e99e5b2646c">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop Motor (Stop motor rotation). Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a051b819e5c9013e881d1ed831d733c2f">motor_api_t::stop</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Stop motor rotation. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga620d8f3a2df2266f1b066e99e5b2646c">RM_MOTOR_CONTROL_Stop</a>(&amp;g_motor_control_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga4b755ced235ddf147dd57a5590af7fba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b755ced235ddf147dd57a5590af7fba">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_ErrorSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_ErrorSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629">motor_error_t</a> const&#160;</td>
+          <td class="paramname"><em>error</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set error information. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a1f302c2b7f82f4aa52b44be05a575eaf">motor_api_t::errorSet</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set error information. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga4b755ced235ddf147dd57a5590af7fba">RM_MOTOR_CONTROL_ErrorSet</a>(&amp;g_motor_control_ctrl, MOTOR_ERROR_NONE);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="gabb116695687b0c387577dcfc81cf1c28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb116695687b0c387577dcfc81cf1c28">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_SpeedSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_SpeedSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float const&#160;</td>
+          <td class="paramname"><em>speed_rpm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set speed reference[rpm]. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#af4635002c9229fddac19e06d05fb3207">motor_api_t::speedSet</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set speed reference. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gabb116695687b0c387577dcfc81cf1c28">RM_MOTOR_CONTROL_SpeedSet</a>(&amp;g_motor_control_ctrl, 1000.0F);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="gaf798bcd005d9bc371261cbe8564c0152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf798bcd005d9bc371261cbe8564c0152">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get current control status. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a292e940165b226b56d83a0b3e9a20a8c">motor_api_t::statusGet</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get motor status. */</span></div><div class="line">    uint8_t status = 0;</div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaf798bcd005d9bc371261cbe8564c0152">RM_MOTOR_CONTROL_StatusGet</a>(&amp;g_motor_control_ctrl, &amp;status);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data received pointer is invalid..</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga74c76a0c4e3ea25c3d643f20336605f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga74c76a0c4e3ea25c3d643f20336605f0">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_SpeedGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_SpeedGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *const&#160;</td>
+          <td class="paramname"><em>p_speed_rpm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get rotational speed. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a9cdbead2d65894e3243ea33fbfcb89cb">motor_api_t::speedGet</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get current speed. */</span></div><div class="line">    <span class="keywordtype">float</span> speed_rpm = 0.0F;</div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#ga74c76a0c4e3ea25c3d643f20336605f0">RM_MOTOR_CONTROL_SpeedGet</a>(&amp;g_motor_control_ctrl, &amp;speed_rpm);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data received pointer is invalid..</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="gaaf5b6af4cf2479e5c249eb25c308f809"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaf5b6af4cf2479e5c249eb25c308f809">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_ErrorCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_ErrorCheck </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *const&#160;</td>
+          <td class="paramname"><em>p_error</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check the occurunce of Error. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888">motor_api_t::errorCheck</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Check for errors. */</span></div><div class="line">    uint16_t error = 0;</div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___c_o_n_t_r_o_l.html#gaaf5b6af4cf2479e5c249eb25c308f809">RM_MOTOR_CONTROL_ErrorCheck</a>(&amp;g_motor_control_ctrl, &amp;error);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data received pointer is invalid..</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga8f5b3b0691d7d4085c6b09c9646e685d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8f5b3b0691d7d4085c6b09c9646e685d">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_PositionSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_PositionSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set position reference. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">motor_api_t::positionSet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="gaa45aad999a3929442422b2a57a182c9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa45aad999a3929442422b2a57a182c9c">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_WaitStopFlagGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_WaitStopFlagGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e">motor_wait_stop_flag_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get wait stop flag. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a429db729202458c2b375023fb5822c39">motor_api_t::waitStopFlagGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga3b335506348260ed37cf8c1e237f8c96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3b335506348260ed37cf8c1e237f8c96">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_FunctionSelect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_FunctionSelect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0">motor_function_select_t</a> const&#160;</td>
+          <td class="paramname"><em>function</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Select function. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a1191b1ba3d266297f524cd67b9504705">motor_api_t::functionSelect</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga90f864eb09544eeb3043f19855e5ac64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90f864eb09544eeb3043f19855e5ac64">&#9670;&nbsp;</a></span>RM_MOTOR_CONTROL_TargetSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_CONTROL_TargetSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#structmotor__trajectory__target__t">motor_trajectory_target_t</a> *&#160;</td>
+          <td class="paramname"><em>p_target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gac06b52edb167327246488fea7c2df266">motor_trajectory_command_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_cmd_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Target set. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully resetted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

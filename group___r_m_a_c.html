@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -305,7 +305,18 @@ Features</h2>
 <li>Broadcast filtering support<a class="anchor" id="um_rmac_regurating_broadcast_packet_when_broadcast_filter_enable"></a></li>
 <li>Promiscuous mode support<a class="anchor" id="um_rmac_receiving_all_frame_when_promiscuous_mode_enabled"></a></li>
 <li>Get the frame transmission and reception times</li>
+<li>Port based forwarding function for transmission/reception</li>
+<li>Descriptor format selection when transmitting</li>
 </ul>
+<h2><a class="anchor" id="r-rmac-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA8</td><td>RA8D2, RA8M2, RA8P1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-rmac-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_rmac</h2>
@@ -421,6 +432,24 @@ Enable</li>
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Timestamp  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">TS queue length</td><td>Value must be an integer</td><td>8 </td><td>Timestamp queue length. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Forwarding  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmission descriptor format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Transmission ethernet descriptor</li>
+<li>
+Transmission direct descriptor</li>
+</ul>
+</td><td>Transmission direct descriptor </td><td>The transmission direct descriptor could be used, for example, for non-routable protocol forwarding (network control) or for CPU-CPU communication and the transmission ethernet descriptor could be used for all normal ethernet transmissions.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port based forwarding for reception</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Port based forwarding function forwards all frames from a port to other ones when receiving. </td></tr>
 </table>
 </p>
 <p><a class="anchor" id="um_rmac_configuration_for_connection_mode"></a><a class="anchor" id="um_rmac_configuration_of_mac_address"></a> </p>
@@ -992,7 +1021,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

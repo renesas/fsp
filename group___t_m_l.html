@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -310,6 +310,15 @@ Selecting a Timer</h2>
 <tr>
 <td>Clock Source</td><td>The GPT runs off PCLKD with a configurable divider up to 1024. It can also be configured to count ELC events or external pulses.</td><td>The TML runs off MOSC, LOCO/SOSC, HOCO, MOCO with a configurable divider up to 128 or ELC events.</td><td>The AGT runs off PCLKB, LOCO, or subclock.</td><td>The TAU runs off PCLK with a configurable divider up to 32768 </td></tr>
 </table>
+<h2><a class="anchor" id="r-tml-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA0</td><td>RA0E1, RA0E2, RA0E3, RA0L1 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-tml-configuration"></a>
 Configuration</h1>
 <p><a class="anchor" id="um_timer_multiple_channels"></a> <h2>Build Time Configurations for r_tml</h2>
@@ -390,7 +399,7 @@ This module can be added to the Stacks tab via New Stack &gt; Timers &gt; 32-bit
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Period</td><td>Value must be positive integer</td><td>0x10000 </td><td>Specify the timer period in units selected below.<br />
 <br />
-Set the period to 0x100 (8-bit) or 0x10000 (16-bit) or 0x100000000 (32-bit) raw counts for a free running timer. Since the maxmimum divider is 128... the raw counts period can be set up to the (max count+1)*128. [0x8000 (8-bit) or 0x800000 (16-bit), or 0x8000000000 (32-bit)]. </td></tr>
+Set the period to 0x100 (8-bit) or 0x10000 (16-bit) or 0x100000000 (32-bit) raw counts for a free running timer. Since the maximum divider is 128, the raw counts period can be set up to the (max count+1)*128. [0x8000 (8-bit) or 0x800000 (16-bit), or 0x8000000000 (32-bit)]. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1145,7 +1154,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

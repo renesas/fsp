@@ -1,0 +1,270 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: lwIP SNTP</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_w_i_p___s_n_t_p.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">lwIP SNTP<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This module provides the lwIP SNTP integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip_sntp-overview"></a>
+Overview</h1>
+<p>The lwIP SNTP library can be used to synchronize system time in a network by exchanging packets regularly. The documentation for the library can be found at the following link: <a href="https://www.nongnu.org/lwip/2_1_x/group__sntp.html">lwIPSNTP</a>.</p>
+<h2><a class="anchor" id="rm-lwip_sntp-features"></a>
+Features</h2>
+<ul>
+<li>This is simple "SNTP" client for the lwIP raw API. It is a minimal implementation of SNTPv4 as specified in RFC 4330.</li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_sntp-usage_notes"></a>
+Usage Notes</h1>
+<dl class="section note"><dt>Note</dt><dd><code>MEMP_NUM_SYS_TIMEOUT</code> at <code>Infrastructure|Internal memory pools|Memp num sys timeout</code> property of lwIP tcpip stack must be increased by one from the default value, as the SNTP module requires an additional timeout slot in the lwIP timer subsystem.</dd></dl>
+<h1><a class="anchor" id="rm-lwip_sntp-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the lwIP SNTP APIs in an application.</p>
+<dl class="section note"><dt>Note</dt><dd>When using <code>printf</code> with e² studio, build errors may occur. Please refer to <a href="https://en-support.renesas.com/knowledgeBase/16979385">https://en-support.renesas.com/knowledgeBase/16979385</a> and follow Method 2, which is recommended for smooth integration and to avoid build errors.</dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;time.h&gt;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/ip_addr.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/sntp.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LWIP_SNTP_EXAMPLE_SECONDS_PER_HOUR     (60 * 60)</span></div><div class="line"><span class="preprocessor">#define LWIP_SNTP_EXAMPLE_TIMEZONE_UTC_PLUS    (7) // This may need to be updated for your timezone</span></div><div class="line"><span class="preprocessor">#define LWIP_SNTP_EXAMPLE_RETRY_CONNECT        (5U)</span></div><div class="line"><span class="preprocessor">#define LWIP_SNTP_EXAMPLE_SERVER_NAME          &quot;time1.google.com&quot;</span></div><div class="line"><span class="preprocessor">#define LWIP_SNTP_EXAMPLE_SERVER_ADDRESS       &quot;216.239.35.0&quot;</span></div><div class="line"></div><div class="line"><span class="comment">/* TODO: Set this function name in the &quot;SNTP Set System Time&quot; property of lwIP SNTP stack.</span></div><div class="line"><span class="comment"> * This function will be called to change the system time in seconds using the timestamp received from the SNTP server.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * Example: lwip_sntp_example_set_time(sec)</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keywordtype">void</span> lwip_sntp_example_set_time(u32_t sec);</div><div class="line"></div><div class="line">uint8_t g_lwip_sntp_example_count;</div><div class="line"><span class="keywordtype">bool</span>    g_lwip_sntp_example_flag;</div><div class="line"></div><div class="line"><span class="comment">/* LwIP SNTP example */</span></div><div class="line"><span class="keywordtype">void</span> lwip_sntp_example () {</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line">    <span class="comment">/* Set SNTP operation mode to Polling. */</span></div><div class="line">    sntp_setoperatingmode(SNTP_OPMODE_POLL);</div><div class="line"></div><div class="line"><span class="preprocessor">#if SNTP_SERVER_DNS &amp;&amp; LWIP_DNS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set server as the supplied DNS. */</span></div><div class="line">    sntp_setservername(0, LWIP_SNTP_EXAMPLE_SERVER_NAME);</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    ip_addr_t sntp_ip;</div><div class="line">    ipaddr_aton(LWIP_SNTP_EXAMPLE_SERVER_ADDRESS, &amp;sntp_ip);</div><div class="line"></div><div class="line">    <span class="comment">/* Set server as the supplied ip address. */</span></div><div class="line">    sntp_setserver(0, &amp;sntp_ip);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SNTP. */</span></div><div class="line">    sntp_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Program main loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (<span class="keyword">true</span> == g_lwip_sntp_example_flag)</div><div class="line">        {</div><div class="line">            g_lwip_sntp_example_count++;</div><div class="line"></div><div class="line">            <span class="comment">/* Stop wait when the total count is reached. */</span></div><div class="line">            <span class="keywordflow">if</span> (LWIP_SNTP_EXAMPLE_RETRY_CONNECT == g_lwip_sntp_example_count)</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        g_lwip_sntp_example_flag = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Stop the current SNTP. */</span></div><div class="line">    <span class="keywordflow">if</span> (sntp_enabled())</div><div class="line">    {</div><div class="line">        sntp_stop();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Change the current time responded from SNTP server example */</span></div><div class="line"><span class="keywordtype">void</span> lwip_sntp_example_set_time (u32_t sec)</div><div class="line">{</div><div class="line">    <span class="comment">/* Set the flag to verify. */</span></div><div class="line">    g_lwip_sntp_example_flag = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Adjust clock to the your timezone. */</span></div><div class="line">    sec += (LWIP_SNTP_EXAMPLE_TIMEZONE_UTC_PLUS * LWIP_SNTP_EXAMPLE_SECONDS_PER_HOUR);</div><div class="line"></div><div class="line">    <span class="comment">/* Convert Unix time to local time structure. */</span></div><div class="line">    time_t      time = (time_t) sec;</div><div class="line">    <span class="keyword">struct </span>tm * timeinfo;</div><div class="line">    timeinfo = localtime(&amp;time);</div><div class="line"></div><div class="line">    <span class="keywordtype">char</span> strftime_buf[32];             <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line"></div><div class="line">    <span class="comment">/* Format time into &quot;YYYY-MM-DD HH:MM:SS&quot;. */</span></div><div class="line">    strftime(strftime_buf, <span class="keyword">sizeof</span>(strftime_buf), <span class="stringliteral">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, timeinfo);</div><div class="line">    printf(<span class="stringliteral">&quot;Current UTC+%d time is: %s\n&quot;</span>, LWIP_SNTP_EXAMPLE_TIMEZONE_UTC_PLUS, strftime_buf);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

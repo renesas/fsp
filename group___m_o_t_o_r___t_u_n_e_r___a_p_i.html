@@ -1,0 +1,980 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor tuner Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_o_t_o_r___t_u_n_e_r___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor tuner Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___i_n_t_e_r_f_a_c_e_s.html">Motor</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for motor tuner functions. </p>
+<h1><a class="anchor" id="MOTOR_TUNER_API_Summary"></a>
+Summary</h1>
+<p>The Motor Tuner interface provides motor parameter estimation and tuning functionality. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__tuner__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__cfg__t">motor_tuner_cfg_t</a></td></tr>
+<tr class="separator:structmotor__tuner__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__tuner__in__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__in__t">motor_tuner_in_t</a></td></tr>
+<tr class="separator:structmotor__tuner__in__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__tuner__out__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__out__t">motor_tuner_out_t</a></td></tr>
+<tr class="separator:structmotor__tuner__out__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__tuner__volterr__lut__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__volterr__lut__t">motor_tuner_volterr_lut_t</a></td></tr>
+<tr class="separator:structmotor__tuner__volterr__lut__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__tuner__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__api__t">motor_tuner_api_t</a></td></tr>
+<tr class="separator:structmotor__tuner__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__tuner__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__instance__t">motor_tuner_instance_t</a></td></tr>
+<tr class="separator:structmotor__tuner__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga20f8f325a4da4307df2ad19c6430bdf3"><td class="memItemLeft" align="right" valign="top"><a id="ga20f8f325a4da4307df2ad19c6430bdf3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga20f8f325a4da4307df2ad19c6430bdf3">TUNER_VOLTAGE_ERROR_LUT_SIZE</a></td></tr>
+<tr class="memdesc:ga20f8f325a4da4307df2ad19c6430bdf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of voltage error lookup table. <br /></td></tr>
+<tr class="separator:ga20f8f325a4da4307df2ad19c6430bdf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0b12a578a13e415ab842aa02d7d12115"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a></td></tr>
+<tr class="separator:ga0b12a578a13e415ab842aa02d7d12115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga32d8e1b49a47324c452cda019342f63a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga32d8e1b49a47324c452cda019342f63a">motor_tuner_status_t</a> </td></tr>
+<tr class="separator:ga32d8e1b49a47324c452cda019342f63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c3f3ca818d09ad76c2cd76ccba77621"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga1c3f3ca818d09ad76c2cd76ccba77621">motor_tuner_param_type_t</a> </td></tr>
+<tr class="separator:ga1c3f3ca818d09ad76c2cd76ccba77621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba12bdaca13fd289cba4beea7773dc0f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#gaba12bdaca13fd289cba4beea7773dc0f">motor_tuner_request_t</a> </td></tr>
+<tr class="separator:gaba12bdaca13fd289cba4beea7773dc0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__tuner__cfg__t" id="structmotor__tuner__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__tuner__cfg__t">&#9670;&nbsp;</a></span>motor_tuner_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_tuner_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Tuner configuration structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ab4c0843e88dcc1f7aa47a1fb99d53c96"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a12af1418cdd311157cdfce35dfe35fa7"></a>void const  *</td>
+<td class="fieldname">
+p_extend</td>
+<td class="fielddoc">
+Placeholder for user extension. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__tuner__in__t" id="structmotor__tuner__in__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__tuner__in__t">&#9670;&nbsp;</a></span>motor_tuner_in_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_tuner_in_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Input signals for the motor tuner inner loop. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="adea33ace6ed80fa3736f45e7c4aba7ce"></a>float</td>
+<td class="fieldname">
+iu</td>
+<td class="fielddoc">
+U-phase current in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6a79a61e58668a2c3d3e857ff609838a"></a>float</td>
+<td class="fieldname">
+iv</td>
+<td class="fielddoc">
+V-phase current in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeb66f2d5387f62da39720ef92d78606f"></a>float</td>
+<td class="fieldname">
+iw</td>
+<td class="fielddoc">
+W-phase current in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7f6175626f2aae2b9275493ab1d626dd"></a>float</td>
+<td class="fieldname">
+vdc</td>
+<td class="fielddoc">
+DC bus voltage in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1bc1220a5c09e7e49a3791150102da3c"></a>float</td>
+<td class="fieldname">
+va_max</td>
+<td class="fielddoc">
+Maximum voltage vector magnitude in the power invariant clarke transform type dq frame. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__tuner__out__t" id="structmotor__tuner__out__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__tuner__out__t">&#9670;&nbsp;</a></span>motor_tuner_out_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_tuner_out_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Output signals from the motor tuner inner loop. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a93525c3df47814191457f41d998b744d"></a>float</td>
+<td class="fieldname">
+vu</td>
+<td class="fielddoc">
+U-phase voltage in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa8ea82eef75c963a125c29ac17615f3e"></a>float</td>
+<td class="fieldname">
+vv</td>
+<td class="fielddoc">
+V-phase voltage in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="a749e1af4a3fb77ec381f873179794012"></a>float</td>
+<td class="fieldname">
+vw</td>
+<td class="fielddoc">
+W-phase voltage in SI unit. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7778fd69871373d8f0c216053ee0d0f5"></a><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#gaba12bdaca13fd289cba4beea7773dc0f">motor_tuner_request_t</a></td>
+<td class="fieldname">
+request</td>
+<td class="fielddoc">
+Tuner request, see <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#gaba12bdaca13fd289cba4beea7773dc0f">motor_tuner_request_t</a>. </td></tr>
+<tr><td class="fieldtype">
+<a id="acce738e356f091f93422ae92437c0614"></a><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga32d8e1b49a47324c452cda019342f63a">motor_tuner_status_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+Tuner status, see <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga32d8e1b49a47324c452cda019342f63a">motor_tuner_status_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__tuner__volterr__lut__t" id="structmotor__tuner__volterr__lut__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__tuner__volterr__lut__t">&#9670;&nbsp;</a></span>motor_tuner_volterr_lut_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_tuner_volterr_lut_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Voltage error lookup table structure. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a600314ba4208a72d6ac05eb23e089110"></a>float</td>
+<td class="fieldname">
+current_breakpoints[<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga20f8f325a4da4307df2ad19c6430bdf3">TUNER_VOLTAGE_ERROR_LUT_SIZE</a>]</td>
+<td class="fielddoc">
+Current breakpoints table. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3ebf77ff03d64244997b01a3876898d7"></a>float</td>
+<td class="fieldname">
+volterr_table[<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga20f8f325a4da4307df2ad19c6430bdf3">TUNER_VOLTAGE_ERROR_LUT_SIZE</a>]</td>
+<td class="fielddoc">
+Voltage error table. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7f2e510caa8153ce2a28c5c1724a5c85"></a>float</td>
+<td class="fieldname">
+ref_voltage</td>
+<td class="fielddoc">
+Reference voltage, DC voltage that used in the measurement [V]. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__tuner__api__t" id="structmotor__tuner__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__tuner__api__t">&#9670;&nbsp;</a></span>motor_tuner_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_tuner_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Functions implemented at the HAL layer will follow this API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a523db151f190e8a732afda57a2ce4dd3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a523db151f190e8a732afda57a2ce4dd3">open</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__cfg__t">motor_tuner_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a523db151f190e8a732afda57a2ce4dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad31d3723832aaa644f4b936e3d8172f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ad31d3723832aaa644f4b936e3d8172f2">innerLoopProcess</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__in__t">motor_tuner_in_t</a> *p_in, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__out__t">motor_tuner_out_t</a> *p_out)</td></tr>
+<tr class="separator:ad31d3723832aaa644f4b936e3d8172f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39c20d4316fee974b1715ee99aaa285d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a39c20d4316fee974b1715ee99aaa285d">outerLoopProcess</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:a39c20d4316fee974b1715ee99aaa285d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cf31399c1326ad79e01a91fb6467431"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a6cf31399c1326ad79e01a91fb6467431">isActive</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, bool *p_is_active)</td></tr>
+<tr class="separator:a6cf31399c1326ad79e01a91fb6467431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addcec14bc518fa48d60c60c62b8902ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#addcec14bc518fa48d60c60c62b8902ac">statusGet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga32d8e1b49a47324c452cda019342f63a">motor_tuner_status_t</a> *p_status)</td></tr>
+<tr class="separator:addcec14bc518fa48d60c60c62b8902ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16fc9e252b716f7943e97af5870c33d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a16fc9e252b716f7943e97af5870c33d7">errorGet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, uint16_t *p_error)</td></tr>
+<tr class="separator:a16fc9e252b716f7943e97af5870c33d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac280f75e6b1901a5682673231b4336d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ac280f75e6b1901a5682673231b4336d7">progressGet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, float *p_progress)</td></tr>
+<tr class="separator:ac280f75e6b1901a5682673231b4336d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79ef84dd8376d1a8e10d6fbec4834d90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a79ef84dd8376d1a8e10d6fbec4834d90">start</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a79ef84dd8376d1a8e10d6fbec4834d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2d128eb0c5e6f5a448d81d9869312aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#af2d128eb0c5e6f5a448d81d9869312aa">stop</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:af2d128eb0c5e6f5a448d81d9869312aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c31bb1a95721f6531227949b8e20a09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a6c31bb1a95721f6531227949b8e20a09">reset</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a6c31bb1a95721f6531227949b8e20a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12ed898321083dcef44ce9369041f0b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a12ed898321083dcef44ce9369041f0b8">abort</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, uint8_t error_code)</td></tr>
+<tr class="separator:a12ed898321083dcef44ce9369041f0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40f21c3f187d63a9973f46633f368433"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a40f21c3f187d63a9973f46633f368433">identifiedParamGet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga1c3f3ca818d09ad76c2cd76ccba77621">motor_tuner_param_type_t</a> param_type, float *p_value)</td></tr>
+<tr class="separator:a40f21c3f187d63a9973f46633f368433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeddfcc2dea0048868edfb269475c94ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#aeddfcc2dea0048868edfb269475c94ca">identifiedVoltageErrorGet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__volterr__lut__t">motor_tuner_volterr_lut_t</a> *p_lut, float *p_rdc)</td></tr>
+<tr class="separator:aeddfcc2dea0048868edfb269475c94ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fb3db545c611088e2fe518922bdec0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a5fb3db545c611088e2fe518922bdec0f">knownParamSet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga1c3f3ca818d09ad76c2cd76ccba77621">motor_tuner_param_type_t</a> param_type, float value)</td></tr>
+<tr class="separator:a5fb3db545c611088e2fe518922bdec0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06599e0376a3a70d1586fa6c8d287ef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#a06599e0376a3a70d1586fa6c8d287ef6">voltageErrorLutSet</a> )(<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__volterr__lut__t">motor_tuner_volterr_lut_t</a> *p_lut)</td></tr>
+<tr class="separator:a06599e0376a3a70d1586fa6c8d287ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a523db151f190e8a732afda57a2ce4dd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a523db151f190e8a732afda57a2ce4dd3">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::open) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__cfg__t">motor_tuner_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open tuner.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad31d3723832aaa644f4b936e3d8172f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad31d3723832aaa644f4b936e3d8172f2">&#9670;&nbsp;</a></span>innerLoopProcess</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::innerLoopProcess) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__in__t">motor_tuner_in_t</a> *p_in, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__out__t">motor_tuner_out_t</a> *p_out)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Process inner loop.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_in</td><td>Pointer to input structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_out</td><td>Pointer to output structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a39c20d4316fee974b1715ee99aaa285d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39c20d4316fee974b1715ee99aaa285d">&#9670;&nbsp;</a></span>outerLoopProcess</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::outerLoopProcess) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Process outer loop.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to tuner instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6cf31399c1326ad79e01a91fb6467431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cf31399c1326ad79e01a91fb6467431">&#9670;&nbsp;</a></span>isActive</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::isActive) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, bool *p_is_active)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check if tuner is active.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_is_active</td><td>Pointer to active status flag. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="addcec14bc518fa48d60c60c62b8902ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addcec14bc518fa48d60c60c62b8902ac">&#9670;&nbsp;</a></span>statusGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::statusGet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga32d8e1b49a47324c452cda019342f63a">motor_tuner_status_t</a> *p_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get tuner status. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Pointer to status structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a16fc9e252b716f7943e97af5870c33d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16fc9e252b716f7943e97af5870c33d7">&#9670;&nbsp;</a></span>errorGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::errorGet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, uint16_t *p_error)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get tuner error code. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_error</td><td>Pointer to error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac280f75e6b1901a5682673231b4336d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac280f75e6b1901a5682673231b4336d7">&#9670;&nbsp;</a></span>progressGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::progressGet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, float *p_progress)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get progress of parameter identification.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_progress</td><td>Pointer to progress value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a79ef84dd8376d1a8e10d6fbec4834d90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79ef84dd8376d1a8e10d6fbec4834d90">&#9670;&nbsp;</a></span>start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::start) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start motor tuner.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af2d128eb0c5e6f5a448d81d9869312aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2d128eb0c5e6f5a448d81d9869312aa">&#9670;&nbsp;</a></span>stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::stop) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop motor tuner. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6c31bb1a95721f6531227949b8e20a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c31bb1a95721f6531227949b8e20a09">&#9670;&nbsp;</a></span>reset</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::reset) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reset motor tuner. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a12ed898321083dcef44ce9369041f0b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12ed898321083dcef44ce9369041f0b8">&#9670;&nbsp;</a></span>abort</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::abort) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, uint8_t error_code)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Abort motor tuner operation. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">error_code</td><td>Error code to be thrown. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a40f21c3f187d63a9973f46633f368433"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40f21c3f187d63a9973f46633f368433">&#9670;&nbsp;</a></span>identifiedParamGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::identifiedParamGet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga1c3f3ca818d09ad76c2cd76ccba77621">motor_tuner_param_type_t</a> param_type, float *p_value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get identified motor parameter. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Type of parameter to get. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_value</td><td>Pointer to store identified parameter value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeddfcc2dea0048868edfb269475c94ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeddfcc2dea0048868edfb269475c94ca">&#9670;&nbsp;</a></span>identifiedVoltageErrorGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::identifiedVoltageErrorGet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__volterr__lut__t">motor_tuner_volterr_lut_t</a> *p_lut, float *p_rdc)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get identified voltage error lookup table. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_lut</td><td>Pointer to lookup table structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_rdc</td><td>Pointer to store identified DC bus resistance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5fb3db545c611088e2fe518922bdec0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb3db545c611088e2fe518922bdec0f">&#9670;&nbsp;</a></span>knownParamSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::knownParamSet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga1c3f3ca818d09ad76c2cd76ccba77621">motor_tuner_param_type_t</a> param_type, float value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set known motor parameter. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Type of parameter to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value of the known parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a06599e0376a3a70d1586fa6c8d287ef6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06599e0376a3a70d1586fa6c8d287ef6">&#9670;&nbsp;</a></span>voltageErrorLutSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_tuner_api_t::voltageErrorLutSet) (<a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__volterr__lut__t">motor_tuner_volterr_lut_t</a> *p_lut)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set voltage error lookup table. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_lut</td><td>Pointer to lookup table structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structmotor__tuner__instance__t" id="structmotor__tuner__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__tuner__instance__t">&#9670;&nbsp;</a></span>motor_tuner_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_tuner_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7f6bd86d00aef5a807059e0f35ee92b2"></a><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0f364aa1d1d14dfa0d136d63d4ce3f7f"></a><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__cfg__t">motor_tuner_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a46f9bae4502e0e5e64d75cf227954730"></a><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__api__t">motor_tuner_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga0b12a578a13e415ab842aa02d7d12115"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0b12a578a13e415ab842aa02d7d12115">&#9670;&nbsp;</a></span>motor_tuner_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115">motor_tuner_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Motor Tuner block. Allocate an instance specific control block to pass into the tuner API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga32d8e1b49a47324c452cda019342f63a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga32d8e1b49a47324c452cda019342f63a">&#9670;&nbsp;</a></span>motor_tuner_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga32d8e1b49a47324c452cda019342f63a">motor_tuner_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates the status of Tuner. Main transitions:</p><ul>
+<li>READY -&gt; RUNNING : START or RESUME command</li>
+<li>RUNNING -&gt; READY : STOP command</li>
+<li>RUNNING -&gt; ERROR : An error occurs</li>
+<li>RUNNING -&gt; COMPLETED : Identification (ID) completed</li>
+<li>ERROR -&gt; RESET : RESET command</li>
+<li>ERROR -&gt; RUNNING : RESUME command</li>
+<li>RESET -&gt; READY : Always (returns to READY)</li>
+<li>COMPLETED -&gt; RUNNING : START or RESUME command </li>
+</ul>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga32d8e1b49a47324c452cda019342f63aa149ef6ac9454bc28be33a88609315554"></a>MOTOR_TUNER_STATUS_READY&#160;</td><td class="fielddoc"><p>Ready to run (idle) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32d8e1b49a47324c452cda019342f63aa1082e7d1dde8e524f0ca6cd741bb93f6"></a>MOTOR_TUNER_STATUS_RUNNING&#160;</td><td class="fielddoc"><p>Running (identification/processing in progress) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32d8e1b49a47324c452cda019342f63aa7d5d4d8556281642ee6e427f6119fa27"></a>MOTOR_TUNER_STATUS_ERROR&#160;</td><td class="fielddoc"><p>Error occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32d8e1b49a47324c452cda019342f63aaa10fdf0da214d5d681b6f585171abb3e"></a>MOTOR_TUNER_STATUS_RESET&#160;</td><td class="fielddoc"><p>Reset state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32d8e1b49a47324c452cda019342f63aac9334c0b6d60eae74aa518a773605e51"></a>MOTOR_TUNER_STATUS_COMPLETED&#160;</td><td class="fielddoc"><p>Operation completed. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1c3f3ca818d09ad76c2cd76ccba77621"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1c3f3ca818d09ad76c2cd76ccba77621">&#9670;&nbsp;</a></span>motor_tuner_param_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga1c3f3ca818d09ad76c2cd76ccba77621">motor_tuner_param_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Motor tuner parameter types. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a343ee6d7253a2c08b0ff44b7ba7a231c"></a>MOTOR_TUNER_PARAM_TYPE_POLE_PAIRS&#160;</td><td class="fielddoc"><p>Number of pole pairs. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a39de132c373d6258b45326a811af5dd8"></a>MOTOR_TUNER_PARAM_TYPE_INERTIA&#160;</td><td class="fielddoc"><p>Rotor inertia moment. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a350b3214edd8a44962991cfd5f645d09"></a>MOTOR_TUNER_PARAM_TYPE_VISCOUS_FRICTION&#160;</td><td class="fielddoc"><p>Viscous friction coefficient. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621ad2b8151c25410a2d46e2ccf50f13f4ff"></a>MOTOR_TUNER_PARAM_TYPE_RATED_CURRENT&#160;</td><td class="fielddoc"><p>Nominal/Rated current. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a8507017205674092ed407f04d49f5e42"></a>MOTOR_TUNER_PARAM_TYPE_PMSM_R&#160;</td><td class="fielddoc"><p>Stator resistance. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a3d394aaec12f126f94afd97d2f5da10d"></a>MOTOR_TUNER_PARAM_TYPE_PMSM_LD&#160;</td><td class="fielddoc"><p>d-axis inductance </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a9a74f4ba3afbe1d1c1ae5e4e7364c0bf"></a>MOTOR_TUNER_PARAM_TYPE_PMSM_LQ&#160;</td><td class="fielddoc"><p>q-axis inductance </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c3f3ca818d09ad76c2cd76ccba77621a094cde93f324367649ad66f30f1b62d5"></a>MOTOR_TUNER_PARAM_TYPE_PMSM_KE&#160;</td><td class="fielddoc"><p>Back-EMF constant. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaba12bdaca13fd289cba4beea7773dc0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaba12bdaca13fd289cba4beea7773dc0f">&#9670;&nbsp;</a></span>motor_tuner_request_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#gaba12bdaca13fd289cba4beea7773dc0f">motor_tuner_request_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Motor tuner request types. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaba12bdaca13fd289cba4beea7773dc0fa4e5d60d6a708064c728f3b359822c9f2"></a>MOTOR_TUNER_REQUEST_NONE&#160;</td><td class="fielddoc"><p>No request. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaba12bdaca13fd289cba4beea7773dc0fa8c5832a476b095497f8b5d2c48a95fba"></a>MOTOR_TUNER_REQUEST_START&#160;</td><td class="fielddoc"><p>Start tuner. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaba12bdaca13fd289cba4beea7773dc0fa2989977e43af2bcd9852fe433e0f940f"></a>MOTOR_TUNER_REQUEST_STOP&#160;</td><td class="fielddoc"><p>Stop tuner. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaba12bdaca13fd289cba4beea7773dc0fa4f4f2e6242397e892bb4830a709dc1ab"></a>MOTOR_TUNER_REQUEST_RESET&#160;</td><td class="fielddoc"><p>Reset tuner. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

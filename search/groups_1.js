@@ -13,6 +13,7 @@ var searchData=
   ['aws_20device_20provisioning',['AWS Device Provisioning',['../group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html',1,'']]],
   ['adc_20and_20pwm_20modulation_20_28rm_5fmotor_5f120_5fdriver_29',['ADC and PWM modulation (rm_motor_120_driver)',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html',1,'']]],
   ['adc_20and_20pwm_20modulation_20_28rm_5fmotor_5fdriver_29',['ADC and PWM Modulation (rm_motor_driver)',['../group___m_o_t_o_r___d_r_i_v_e_r.html',1,'']]],
+  ['advanced_20motor_20middleware',['Advanced Motor Middleware',['../group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html',1,'']]],
   ['ai',['AI',['../group___r_e_n_e_s_a_s___a_i___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['ai',['AI',['../group___r_e_n_e_s_a_s___a_i___m_o_d_u_l_e_s.html',1,'']]],
   ['analog',['Analog',['../group___r_e_n_e_s_a_s___a_n_a_l_o_g___i_n_t_e_r_f_a_c_e_s.html',1,'']]],

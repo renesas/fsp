@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -298,6 +298,15 @@ Features</h2>
 <p>The time error adjustment function is used to correct errors, running fast or slow, in the time caused by variation in the precision of oscillation by the sub-clock oscillator. Because 32,768 cycles of the sub-clock oscillator constitute 1 second of operation when the sub-clock oscillator is selected, the clock runs fast if the sub-clock frequency is high and slow if the sub-clock frequency is low.</p>
 <p><a class="anchor" id="um_rtc_set_time_error_adjustment"></a> The error adjustment is reset every time RTC is reconfigured or time is set.</p>
 <dl class="section note"><dt>Note</dt><dd>RTC driver configurations do not do error adjustment internally while initializing the driver. Application must make calls to the error adjustment api's for desired adjustment.</dd></dl>
+<h2><a class="anchor" id="r-rtc_c-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA0</td><td>RA0E1, RA0E2, RA0L1 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-rtc_c-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_rtc_c</h2>
@@ -961,7 +970,7 @@ const <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

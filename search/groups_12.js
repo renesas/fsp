@@ -2,6 +2,7 @@ var searchData=
 [
   ['ra0e1',['RA0E1',['../group___b_s_p___m_c_u___r_a0_e1.html',1,'']]],
   ['ra0e2',['RA0E2',['../group___b_s_p___m_c_u___r_a0_e2.html',1,'']]],
+  ['ra0e3',['RA0E3',['../group___b_s_p___m_c_u___r_a0_e3.html',1,'']]],
   ['ra0l1',['RA0L1',['../group___b_s_p___m_c_u___r_a0_l1.html',1,'']]],
   ['ra2a1',['RA2A1',['../group___b_s_p___m_c_u___r_a2_a1.html',1,'']]],
   ['ra2a2',['RA2A2',['../group___b_s_p___m_c_u___r_a2_a2.html',1,'']]],
@@ -46,6 +47,7 @@ var searchData=
   ['rrh47000_20ndir_20co2_20sensor_20module_20_28rm_5frrh47000_29_20_5bdeprecated_5d',['RRH47000 NDIR CO2 Sensor Module (rm_rrh47000) [Deprecated]',['../group___r_m___r_r_h47000.html',1,'']]],
   ['rrh62000_20all_2din_2done_20air_20quality_20module_20_28rm_5frrh62000_29_20_5bdeprecated_5d',['RRH62000 All-in-one Air Quality Module (rm_rrh62000) [Deprecated]',['../group___r_m___r_r_h62000.html',1,'']]],
   ['renesas_20secure_20ip_20_28r_5frsip_5fe11a_5fprotected_5fcavp_29',['Renesas Secure IP (r_rsip_e11a_protected_cavp)',['../group___r_s_i_p___e11_a___p_r_o_t_e_c_t_e_d___c_a_v_p.html',1,'']]],
+  ['renesas_20secure_20ip_20_28r_5frsip_5fe31a_5fprotected_5fcavp_29',['Renesas Secure IP (r_rsip_e31a_protected_cavp)',['../group___r_s_i_p___e31_a___p_r_o_t_e_c_t_e_d___c_a_v_p.html',1,'']]],
   ['renesas_20secure_20ip_20_28r_5frsip_5fe51a_5fprotected_5fcavp_29',['Renesas Secure IP (r_rsip_e51a_protected_cavp)',['../group___r_s_i_p___e51_a___p_r_o_t_e_c_t_e_d___c_a_v_p.html',1,'']]],
   ['rsip_20key_20injection_20interface',['RSIP key injection Interface',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html',1,'']]],
   ['renesas_20secure_20ip_20_28r_5frsip_5fprotected_29',['Renesas Secure IP (r_rsip_protected)',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d.html',1,'']]],

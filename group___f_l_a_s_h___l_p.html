@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -301,6 +301,19 @@ Features</h2>
 <li>Boot block-swapping.</li>
 <li>ID code programming support.</li>
 </ul>
+<h2><a class="anchor" id="r-flash-lp-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA0</td><td>RA0E1, RA0E2, RA0E3, RA0L1 </td></tr>
+<tr>
+<td>RA2</td><td>RA2A1, RA2A2, RA2E1, RA2E2, RA2E3, RA2L1, RA2L2, RA2T1 </td></tr>
+<tr>
+<td>RA4</td><td>RA4M1, RA4W1 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-flash-lp-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_flash_lp</h2>
@@ -319,31 +332,13 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
-<td>Code Flash Programming</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Controls whether or not code-flash programming is enabled. Disabling reduces the amount of ROM and RAM used by the API. </td></tr>
+<td>Code Flash Programming</td><td>MCU Specific Options</td><td></td><td>Controls whether or not code-flash programming is enabled. Disabling reduces the amount of ROM and RAM used by the API. </td></tr>
 <tr class="tree_none">
 <td>Code Flash Background Operation Support With Bank Programming</td><td>MCU Specific Options</td><td></td><td>Enables execution from the startup code flash bank while programming the other code flash bank. </td></tr>
 <tr class="tree_none">
-<td>Data Flash Programming</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Controls whether or not data-flash programming is enabled. Disabling reduces the amount of ROM used by the API. </td></tr>
+<td>Data Flash Programming</td><td>MCU Specific Options</td><td></td><td>Controls whether or not data-flash programming is enabled. Disabling reduces the amount of ROM used by the API. </td></tr>
 <tr class="tree_none">
-<td>Data Flash Background Operation Support</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Controls whether or not Data Flash Background Operation support is included in the build. Disabling reduces the amount of ROM used by the API. </td></tr>
+<td>Data Flash Background Operation Support</td><td>MCU Specific Options</td><td></td><td>Controls whether or not Data Flash Background Operation support is included in the build. Disabling reduces the amount of ROM used by the API. </td></tr>
 <tr class="tree_none">
 <td>Instant Bank Swap (No Reset Required)</td><td>MCU Specific Options</td><td></td><td>Calls to R_FLASH_LP_BankSwap will immediately swap banks without requiring a reset. </td></tr>
 </table>
@@ -355,13 +350,7 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Flash
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_flash0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
-<td>Data Flash Background Operation</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enabling allows Flash API calls that reference data-flash to return immediately, with the operation continuing in the background. </td></tr>
+<td>Data Flash Background Operation</td><td>MCU Specific Options</td><td></td><td>Enabling allows Flash API calls that reference data-flash to return immediately, with the operation continuing in the background. </td></tr>
 <tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be specified. Callback function called when a Data Flash Background Operation completes or errors. </td></tr>
 <tr class="tree_none">
@@ -383,6 +372,10 @@ Data Flash Background Operation (BGO) Precautions</h2>
 <h2><a class="anchor" id="r-flash-lp-code-precautions"></a>
 Code Flash Precautions</h2>
 <p>Modifying code flash has limitations requiring some of the flash code to reside in RAM. The use of Bank Programming can limit these requirements but some still exist.</p>
+<p>On MCUs with limited RAM, an overflow may occur when using the r_flash_lp module. Possible solutions:</p><ul>
+<li>Reduce "Main stack size (bytes)" under RA Common on the BSP tab</li>
+<li>Enable LTO (Link Time Optimization)</li>
+</ul>
 <p>Code flash cannot be accessed while writing, erasing or blank checking code flash unless Bank Programming is supported. Code flash cannot be accessed while modifying the access window, selecting the startup area or setting the ID code. In order to support modifying code flash or flash settings all supporting code must reside in RAM. This is only done when code flash programming is enabled.</p>
 <p>When Bank Programming is disabled or not supported a code flash write, erase or blank check operation will not return before the operation has completed.</p>
 <p>By default, the vector table resides in the code flash. If an interrupt occurs during the code flash operation other thank a Bank Programming operation, then code flash will be accessed to fetch the interrupt's starting address and an error will occur. The simplest work-around is to disable interrupts during code flash operations. Another option is to copy the vector table to RAM, update the VTOR (Vector Table Offset Register) accordingly and ensure that any interrupt service routines execute out of RAM. Similarly, you must ensure that if in a multi-threaded environment, threads running from code flash cannot become active while a code flash operation is in progress.</p>
@@ -1236,7 +1229,7 @@ When active bank is bank 1, startup program protection function is invalid.</dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

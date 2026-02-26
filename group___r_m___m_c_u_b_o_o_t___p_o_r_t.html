@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -323,6 +323,12 @@ ECDSA P-384</li>
 RSA 2048</li>
 <li>
 RSA 3072</li>
+<li>
+ML-DSA 44</li>
+<li>
+ML-DSA 65</li>
+<li>
+ML-DSA 87</li>
 </ul>
 </td><td>ECDSA P-256 </td><td>Configure the signature type. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -408,6 +414,9 @@ Getting Started: Converting an Application Project to an MCUboot Image</h2>
 <li>MCUBOOT_IMAGE_SIGNING_KEY: Set the path to the key used for signing. If signing is not required, do not set this variable. If example keys are used, set MCUBOOT_IMAGE_SIGNING_KEY as follows (replace &lt;boot_project&gt; with the bootloader project path):<ul>
 <li>ECC 256: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-ec-p256.pem</li>
 <li>ECC 384: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-ec-p384.pem</li>
+<li>ML-DSA-44: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-mldsa-44.pem</li>
+<li>ML-DSA-65: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-mldsa-65.pem</li>
+<li>ML-DSA-87: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-mldsa-87.pem</li>
 <li>RSA 2K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-2048.pem</li>
 <li>RSA 3K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-3072.pem</li>
 </ul>
@@ -602,7 +611,7 @@ MCUboot Memory Map with QSPI</div></div>
  <h2>MCUboot verification options</h2>
 <p>MCUboot in FSP supports the following secure image verification options</p><ol type="1">
 <li>Hash verification only (SHA256).</li>
-<li>Hash and signature verification (ECDSA-P256, ECDSA-P384, RSA-2048 and RSA-3072).</li>
+<li>Hash and signature verification (ECDSA-P256, ECDSA-P384, RSA-2048, RSA-3072, ML-DSA-44, ML-DSA-65, and ML-DSA-87).</li>
 <li>Hash, signature verification and image encryption (ECIES-P256 and RSA-OAEP-2048 with AES-128).</li>
 <li>Hash and image encryption only.</li>
 </ol>
@@ -614,7 +623,12 @@ Limitations</h2>
 <p>When encryption is enabled, MCUboot requires the image in the primary slot to be unencrypted. Only the image loaded in the secondary slot can be encrypted.</p>
 <h2>MCUboot Crypto Stack Options</h2>
 <p>The following crypto stacks can be used with MCUboot in FSP:</p><ol type="1">
-<li>MbedTLS, which is hardware accelerated on all RA devices. On the RA2 which has an AES engine only, ECC/RSA/SHA operations are in software.</li>
+<li>MbedTLS, which is hardware accelerated on all RA devices. On the RA2 which has an AES engine only, ECC/RSA/SHA operations are in software.<ol type="a">
+<li>Post Quantum Crypto (PQC) can optionally be used for ML-DSA operations</li>
+</ol>
+</li>
+<li>Ocrypto (TRNG Only) can be used with some devices. See <a class="el" href="_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-limitations">Licensed Devices</a>.</li>
+<li>Ocrypto (H/W Accelerated) has AES operations accelerated for some devices. See <a class="el" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#rm-ocrypto-port-overview">Hardware acceleration summary</a>.</li>
 <li>TinyCrypt (S/W Only) can be used with all devices.</li>
 <li>TinyCrypt (H/W Accelerated) has AES operations accelerated for the RA2 family only. When using MCUboot without encryption there is no difference between using this or the S/W only version.</li>
 <li>SCE9 Protected Mode on devices that have the SCE9 (eg: RA6M4, RA4M3, RA4M2)</li>
@@ -642,13 +656,13 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is an example of using MCUboot in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_mcuboot_port_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#ifdef MCUBOOT_USE_MBED_TLS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize mbedtls. */</span></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    assert(0 == <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx));</div><div class="line"><span class="preprocessor">#elif defined(MCUBOOT_USE_OCRYPTO)</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize TinyCrypt port. */</span></div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#ga14e01509849f92d314bd4426669ec3b1">RM_OCRYPTO_PORT_Init</a>());</div><div class="line"><span class="preprocessor">#elif defined(MCUBOOT_USE_TINYCRYPT)</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize TinyCrypt port. */</span></div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga61682df07075c19ebb327063d5ba6e8b">RM_TINCYRYPT_PORT_Init</a>());</div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize SCE9 Protected Mode driver. */</span></div><div class="line">    <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#structsce__instance__ctrl__t">sce_instance_ctrl_t</a> sce_ctrl;</div><div class="line">    <span class="keyword">const</span> <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__cfg__t">sce_cfg_t</a>     sce_cfg =</div><div class="line">    {.lifecycle = SCE_SSD};</div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#gae41c48db65491a6884039929b6734557">R_SCE_Open</a>(&amp;sce_ctrl, &amp;sce_cfg));</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) To check for updates, call boot_set_pending. */</span></div><div class="line">    <span class="keywordtype">bool</span> update = 0;</div><div class="line">    <span class="keywordflow">if</span> (update)</div><div class="line">    {</div><div class="line">        boot_set_pending(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the boot image and get its location. */</span></div><div class="line">    <span class="keyword">struct </span>boot_rsp rsp;</div><div class="line">    assert(0 == boot_go(&amp;rsp));</div><div class="line"></div><div class="line">    <span class="comment">/* Enter the application. */</span></div><div class="line">    RM_MCUBOOT_PORT_BootApp(&amp;rsp);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_mcuboot_port_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#ifdef MCUBOOT_USE_MBED_TLS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize mbedtls. */</span></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    assert(0 == <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx));</div><div class="line"><span class="preprocessor">#elif defined(MCUBOOT_USE_OCRYPTO)</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize Ocrypto port. */</span></div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#ga14e01509849f92d314bd4426669ec3b1">RM_OCRYPTO_PORT_Init</a>());</div><div class="line"><span class="preprocessor">#elif defined(MCUBOOT_USE_TINYCRYPT)</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize TinyCrypt port. */</span></div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga61682df07075c19ebb327063d5ba6e8b">RM_TINCYRYPT_PORT_Init</a>());</div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize SCE9 Protected Mode driver. */</span></div><div class="line">    <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#structsce__instance__ctrl__t">sce_instance_ctrl_t</a> sce_ctrl;</div><div class="line">    <span class="keyword">const</span> <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__cfg__t">sce_cfg_t</a>     sce_cfg =</div><div class="line">    {.lifecycle = SCE_SSD};</div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#gae41c48db65491a6884039929b6734557">R_SCE_Open</a>(&amp;sce_ctrl, &amp;sce_cfg));</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) To check for updates, call boot_set_pending. */</span></div><div class="line">    <span class="keywordtype">bool</span> update = 0;</div><div class="line">    <span class="keywordflow">if</span> (update)</div><div class="line">    {</div><div class="line">        boot_set_pending(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the boot image and get its location. */</span></div><div class="line">    <span class="keyword">struct </span>boot_rsp rsp;</div><div class="line">    assert(0 == boot_go(&amp;rsp));</div><div class="line"></div><div class="line">    <span class="comment">/* Enter the application. */</span></div><div class="line">    RM_MCUBOOT_PORT_BootApp(&amp;rsp);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

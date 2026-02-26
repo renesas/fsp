@@ -506,6 +506,7 @@ var searchData=
   ['rsip_5fapi_5ft',['rsip_api_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__api__t',1,'']]],
   ['rsip_5fcfg_5ft',['rsip_cfg_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__cfg__t',1,'']]],
   ['rsip_5fchacha20_5fwrapped_5fkey_5ft',['rsip_chacha20_wrapped_key_t',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__chacha20__wrapped__key__t',1,'']]],
+  ['rsip_5fdlms_5fapdu_5fdata_5ft',['rsip_dlms_apdu_data_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__dlms__apdu__data__t',1,'']]],
   ['rsip_5fecc_5fprivate_5fwrapped_5fkey_5ft',['rsip_ecc_private_wrapped_key_t',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t',1,'']]],
   ['rsip_5fhmac_5fhandle_5ft',['rsip_hmac_handle_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#structrsip__hmac__handle__t',1,'']]],
   ['rsip_5fhmac_5fsha_5fwrapped_5fkey_5ft',['rsip_hmac_sha_wrapped_key_t',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__hmac__sha__wrapped__key__t',1,'']]],

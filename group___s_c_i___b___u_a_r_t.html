@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -291,6 +291,17 @@ Features</h2>
 <li>Abort in-progress read/write operations<a class="anchor" id="um_sci_uart_abort"></a></li>
 <li>FIFO support on supported channels<a class="anchor" id="um_sci_uart_fifo_disabled"></a> </li>
 </ul>
+<h2><a class="anchor" id="r-sci-b-uart-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA6</td><td>RA6T2 </td></tr>
+<tr>
+<td>RA8</td><td>RA8D1, RA8D2, RA8E1, RA8E2, RA8M1, RA8M2, RA8P1, RA8T1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-sci-b-uart-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_sci_b_uart</h2>
@@ -452,6 +463,8 @@ Disable</li>
 </td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Receive FIFO Trigger Level</td><td>Refer to the RA Configuration tool for available options.</td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">TXI/TEI Synchronization Delay Cycles</td><td>Must be an integer between 0 and 3.</td><td>0 </td><td>Configure the optional delay, in SCICLK/SCISPICLK cycles, between writing the last data byte in the transmit data empty (TXI) interrupt and enabling the transmit end (TEI) interrupt. Only required when SCICLK/SCISPICLK (TCLK) is much slower than the bus clock (PCLK). </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -509,6 +522,7 @@ Usage Notes</h1>
 Limitations</h2>
 <ul>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+<li>When SCICLK/SCISPICLK is much slower than PCLK, it may be necessary to delay up to 3 cycles of SCICLK/SCISPICLK after writing the last data to TDR to avoid early termination of the transmission. The delay can be configured using the property Extra &gt; TXI/TEI Synchronization Delay Cycles.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-b-uart-dtc"></a>
 DTC Limitations</h2>
@@ -685,6 +699,12 @@ CTS/RTS function of the SSn pin. </td></tr>
 rs485_setting</td>
 <td class="fielddoc">
 RS-485 settings. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa3014cf9bd5b37791da22f1cb9b876b0"></a>uint8_t</td>
+<td class="fieldname">
+delay_cycles</td>
+<td class="fielddoc">
+Number of SCICLK cycles to delay after writing last byte to TDR. </td></tr>
 </table>
 
 </div>
@@ -1367,7 +1387,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

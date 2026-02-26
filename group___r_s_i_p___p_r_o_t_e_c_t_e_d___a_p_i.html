@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -252,6 +252,8 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structrsip__dlms__apdu__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__dlms__apdu__data__t">rsip_dlms_apdu_data_t</a></td></tr>
+<tr class="separator:structrsip__dlms__apdu__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a></td></tr>
 <tr class="separator:structrsip__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__wrapped__dkm__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__dkm__t">rsip_wrapped_dkm_t</a></td></tr>
@@ -302,8 +304,40 @@ Enumerations</h2></td></tr>
 <tr class="separator:gae61f4d26c0ba8bb71e87d9d7e1a049cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga227a72148dc9ad001669802949923fcf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf">rsip_otf_channel_t</a> </td></tr>
 <tr class="separator:ga227a72148dc9ad001669802949923fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc94fd77205887b093800ff7246d1861"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadc94fd77205887b093800ff7246d1861">rsip_dlms_ret_t</a> </td></tr>
+<tr class="separator:gadc94fd77205887b093800ff7246d1861"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrsip__dlms__apdu__data__t" id="structrsip__dlms__apdu__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__dlms__apdu__data__t">&#9670;&nbsp;</a></span>rsip_dlms_apdu_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_dlms_apdu_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>APDU data structure for DLMS/COSEM API. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6035123172c81d0d0b605d50dc490c7d"></a>uint8_t</td>
+<td class="fieldname">
+part_1[3]</td>
+<td class="fielddoc">
+Buffer to store the first 3 bytes of the decrypted ADPU (APDU Choice, Key Flag, and Key Length) </td></tr>
+<tr><td class="fieldtype">
+<a id="afef1aa56bd2d50edfd0aaa4b9c5d0cf2"></a>uint8_t</td>
+<td class="fieldname">
+part_2[14]</td>
+<td class="fielddoc">
+Buffer to store the decrypted ADPU, excluding part_1 and the dedicated key. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structrsip__wrapped__key__t" id="structrsip__wrapped__key__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrsip__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_wrapped_key_t</h2>
 
@@ -553,6 +587,8 @@ Hardware-dependent configuration. </td></tr>
 <tr class="separator:a26879f602be05ab0157f6e01bb18c568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca7580207c2d26c03720e44532c428b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aca7580207c2d26c03720e44532c428b0">otfInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf">rsip_otf_channel_t</a> const channel, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key, uint8_t const *const p_seed)</td></tr>
 <tr class="separator:aca7580207c2d26c03720e44532c428b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab92785b69704292a7e5c35848867a1ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ab92785b69704292a7e5c35848867a1ea">xdlmsInitiateRequestDecrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_apdu, uint8_t const *const p_nonce, uint8_t const *const p_aad, uint32_t const aad_length, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_dedicated_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__dlms__apdu__data__t">rsip_dlms_apdu_data_t</a> *const p_apdu_data, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadc94fd77205887b093800ff7246d1861">rsip_dlms_ret_t</a> *const p_dlms_ret)</td></tr>
+<tr class="separator:ab92785b69704292a7e5c35848867a1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="aefa2a1387728e6d12e2d7220ba92f47b"></a>
@@ -2535,6 +2571,34 @@ Hardware-dependent configuration. </td></tr>
 
 </div>
 </div>
+<a id="ab92785b69704292a7e5c35848867a1ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab92785b69704292a7e5c35848867a1ea">&#9670;&nbsp;</a></span>xdlmsInitiateRequestDecrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::xdlmsInitiateRequestDecrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_apdu, uint8_t const *const p_nonce, uint8_t const *const p_aad, uint32_t const aad_length, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_dedicated_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__dlms__apdu__data__t">rsip_dlms_apdu_data_t</a> *const p_apdu_data, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadc94fd77205887b093800ff7246d1861">rsip_dlms_ret_t</a> *const p_dlms_ret)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts and Verifies ciphered InitiateRequest message, and wraps Dedicated Key (AES-128 or AES-256) embedded in the message. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of ciphered InitiateRequest APDU decryption key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_apdu</td><td>Pointer to ciphered xDLMS InitiateRequest APDU (TAG || LEN || SH || C || T). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_nonce</td><td>Pointer to nonce (Sys-T || IC). The length must be 12 bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_aad</td><td>Pointer to additional authentication data (SC || AK). The length is aad_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aad_length</td><td>Byte length of additional authentication data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dedicated_key</td><td>Pointer to Dedicated Key wrapped with HUK. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_apdu_data</td><td>Pointer to decrypted xDLMS InitiateRequest APDU structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_dlms_ret</td><td>DLMS/COSEM specific return value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -3025,13 +3089,48 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="gadc94fd77205887b093800ff7246d1861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc94fd77205887b093800ff7246d1861">&#9670;&nbsp;</a></span>rsip_dlms_ret_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadc94fd77205887b093800ff7246d1861">rsip_dlms_ret_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return values for DLMS/COSEM. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861ad110702a0f4492e62c3244030a936d12"></a>RSIP_DLMS_RET_SUCCESS&#160;</td><td class="fielddoc"><p>Normal termination. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861a2b85dcdda2b1a50ace921f91fbfdacc6"></a>RSIP_DLMS_RET_INVALID_OPERATIONAL_MODE&#160;</td><td class="fielddoc"><p>xDLMS Operational Mode is invalid (not Authenticated encryption mode). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861ac2a46aa440622804d47afa0674c2ce7d"></a>RSIP_DLMS_RET_INVALID_SECURITY_SUITE&#160;</td><td class="fielddoc"><p>Security Suite id is unexpected value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861ab2854bb4e5988c41236d31d67f551227"></a>RSIP_DLMS_RET_INVALID_APDU_CHOICE&#160;</td><td class="fielddoc"><p>APDU CHOICE is unexpected value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861a882c888051f5050ba45bf00bbac3fa27"></a>RSIP_DLMS_RET_INVALID_KEY_LENGTH&#160;</td><td class="fielddoc"><p>Key Length is unexpected value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861aecfaed59811a8189232718efbe61e197"></a>RSIP_DLMS_RET_INVALID_SIZE_AAD&#160;</td><td class="fielddoc"><p>Input AAD length is invalid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861ae25c5936428da97f673c2033633b469b"></a>RSIP_DLMS_RET_INVALID_SIZE_LEN&#160;</td><td class="fielddoc"><p>LEN field within the APDU is invalid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861a69a65d472e97f40bc18bca4abdea79a1"></a>RSIP_DLMS_RET_SECURITY_SUITE_MISMATCH&#160;</td><td class="fielddoc"><p>Key type is mismatch with Security Suite id. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc94fd77205887b093800ff7246d1861a292909b9d4a8ea12097d902d0e76cbd5"></a>RSIP_DLMS_RET_NO_DEDICATED_KEY&#160;</td><td class="fielddoc"><p>Dedicated key not present. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

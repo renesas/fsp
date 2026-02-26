@@ -170,7 +170,7 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "layer3_switch_extended_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__extended__cfg__t", [
       [ "p_ether_phy_instances", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a115f29d9a0dba98d78c5d2f7ad0a5418", null ],
       [ "p_gptp_instance", "group___l_a_y_e_r3___s_w_i_t_c_h.html#acceba339796b50a217ff1d9f1b6fd75e", null ],
-      [ "fowarding_target_port_masks", "group___l_a_y_e_r3___s_w_i_t_c_h.html#afdfe4de0b2b55880bb33486afde41347", null ],
+      [ "fowarding_target_port_masks", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad16d956b9dc1ab6eddd1312eaba240cb", null ],
       [ "ipv_queue_depth_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa30b618784f5587b312ee65a0a87bf2e", null ],
       [ "ipv_queue_preemptable_bitmask", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a143d3007f22a530b922ae92e4624d302", null ],
       [ "frame_preemption_fragment_size", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a44b356e79b140c3d1e2f4aa185be30ff", null ],

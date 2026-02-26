@@ -1,0 +1,1803 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor Hal Driver middleware (rm_motor_hal_driver)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor Hal Driver middleware (rm_motor_hal_driver)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga4e4194593e3e27c1c017717068326b2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga4e4194593e3e27c1c017717068326b2b">RM_MOTOR_HAL_DRIVER_Open</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__cfg__t">motor_hal_driver_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga4e4194593e3e27c1c017717068326b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures the Motor Driver module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#af8587803e1e7ea79e8e0d3922c44d617">motor_hal_driver_api_t::open</a>.  <a href="#ga4e4194593e3e27c1c017717068326b2b">More...</a><br /></td></tr>
+<tr class="separator:ga4e4194593e3e27c1c017717068326b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06a25b97c9180f57638cfa8448c9d2f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga06a25b97c9180f57638cfa8448c9d2f7">RM_MOTOR_HAL_DRIVER_Close</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga06a25b97c9180f57638cfa8448c9d2f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified Motor Driver Module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a80e355030f2cf3eea06558d4593e851e">motor_hal_driver_api_t::close</a>.  <a href="#ga06a25b97c9180f57638cfa8448c9d2f7">More...</a><br /></td></tr>
+<tr class="separator:ga06a25b97c9180f57638cfa8448c9d2f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47bee448ecf0142a21d7c4c8d99de188"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga47bee448ecf0142a21d7c4c8d99de188">RM_MOTOR_HAL_DRIVER_Reset</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga47bee448ecf0142a21d7c4c8d99de188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset variables of Motor Driver Module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#aebdddbcf4a9f90d9ad756c8b2ce65145">motor_hal_driver_api_t::reset</a>.  <a href="#ga47bee448ecf0142a21d7c4c8d99de188">More...</a><br /></td></tr>
+<tr class="separator:ga47bee448ecf0142a21d7c4c8d99de188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea3f01e877a8866f01d17f49e3dd7e10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaea3f01e877a8866f01d17f49e3dd7e10">RM_MOTOR_HAL_DRIVER_PhaseVoltageSet</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, ccal_num_t const u_voltage, ccal_num_t const v_voltage, ccal_num_t const w_voltage)</td></tr>
+<tr class="memdesc:gaea3f01e877a8866f01d17f49e3dd7e10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Phase Voltage Data to calculate PWM duty. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#aea1710474dbb3b608e9ba904e820ba40">motor_hal_driver_api_t::phaseVoltageSet</a>.  <a href="#gaea3f01e877a8866f01d17f49e3dd7e10">More...</a><br /></td></tr>
+<tr class="separator:gaea3f01e877a8866f01d17f49e3dd7e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae82740e16f40e496ae8f2ae1e5deae48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gae82740e16f40e496ae8f2ae1e5deae48">RM_MOTOR_HAL_DRIVER_Activate</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gae82740e16f40e496ae8f2ae1e5deae48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Active flag. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ae3b7fcb9fac89c81a4cb56ddfa079595">motor_hal_driver_api_t::activate</a>.  <a href="#gae82740e16f40e496ae8f2ae1e5deae48">More...</a><br /></td></tr>
+<tr class="separator:gae82740e16f40e496ae8f2ae1e5deae48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52dee48cf3e80ef6c1bcfb7424f54e70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga52dee48cf3e80ef6c1bcfb7424f54e70">RM_MOTOR_HAL_DRIVER_Deactivate</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga52dee48cf3e80ef6c1bcfb7424f54e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Active flag. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ae1b8ed2ca142b1f07ec4f705ec4050c9">motor_hal_driver_api_t::deactivate</a>.  <a href="#ga52dee48cf3e80ef6c1bcfb7424f54e70">More...</a><br /></td></tr>
+<tr class="separator:ga52dee48cf3e80ef6c1bcfb7424f54e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bc5076cb7ed1aef0e525f86d50159b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga0bc5076cb7ed1aef0e525f86d50159b9">RM_MOTOR_HAL_DRIVER_CurrentGet</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__current__dataset__t">motor_hal_driver_current_dataset_t</a> *const p_current_dataset)</td></tr>
+<tr class="memdesc:ga0bc5076cb7ed1aef0e525f86d50159b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get calculated phase Current, Vdc &amp; Va_max data. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a4c962a1c838eb695f8c4de72a787f021">motor_hal_driver_api_t::currentGet</a>.  <a href="#ga0bc5076cb7ed1aef0e525f86d50159b9">More...</a><br /></td></tr>
+<tr class="separator:ga0bc5076cb7ed1aef0e525f86d50159b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba946c0493b2bbb73b29ac4a254de804"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaba946c0493b2bbb73b29ac4a254de804">RM_MOTOR_HAL_DRIVER_OutputVoltageGet</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__voltage__dataset__t">motor_hal_driver_voltage_dataset_t</a> *const p_voltage_dataset)</td></tr>
+<tr class="memdesc:gaba946c0493b2bbb73b29ac4a254de804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get calculated phase Voltage data. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a2c53730e5a06937ea1cf855aad5ffd13">motor_hal_driver_api_t::outputVoltageGet</a>.  <a href="#gaba946c0493b2bbb73b29ac4a254de804">More...</a><br /></td></tr>
+<tr class="separator:gaba946c0493b2bbb73b29ac4a254de804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a14c13c073091ee3e9fe558c42b9bd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga8a14c13c073091ee3e9fe558c42b9bd9">RM_MOTOR_HAL_DRIVER_FlagCurrentOffsetGet</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, uint8_t *const p_offset_flag)</td></tr>
+<tr class="memdesc:ga8a14c13c073091ee3e9fe558c42b9bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the flag of finish current offset detection. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ab88cfcc72949a1ab09d0aad21008651b">motor_hal_driver_api_t::flagCurrentOffsetGet</a>.  <a href="#ga8a14c13c073091ee3e9fe558c42b9bd9">More...</a><br /></td></tr>
+<tr class="separator:ga8a14c13c073091ee3e9fe558c42b9bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5f6d18dd7151c1b089268f9fc71113b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaf5f6d18dd7151c1b089268f9fc71113b">RM_MOTOR_HAL_DRIVER_CurrentOffsetRestart</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gaf5f6d18dd7151c1b089268f9fc71113b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restart the current offset detection. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a6ca18a7e82d83983b9743dcb37d54f70">motor_hal_driver_api_t::currentOffsetRestart</a>.  <a href="#gaf5f6d18dd7151c1b089268f9fc71113b">More...</a><br /></td></tr>
+<tr class="separator:gaf5f6d18dd7151c1b089268f9fc71113b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab62fa5178b4b19c9df6b0a82e05bc866"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gab62fa5178b4b19c9df6b0a82e05bc866">RM_MOTOR_HAL_DRIVER_ParameterUpdate</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__cfg__t">motor_hal_driver_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:gab62fa5178b4b19c9df6b0a82e05bc866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the parameters of Driver Module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a4a2ff7b2a4ec71593f58ec9ae0b368ef">motor_hal_driver_api_t::parameterUpdate</a>.  <a href="#gab62fa5178b4b19c9df6b0a82e05bc866">More...</a><br /></td></tr>
+<tr class="separator:gab62fa5178b4b19c9df6b0a82e05bc866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga522f47e030d50fac53388eaa6ed4e1c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga522f47e030d50fac53388eaa6ed4e1c1">RM_MOTOR_HAL_DRIVER_FlagBootstrapGet</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl, uint8_t *const p_bootstrap_flag)</td></tr>
+<tr class="memdesc:ga522f47e030d50fac53388eaa6ed4e1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the flag of finish bootstrap. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a764cc2e0066d2fd57c5c732a87bd7987">motor_hal_driver_api_t::flagBootstrapGet</a>.  <a href="#ga522f47e030d50fac53388eaa6ed4e1c1">More...</a><br /></td></tr>
+<tr class="separator:ga522f47e030d50fac53388eaa6ed4e1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81dbd616d144721c4835db6a36b15e90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga81dbd616d144721c4835db6a36b15e90">RM_MOTOR_HAL_DRIVER_ChargeBootstrap</a> (<a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga81dbd616d144721c4835db6a36b15e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Charge the Bootstrap circuit. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a72f18a77babc8b712ef19d0dea59197d">motor_hal_driver_api_t::bootstrapCharge</a>.  <a href="#ga81dbd616d144721c4835db6a36b15e90">More...</a><br /></td></tr>
+<tr class="separator:ga81dbd616d144721c4835db6a36b15e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Motor hal driver on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html">Motor Hal Driver Interface</a>. </p>
+<h1><a class="anchor" id="rm-motor-hal-driver-overview"></a>
+Overview</h1>
+<p>The Motor HAL Driver module provides hardware abstraction layer functions for motor control applications. It handles PWM modulation, ADC current sensing, and voltage control for three-phase motor drivers. This module serves as an interface between the motor control algorithm and the hardware peripherals (ADC, GPT).</p>
+<p>Motor HAL Driver Block Diagram</p>
+<h2><a class="anchor" id="rm-motor-hal-driver-features"></a>
+Features</h2>
+<p>The Motor HAL Driver module has the following key features:</p>
+<ul>
+<li>Supports multiple current sensing configurations:<ul>
+<li>1-shunt current sensing</li>
+<li>2-shunt current sensing</li>
+<li>3-shunt current sensing</li>
+</ul>
+</li>
+<li>Multiple PWM modulation methods:<ul>
+<li>SPWM (Sinusoidal Pulse Width Modulation)</li>
+<li>SVPWM (Space Vector Pulse Width Modulation)</li>
+<li>DPWM (Discontinuous Pulse Width Modulation)</li>
+</ul>
+</li>
+<li>Automatic current offset calibration</li>
+<li>Bootstrap circuit charging support</li>
+<li>Phase voltage and current measurement</li>
+<li>Support for multiple motor control (shared ADC instance)</li>
+</ul>
+<h1><a class="anchor" id="rm-motor-hal-driver-configuration"></a>
+Configuration</h1>
+<p>Configure the Motor HAL Driver module on the Stacks tab of the FSP Configuration editor.</p>
+<p><h2>Build Time Configurations for rm_motor_hal_driver</h2>
+The following build time configurations are defined in fsp_cfg/rm_motor_hal_driver_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>ADC_B Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Select ADC_B module support. </td></tr>
+<tr class="tree_none">
+<td>Shared ADC support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select Shared ADC support. </td></tr>
+<tr class="tree_none">
+<td>Supported Motor Number</td><td>Must be greater than 1.</td><td>1 </td><td></td></tr>
+<tr class="tree_none">
+<td>Saturation checking for PWM</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If selected, saturation checking code for PWM modulation is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Motor &gt; Advanced Motor Middleware &gt; Motor Hal Driver Module (rm_motor_hal_driver)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Advanced Motor Middleware &gt; Motor Hal Driver Module (rm_motor_hal_driver).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor0_hal_driver </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resolution of A/D conversion</td><td>Must be a valid Resolution of ADC.</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> PWM config  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> PWM config &gt; Timer  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM Timer Frequency (MHz)</td><td>Must be a valid integer.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM Carrier Period (Microseconds)</td><td>Must be a valid integer.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dead Time (Microseconds)</td><td>Must be a valid value</td><td>2.0 </td><td>GPT PWM dead time </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+</ul>
+</td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+</ul>
+</td><td>Pin Level High </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> PWM config &gt; Port  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM output port UP</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_04 </td><td>PWM output port UP </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM output port UN</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_05 </td><td>PWM output port UN </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM output port VP</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_06 </td><td>PWM output port VP </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM output port VN</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_07 </td><td>PWM output port VN </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM output port WP</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_08 </td><td>PWM output port WP </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">PWM output port WN</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_09 </td><td>PWM output port WN </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Modulation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Modulation method</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+SVPWM</li>
+<li>
+SPWM</li>
+<li>
+DPWM</li>
+</ul>
+</td><td>SVPWM </td><td>Select PWM modulation method </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input Voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Input voltage </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Duty</td><td>Must be a valid value</td><td>0.9375F </td><td>Maximum duty of PWM </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Current related  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current Range (A)</td><td>Must be a valid value</td><td>16.5 </td><td>Current range to measure(Maximum input current) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Counts for current offset measurement</td><td>Must be a valid integer.</td><td>512 </td><td>How many times to measure current offset </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Offset of A/D conversion for current</td><td>Must be a valid non-negative value.</td><td>0x7FF </td><td>Offset of A/D conversion for current </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Voltage related  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">VDC Range (V)</td><td>Must be a valid value</td><td>73.26 </td><td>Voltage range to measure(Maximum input Main Line Voltage) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage Range (V)</td><td>Must be a valid value</td><td>73.26 </td><td>Voltage range to measure(Maximum output Voltage) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Offset of A/D conversion for VDC</td><td>Must be a valid non-negative value.</td><td>0x0 </td><td>Offset of A/D conversion for VDC </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Offset of A/D conversion for voltage</td><td>Must be a valid non-negative value.</td><td>0x0 </td><td>Offset of A/D conversion for output voltage </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Bootstrap config  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Counts for bootstrap charge</td><td>Must be a valid integer.</td><td>100 </td><td>Counts for charging the bootstrap circuit </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Shunt current config  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 shunt</li>
+<li>
+2 shunt</li>
+<li>
+3 shunt</li>
+</ul>
+</td><td>2 shunt </td><td>Select shunt type </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">1shunt interrupt phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+PHASE_U</li>
+<li>
+PHASE_V</li>
+<li>
+PHASE_W</li>
+</ul>
+</td><td>PHASE_U </td><td>Select the phase which occures ADC end interrupt. (Only valid with 1shunt) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimum difference of PWM duty</td><td>Must be a valid non-negative value.</td><td>300 </td><td>Minimum difference of PWM duty for 1shunt </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> ADC setting  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> ADC setting &gt; Channel  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">U Phase current</td><td>Value must be a supported channel number</td><td>4 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">V Phase current</td><td>Value must be a supported channel number</td><td>2 </td><td>Specify the A/D channel for V phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">W Phase current</td><td>Value must be a supported channel number</td><td>0 </td><td>Specify the A/D channel for W phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Main Line Voltage</td><td>Value must be a supported channel number</td><td>7 </td><td>Specify the A/D channel for main line voltage (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">U Phase voltage</td><td>Value must be a supported channel number</td><td>27 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">V Phase voltage</td><td>Value must be a supported channel number</td><td>3 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">W Phase voltage</td><td>Value must be a supported channel number</td><td>1 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> ADC setting &gt; Unit  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">U Phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for U phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">V Phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">W Phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for W phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Main line voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for main line voltage (only valid with adc module) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">U Phase voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">V Phase voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">W Phase voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Using ADC Scan Group</td><td>Value should be between 0 to 8 (valid only with ADC_B module)</td><td>0 </td><td>For MCUs with ADC_B, select the scan group used. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ADC interrupt module</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1st</li>
+<li>
+2nd</li>
+</ul>
+</td><td>1st </td><td>Select from which module ADC intterupt happens (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Adjustment value to current A/D</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Value to adjust 1shunt A/D double buffer </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Adjustment delay</td><td>Must be a valid non-negative value.</td><td>240 </td><td>Adjustment delay of A/D conversion </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Conversion level of A/D conversion for voltage</td><td>Must be a valid value</td><td>1.0 </td><td>Conversion level of A/D conversion for voltage </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm-motor-hal-driver-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The Motor HAL Driver uses GPT (General PWM Timer) for PWM generation. The PWM carrier frequency is determined by the GPT timer frequency and the carrier base count setting.</p>
+<h2><a class="anchor" id="rm-motor-hal-driver-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module uses the following pins:</p>
+<table class="doxtable">
+<tr>
+<th>Pin Type </th><th>Description  </th></tr>
+<tr>
+<td>GPT PWM Output (UP, UN) </td><td>U-phase high-side and low-side PWM output </td></tr>
+<tr>
+<td>GPT PWM Output (VP, VN) </td><td>V-phase high-side and low-side PWM output </td></tr>
+<tr>
+<td>GPT PWM Output (WP, WN) </td><td>W-phase high-side and low-side PWM output </td></tr>
+<tr>
+<td>ADC Input </td><td>Phase current sensing (Iu, Iv, Iw) </td></tr>
+<tr>
+<td>ADC Input </td><td>DC bus voltage sensing (Vdc) </td></tr>
+<tr>
+<td>ADC Input </td><td>Phase voltage sensing (Vu, Vv, Vw) - optional </td></tr>
+</table>
+<h1><a class="anchor" id="rm-motor-hal-driver-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm-motor-hal-driver-current-offset"></a>
+Current Offset Calibration</h2>
+<p>Before motor operation begins, the module automatically performs current offset calibration. The calibration process measures the ADC offset values when no current is flowing through the motor.</p>
+<p>The calibration count can be configured via offset_calc_count parameter. PWM output is disabled during calibration and automatically enabled after calibration completes. Use <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga8a14c13c073091ee3e9fe558c42b9bd9">RM_MOTOR_HAL_DRIVER_FlagCurrentOffsetGet</a> to check if calibration is complete. Use <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaf5f6d18dd7151c1b089268f9fc71113b">RM_MOTOR_HAL_DRIVER_CurrentOffsetRestart</a> to restart calibration if needed.</p>
+<h2><a class="anchor" id="rm-motor-hal-driver-bootstrap"></a>
+Bootstrap Circuit Charging</h2>
+<p>For motor drivers with bootstrap circuits, the module provides bootstrap charging functionality:</p>
+<p>Call <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga81dbd616d144721c4835db6a36b15e90">RM_MOTOR_HAL_DRIVER_ChargeBootstrap</a> periodically until charging is complete. Use <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga522f47e030d50fac53388eaa6ed4e1c1">RM_MOTOR_HAL_DRIVER_FlagBootstrapGet</a> to check if bootstrap charging is complete. The charging time can be configured via charge_bootstrap_time parameter.</p>
+<h2><a class="anchor" id="rm-motor-hal-driver-shared-adc"></a>
+Shared ADC Instance Support</h2>
+<p>When using shared ADC instance for multiple motor control, follow these steps:</p>
+<ol type="1">
+<li>Add (New) shared ADC instance in FSP Configurator.</li>
+<li>Configure the ADC module settings for your application.</li>
+<li>Set "Common | Shared ADC support" to "Enabled".</li>
+<li>Configure p_shared_cfg in the extended configuration.</li>
+</ol>
+<h2><a class="anchor" id="rm-motor-hal-driver-modulation"></a>
+Modulation Methods</h2>
+<p>The module supports three PWM modulation methods:</p>
+<p>Method Description Voltage Utilization SPWM Sinusoidal PWM - Simple implementation ~86.6% SVPWM Space Vector PWM - Better DC bus utilization ~100% DPWM Discontinuous PWM - Reduced switching losses ~100%</p>
+<h2><a class="anchor" id="rm-motor-hal-driver-callback"></a>
+Callback Function</h2>
+<p>The module calls the user-provided callback function at each PWM carrier cycle (ADC conversion complete). This callback is typically used for current control processing.</p>
+<p>Example callback usage: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_current_callback(<a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__callback__args__t">motor_hal_driver_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ga5001ea614012ccab7c7506b1a83c7213">MOTOR_HAL_DRIVER_EVENT_CURRENT</a> == p_args-&gt;<a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a57694beffcd7b6060c547b36a62043c0">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Perform current control processing */</span></div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><h2><a class="anchor" id="rm-motor-hal-driver-limitations"></a>
+Limitations</h2>
+<h1><a class="anchor" id="rm-motor-hal-driver-examples"></a>
+Examples</h1>
+<p>Motor HAL Driver Basic Example This is a basic example of minimal use of the Motor HAL Driver in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_hal_driver_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga4e4194593e3e27c1c017717068326b2b">RM_MOTOR_HAL_DRIVER_Open</a>(&amp;g_motor_hal_driver_ctrl, &amp;g_motor_hal_driver_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Basically run this module at cyclic interrupt (e.g. included GPT PWM Carrier intterupt).</span></div><div class="line"><span class="comment">     * This implementation is an example. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the active into hal_driver. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gae82740e16f40e496ae8f2ae1e5deae48">RM_MOTOR_HAL_DRIVER_Activate</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set phase voltage. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaea3f01e877a8866f01d17f49e3dd7e10">RM_MOTOR_HAL_DRIVER_PhaseVoltageSet</a>(&amp;g_motor_hal_driver_ctrl, 1.0F, 1.0F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get current data. */</span></div><div class="line">    <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__current__dataset__t">motor_hal_driver_current_dataset_t</a> current_data = {0.0F, 0.0F, 0.0F, 0.0F, 1.0F};</div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga0bc5076cb7ed1aef0e525f86d50159b9">RM_MOTOR_HAL_DRIVER_CurrentGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;current_data);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get voltage data. */</span></div><div class="line">    <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__voltage__dataset__t">motor_hal_driver_voltage_dataset_t</a> voltage_data = {0.0F, 0.0F, 0.0F};</div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaba946c0493b2bbb73b29ac4a254de804">RM_MOTOR_HAL_DRIVER_OutputVoltageGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;voltage_data);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the flag of A/D convderted current offset */</span></div><div class="line">    uint8_t offset_flag = 0U;</div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga8a14c13c073091ee3e9fe558c42b9bd9">RM_MOTOR_HAL_DRIVER_FlagCurrentOffsetGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;offset_flag);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the flag of Bootstrap. */</span></div><div class="line">    uint8_t bootstrap_flag = 0U;</div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga522f47e030d50fac53388eaa6ed4e1c1">RM_MOTOR_HAL_DRIVER_FlagBootstrapGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;bootstrap_flag);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Charge the Bootstrap circuit. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga81dbd616d144721c4835db6a36b15e90">RM_MOTOR_HAL_DRIVER_ChargeBootstrap</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Update the parameters. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gab62fa5178b4b19c9df6b0a82e05bc866">RM_MOTOR_HAL_DRIVER_ParameterUpdate</a>(&amp;g_motor_hal_driver_ctrl, &amp;g_motor_hal_driver_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Clear the active into hal_driver. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga52dee48cf3e80ef6c1bcfb7424f54e70">RM_MOTOR_HAL_DRIVER_Deactivate</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Recalculate the A/D convderted current offset. */</span></div><div class="line">    offset_flag = 0U;</div><div class="line">    err         = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaf5f6d18dd7151c1b089268f9fc71113b">RM_MOTOR_HAL_DRIVER_CurrentOffsetRestart</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga47bee448ecf0142a21d7c4c8d99de188">RM_MOTOR_HAL_DRIVER_Reset</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga06a25b97c9180f57638cfa8448c9d2f7">RM_MOTOR_HAL_DRIVER_Close</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h1>Motor HAL Driver Advanced Example</h1>
+<p>This example demonstrates a more complete motor control sequence including bootstrap charging and current control.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_hal_driver_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err            = FSP_SUCCESS;</div><div class="line">    uint8_t   offset_flag    = 0U;</div><div class="line">    uint8_t   bootstrap_flag = 0U;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga4e4194593e3e27c1c017717068326b2b">RM_MOTOR_HAL_DRIVER_Open</a>(&amp;g_motor_hal_driver_ctrl, &amp;g_motor_hal_driver_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Charge bootstrap circuit (if applicable) */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga81dbd616d144721c4835db6a36b15e90">RM_MOTOR_HAL_DRIVER_ChargeBootstrap</a>(&amp;g_motor_hal_driver_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga522f47e030d50fac53388eaa6ed4e1c1">RM_MOTOR_HAL_DRIVER_FlagBootstrapGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;bootstrap_flag);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    } <span class="keywordflow">while</span> (0U == bootstrap_flag);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for current offset calibration to complete */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga8a14c13c073091ee3e9fe558c42b9bd9">RM_MOTOR_HAL_DRIVER_FlagCurrentOffsetGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;offset_flag);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    } <span class="keywordflow">while</span> (0U == offset_flag);</div><div class="line"></div><div class="line">    <span class="comment">/* Motor control loop */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__current__dataset__t">motor_hal_driver_current_dataset_t</a> current_data;</div><div class="line"></div><div class="line">        <span class="comment">/* Get current data */</span></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga0bc5076cb7ed1aef0e525f86d50159b9">RM_MOTOR_HAL_DRIVER_CurrentGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;current_data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="comment">/* Calculate phase voltages based on current feedback */</span></div><div class="line">        <span class="comment">/* (User implements current control algorithm here) */</span></div><div class="line">        ccal_num_t v_u = 0.0F;</div><div class="line">        ccal_num_t v_v = 0.0F;</div><div class="line">        ccal_num_t v_w = 0.0F;</div><div class="line"></div><div class="line">        <span class="comment">/* Set phase voltage */</span></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaea3f01e877a8866f01d17f49e3dd7e10">RM_MOTOR_HAL_DRIVER_PhaseVoltageSet</a>(&amp;g_motor_hal_driver_ctrl, v_u, v_v, v_w);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> Getting Output Voltage Example This example shows how to read the measured phase voltages.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_hal_driver_voltage_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__voltage__dataset__t">motor_hal_driver_voltage_dataset_t</a> voltage_data;</div><div class="line"></div><div class="line">    <span class="comment">/* Get output voltage data */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gaba946c0493b2bbb73b29ac4a254de804">RM_MOTOR_HAL_DRIVER_OutputVoltageGet</a>(&amp;g_motor_hal_driver_ctrl, &amp;voltage_data);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> Parameter Update Example This example shows how to update module parameters at runtime.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_hal_driver_parameter_update_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Update parameters with new configuration */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gab62fa5178b4b19c9df6b0a82e05bc866">RM_MOTOR_HAL_DRIVER_ParameterUpdate</a>(&amp;g_motor_hal_driver_ctrl, &amp;g_motor_hal_driver_cfg_updated);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__hal__driver__modulation__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__modulation__t">motor_hal_driver_modulation_t</a></td></tr>
+<tr class="separator:structmotor__hal__driver__modulation__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__hal__driver__shared__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__shared__instance__ctrl__t">motor_hal_driver_shared_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__hal__driver__shared__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__hal__driver__extended__shared__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__extended__shared__cfg__t">motor_hal_driver_extended_shared_cfg_t</a></td></tr>
+<tr class="separator:structmotor__hal__driver__extended__shared__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__hal__driver__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__extended__cfg__t">motor_hal_driver_extended_cfg_t</a></td></tr>
+<tr class="separator:structmotor__hal__driver__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__hal__driver__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__instance__ctrl__t">motor_hal_driver_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__hal__driver__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga5aa49da32f4f07af89372d73ae356d37"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga5aa49da32f4f07af89372d73ae356d37">motor_hal_driver_modulation_method_t</a> </td></tr>
+<tr class="separator:ga5aa49da32f4f07af89372d73ae356d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a60ffebeae37d8724e8d09bfe3b00e8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga7a60ffebeae37d8724e8d09bfe3b00e8">motor_hal_driver_select_adc_instance_t</a> </td></tr>
+<tr class="separator:ga7a60ffebeae37d8724e8d09bfe3b00e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7c8bd5dbd38e8d6e92c50b865376714"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gac7c8bd5dbd38e8d6e92c50b865376714">motor_hal_driver_phase_t</a> </td></tr>
+<tr class="separator:gac7c8bd5dbd38e8d6e92c50b865376714"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__hal__driver__modulation__t" id="structmotor__hal__driver__modulation__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__hal__driver__modulation__t">&#9670;&nbsp;</a></span>motor_hal_driver_modulation_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_hal_driver_modulation_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Modulation instance block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa83d6f5170d55d73331ff0f58b7452cc"></a>ccal_num_t</td>
+<td class="fieldname">
+v_dc</td>
+<td class="fielddoc">
+Main line voltage (Vdc) [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a27a2330a03184592d5746776a3524a47"></a>ccal_num_t</td>
+<td class="fieldname">
+voltage_error_ratio</td>
+<td class="fielddoc">
+The voltage error ratio (VoltageError/Vdc) </td></tr>
+<tr><td class="fieldtype">
+<a id="ad4251a7366c43c221fc3114c620b7d41"></a>ccal_num_t</td>
+<td class="fieldname">
+max_duty</td>
+<td class="fielddoc">
+Maximum duty cycle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7802bf92f0dbacfa0ebd9a98fb5c2f83"></a>ccal_num_t</td>
+<td class="fieldname">
+min_duty</td>
+<td class="fielddoc">
+Minimum duty cycle. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab8fd866259e1f1278e7fbd02ebfb035f"></a>ccal_num_t</td>
+<td class="fieldname">
+neutral_duty</td>
+<td class="fielddoc">
+Duty cycle that represents 0[V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9193933dfbc630f075892a5c18592888"></a>uint8_t</td>
+<td class="fieldname">
+saturation_flag</td>
+<td class="fielddoc">
+Saturation flag. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__hal__driver__shared__instance__ctrl__t" id="structmotor__hal__driver__shared__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__hal__driver__shared__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_hal_driver_shared_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_hal_driver_shared_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>For multiple motor </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acae7dcd202a306f806191f17b489ab7b"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Motor_hal_driver open flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1c620678cbf5c112fc0b804bc33e394d"></a>uint8_t</td>
+<td class="fieldname">
+registered_motor_count</td>
+<td class="fielddoc">
+Registered motor counts. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2b522b3c2f36b246f897ce0bfe7f2ace"></a>void const  *</td>
+<td class="fieldname">
+p_context[MOTOR_HAL_DRIVER_CFG_SUPPORT_MOTOR_NUM]</td>
+<td class="fielddoc">
+Each instance pointer for multiple motors. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__hal__driver__extended__shared__cfg__t" id="structmotor__hal__driver__extended__shared__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__hal__driver__extended__shared__cfg__t">&#9670;&nbsp;</a></span>motor_hal_driver_extended_shared_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_hal_driver_extended_shared_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>For multiple motor </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="abd458da69a0ba1fb33fb352390e90817"></a><a class="el" href="group___a_d_c___a_p_i.html#structadc__instance__t">adc_instance_t</a> const  *</td>
+<td class="fieldname">
+p_adc_instance_first</td>
+<td class="fielddoc">
+first ADC instance </td></tr>
+<tr><td class="fieldtype">
+<a id="a94518f2c364e724b05ce2f21e069b535"></a><a class="el" href="group___a_d_c___a_p_i.html#structadc__instance__t">adc_instance_t</a> const  *</td>
+<td class="fieldname">
+p_adc_instance_second</td>
+<td class="fielddoc">
+second ADC instance </td></tr>
+<tr><td class="fieldtype">
+<a id="a8e5cd9260c1d76382d8719e0e5f5baff"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__shared__instance__ctrl__t">motor_hal_driver_shared_instance_ctrl_t</a> <br class="typebreak" />
+*const</td>
+<td class="fieldname">
+p_shared_instance_ctrl</td>
+<td class="fielddoc">
+Control instance for multiple motor. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__hal__driver__extended__cfg__t" id="structmotor__hal__driver__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__hal__driver__extended__cfg__t">&#9670;&nbsp;</a></span>motor_hal_driver_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_hal_driver_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration for motor_hal_driver </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af150351b0861a33f18f51e9f46e83a79"></a>uint16_t</td>
+<td class="fieldname">
+pwm_timer_freq</td>
+<td class="fielddoc">
+PWM timer frequency [MHz]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa61a721526eb999ddd9be4798d5e62d8"></a>ccal_num_t</td>
+<td class="fieldname">
+pwm_carrier_freq</td>
+<td class="fielddoc">
+PWM carrier frequency [kHz]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a01b8a57ad347a7201a301e592ab464fc"></a>uint32_t</td>
+<td class="fieldname">
+carrier_base</td>
+<td class="fielddoc">
+PWM carrier raw count. </td></tr>
+<tr><td class="fieldtype">
+<a id="afea9509c97970b27a572041ef0d141b7"></a>uint16_t</td>
+<td class="fieldname">
+deadtime</td>
+<td class="fielddoc">
+PWM deadtime raw count. </td></tr>
+<tr><td class="fieldtype">
+<a id="a658af6b922da5539ad5d74454b4d856a"></a>ccal_num_t</td>
+<td class="fieldname">
+current_range</td>
+<td class="fielddoc">
+A/D current measure range (max current) [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a960506636a7967c5c7991bb00e486c4c"></a>ccal_num_t</td>
+<td class="fieldname">
+voltage_range</td>
+<td class="fielddoc">
+A/D voltage measure range (max phase voltage) [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="abab06f29f13e781402cf5fcfad076f38"></a>ccal_num_t</td>
+<td class="fieldname">
+v_dc_range</td>
+<td class="fielddoc">
+A/D main line voltage measure range (max voltage) [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5bd4e4839e4d8ebb7b21a1f696fa5703"></a>ccal_num_t</td>
+<td class="fieldname">
+sf_ad_current</td>
+<td class="fielddoc">
+conversion A/D to current value </td></tr>
+<tr><td class="fieldtype">
+<a id="adb12136469b8dbe9bcd870d2bec71908"></a>ccal_num_t</td>
+<td class="fieldname">
+sf_ad_vdc</td>
+<td class="fielddoc">
+conversion A/D to vdc value </td></tr>
+<tr><td class="fieldtype">
+<a id="a6396e1b18705229202104881cb90861f"></a>ccal_num_t</td>
+<td class="fieldname">
+sf_ad_voltage</td>
+<td class="fielddoc">
+conversion A/D to voltage value </td></tr>
+<tr><td class="fieldtype">
+<a id="ad9226f1afbdf92c256d48f421a3244e7"></a>uint16_t</td>
+<td class="fieldname">
+ad_resolution</td>
+<td class="fielddoc">
+A/D resolution. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3a2f4583be84a035dc39e63c28d6e133"></a>uint16_t</td>
+<td class="fieldname">
+ad_current_offset</td>
+<td class="fielddoc">
+A/D current offset (Center value) </td></tr>
+<tr><td class="fieldtype">
+<a id="ada01a83b88bf6935343b84a3806948bc"></a>int16_t</td>
+<td class="fieldname">
+ad_voltage_offset</td>
+<td class="fielddoc">
+A/D voltage offset (Error correction value) </td></tr>
+<tr><td class="fieldtype">
+<a id="a1b34cb23755d36dd9800708f7780a6ab"></a>int16_t</td>
+<td class="fieldname">
+ad_vdc_offset</td>
+<td class="fielddoc">
+A/D vdc offset (Center value or Error correction value) </td></tr>
+<tr><td class="fieldtype">
+<a id="a331030c53762822ead4fbbe0a4fb87d6"></a>ccal_num_t</td>
+<td class="fieldname">
+ad_voltage_conversion</td>
+<td class="fielddoc">
+A/D conversion level. </td></tr>
+<tr><td class="fieldtype">
+<a id="afdc852ec62b99c2d9e39598879279a9c"></a>uint16_t</td>
+<td class="fieldname">
+offset_calc_count</td>
+<td class="fielddoc">
+Calculation counts for current offset. </td></tr>
+<tr><td class="fieldtype">
+<a id="ace951c21471f48051affcebcede91614"></a>uint16_t</td>
+<td class="fieldname">
+charge_bootstrap_time</td>
+<td class="fielddoc">
+Charge time for bootstrap circuit (counts) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3324ca1ed0223d78d0966bd864b3cf84"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga5aa49da32f4f07af89372d73ae356d37">motor_hal_driver_modulation_method_t</a></td>
+<td class="fieldname">
+modulation_method</td>
+<td class="fielddoc">
+Modulation method. </td></tr>
+<tr><td class="fieldtype">
+<a id="a888f1515ace3a536aeb86dbd072b2679"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_up</td>
+<td class="fielddoc">
+PWM output port UP. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8cc351a515bfce8f443423d2b488f3be"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_un</td>
+<td class="fielddoc">
+PWM output port UN. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4212e29bd3babcb9ca29f19fe0b37d7f"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_vp</td>
+<td class="fielddoc">
+PWM output port VP. </td></tr>
+<tr><td class="fieldtype">
+<a id="a77228e646a85e75ef84d07c5df8ffa9b"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_vn</td>
+<td class="fielddoc">
+PWM output port VN. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab730c91053b6d5c1087c071600312a33"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_wp</td>
+<td class="fielddoc">
+PWM output port WP. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac976b890cdf6c0c205a822e282bd8613"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_wn</td>
+<td class="fielddoc">
+PWM output port WN. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5e06b7ac2a106649f743b5161603ecfc"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ga68e34c2df0e20c61e9a642c9c2d71d9a">motor_hal_driver_shunt_type_t</a></td>
+<td class="fieldname">
+shunt</td>
+<td class="fielddoc">
+Selection of shunt type. </td></tr>
+<tr><td class="fieldtype">
+<a id="ace9fb6ebd2463d89fea8ca4e75ccd622"></a>int32_t</td>
+<td class="fieldname">
+difference_minimum</td>
+<td class="fielddoc">
+Minimum difference of PWM duty. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab5da3a22e74d531daf86839a3c429d13"></a>int32_t</td>
+<td class="fieldname">
+adjust_adc_delay</td>
+<td class="fielddoc">
+Adjustment delay for A/D conversion. </td></tr>
+<tr><td class="fieldtype">
+<a id="a19aa556c25fa6fe9f8dacd2aa96e83ca"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gac7c8bd5dbd38e8d6e92c50b865376714">motor_hal_driver_phase_t</a></td>
+<td class="fieldname">
+trigger_phase</td>
+<td class="fielddoc">
+trigger phase of interrupt to get 1shunt current </td></tr>
+<tr><td class="fieldtype">
+<a id="ac5b843d20fbd976205a0efc9c12419ad"></a><a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a></td>
+<td class="fieldname">
+adc_group</td>
+<td class="fielddoc">
+Used ADC scan group only valid for adc_b. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9bf8c0d304855bac95c3618b53958588"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+i_u_ad_ch</td>
+<td class="fielddoc">
+A/D Channel for U Phase Current. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa36a42fc153b06c549e9d0b4d8bb03bb"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+i_v_ad_ch</td>
+<td class="fielddoc">
+A/D Channel for V Phase Current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a28fedd5b97e61ace8e9972a9ffa382b7"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+i_w_ad_ch</td>
+<td class="fielddoc">
+A/D Channel for W Phase Current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a96c789b9ff414cdbbf2ba8ba90e381ae"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+v_dc_ad_ch</td>
+<td class="fielddoc">
+A/D Channel for Main Line Voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac05370c873f73b49b9a60f3cb81acf2b"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+v_u_ad_ch</td>
+<td class="fielddoc">
+A/D channel for U phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab2556c9c29e2e8ef4f7240136ac18894"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+v_v_ad_ch</td>
+<td class="fielddoc">
+A/D channel for V phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="aacd40e4439edae06b6e18af0adc9155f"></a><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+<td class="fieldname">
+v_w_ad_ch</td>
+<td class="fielddoc">
+A/D channel for W phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="a970525e89517fb456fd9b7dfeb5ea8a5"></a>uint8_t</td>
+<td class="fieldname">
+i_u_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for U phase current. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaeed07e6f07d2c607e1cd924f5460294"></a>uint8_t</td>
+<td class="fieldname">
+i_v_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for V phase current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a79bdde9e306a84c4a5c1c968c736b923"></a>uint8_t</td>
+<td class="fieldname">
+i_w_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for W phase current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a032dcc67d842070611f32b3d49e4917e"></a>uint8_t</td>
+<td class="fieldname">
+v_dc_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for main line voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="acb2f868c3db678099b5ea90fbe4b533e"></a>uint8_t</td>
+<td class="fieldname">
+v_u_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for U phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="a691d49a48b69ab71a2a6cdbea689619e"></a>uint8_t</td>
+<td class="fieldname">
+v_v_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for V phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad681f745eecf22434108f155fa8fbf44"></a>uint8_t</td>
+<td class="fieldname">
+v_w_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for W phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae6b380959c9ba9baaba2bce4816e5279"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__modulation__t">motor_hal_driver_modulation_t</a></td>
+<td class="fieldname">
+mod_param</td>
+<td class="fielddoc">
+Modulation structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a986973fa147a6e184fdb6133515fdd84"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga7a60ffebeae37d8724e8d09bfe3b00e8">motor_hal_driver_select_adc_instance_t</a></td>
+<td class="fieldname">
+interrupt_adc</td>
+<td class="fielddoc">
+Select which interrupt to use. </td></tr>
+<tr><td class="fieldtype">
+<a id="ade5d00fd0327e4b3b60be5ca9cf2b3bb"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__extended__shared__cfg__t">motor_hal_driver_extended_shared_cfg_t</a> <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_shared_cfg</td>
+<td class="fielddoc">
+Shared extended config. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__hal__driver__instance__ctrl__t" id="structmotor__hal__driver__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__hal__driver__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_hal_driver_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_hal_driver_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor_hal_driver instance control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7d697a5f173fcd92f8e7ba83cb435346"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Motor_hal_driver open flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a76411dfb1f1aadc642ae525621854de5"></a>uint32_t</td>
+<td class="fieldname">
+carrier_base</td>
+<td class="fielddoc">
+PWM carrier base counts. </td></tr>
+<tr><td class="fieldtype">
+<a id="acc397c035b17f218be765243a03c1d71"></a>uint16_t</td>
+<td class="fieldname">
+deadtime_count</td>
+<td class="fielddoc">
+Deadtime counts. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae781bf9c120fe22eeb4536cb506d2484"></a>ccal_num_t</td>
+<td class="fieldname">
+i_u_ad</td>
+<td class="fielddoc">
+U phase current [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aac8ff7ee18225709007ebe903f7a6f1f"></a>ccal_num_t</td>
+<td class="fieldname">
+i_v_ad</td>
+<td class="fielddoc">
+V phase current [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a04d51075c4e91b06a6e48b8942e36d88"></a>ccal_num_t</td>
+<td class="fieldname">
+i_w_ad</td>
+<td class="fielddoc">
+W phase current [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a79f0be018c36e65e54a0a6dac534cf7f"></a>ccal_num_t</td>
+<td class="fieldname">
+v_dc_ad</td>
+<td class="fielddoc">
+Main line voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1aba6304b86e437a64e4703e70db6f4e"></a>ccal_num_t</td>
+<td class="fieldname">
+v_u_ad</td>
+<td class="fielddoc">
+U phase voltage (V) </td></tr>
+<tr><td class="fieldtype">
+<a id="a88eb48adff863c5c203ee99f503a1880"></a>ccal_num_t</td>
+<td class="fieldname">
+v_v_ad</td>
+<td class="fielddoc">
+V phase voltage (V) </td></tr>
+<tr><td class="fieldtype">
+<a id="af3183c70dbe52a57e12d289954212397"></a>ccal_num_t</td>
+<td class="fieldname">
+v_w_ad</td>
+<td class="fielddoc">
+W phase voltage (V) </td></tr>
+<tr><td class="fieldtype">
+<a id="a569a8003164a425d6edecbd3f513a8b1"></a>ccal_num_t</td>
+<td class="fieldname">
+ref_u</td>
+<td class="fielddoc">
+Calculated U Phase output voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac2e451e52484ec87fd8a6b7a83851e70"></a>ccal_num_t</td>
+<td class="fieldname">
+ref_v</td>
+<td class="fielddoc">
+Calculated V Phase output voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a70d861cb4d06b23f185a991646da34c4"></a>ccal_num_t</td>
+<td class="fieldname">
+ref_w</td>
+<td class="fielddoc">
+Calculated W Phase output voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a68dde50577f7b7559b8ad928cec04cdc"></a>uint8_t</td>
+<td class="fieldname">
+offset_calc_flag</td>
+<td class="fielddoc">
+The flag represents that the offset measurement is finished. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7a2e884b502fccf0cb15c952e6303a6f"></a>uint16_t</td>
+<td class="fieldname">
+offset_calc_times</td>
+<td class="fielddoc">
+Calculation current times for current offset. </td></tr>
+<tr><td class="fieldtype">
+<a id="a711e08d9a92033d8021cdb90e780059a"></a>uint16_t</td>
+<td class="fieldname">
+offset_calc_digit</td>
+<td class="fielddoc">
+Calculation reference level for current offset. </td></tr>
+<tr><td class="fieldtype">
+<a id="a75bf7f93527bfbb40fbdd1b9afd05f57"></a>int32_t</td>
+<td class="fieldname">
+offset_i_u</td>
+<td class="fielddoc">
+U phase current offset correction value [LSB]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a174793fdaacf352f56a4a7eec142f0a8"></a>int32_t</td>
+<td class="fieldname">
+offset_i_v</td>
+<td class="fielddoc">
+V phase current offset correction value [LSB]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a775244ae984dc24cb4730d0265263650"></a>int32_t</td>
+<td class="fieldname">
+offset_i_w</td>
+<td class="fielddoc">
+W phase current offset correction value [LSB]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a84ff72bcdcbae039b1737f00d0f41ba4"></a>int32_t</td>
+<td class="fieldname">
+sum_i_u_ad</td>
+<td class="fielddoc">
+U phase current summation value to calculate offset [LSB]. </td></tr>
+<tr><td class="fieldtype">
+<a id="acba54ff5d3ced8eae2bb5bdc50c25e9a"></a>int32_t</td>
+<td class="fieldname">
+sum_i_v_ad</td>
+<td class="fielddoc">
+V phase current summation value to calculate offset [LSB]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad4fab52edc7b3bca3a6f84c1646453bb"></a>int32_t</td>
+<td class="fieldname">
+sum_i_w_ad</td>
+<td class="fielddoc">
+W phase current summation value to calculate offset [LSB]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa685ec80c16333fa49ac3e913cb1ca84"></a>uint8_t</td>
+<td class="fieldname">
+active</td>
+<td class="fielddoc">
+Active/inactive flags for hal_driver. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae85987104c0195cfcfbcdffb2ce74d83"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gac7c8bd5dbd38e8d6e92c50b865376714">motor_hal_driver_phase_t</a></td>
+<td class="fieldname">
+min_phase</td>
+<td class="fielddoc">
+Minimum phase information to calculate 1shunt current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9eb05acdcdc617df8cb7eea4c4968e99"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gac7c8bd5dbd38e8d6e92c50b865376714">motor_hal_driver_phase_t</a></td>
+<td class="fieldname">
+mid_phase</td>
+<td class="fielddoc">
+Middle phase information to calculate 1shunt current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a918c22df46295a2dfce07fd90d41e4e1"></a>uint8_t</td>
+<td class="fieldname">
+charge_bootstrap_flag</td>
+<td class="fielddoc">
+Charge flag of bootstrap circuit. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae15cb32ddf04c799c3b9b0e33f4eb5ec"></a>uint16_t</td>
+<td class="fieldname">
+charge_bootstrap_cnt</td>
+<td class="fielddoc">
+The number of samples for charging bootstrap circuit. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa4614790c9427bd3b7bd81369ce07a2d"></a>uint8_t</td>
+<td class="fieldname">
+modulation_method</td>
+<td class="fielddoc">
+Modulation method. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa6cdf6ed2f07364d878b1ec70a241059"></a>uint8_t</td>
+<td class="fieldname">
+maxvoltage_flag</td>
+<td class="fielddoc">
+Phase of maximum voltage in DPWM method. </td></tr>
+<tr><td class="fieldtype">
+<a id="a747bfb1bce63a2f625ddfed5ba61b26e"></a>uint32_t</td>
+<td class="fieldname">
+gtioca_low_cfg</td>
+<td class="fielddoc">
+I/O port "Low" config for gtioca. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3d7ef538a109fe06f6fe4a38bffa3325"></a>uint32_t</td>
+<td class="fieldname">
+gtiocb_low_cfg</td>
+<td class="fielddoc">
+I/O port "Low" config for gtioca. </td></tr>
+<tr><td class="fieldtype">
+<a id="adca6666f41acdf9ee9962d174b62dec2"></a>uint8_t</td>
+<td class="fieldname">
+port_enable_flag</td>
+<td class="fielddoc">
+The flag represents that PWM port should be enabled. </td></tr>
+<tr><td class="fieldtype">
+<a id="a72df2626b9bbb1d8268d0b6d8c0c203c"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__modulation__t">motor_hal_driver_modulation_t</a></td>
+<td class="fieldname">
+st_modulation</td>
+<td class="fielddoc">
+Modulation structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8e9e046c375b09539538051d85e1da58"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__cfg__t">motor_hal_driver_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Motor Driver configuration Structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a306eebad375a358f156848e2c4b52333"></a><a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a></td>
+<td class="fieldname">
+adc_callback_args</td>
+<td class="fielddoc">
+For call ADC callbackSet function. </td></tr>
+<tr><td class="fieldtype">
+<a id="a92afe8f63458a49879fcd28dad12fc48"></a><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a></td>
+<td class="fieldname">
+timer_callback_args</td>
+<td class="fielddoc">
+For call GPT(Timer) callbackSet function. </td></tr>
+<tr><td class="fieldtype">
+<a id="a64c8ff7e2aac024123f40993945e8b5c"></a><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#structmotor__hal__driver__shared__instance__ctrl__t">motor_hal_driver_shared_instance_ctrl_t</a> *</td>
+<td class="fieldname">
+p_shared_instance_ctrl</td>
+<td class="fielddoc">
+Control instance for multiple motor. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga5aa49da32f4f07af89372d73ae356d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5aa49da32f4f07af89372d73ae356d37">&#9670;&nbsp;</a></span>motor_hal_driver_modulation_method_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga5aa49da32f4f07af89372d73ae356d37">motor_hal_driver_modulation_method_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Modulation type selection </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5aa49da32f4f07af89372d73ae356d37a6648353e9f39e88c07b55a25a8d8c4f8"></a>MOTOR_HAL_DRIVER_MODULATION_METHOD_SPWM&#160;</td><td class="fielddoc"><p>Sinusoidal pulse-width-modulation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5aa49da32f4f07af89372d73ae356d37a2959c115c9333b2a01b246091bd37a4a"></a>MOTOR_HAL_DRIVER_MODULATION_METHOD_SVPWM&#160;</td><td class="fielddoc"><p>Space vector pulse-width-modulation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5aa49da32f4f07af89372d73ae356d37a5ed12a77896817a03bea43db5c9dc16e"></a>MOTOR_HAL_DRIVER_MODULATION_METHOD_DPWM&#160;</td><td class="fielddoc"><p>Discontinuous pulse-width-modulation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7a60ffebeae37d8724e8d09bfe3b00e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7a60ffebeae37d8724e8d09bfe3b00e8">&#9670;&nbsp;</a></span>motor_hal_driver_select_adc_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#ga7a60ffebeae37d8724e8d09bfe3b00e8">motor_hal_driver_select_adc_instance_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Support two ADC instance valid for adc </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7a60ffebeae37d8724e8d09bfe3b00e8aac8e08f9d76f3ab1d5f18a54132d636a"></a>MOTOR_HAL_DRIVER_SELECT_ADC_INSTANCE_FIRST&#160;</td><td class="fielddoc"><p>Use first ADC instance. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7a60ffebeae37d8724e8d09bfe3b00e8aa16e2550c5b9b57470078ea75b188f12"></a>MOTOR_HAL_DRIVER_SELECT_ADC_INSTANCE_SECOND&#160;</td><td class="fielddoc"><p>Use second ADC instances. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gac7c8bd5dbd38e8d6e92c50b865376714"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac7c8bd5dbd38e8d6e92c50b865376714">&#9670;&nbsp;</a></span>motor_hal_driver_phase_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#gac7c8bd5dbd38e8d6e92c50b865376714">motor_hal_driver_phase_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For 1shunt phase detection </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac7c8bd5dbd38e8d6e92c50b865376714a4b8a0e4df083f67a2d69a4504722960c"></a>MOTOR_HAL_DRIVER_PHASE_U_PHASE&#160;</td><td class="fielddoc"><p>Use U-phase for 1shunt detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac7c8bd5dbd38e8d6e92c50b865376714a25ad18cb0e264aad18fd5631a71ed63b"></a>MOTOR_HAL_DRIVER_PHASE_V_PHASE&#160;</td><td class="fielddoc"><p>Use V-phase for 1shunt detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac7c8bd5dbd38e8d6e92c50b865376714a2f69c90731930bfbdc79e6c1eaf927ba"></a>MOTOR_HAL_DRIVER_PHASE_W_PHASE&#160;</td><td class="fielddoc"><p>Use W-phase for 1shunt detection. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga4e4194593e3e27c1c017717068326b2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e4194593e3e27c1c017717068326b2b">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__cfg__t">motor_hal_driver_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens and configures the Motor Driver module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#af8587803e1e7ea79e8e0d3922c44d617">motor_hal_driver_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Motor Driver successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga06a25b97c9180f57638cfa8448c9d2f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga06a25b97c9180f57638cfa8448c9d2f7">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified Motor Driver Module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a80e355030f2cf3eea06558d4593e851e">motor_hal_driver_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga47bee448ecf0142a21d7c4c8d99de188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47bee448ecf0142a21d7c4c8d99de188">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset variables of Motor Driver Module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#aebdddbcf4a9f90d9ad756c8b2ce65145">motor_hal_driver_api_t::reset</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully reset. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaea3f01e877a8866f01d17f49e3dd7e10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaea3f01e877a8866f01d17f49e3dd7e10">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_PhaseVoltageSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_PhaseVoltageSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ccal_num_t const&#160;</td>
+          <td class="paramname"><em>u_voltage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ccal_num_t const&#160;</td>
+          <td class="paramname"><em>v_voltage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ccal_num_t const&#160;</td>
+          <td class="paramname"><em>w_voltage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set Phase Voltage Data to calculate PWM duty. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#aea1710474dbb3b608e9ba904e820ba40">motor_hal_driver_api_t::phaseVoltageSet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae82740e16f40e496ae8f2ae1e5deae48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae82740e16f40e496ae8f2ae1e5deae48">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_Activate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_Activate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set Active flag. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ae3b7fcb9fac89c81a4cb56ddfa079595">motor_hal_driver_api_t::activate</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga52dee48cf3e80ef6c1bcfb7424f54e70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52dee48cf3e80ef6c1bcfb7424f54e70">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_Deactivate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_Deactivate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear Active flag. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ae1b8ed2ca142b1f07ec4f705ec4050c9">motor_hal_driver_api_t::deactivate</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0bc5076cb7ed1aef0e525f86d50159b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0bc5076cb7ed1aef0e525f86d50159b9">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_CurrentGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_CurrentGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__current__dataset__t">motor_hal_driver_current_dataset_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_current_dataset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get calculated phase Current, Vdc &amp; Va_max data. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a4c962a1c838eb695f8c4de72a787f021">motor_hal_driver_api_t::currentGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaba946c0493b2bbb73b29ac4a254de804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaba946c0493b2bbb73b29ac4a254de804">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_OutputVoltageGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_OutputVoltageGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__voltage__dataset__t">motor_hal_driver_voltage_dataset_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_voltage_dataset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get calculated phase Voltage data. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a2c53730e5a06937ea1cf855aad5ffd13">motor_hal_driver_api_t::outputVoltageGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8a14c13c073091ee3e9fe558c42b9bd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a14c13c073091ee3e9fe558c42b9bd9">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_FlagCurrentOffsetGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_FlagCurrentOffsetGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_offset_flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the flag of finish current offset detection. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#ab88cfcc72949a1ab09d0aad21008651b">motor_hal_driver_api_t::flagCurrentOffsetGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf5f6d18dd7151c1b089268f9fc71113b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5f6d18dd7151c1b089268f9fc71113b">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_CurrentOffsetRestart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_CurrentOffsetRestart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Restart the current offset detection. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a6ca18a7e82d83983b9743dcb37d54f70">motor_hal_driver_api_t::currentOffsetRestart</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully restarted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab62fa5178b4b19c9df6b0a82e05bc866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab62fa5178b4b19c9df6b0a82e05bc866">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_ParameterUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_ParameterUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#structmotor__hal__driver__cfg__t">motor_hal_driver_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the parameters of Driver Module. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a4a2ff7b2a4ec71593f58ec9ae0b368ef">motor_hal_driver_api_t::parameterUpdate</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data was updated. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga522f47e030d50fac53388eaa6ed4e1c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga522f47e030d50fac53388eaa6ed4e1c1">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_FlagBootstrapGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_FlagBootstrapGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_bootstrap_flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the flag of finish bootstrap. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a764cc2e0066d2fd57c5c732a87bd7987">motor_hal_driver_api_t::flagBootstrapGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga81dbd616d144721c4835db6a36b15e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga81dbd616d144721c4835db6a36b15e90">&#9670;&nbsp;</a></span>RM_MOTOR_HAL_DRIVER_ChargeBootstrap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_HAL_DRIVER_ChargeBootstrap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf">motor_hal_driver_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Charge the Bootstrap circuit. Implements <a class="el" href="group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#a72f18a77babc8b712ef19d0dea59197d">motor_hal_driver_api_t::bootstrapCharge</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data was updated. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

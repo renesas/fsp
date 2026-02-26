@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -298,6 +298,23 @@ Features</h2>
 <li>Reads event input data</li>
 <li>Controlled Current Drive (CCD)</li>
 </ul>
+<h2><a class="anchor" id="r-ioport-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA0</td><td>RA0E1, RA0E2, RA0E3, RA0L1 </td></tr>
+<tr>
+<td>RA2</td><td>RA2A1, RA2A2, RA2E1, RA2E2, RA2E3, RA2L1, RA2L2, RA2T1 </td></tr>
+<tr>
+<td>RA4</td><td>RA4C1, RA4E1, RA4E2, RA4L1, RA4M1, RA4M2, RA4M3, RA4T1, RA4W1 </td></tr>
+<tr>
+<td>RA6</td><td>RA6E1, RA6E2, RA6M1, RA6M2, RA6M3, RA6M4, RA6M5, RA6T1, RA6T2, RA6T3 </td></tr>
+<tr>
+<td>RA8</td><td>RA8D1, RA8D2, RA8E1, RA8E2, RA8M1, RA8M2, RA8P1, RA8T1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-ioport-configuration"></a>
 Configuration</h1>
 <p>The I/O PORT HAL module must be configured by the user for the desired operation. The operating state of an I/O pin can be set via the RA Configuration tool. When the project is built a pin configuration file is created. The BSP will automatically configure the MCU IO ports accordingly at startup using the same API functions mentioned in this document.</p>
@@ -1492,6 +1509,26 @@ Low-level output current for the CCD pins. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aec28fadf6109ec5ea80a1b1046bd25e5"></a>IOPORT_CFG_IRQ_ENABLE&#160;</td><td class="fielddoc"><p>Sets pin as an IRQ pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d329786cc601ca9341427dd0bed8ad8"></a>IOPORT_CFG_ANALOG_ENABLE&#160;</td><td class="fielddoc"><p>Enables pin to operate as an analog pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a2066555437a19b9e6e721fb494c8f5c3"></a>IOPORT_CFG_PERIPHERAL_PIN&#160;</td><td class="fielddoc"><p>Enables pin to operate as a peripheral pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb"></a>IOPORT_CFG_PORT_DIRECTION_INPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to input (default) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97"></a>IOPORT_CFG_PORT_DIRECTION_OUTPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5"></a>IOPORT_CFG_PORT_OUTPUT_LOW&#160;</td><td class="fielddoc"><p>Sets the pin level to low. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4b93b19150d018ab8ba5ef74e2852499"></a>IOPORT_CFG_PORT_OUTPUT_HIGH&#160;</td><td class="fielddoc"><p>Sets the pin level to high. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a925954d59fa1101a4784a0d64a64d133"></a>IOPORT_CFG_PULLUP_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's internal pull-up. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a619e7ce9643c81a165dd70aea63b7fe9"></a>IOPORT_CFG_PIM_TTL&#160;</td><td class="fielddoc"><p>Enables the pin's input mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aa6f841964b20d6d4bfc1a8f7b2040554"></a>IOPORT_CFG_PMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's PMOS open-drain output. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a3b65ecea77e425c0ec1a0c29324a042b"></a>IOPORT_CFG_DRIVE_MID&#160;</td><td class="fielddoc"><p>Sets pin drive output to medium. </p>
@@ -2136,7 +2173,7 @@ Low-level output current for the CCD pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

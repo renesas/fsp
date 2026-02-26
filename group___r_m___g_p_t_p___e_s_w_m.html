@@ -1,0 +1,453 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: gPTP Ethernet Switch Module(rm_gptp_eswm)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___g_p_t_p___e_s_w_m.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">gPTP Ethernet Switch Module(rm_gptp_eswm)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<h1><a class="anchor" id="rm-gptp-eswm-overview"></a>
+Overview</h1>
+<p>This module provides time synchronization based on the standard IEEE 802.1AS-2020.</p>
+<h2><a class="anchor" id="rm-gptp-eswm-features"></a>
+Features</h2>
+<ul>
+<li>Clock Source selection according to Best Master Clock Algorithm (BMCA)</li>
+<li>Time Aware Endstation<ul>
+<li>Clock Source (Synchronization Master)</li>
+<li>Clock Sink (Synchronization Slave)</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="rm-gptp-eswm-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm-gptp-eswm-limitations"></a>
+Limitations</h2>
+<p>The supported clock are 200/250 MHz for ESW clock and 25MHz for ETHPHY clock.</p>
+<h1><a class="anchor" id="rm-gptp-eswm-examples"></a>
+Examples</h1>
+<h2>Baremetal Example</h2>
+<p>This is a example of minimal use of the gPTP Ethernet switch module in the baremetal application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_gptp_eswm_baremetal_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize gPTP ESWM module. */</span></div><div class="line">    err = rm_gptp_eswm_init(&amp;g_gptp_eswm0_ctrl, &amp;g_gptp_eswm0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Read a gPTP packet. */</span></div><div class="line">        gptp_read();</div><div class="line"></div><div class="line">        <span class="comment">/* Check timer expired. */</span></div><div class="line">        gptp_timer_check();</div><div class="line"></div><div class="line">        <span class="comment">/* Send a gPTP packet. */</span></div><div class="line">        gptp_send();</div><div class="line"></div><div class="line">        <span class="comment">/* Detect timer counts. */</span></div><div class="line">        <span class="keywordflow">while</span> (!(gptp_detect_count()))</div><div class="line">        {</div><div class="line">            ;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>FreeRTOS Example</h2>
+<p>This is a example of minimal use of the gPTP Ethernet switch module in the freertos application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_gptp_eswm_freertos_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize gPTP ESWM module. */</span></div><div class="line">    err = rm_gptp_eswm_init(&amp;g_gptp_eswm0_ctrl, &amp;g_gptp_eswm0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create ptp task. */</span></div><div class="line">    rm_gptp_sys_freertos_create_ptp_task(g_gptp_eswm0_ctrl.p_cfg-&gt;p_gptp_sys_port_instance-&gt;p_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Create ptp message generation task. */</span></div><div class="line">    rm_gptp_sys_freertos_create_ptp_message_gen_task(g_gptp_eswm0_ctrl.p_cfg-&gt;p_gptp_sys_port_instance-&gt;p_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Create ptp read task. */</span></div><div class="line">    rm_gptp_sys_freertos_create_ptp_read_task(g_gptp_eswm0_ctrl.p_cfg-&gt;p_gptp_sys_port_instance-&gt;p_ctrl);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        vTaskDelay(1);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Configuration API</h2>
+<p>The configuration application programming interface (configuration-api) can be used to change dedicated functions of the synchronization software stack during runtime. The interface has the following functions and is located in module r_ptp_configuration_api:</p>
+<table class="doxtable">
+<tr>
+<th align="left">Function name </th><th align="left">Brief description  </th></tr>
+<tr>
+<td align="left">set_priority1 </td><td align="left">Set the priority 1 value for the PTP instance </td></tr>
+<tr>
+<td align="left">set_priority2 </td><td align="left">Set the priority 2 value for the PTP instance </td></tr>
+<tr>
+<td align="left">set_domain_number </td><td align="left">Set the domain number for the PTP instance </td></tr>
+<tr>
+<td align="left">set_instance_enable </td><td align="left">Enable or disable a PTP instance </td></tr>
+<tr>
+<td align="left">set_enable_ptp_port </td><td align="left">Enable a port for PTP </td></tr>
+<tr>
+<td align="left">set_delay_mechanism </td><td align="left">Set a delay mechanism for a PTP port </td></tr>
+<tr>
+<td align="left">set_mean_link_delay_threshold </td><td align="left">Set the mean link delay threshold for a PTP port </td></tr>
+<tr>
+<td align="left">set_mgt_settable_log_announce_interval </td><td align="left">Set the log announce message interval for a PTP port </td></tr>
+<tr>
+<td align="left">set_use_mgt_settable_log_announce_interval </td><td align="left">Use the settable log announce message interval for a PTP port </td></tr>
+<tr>
+<td align="left">set_announce_receipt _timeout </td><td align="left">Set the announce receipt timeout value for a PTP port </td></tr>
+<tr>
+<td align="left">set_initial_log_sync_interval </td><td align="left">Set the initial log sync interval </td></tr>
+<tr>
+<td align="left">set_mgt_settable_log_sync_interval </td><td align="left">Set the log sync message interval for a PTP port </td></tr>
+<tr>
+<td align="left">set_use_mgt_settale_log_sync_interval </td><td align="left">Use the settable log sync message interval for a PTP port </td></tr>
+<tr>
+<td align="left">set_sync_receipt _timeout </td><td align="left">Set the sync receipt timeout value for a PTP port </td></tr>
+<tr>
+<td align="left">set_initial_log_pdelay_req_interval </td><td align="left">Set the initial log Pdelay request interval </td></tr>
+<tr>
+<td align="left">set_use_mgt_settable_log_pdelay_req_interval </td><td align="left">Use the managementt settable log pdelay request intervalfor a PTP port </td></tr>
+<tr>
+<td align="left">set_mgt_settable_log_pdelay_req_interval </td><td align="left">Set the log Pdelay request interval for a PTP port </td></tr>
+<tr>
+<td align="left">set_allowed_lost_responses </td><td align="left">Set the number of allowed lost Pdelay responses for a PTP port </td></tr>
+<tr>
+<td align="left">set_initial_log_gptp_capable_message_ineterval </td><td align="left">Set the initial log gptp capable message interval </td></tr>
+<tr>
+<td align="left">set_use_mgt_settable_log_gptp_capable_message_interval </td><td align="left">Use the management settable log gptp capable message interval for a PTP port </td></tr>
+<tr>
+<td align="left">set_mgt_settable_log_gptp_capable_message_interval </td><td align="left">Set the management settable log gptp capable message interval </td></tr>
+<tr>
+<td align="left">set_time_value </td><td align="left">Set the management settable log gptp capable message interval </td></tr>
+</table>
+<h2>Diagnosis API</h2>
+<p>The diagnosis application programming interface (diagnosis-api) can be used to monitor dedicated functions of the synchronization software stack. The interface has the following functions and is located at r_ptp_diagnosis_api:</p>
+<table class="doxtable">
+<tr>
+<th align="left">Function name </th><th align="left">Brief description  </th></tr>
+<tr>
+<td align="left">get_clock_class </td><td align="left">Get the clock class value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_clock_accuracy </td><td align="left">Get the clock accuracy value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_offset_scaled_log_variance </td><td align="left">Get the offset scaled log variance value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_priority1 </td><td align="left">Get the priority 1 value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_priority2 </td><td align="left">Get the priority 2 value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_domain_number </td><td align="left">Get the domain number value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_offset_from_master </td><td align="left">Get the current offset from master for a PTP instance </td></tr>
+<tr>
+<td align="left">get_cumulative_rate_ratio </td><td align="left">Get the cumulative rate ratio value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_grandmaster_clock_class </td><td align="left">Get the grandmaster clock class value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_grandmaster_clock_accuracy </td><td align="left">Get the grandmaster clock accuracy value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_grandmaster_offset_scaled_log_variance </td><td align="left">Get_the grandmaster offset scaled log variance value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_grandmaster_priority1 </td><td align="left">Get the grandmaster priority1 value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_grandmaster_priority2 </td><td align="left">Get the grandmaster priority2 value for a PTP instance </td></tr>
+<tr>
+<td align="left">get_ptp_port_enabled </td><td align="left">Get the PTP port enabled status for a PTP port </td></tr>
+<tr>
+<td align="left">get_delay_measurement </td><td align="left">Get the delay measurement method for a PTP port </td></tr>
+<tr>
+<td align="left">get_mean_link_delay_threshold </td><td align="left">Get the mean link delay threshold value for a PTP port </td></tr>
+<tr>
+<td align="left">get_mean_link_delay_threshold </td><td align="left">Get the initial log announce interval value for a PTP port </td></tr>
+<tr>
+<td align="left">get_current_log_announce_interval </td><td align="left">Get the current log announce interval value for a PTP port </td></tr>
+<tr>
+<td align="left">get_use_mgt_settable_log_announce_interval </td><td align="left">Get the management settable log announce interval use status for a PTP port </td></tr>
+<tr>
+<td align="left">get_announce_receipt_timeout </td><td align="left">Get the announce receipt timeout value for a PTP port </td></tr>
+<tr>
+<td align="left">get_initial_log_sync_interval </td><td align="left">Get the initial log sync interval value for a PTP port </td></tr>
+<tr>
+<td align="left">get_initial_log_sync_interval </td><td align="left">Get the current log sync interval value for a PTP port </td></tr>
+<tr>
+<td align="left">get_use_mgt_settable_log_sync_interval </td><td align="left">Get the management settable log sync interval use state for a PTP port </td></tr>
+<tr>
+<td align="left">get_sync_receipt_timeout </td><td align="left">Get the sync receipt timeout value for a PTP port </td></tr>
+<tr>
+<td align="left">get_initial_log_pdelay_req_interval </td><td align="left">Get the initial log Pdelay request interval value </td></tr>
+<tr>
+<td align="left">get_current_log_pdelay_req_interval </td><td align="left">Get the current log Pdelay request interval value </td></tr>
+<tr>
+<td align="left">get_use_mgt_settable_log_pdelay_req_interval </td><td align="left">Get the management settable log Pdelay request interval use status value for a PTP port </td></tr>
+<tr>
+<td align="left">get_allowed_lost_responses </td><td align="left">Get the value of allowed lost Pdelay responses for a PTP port </td></tr>
+<tr>
+<td align="left">get_initial_log_gptp_capable_message_interval </td><td align="left">Get the initial log gptp capable signaling message interval </td></tr>
+<tr>
+<td align="left">get_current_log_gptp_capable_message_interval </td><td align="left">Get the current gptp capable signaling message interval </td></tr>
+<tr>
+<td align="left">get_use_mgt_settable_log_gptp_capable_messag_interval </td><td align="left">Get the management settable log gptp capable message interval use state </td></tr>
+<tr>
+<td align="left">get_mgt_settable_log_gptp_capble_message_interval </td><td align="left">Get the management settable log gptp capable message interval </td></tr>
+<tr>
+<td align="left">get_cmlds_link_port_enable </td><td align="left">Get the cmlds link port enable status for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_sync_count </td><td align="left">Get the counter value for received Sync messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_one_step_sync_count </td><td align="left">Get the counter value for received one step Sync messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_follow_up_count </td><td align="left">Get the counter value for received Follow-Up messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_pdelay_request_count </td><td align="left">Get the counter value for received Pdelay request messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_pdelay_resp_count </td><td align="left">Get the counter value for received Pdelay response messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_pdelay_resp_fu_count </td><td align="left">Get the counter value for received Pdelay response follow up messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_announce_count </td><td align="left">Get the counter value for received Announce messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_rx_packet_discard_count </td><td align="left">Get the counter value for discarded PTP packets for a PTP port </td></tr>
+<tr>
+<td align="left">get_sync_receipt_timeout_count </td><td align="left">Get the counter value for Sync receipt timeouts for a PTP port </td></tr>
+<tr>
+<td align="left">get_announce_receipt_timeout_count </td><td align="left">Get the counter value for Announce receipt timeouts for a PTP port </td></tr>
+<tr>
+<td align="left">get_pdelay_allowed_lost_responses_exceeded_count </td><td align="left">Get the counter value for lost responses exceeded for a PTP port </td></tr>
+<tr>
+<td align="left">get_sync_tx_count </td><td align="left">Get the counter value for transmitted Sync messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_tx_one_step_sync_count </td><td align="left">Get the counter value for transmitted one step Sync messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_tx_follow_up_count </td><td align="left">Get the counter value for transmitted Follow-Up messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_tx_pdelay_request_count </td><td align="left">Get the counter value for transmitted Pdelay request messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_tx_Pdelay_response_count </td><td align="left">Get the counter value for transmitted Pdelay response messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_tx_Pdelay_response_follow_up_count </td><td align="left">Get the counter value for transmitted Pdelay response follow up messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_tx_announce_count </td><td align="left">Get the counter value for transmitted Announce messages for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_rx_pdelay_request_count </td><td align="left">Get the counter value for received Pdelay request messages with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_rx_pdelay_response_count </td><td align="left">Get the counter value for received Pdelay response messages with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_rx_pdelay_response_fu_count </td><td align="left">Get the counter value for received Pdelay response follow up messages with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_rx_ptp_packet_discard_count </td><td align="left">Get the counter value for discarded PTP packetes with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_pdelay_allowed_lost_responses_exceeded_count </td><td align="left">Get the counter value for lost responses exceeded with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_tx_pdelay_request_count </td><td align="left">Get the counter value for transmitted Pdelay request messages with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_tx_pdelay_response_count </td><td align="left">Get the counter value for transmitted Pdelay response messages with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_cmlds_tx_pdelay_response_fu_count </td><td align="left">Get the counter value for transmitted Pdelay response follow up messages with CMLDS tag for a PTP port </td></tr>
+<tr>
+<td align="left">get_time_value </td><td align="left">Get the current time value of the timer (PTP clock) </td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -90,9 +90,11 @@ var searchData=
   ['gsm_5fmode',['gsm_mode',['../group___s_m_c_i___a_p_i.html#ab7e04b03829f82a8d677167a89966692',1,'smci_transfer_mode_t']]],
   ['gtioca',['gtioca',['../group___g_p_t.html#ad323c6db6a695028d2926dfbf0a0dda8',1,'gpt_extended_cfg_t']]],
   ['gtioca_5fdisable_5fsetting',['gtioca_disable_setting',['../group___g_p_t.html#af8c63e238ee298b4f1dac545a597eff7',1,'gpt_extended_pwm_cfg_t']]],
+  ['gtioca_5flow_5fcfg',['gtioca_low_cfg',['../group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#a747bfb1bce63a2f625ddfed5ba61b26e',1,'motor_hal_driver_instance_ctrl_t']]],
   ['gtioca_5fpolarity',['gtioca_polarity',['../group___g_p_t.html#ac74969a4dcc449fc1f94742f70754a5d',1,'gpt_extended_cfg_t']]],
   ['gtiocb',['gtiocb',['../group___g_p_t.html#a78476af74debd54ee8394dd0aa6d2505',1,'gpt_extended_cfg_t']]],
   ['gtiocb_5fdisable_5fsetting',['gtiocb_disable_setting',['../group___g_p_t.html#aa34079abac90aaced078650c626c9820',1,'gpt_extended_pwm_cfg_t']]],
+  ['gtiocb_5flow_5fcfg',['gtiocb_low_cfg',['../group___m_o_t_o_r___h_a_l___d_r_i_v_e_r.html#a3d7ef538a109fe06f6fe4a38bffa3325',1,'motor_hal_driver_instance_ctrl_t']]],
   ['gtiocb_5fpolarity',['gtiocb_polarity',['../group___g_p_t.html#ad169a7acd47a1cdaeab62ea659a0a4d3',1,'gpt_extended_cfg_t']]],
   ['gtior_5fsetting',['gtior_setting',['../group___g_p_t.html#ad8b8b467339a151f016017d175df2f9c',1,'gpt_extended_cfg_t']]]
 ];

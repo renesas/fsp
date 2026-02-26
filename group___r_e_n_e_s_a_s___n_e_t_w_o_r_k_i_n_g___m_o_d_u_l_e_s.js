@@ -33,6 +33,9 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "Socket Communication Device (rm_comms_socket)", "group___r_m___c_o_m_m_s___s_o_c_k_e_t.html", "group___r_m___c_o_m_m_s___s_o_c_k_e_t" ],
     [ "WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)", "group___w_i_f_i___d_a16_x_x_x.html", "group___w_i_f_i___d_a16_x_x_x" ],
     [ "WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x" ],
+    [ "gPTP Baremetal Porting Layer (rm_gptp_sys_baremetal)", "group___r_m___g_p_t_p___s_y_s___b_a_r_e_m_e_t_a_l.html", null ],
+    [ "gPTP Ethernet Switch Module(rm_gptp_eswm)", "group___r_m___g_p_t_p___e_s_w_m.html", null ],
+    [ "gPTP FreeRTOS Porting Layer (rm_gptp_sys_freertos)", "group___r_m___g_p_t_p___s_y_s___f_r_e_e_r_t_o_s.html", null ],
     [ "lwIP Baremetal Porting Layer (rm_lwip_sys_baremetal)", "group___r_m___l_w_i_p___s_y_s___b_a_r_e_m_e_t_a_l.html", null ],
     [ "lwIP Ethernet Driver (rm_lwip_ether)", "group___r_m___l_w_i_p___e_t_h_e_r.html", "group___r_m___l_w_i_p___e_t_h_e_r" ],
     [ "lwIP FreeRTOS Porting Layer (rm_lwip_sys_freertos)", "group___r_m___l_w_i_p___s_y_s___f_r_e_e_r_t_o_s.html", null ],
@@ -40,5 +43,6 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "lwIP Iperf", "group___l_w_i_p___i_p_e_r_f.html", null ],
     [ "lwIP MQTT", "group___l_w_i_p___m_q_t_t.html", null ],
     [ "lwIP NETBIOSNS", "group___l_w_i_p___n_e_t_b_i_o_s_n_s.html", null ],
-    [ "lwIP SMTP", "group___l_w_i_p___s_m_t_p.html", null ]
+    [ "lwIP SMTP", "group___l_w_i_p___s_m_t_p.html", null ],
+    [ "lwIP SNTP", "group___l_w_i_p___s_n_t_p.html", null ]
 ];

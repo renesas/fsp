@@ -5,6 +5,7 @@ var searchData=
   ['x_5fcapture_5fstart_5fpixel',['x_capture_start_pixel',['../group___c_a_p_t_u_r_e___a_p_i.html#a0fc5dd7195e4a8e744a16b15471d4ed1',1,'capture_cfg_t']]],
   ['xband',['xBand',['../group___w_i_f_i___a_p_i.html#abc6f695b21555ff821ddedeb7d99b0b9',1,'WIFICapabilityInfo_t']]],
   ['xbandwidth',['xBandwidth',['../group___w_i_f_i___a_p_i.html#a417f6ccc63d76e056aae94fbbb8559c7',1,'WIFICapabilityInfo_t']]],
+  ['xdlmsinitiaterequestdecrypt',['xdlmsInitiateRequestDecrypt',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ab92785b69704292a7e5c35848867a1ea',1,'rsip_api_t']]],
   ['xdns1',['xDns1',['../group___w_i_f_i___a_p_i.html#a4a054fbbf444287b4cd3a1c7e7e25d87',1,'WIFIIPConfiguration_t']]],
   ['xdns2',['xDns2',['../group___w_i_f_i___a_p_i.html#a86329f066deffb9e87d6f1ca09033b0a',1,'WIFIIPConfiguration_t']]],
   ['xgateway',['xGateway',['../group___w_i_f_i___a_p_i.html#a187b462b0e587cccd5cf3836e852d876',1,'WIFIIPConfiguration_t']]],

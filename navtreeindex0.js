@@ -86,8 +86,8 @@ var NAVTREEINDEX0 =
 "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-summary":[1,4,2],
 "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-translation":[1,4,0,4],
 "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-why":[1,4,0,0],
-"_o_c_r_y_p_t_o__f_u_n_c_t_i_o_n_s.html":[1,3,6],
-"_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l.html":[1,3,5],
+"_o_c_r_y_p_t_o__f_u_n_c_t_i_o_n_s.html":[1,3,5],
+"_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l.html":[1,3,4],
 "_r_e_f__m_a_t_e_r_i_a_l_s.html":[1],
 "_s_t_a_r_t__d_e_v.html":[2],
 "_s_t_a_r_t__d_e_v.html#RASC":[2,6,0],
@@ -244,10 +244,10 @@ var NAVTREEINDEX0 =
 "_s_t_a_r_t__d_e_v.html#workflow":[2,5,2],
 "_s_t_a_r_t__d_e_v.html#writing-the-application":[2,1,7],
 "_u_s_i_n_g__o_c_r_y_p_t_o.html":[1,3],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-examples":[1,3,3],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-info":[1,3,4],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_functions":[1,3,2],
+"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-examples":[1,3,2],
+"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-info":[1,3,3],
+"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_devices":[1,3,1,0],
+"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_functions":[1,3,1,1],
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-limitations":[1,3,1],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-overview":[1,3,0],
-"group___a_c_m_p_h_s.html":[5,1,0,3]
+"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-overview":[1,3,0]
 };

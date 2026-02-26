@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bsp_5falign_5fvariable',['BSP_ALIGN_VARIABLE',['../group___i3_c.html#a8b20719eeff0aefd805d0c020af56600',1,'i3c_instance_ctrl_t']]]
+  ['algorithm_5fdisabled',['algorithm_disabled',['../group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaa44178c7b77883da0ab4cb627df0df79',1,'rm_motor_pm_foc_outer_fnc.c']]]
 ];

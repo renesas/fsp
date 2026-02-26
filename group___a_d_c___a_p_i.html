@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -385,7 +385,7 @@ Group Mask. </td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a779dbfcdb47eb8fb79af75eed3b4284b"></a>__I void *</td>
+<a id="a4a34a30266bada9124741db43ca66cb2"></a>__I void *</td>
 <td class="fieldname">
 p_address</td>
 <td class="fielddoc">
@@ -402,18 +402,6 @@ The total number of transfers to read. </td></tr>
 transfer_size</td>
 <td class="fielddoc">
 The size of each transfer. </td></tr>
-<tr><td class="fieldtype">
-<a id="a391a11955d9d3b8d84ca87bbfe72df86"></a><a class="el" href="group___b_s_p___m_c_u___r_a0_e1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
-<td class="fieldname">
-elc_peripheral</td>
-<td class="fielddoc">
-Name of the peripheral in the ELC list. </td></tr>
-<tr><td class="fieldtype">
-<a id="a06d242e573821f38b3a7543dd9eb5548"></a><a class="el" href="group___b_s_p___m_c_u___r_a0_e1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
-<td class="fieldname">
-elc_event</td>
-<td class="fielddoc">
-Name of the ELC event for the peripheral. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5869042d58165926402aa499eefb68f2"></a>uint32_t</td>
 <td class="fieldname">
@@ -438,6 +426,18 @@ Low temperature sensor calibration data (0xFFFFFFFF if unsupported) for referenc
 slope_microvolts</td>
 <td class="fielddoc">
 Temperature sensor slope in microvolts/degrees C. </td></tr>
+<tr><td class="fieldtype">
+<a id="a391a11955d9d3b8d84ca87bbfe72df86"></a><a class="el" href="group___b_s_p___m_c_u___r_a0_e1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+<td class="fieldname">
+elc_peripheral</td>
+<td class="fielddoc">
+Name of the peripheral in the ELC list. </td></tr>
+<tr><td class="fieldtype">
+<a id="a06d242e573821f38b3a7543dd9eb5548"></a><a class="el" href="group___b_s_p___m_c_u___r_a0_e1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+<td class="fieldname">
+elc_event</td>
+<td class="fielddoc">
+Name of the ELC event for the peripheral. </td></tr>
 </table>
 
 </div>
@@ -961,6 +961,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa8ebd681650d751af22a7849be9ab8bc1"></a>ADC_RESOLUTION_8_BIT&#160;</td><td class="fielddoc"><p>8 bit resolution </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa24283bc621bcaa68a73c8eab142030b8"></a>ADC_RESOLUTION_10_BIT&#160;</td><td class="fielddoc"><p>10 bit resolution </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa8ebd681650d751af22a7849be9ab8bc1"></a>ADC_RESOLUTION_8_BIT&#160;</td><td class="fielddoc"><p>8 bit resolution </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaf88bfcbfc4a19c82f8bb423218d13cdaab35c4dcc6cda85146a9ffd339c5de1c4"></a>ADC_RESOLUTION_12_BIT&#160;</td><td class="fielddoc"><p>12 bit resolution </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf88bfcbfc4a19c82f8bb423218d13cdaab35c4dcc6cda85146a9ffd339c5de1c4"></a>ADC_RESOLUTION_12_BIT&#160;</td><td class="fielddoc"><p>12 bit resolution </p>
@@ -1138,6 +1142,26 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>Channel 11 for select mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>Channel 12 for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>Channel 21 for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>Channel 22 for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output voltage for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aeddb8c2b42c21a20aa3625bf3e185a0e"></a>ADC_CHANNEL_POSITIVE_SIDE_VREF&#160;</td><td class="fielddoc"><p>Select positive reference voltage as target conversion. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ae9e4ff59c9ffb58a9e580e16c3f56b3f"></a>ADC_CHANNEL_NEGATIVE_SIDE_VREF&#160;</td><td class="fielddoc"><p>Select negative reference voltage as target conversion. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>Channel 0 for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>Channel 1 for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>Channel 4 for select mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>Channel 5 for select mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>Channel 21 for select mode. </p>
 </td></tr>
@@ -1797,7 +1821,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

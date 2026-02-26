@@ -60,6 +60,7 @@ var searchData=
   ['wdt_5fwindow_5fstart_5f75',['WDT_WINDOW_START_75',['../group___w_d_t___a_p_i.html#gga9e0c1284f5d75d4a090d988536e3f633ab268e222207739405538345ae67483c8',1,'r_wdt_api.h']]],
   ['wdt_5fwindow_5fstart_5ft',['wdt_window_start_t',['../group___w_d_t___a_p_i.html#ga9e0c1284f5d75d4a090d988536e3f633',1,'r_wdt_api.h']]],
   ['wednesday_5fmatch',['wednesday_match',['../group___r_t_c___a_p_i.html#a45c6bc225e92af21904eefe07614b611',1,'rtc_alarm_time_t']]],
+  ['weight',['weight',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#a9dc8a7c38681a4749472503f369eebe8',1,'motor_sensor_hall_instance_signals_ctrl_t']]],
   ['wide',['wide',['../group___g_p_t_p.html#a9b87bafc1a28fa53066fed47eefaf735',1,'gptp_pulsed_output_cfg_t']]],
   ['wifi_20interface',['WiFi Interface',['../group___w_i_f_i___a_p_i.html',1,'']]],
   ['wifi_5fconfigureap',['WIFI_ConfigureAP',['../group___w_i_f_i___a_p_i.html#ga4613d7e6ee7c2208b24b7edd68b8384c',1,'WIFI_ConfigureAP(const WIFINetworkParams_t *const pxNetworkParams):&#160;rm_wifi_api_silex.c'],['../group___w_i_f_i___a_p_i.html#ga4613d7e6ee7c2208b24b7edd68b8384c',1,'WIFI_ConfigureAP(const WIFINetworkParams_t *const pxNetworkParams):&#160;rm_wifi_api_da16xxx.c'],['../group___w_i_f_i___a_p_i.html#ga4613d7e6ee7c2208b24b7edd68b8384c',1,'WIFI_ConfigureAP(const WIFINetworkParams_t *const pxNetworkParams):&#160;rm_wifi_api_silex.c']]],

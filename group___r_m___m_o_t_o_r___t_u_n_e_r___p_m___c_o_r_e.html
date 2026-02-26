@@ -1,0 +1,951 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: The tuner core FOC module</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle">
+<div class="title">The tuner core FOC module<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a> &raquo; <a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html">Motor Tuner middleware (rm_motor_tuner_pm)</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga83cd9d637755112c413485d7da7822c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga83cd9d637755112c413485d7da7822c4">tuner_pm_core_assert_fail</a> (motor_tuner_pm_core_foc_t *p_foc, uint32_t line, uint32_t file)</td></tr>
+<tr class="memdesc:ga83cd9d637755112c413485d7da7822c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record debug data when assert failure happened.  <a href="#ga83cd9d637755112c413485d7da7822c4">More...</a><br /></td></tr>
+<tr class="separator:ga83cd9d637755112c413485d7da7822c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f6449471a49e830ebe9824f8071a428"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga0f6449471a49e830ebe9824f8071a428">tuner_pm_core_throw_error</a> (motor_tuner_pm_core_foc_t *p_foc, uint16_t error_code)</td></tr>
+<tr class="memdesc:ga0f6449471a49e830ebe9824f8071a428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw an error with the given error code and stop PWM output.  <a href="#ga0f6449471a49e830ebe9824f8071a428">More...</a><br /></td></tr>
+<tr class="separator:ga0f6449471a49e830ebe9824f8071a428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5771c185d822a3f048828af94d5b48ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga5771c185d822a3f048828af94d5b48ce">tuner_pm_core_set_startup_params</a> (motor_tuner_pm_core_foc_t *p_foc, float open_loop_id, float ol2cl_speed_rad, float cl2ol_speed_rad)</td></tr>
+<tr class="separator:ga5771c185d822a3f048828af94d5b48ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga958158e2bb5967f4b833bff89c9a50eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga958158e2bb5967f4b833bff89c9a50eb">tuner_pm_core_set_speed_pi</a> (motor_tuner_pm_core_foc_t *p_foc, float kp, float kidt)</td></tr>
+<tr class="separator:ga958158e2bb5967f4b833bff89c9a50eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83b54b28ff55c68b4e68595c7b2c535a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga83b54b28ff55c68b4e68595c7b2c535a">tuner_pm_core_set_rated_current</a> (motor_tuner_pm_core_foc_t *p_foc, float rated_current)</td></tr>
+<tr class="memdesc:ga83b54b28ff55c68b4e68595c7b2c535a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure rated current, this will also change the current limits and the over-current threshold.  <a href="#ga83b54b28ff55c68b4e68595c7b2c535a">More...</a><br /></td></tr>
+<tr class="separator:ga83b54b28ff55c68b4e68595c7b2c535a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e1525bba9af696d8d16d1f42e7c3812"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga8e1525bba9af696d8d16d1f42e7c3812">tuner_pm_core_set_volterr_table</a> (motor_tuner_pm_core_foc_t *p_foc, const float *current_tab, const float *voltage_tab, float vdc_ref)</td></tr>
+<tr class="memdesc:ga8e1525bba9af696d8d16d1f42e7c3812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the voltage error compensation module with the given lookup table.  <a href="#ga8e1525bba9af696d8d16d1f42e7c3812">More...</a><br /></td></tr>
+<tr class="separator:ga8e1525bba9af696d8d16d1f42e7c3812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7f1bf62f4f3b8d95468ba066382a6f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#gaf7f1bf62f4f3b8d95468ba066382a6f5">tuner_pm_core_clear_error</a> (motor_tuner_pm_core_foc_t *p_foc)</td></tr>
+<tr class="memdesc:gaf7f1bf62f4f3b8d95468ba066382a6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the error status of the FOC core.  <a href="#gaf7f1bf62f4f3b8d95468ba066382a6f5">More...</a><br /></td></tr>
+<tr class="separator:gaf7f1bf62f4f3b8d95468ba066382a6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9ae26dcd064be8c8a0d1b9ebbb03e4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#gac9ae26dcd064be8c8a0d1b9ebbb03e4f">tuner_pm_core_config_current_pi_gains</a> (motor_tuner_pm_core_foc_t *p_foc, float omega, float zeta)</td></tr>
+<tr class="separator:gac9ae26dcd064be8c8a0d1b9ebbb03e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2aa748b1265e483016d66e192552ac9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga2aa748b1265e483016d66e192552ac9a">tuner_pm_core_config_bemf_obsv</a> (motor_tuner_pm_core_foc_t *p_foc, float omega, float zeta)</td></tr>
+<tr class="memdesc:ga2aa748b1265e483016d66e192552ac9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure speed pi with given gains.  <a href="#ga2aa748b1265e483016d66e192552ac9a">More...</a><br /></td></tr>
+<tr class="separator:ga2aa748b1265e483016d66e192552ac9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga421d989d8e23a5792b5a2a039ff9c51e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga421d989d8e23a5792b5a2a039ff9c51e">tuner_pm_core_crnt_ctrl_handler</a> (motor_tuner_pm_core_foc_t *p_foc, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__in__t">motor_tuner_in_t</a> *p_in, <a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__out__t">motor_tuner_out_t</a> *p_out)</td></tr>
+<tr class="memdesc:ga421d989d8e23a5792b5a2a039ff9c51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carrier interrupt handler of CORE module This function defines the process should be executed every PWM cycle.  <a href="#ga421d989d8e23a5792b5a2a039ff9c51e">More...</a><br /></td></tr>
+<tr class="separator:ga421d989d8e23a5792b5a2a039ff9c51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3d3ee073599ab2451c7b6add226cc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#gaa3d3ee073599ab2451c7b6add226cc95">tuner_pm_core_stop</a> (motor_tuner_pm_core_foc_t *p_foc)</td></tr>
+<tr class="memdesc:gaa3d3ee073599ab2451c7b6add226cc95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops driving motor, this also stops the PWM output.  <a href="#gaa3d3ee073599ab2451c7b6add226cc95">More...</a><br /></td></tr>
+<tr class="separator:gaa3d3ee073599ab2451c7b6add226cc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga268df6001e3e0fd9a645798240369d87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga268df6001e3e0fd9a645798240369d87">tuner_pm_core_init</a> (motor_tuner_pm_core_foc_t *p_foc, <a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#structmotor__tuner__pm__core__foc__cfg__t">motor_tuner_pm_core_foc_cfg_t</a> const *p_cfg, void *p_context, uint8_t pwm_tick_per_irq, float speed_ctrl_period)</td></tr>
+<tr class="memdesc:ga268df6001e3e0fd9a645798240369d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core module initialization.  <a href="#ga268df6001e3e0fd9a645798240369d87">More...</a><br /></td></tr>
+<tr class="separator:ga268df6001e3e0fd9a645798240369d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8727c493e8e3c21578f8aea7497f2d79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga8727c493e8e3c21578f8aea7497f2d79">tuner_pm_core_set_ctrl_level</a> (motor_tuner_pm_core_foc_t *p_foc, uint16_t ctrl_level)</td></tr>
+<tr class="memdesc:ga8727c493e8e3c21578f8aea7497f2d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the control level of CORE module.  <a href="#ga8727c493e8e3c21578f8aea7497f2d79">More...</a><br /></td></tr>
+<tr class="separator:ga8727c493e8e3c21578f8aea7497f2d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7539fb8a79ec614e4d18311b1e29c341"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga7539fb8a79ec614e4d18311b1e29c341">tuner_pm_core_reset</a> (motor_tuner_pm_core_foc_t *p_foc)</td></tr>
+<tr class="memdesc:ga7539fb8a79ec614e4d18311b1e29c341"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets CORE modules includes gain and motor parameters.  <a href="#ga7539fb8a79ec614e4d18311b1e29c341">More...</a><br /></td></tr>
+<tr class="separator:ga7539fb8a79ec614e4d18311b1e29c341"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga707ec6fbdbc7424c2f49074a8cc04a93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga707ec6fbdbc7424c2f49074a8cc04a93">tuner_pm_core_reset_startup_seq</a> (motor_tuner_pm_core_foc_t *p_foc)</td></tr>
+<tr class="memdesc:ga707ec6fbdbc7424c2f49074a8cc04a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets start-up sequence and related variables.  <a href="#ga707ec6fbdbc7424c2f49074a8cc04a93">More...</a><br /></td></tr>
+<tr class="separator:ga707ec6fbdbc7424c2f49074a8cc04a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66b7c572a00ccaabf956bd2f1cb820ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga66b7c572a00ccaabf956bd2f1cb820ad">tuner_pm_core_spd_ctrl_handler</a> (motor_tuner_pm_core_foc_t *p_foc)</td></tr>
+<tr class="memdesc:ga66b7c572a00ccaabf956bd2f1cb820ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Long period interrupt handler, for outer loop and start-up sequence control.  <a href="#ga66b7c572a00ccaabf956bd2f1cb820ad">More...</a><br /></td></tr>
+<tr class="separator:ga66b7c572a00ccaabf956bd2f1cb820ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>RM_MOTOR_TUNER_PM_CORE module handles calibrations, current/speed control and signals. Also launch events for upper layer </p><pre class="fragment"></pre><p>. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga1bc147ee91e6fe26a6ed6e92dba30a07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m___c_o_r_e.html#ga1bc147ee91e6fe26a6ed6e92dba30a07">TUNER_PM_CORE_DUTY_MARGIN_MULT</a></td></tr>
+<tr class="separator:ga1bc147ee91e6fe26a6ed6e92dba30a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga1bc147ee91e6fe26a6ed6e92dba30a07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1bc147ee91e6fe26a6ed6e92dba30a07">&#9670;&nbsp;</a></span>TUNER_PM_CORE_DUTY_MARGIN_MULT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TUNER_PM_CORE_DUTY_MARGIN_MULT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Multiplier for duty margin calculation, include non-linear deadtime region and margin for compensation </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga83cd9d637755112c413485d7da7822c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83cd9d637755112c413485d7da7822c4">&#9670;&nbsp;</a></span>tuner_pm_core_assert_fail()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_assert_fail </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Record debug data when assert failure happened. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">line</td><td>The line where the assertion failure happened </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>The file code where the assertion failure happened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0f6449471a49e830ebe9824f8071a428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f6449471a49e830ebe9824f8071a428">&#9670;&nbsp;</a></span>tuner_pm_core_throw_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_throw_error </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>error_code</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Throw an error with the given error code and stop PWM output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">error_code</td><td>The error code of the error </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5771c185d822a3f048828af94d5b48ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5771c185d822a3f048828af94d5b48ce">&#9670;&nbsp;</a></span>tuner_pm_core_set_startup_params()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_set_startup_params </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>open_loop_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>ol2cl_speed_rad</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>cl2ol_speed_rad</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure start-up sequence</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">open_loop_id</td><td>The Id[A] injected in open-loop mode </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ol2cl_speed_rad</td><td>The open-loop to closed-loop switching threshold speed in [rad/s] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cl2ol_speed_rad</td><td>The closed-loop to open-loop switching threshold speed in [rad/s] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga958158e2bb5967f4b833bff89c9a50eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga958158e2bb5967f4b833bff89c9a50eb">&#9670;&nbsp;</a></span>tuner_pm_core_set_speed_pi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_set_speed_pi </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>kp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>kidt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure speed pi with given gains</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kp</td><td>The proportional gain </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kidt</td><td>The integral gain </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga83b54b28ff55c68b4e68595c7b2c535a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83b54b28ff55c68b4e68595c7b2c535a">&#9670;&nbsp;</a></span>tuner_pm_core_set_rated_current()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_set_rated_current </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>rated_current</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configure rated current, this will also change the current limits and the over-current threshold. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rated_current</td><td>The value [A] to be set as the rated current </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8e1525bba9af696d8d16d1f42e7c3812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e1525bba9af696d8d16d1f42e7c3812">&#9670;&nbsp;</a></span>tuner_pm_core_set_volterr_table()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_set_volterr_table </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float *&#160;</td>
+          <td class="paramname"><em>current_tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float *&#160;</td>
+          <td class="paramname"><em>voltage_tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>vdc_ref</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configures the voltage error compensation module with the given lookup table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">current_tab</td><td>The pointer to the current column array of the lookup table </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">voltage_tab</td><td>The pointer to the voltage column array of the lookup table </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vdc_ref</td><td>The reference DC bus voltage which is the measurement condition of the given table </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf7f1bf62f4f3b8d95468ba066382a6f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf7f1bf62f4f3b8d95468ba066382a6f5">&#9670;&nbsp;</a></span>tuner_pm_core_clear_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_clear_error </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear the error status of the FOC core. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac9ae26dcd064be8c8a0d1b9ebbb03e4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac9ae26dcd064be8c8a0d1b9ebbb03e4f">&#9670;&nbsp;</a></span>tuner_pm_core_config_current_pi_gains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_config_current_pi_gains </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>omega</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>zeta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure current pi with given gains</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">omega</td><td>The natural frequency in [Hz] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zeta</td><td>The damping factor </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2aa748b1265e483016d66e192552ac9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2aa748b1265e483016d66e192552ac9a">&#9670;&nbsp;</a></span>tuner_pm_core_config_bemf_obsv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_config_bemf_obsv </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>omega</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>zeta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configure speed pi with given gains. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner core FOC structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">omega</td><td>The natural frequency in [Hz] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zeta</td><td>The damping factor </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga421d989d8e23a5792b5a2a039ff9c51e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga421d989d8e23a5792b5a2a039ff9c51e">&#9670;&nbsp;</a></span>tuner_pm_core_crnt_ctrl_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_crnt_ctrl_handler </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__in__t">motor_tuner_in_t</a> *&#160;</td>
+          <td class="paramname"><em>p_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#structmotor__tuner__out__t">motor_tuner_out_t</a> *&#160;</td>
+          <td class="paramname"><em>p_out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Carrier interrupt handler of CORE module This function defines the process should be executed every PWM cycle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_in</td><td>Pointer to motor tuner input structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_out</td><td>Pointer to motor tuner output structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>AD conversion of current and DC bus voltage must be done before calling this function </dd></dl>
+
+</div>
+</div>
+<a id="gaa3d3ee073599ab2451c7b6add226cc95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3d3ee073599ab2451c7b6add226cc95">&#9670;&nbsp;</a></span>tuner_pm_core_stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_stop </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stops driving motor, this also stops the PWM output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga268df6001e3e0fd9a645798240369d87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga268df6001e3e0fd9a645798240369d87">&#9670;&nbsp;</a></span>tuner_pm_core_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_init </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___m_o_t_o_r___t_u_n_e_r___p_m.html#structmotor__tuner__pm__core__foc__cfg__t">motor_tuner_pm_core_foc_cfg_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>pwm_tick_per_irq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>speed_ctrl_period</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Core module initialization. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to motor tuner FOC core configuration structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to the upper layer context </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pwm_tick_per_irq</td><td>The PWM tick per interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">speed_ctrl_period</td><td>The speed control period </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8727c493e8e3c21578f8aea7497f2d79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8727c493e8e3c21578f8aea7497f2d79">&#9670;&nbsp;</a></span>tuner_pm_core_set_ctrl_level()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_set_ctrl_level </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ctrl_level</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the control level of CORE module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ctrl_level</td><td>The control level </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7539fb8a79ec614e4d18311b1e29c341"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7539fb8a79ec614e4d18311b1e29c341">&#9670;&nbsp;</a></span>tuner_pm_core_reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_reset </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets CORE modules includes gain and motor parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function will resets all parameters in the module, and should be used only when new identification starts </dd></dl>
+
+</div>
+</div>
+<a id="ga707ec6fbdbc7424c2f49074a8cc04a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga707ec6fbdbc7424c2f49074a8cc04a93">&#9670;&nbsp;</a></span>tuner_pm_core_reset_startup_seq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_reset_startup_seq </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets start-up sequence and related variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga66b7c572a00ccaabf956bd2f1cb820ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga66b7c572a00ccaabf956bd2f1cb820ad">&#9670;&nbsp;</a></span>tuner_pm_core_spd_ctrl_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tuner_pm_core_spd_ctrl_handler </td>
+          <td>(</td>
+          <td class="paramtype">motor_tuner_pm_core_foc_t *&#160;</td>
+          <td class="paramname"><em>p_foc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Long period interrupt handler, for outer loop and start-up sequence control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_foc</td><td>Pointer to motor tuner FOC core structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Wrapper of current control interrupt handler </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,2070 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor PM FOC middleware (rm_motor_pm_foc)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___m_o_t_o_r___p_m___f_o_c.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor PM FOC middleware (rm_motor_pm_foc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga0d0cf3dbd5b6ee29ba362053ad985ba3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga0d0cf3dbd5b6ee29ba362053ad985ba3">RM_MOTOR_PM_FOC_Open</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga0d0cf3dbd5b6ee29ba362053ad985ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures the Vector control module. Implements <a class="el" href="group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a8429930c08fa6bdb6222d8ab066c5aa9">motor_driver_api_t::open</a>.  <a href="#ga0d0cf3dbd5b6ee29ba362053ad985ba3">More...</a><br /></td></tr>
+<tr class="separator:ga0d0cf3dbd5b6ee29ba362053ad985ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga459a0df88ac9cbcfe81a818ea4009ff1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga459a0df88ac9cbcfe81a818ea4009ff1">RM_MOTOR_PM_FOC_Close</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga459a0df88ac9cbcfe81a818ea4009ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified Motor Current Module.  <a href="#ga459a0df88ac9cbcfe81a818ea4009ff1">More...</a><br /></td></tr>
+<tr class="separator:ga459a0df88ac9cbcfe81a818ea4009ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0c8bc98e8f953ca1ab58154b466de50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaf0c8bc98e8f953ca1ab58154b466de50">RM_MOTOR_PM_FOC_Reset</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gaf0c8bc98e8f953ca1ab58154b466de50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified Motor Current Module.  <a href="#gaf0c8bc98e8f953ca1ab58154b466de50">More...</a><br /></td></tr>
+<tr class="separator:gaf0c8bc98e8f953ca1ab58154b466de50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga542bbc27e1f6739a896866e49255d5f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga542bbc27e1f6739a896866e49255d5f7">RM_MOTOR_PM_FOC_Run</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga542bbc27e1f6739a896866e49255d5f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Active run motor.  <a href="#ga542bbc27e1f6739a896866e49255d5f7">More...</a><br /></td></tr>
+<tr class="separator:ga542bbc27e1f6739a896866e49255d5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41b4b624bb931c9e2165a1446abfb513"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga41b4b624bb931c9e2165a1446abfb513">RM_MOTOR_PM_FOC_Stop</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga41b4b624bb931c9e2165a1446abfb513"><td class="mdescLeft">&#160;</td><td class="mdescRight">Motor Stop.  <a href="#ga41b4b624bb931c9e2165a1446abfb513">More...</a><br /></td></tr>
+<tr class="separator:ga41b4b624bb931c9e2165a1446abfb513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6bf6209872725451c851b854703811e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gac6bf6209872725451c851b854703811e">RM_MOTOR_PM_FOC_ControlModeGet</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> *p_control_mode)</td></tr>
+<tr class="memdesc:gac6bf6209872725451c851b854703811e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ControlModeGet.  <a href="#gac6bf6209872725451c851b854703811e">More...</a><br /></td></tr>
+<tr class="separator:gac6bf6209872725451c851b854703811e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18e4ffc70533028a54066e0604102fbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga18e4ffc70533028a54066e0604102fbf">RM_MOTOR_PM_FOC_ControlModeSet</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> control_mode)</td></tr>
+<tr class="memdesc:ga18e4ffc70533028a54066e0604102fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">ControlModeSet.  <a href="#ga18e4ffc70533028a54066e0604102fbf">More...</a><br /></td></tr>
+<tr class="separator:ga18e4ffc70533028a54066e0604102fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5d2cbf80e7e386055f1912064576140"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaa5d2cbf80e7e386055f1912064576140">RM_MOTOR_PM_FOC_StatusGet</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, uint8_t *const p_status)</td></tr>
+<tr class="memdesc:gaa5d2cbf80e7e386055f1912064576140"><td class="mdescLeft">&#160;</td><td class="mdescRight">StatusGet.  <a href="#gaa5d2cbf80e7e386055f1912064576140">More...</a><br /></td></tr>
+<tr class="separator:gaa5d2cbf80e7e386055f1912064576140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a41012fe3b8c044f5cfff7c9a040aef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga8a41012fe3b8c044f5cfff7c9a040aef">RM_MOTOR_PM_FOC_ParameterUpdate</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga8a41012fe3b8c044f5cfff7c9a040aef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the parameters of the motor control module.  <a href="#ga8a41012fe3b8c044f5cfff7c9a040aef">More...</a><br /></td></tr>
+<tr class="separator:ga8a41012fe3b8c044f5cfff7c9a040aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga935e192f3f5364562d2430edee813fbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga935e192f3f5364562d2430edee813fbf">RM_MOTOR_PM_FOC_ErrorGet</a> (<a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const p_ctrl, uint32_t *p_error_flags)</td></tr>
+<tr class="memdesc:ga935e192f3f5364562d2430edee813fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">ErrorGet.  <a href="#ga935e192f3f5364562d2430edee813fbf">More...</a><br /></td></tr>
+<tr class="separator:ga935e192f3f5364562d2430edee813fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa44178c7b77883da0ab4cb627df0df79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaa44178c7b77883da0ab4cb627df0df79">algorithm_disabled</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:gaa44178c7b77883da0ab4cb627df0df79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dummy function for disabled algorithms.  <a href="#gaa44178c7b77883da0ab4cb627df0df79">More...</a><br /></td></tr>
+<tr class="separator:gaa44178c7b77883da0ab4cb627df0df79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaec16525ab2a9701d95faa7c3df3cfa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaaec16525ab2a9701d95faa7c3df3cfa4">motor_outer_fnctbl_spdobsrv_ctrl</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:gaaec16525ab2a9701d95faa7c3df3cfa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Speed observer control function.  <a href="#gaaec16525ab2a9701d95faa7c3df3cfa4">More...</a><br /></td></tr>
+<tr class="separator:gaaec16525ab2a9701d95faa7c3df3cfa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ed42d7a5225d2dc530b26c05952b402"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga0ed42d7a5225d2dc530b26c05952b402">motor_outer_fnctbl_spddirct_ctrl</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga0ed42d7a5225d2dc530b26c05952b402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direct speed assignment control function.  <a href="#ga0ed42d7a5225d2dc530b26c05952b402">More...</a><br /></td></tr>
+<tr class="separator:ga0ed42d7a5225d2dc530b26c05952b402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d0d7573ff6935fbc5ea18e6ecee04ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga9d0d7573ff6935fbc5ea18e6ecee04ff">motor_outer_fnctbl_spdlpf_ctrl</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga9d0d7573ff6935fbc5ea18e6ecee04ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-pass filter processing for speed.  <a href="#ga9d0d7573ff6935fbc5ea18e6ecee04ff">More...</a><br /></td></tr>
+<tr class="separator:ga9d0d7573ff6935fbc5ea18e6ecee04ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga695ce8e1f215489774f92a0cff189e56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga695ce8e1f215489774f92a0cff189e56">motor_outer_fnctbl_extobsrv_ctrl</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga695ce8e1f215489774f92a0cff189e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended observer for disturbance torque and speed estimation.  <a href="#ga695ce8e1f215489774f92a0cff189e56">More...</a><br /></td></tr>
+<tr class="separator:ga695ce8e1f215489774f92a0cff189e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7231ecabcd16390df2862242366faedd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga7231ecabcd16390df2862242366faedd">motor_outer_fnctbl_mtpa_ctrl</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga7231ecabcd16390df2862242366faedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">MTPA (Maximum Torque Per Ampere) control function.  <a href="#ga7231ecabcd16390df2862242366faedd">More...</a><br /></td></tr>
+<tr class="separator:ga7231ecabcd16390df2862242366faedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02f613097933624b0effc250ad6ac6b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga02f613097933624b0effc250ad6ac6b6">motor_outer_fnctbl_fw_ctrl</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga02f613097933624b0effc250ad6ac6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flux weakening control function.  <a href="#ga02f613097933624b0effc250ad6ac6b6">More...</a><br /></td></tr>
+<tr class="separator:ga02f613097933624b0effc250ad6ac6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52795dfb3a5d9517c2f482547d641475"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga52795dfb3a5d9517c2f482547d641475">motor_outer_speed_control</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga52795dfb3a5d9517c2f482547d641475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the d/q-axis current reference for speed control.  <a href="#ga52795dfb3a5d9517c2f482547d641475">More...</a><br /></td></tr>
+<tr class="separator:ga52795dfb3a5d9517c2f482547d641475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9edf9220e7d84a537e0c2347cf9b8787"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga9edf9220e7d84a537e0c2347cf9b8787">motor_outer_position_control</a> (void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="memdesc:ga9edf9220e7d84a537e0c2347cf9b8787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the d/q-axis current reference for position control.  <a href="#ga9edf9220e7d84a537e0c2347cf9b8787">More...</a><br /></td></tr>
+<tr class="separator:ga9edf9220e7d84a537e0c2347cf9b8787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Motor PM FOC on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html">Motor Interface</a>. </p>
+<h1><a class="anchor" id="rm_motor_pm_foc-overview"></a>
+Overview</h1>
+<p>The Motor PM FOC module provides Field Oriented Control (FOC) for Permanent Magnet (PM) motors. It implements inner loop (current control) and outer loop (speed control) algorithms for precise motor control.</p>
+<p>FOC is a control technique that transforms the stator current into two orthogonal components: the direct (d-axis) and quadrature (q-axis) currents. This allows independent control of torque and flux, resulting in efficient and responsive motor control.</p>
+<h2><a class="anchor" id="rm_motor_pm_foc-features"></a>
+Features</h2>
+<p>The Motor PM FOC module has the following key features:</p>
+<ul>
+<li>Field Oriented Control for Permanent Magnet motors</li>
+<li>Inner loop current control with PI controllers for d-axis and q-axis</li>
+<li>Outer loop speed control with PI controller</li>
+<li>Flux weakening support for extended speed range operation</li>
+<li>Voltage error compensation for improved accuracy</li>
+<li>Multiple sensor slot support (dual sensor capability)</li>
+<li>Speed observer and disturbance observer support</li>
+<li>Position control mode support</li>
+<li>Configurable current and speed limits</li>
+<li>Error detection for overcurrent, overvoltage, low voltage, and overspeed conditions</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_pm_foc-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_motor_pm_foc</h2>
+The following build time configurations are defined in fsp_cfg/rm_motor_pm_foc_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Motor &gt; Advanced Motor Middleware &gt; Motor PM FOC Module (rm_motor_pm_foc)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Advanced Motor Middleware &gt; Motor PM FOC Module (rm_motor_pm_foc).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Inverter Parameters  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM Carrier Period (Microseconds)</td><td>Must be a valid non-negative value</td><td>50 </td><td>Inverter carrier period </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Dead Time (Microseconds)</td><td>Must be a valid value</td><td>2.0 </td><td>PWM dead time </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Design Parameter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current PI Loop Natural Frequency (Hz)</td><td>Must be a valid non-negative value</td><td>300.0F </td><td>Current PI loop natural frequency </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current PI Loop Damping Ratio</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Current PI loop dampin ratio </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed PI Loop Natural Frequency (Hz)</td><td>Must be a valid non-negative value</td><td>12.0F </td><td>Speed PI loop natural frequency </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed PI Loop Damping Ratio</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Speed PI loop damping ratio </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed Observer Natural Frequency (Hz)</td><td>Must be a valid non-negative value</td><td>200.0F </td><td>Speed observer loop natural frequency </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed Observer Damping Ratio</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Speed observer loop damping ratio </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed LPF Natural Frequency (Hz)</td><td>Must be a valid non-negative value</td><td>10.0F </td><td>Design natural frequency for speed Low Pass Filter. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Disturbance Speed Observer Natural Frequency (Hz)</td><td>Must be a valid non-negative value.</td><td>100.0F </td><td>Natural frequency for disturbance speed observer. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Sensor  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Selected Slot For Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+MOTOR_INNER_SLOT_1_ENABLE</li>
+<li>
+MOTOR_INNER_SLOT_2_ENABLE</li>
+</ul>
+</td><td>MOTOR_INNER_SLOT_1_ENABLE </td><td>Select the sensor slot used for control. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed Control Period (sec)</td><td>Must be a valid non-negative value</td><td>0.0005F </td><td>Period of speed control function. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Acceleration To Target Speed (rpm/sec)</td><td>Must be a valid non-negative value</td><td>1000.0F </td><td>The rate of acceleration to reach the target motor speed. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current PI Output Limit (V)</td><td>Must be a valid non-negative value</td><td>24.0F </td><td>Current PI output limit </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit Of Q-axis Current (A)</td><td>Must be a valid non-negative value</td><td>0.42F </td><td>Limit of q-axis current. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Protection  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Speed (rpm)</td><td>Must be a valid non-negative value.</td><td>2650.0F </td><td>Controllable maximum speed </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit Of Over Current (A)</td><td>Must be a valid value</td><td>3.54F </td><td>Limit of over current.(Detection threshold, instantaneous value) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit Of Over Voltage (V)</td><td>Must be a valid value</td><td>28.0F </td><td>Limit of over voltage for DC Bus.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit Of Over Speed (rpm)</td><td>Must be a valid value</td><td>3000.0F </td><td>Limit of over speed.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit Of Low Voltage (V)</td><td>Must be a valid value</td><td>14.0F </td><td>Limit of low voltage for DC Bus.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Sample Delay Compensation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Enable </td><td>Select enable/disable sample delay compensation. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Magnification Value</td><td>Must be a valid value</td><td>1.5 </td><td>Period magnification value for sampling delay compensation. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Voltage Error Compensation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Enable </td><td>Select enable/disable voltage error compensation. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reference Voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Reference voltage for compensation table. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Voltage 1 (V)</td><td>Must be a valid value</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Voltage 2 (V)</td><td>Must be a valid value</td><td>0.945F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Voltage 3 (V)</td><td>Must be a valid value</td><td>1.054F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Voltage 4 (V)</td><td>Must be a valid value</td><td>1.109F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Voltage 5 (V)</td><td>Must be a valid value</td><td>1.192F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Current 1 (A)</td><td>Must be a valid value</td><td>0.013F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Current 2 (A)</td><td>Must be a valid value</td><td>0.049F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Current 3 (A)</td><td>Must be a valid value</td><td>0.080F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Current 4 (A)</td><td>Must be a valid value</td><td>0.184F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Table Of Current 5 (A)</td><td>Must be a valid value</td><td>0.751F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pole Pairs</td><td>Must be a valid non-negative value.</td><td>4 </td><td>Pole pairs </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid value</td><td>1.3F </td><td>Resistance </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance Of D-axis (H)</td><td>Must be a valid value</td><td>0.0013F </td><td>Inductance of d-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance Of Q-axis (H)</td><td>Must be a valid value</td><td>0.0013F </td><td>Inductance of q-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Permanent Magnetic Flux (Wb)</td><td>Must be a valid value</td><td>0.01119F </td><td>Permanent magnetic flux </td></tr>
+<tr>
+<td>Motor Parameter &gt; Rotor Inertia (kgm^2)</td><td>Must be a valid value</td><td>0.000003666F </td><td>Rotor inertia </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Rated Current (A)</td><td>Must be a valid value</td><td>1.67F </td><td>Rated current </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extended Function  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">MTPA</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>module.middleware.motor_algorithm.-.mtpa.disabled </td><td>Select MTPA function. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Flux-Weakening</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Select Flux weakening function. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed Feedback Process</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Direct</li>
+<li>
+LPF</li>
+<li>
+SpeedObserver</li>
+</ul>
+</td><td>Direct </td><td>Select speed feedback process. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>rm_motor_control_callback </td><td>A user callback function. If this callback function is provided, it is called from multiple internal events. </td></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_motor0_pm_foc </td><td>Module name. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm_motor_pm_foc-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The Motor PM FOC module uses timer peripherals for inner loop and outer loop control timing. Configure the timer instances according to your control period requirements:</p>
+<ul>
+<li>Inner loop (current control): Typically 50-100 µs period</li>
+<li>Outer loop (speed control): Typically 1-10 ms period</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_pm_foc-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not use I/O pins directly. Pin configuration is handled by the motor driver module (motor_hal_driver_instance) and sensor module (motor_sensor_instance).</p>
+<h1><a class="anchor" id="rm_motor_pm_foc-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm_motor_pm_foc-control-modes"></a>
+Control Modes</h2>
+<p>The Motor PM FOC module supports multiple control modes that can be set using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga18e4ffc70533028a54066e0604102fbf">RM_MOTOR_PM_FOC_ControlModeSet</a> and retrieved using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gac6bf6209872725451c851b854703811e">RM_MOTOR_PM_FOC_ControlModeGet</a>. The control mode determines how the motor is driven:</p>
+<ul>
+<li>Speed control mode: Motor speed follows the speed reference</li>
+<li>Position control mode: Motor position follows the position reference</li>
+<li>Current control mode: Direct control of d-axis and q-axis currents</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_pm_foc-motor-status"></a>
+Motor Status</h2>
+<p>The motor status can be retrieved using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaa5d2cbf80e7e386055f1912064576140">RM_MOTOR_PM_FOC_StatusGet</a>. This provides information about the current operating state of the motor control system.</p>
+<h2><a class="anchor" id="rm_motor_pm_foc-error-handling"></a>
+Error Handling</h2>
+<p>The Motor PM FOC module monitors for various error conditions:</p>
+<ul>
+<li><b>Overcurrent</b>: Phase current exceeds the configured limit</li>
+<li><b>Overvoltage</b>: DC bus voltage exceeds the configured limit</li>
+<li><b>Low voltage</b>: DC bus voltage falls below the configured limit</li>
+<li><b>Overspeed</b>: Motor speed exceeds the configured limit</li>
+</ul>
+<p>When an error is detected, it can be retrieved using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga935e192f3f5364562d2430edee813fbf">RM_MOTOR_PM_FOC_ErrorGet</a>. After handling the error condition, use <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaf0c8bc98e8f953ca1ab58154b466de50">RM_MOTOR_PM_FOC_Reset</a> to clear the error state and <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga542bbc27e1f6739a896866e49255d5f7">RM_MOTOR_PM_FOC_Run</a> to restart motor operation.</p>
+<h2><a class="anchor" id="rm_motor_pm_foc-flux-weakening"></a>
+Flux Weakening</h2>
+<p>Flux weakening allows the motor to operate above its base speed by reducing the magnetic flux. This is achieved by injecting negative d-axis current. The flux weakening feature can be enabled through the extended configuration.</p>
+<h2><a class="anchor" id="rm_motor_pm_foc-voltage-compensation"></a>
+Voltage Error Compensation</h2>
+<p>Voltage error compensation improves control accuracy by compensating for non-linearities in the inverter, such as dead-time effects and device voltage drops. The compensation table can be configured in the extended configuration.</p>
+<h2><a class="anchor" id="rm_motor_pm_foc-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the Motor PM FOC:</p>
+<ul>
+<li>The module must be opened using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga0d0cf3dbd5b6ee29ba362053ad985ba3">RM_MOTOR_PM_FOC_Open</a> before any other API calls.</li>
+<li>Control mode should be set using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga18e4ffc70533028a54066e0604102fbf">RM_MOTOR_PM_FOC_ControlModeSet</a> before activating motor run.</li>
+<li>The motor driver and sensor modules must be properly configured before opening this module.</li>
+<li>Parameter updates using <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga8a41012fe3b8c044f5cfff7c9a040aef">RM_MOTOR_PM_FOC_ParameterUpdate</a> should be performed when the motor is stopped or during controlled operation to avoid transients.</li>
+<li>Only the functions/types/macros exposed via rm_motor_pm_foc.h and rm_motor_algorithm_api.h should be accessed by user code and that the contents of the other headers is subject to change.</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_pm_foc-examples"></a>
+Examples</h1>
+<h2>Motor PM FOC Basic Example</h2>
+<p>This is a basic example of minimal use of the Motor PM FOC in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_pm_foc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the motor PM FOC module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga0d0cf3dbd5b6ee29ba362053ad985ba3">RM_MOTOR_PM_FOC_Open</a>(&amp;g_motor_pm_foc_ctrl, &amp;g_motor_pm_foc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Activate the motor control. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga542bbc27e1f6739a896866e49255d5f7">RM_MOTOR_PM_FOC_Run</a>(&amp;g_motor_pm_foc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Motor PM FOC Advanced Example</h2>
+<p>This example demonstrates status monitoring, control mode management, and error handling.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_pm_foc_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err          = FSP_SUCCESS;</div><div class="line">    uint8_t   status       = 0U;</div><div class="line">    uint32_t  error_flags  = 0U;</div><div class="line">    uint8_t   control_mode = 0U;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the motor PM FOC module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga0d0cf3dbd5b6ee29ba362053ad985ba3">RM_MOTOR_PM_FOC_Open</a>(&amp;g_motor_pm_foc_ctrl, &amp;g_motor_pm_foc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set control mode. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga18e4ffc70533028a54066e0604102fbf">RM_MOTOR_PM_FOC_ControlModeSet</a>(&amp;g_motor_pm_foc_ctrl, control_mode);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Activate the motor control. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga542bbc27e1f6739a896866e49255d5f7">RM_MOTOR_PM_FOC_Run</a>(&amp;g_motor_pm_foc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line"></div><div class="line">        <span class="comment">/* Get motor status. */</span></div><div class="line">        err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaa5d2cbf80e7e386055f1912064576140">RM_MOTOR_PM_FOC_StatusGet</a>(&amp;g_motor_pm_foc_ctrl, &amp;status);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get current control mode. */</span></div><div class="line">        err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gac6bf6209872725451c851b854703811e">RM_MOTOR_PM_FOC_ControlModeGet</a>(&amp;g_motor_pm_foc_ctrl, &amp;control_mode);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Check for errors. */</span></div><div class="line">        err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga935e192f3f5364562d2430edee813fbf">RM_MOTOR_PM_FOC_ErrorGet</a>(&amp;g_motor_pm_foc_ctrl, &amp;error_flags);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (error_flags != 0U)</div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* Stop motor on error. */</span></div><div class="line">            err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga41b4b624bb931c9e2165a1446abfb513">RM_MOTOR_PM_FOC_Stop</a>(&amp;g_motor_pm_foc_ctrl);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">            <span class="comment">/* Reset the motor control module. */</span></div><div class="line">            err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gaf0c8bc98e8f953ca1ab58154b466de50">RM_MOTOR_PM_FOC_Reset</a>(&amp;g_motor_pm_foc_ctrl);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Update parameters if needed. */</span></div><div class="line">        err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga8a41012fe3b8c044f5cfff7c9a040aef">RM_MOTOR_PM_FOC_ParameterUpdate</a>(&amp;g_motor_pm_foc_ctrl, &amp;g_motor_pm_foc_cfg);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the motor PM FOC module. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga459a0df88ac9cbcfe81a818ea4009ff1">RM_MOTOR_PM_FOC_Close</a>(&amp;g_motor_pm_foc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__pm__foc__inner__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__inner__cfg__t">motor_pm_foc_inner_cfg_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__inner__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__pm__foc__outer__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__outer__cfg__t">motor_pm_foc_outer_cfg_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__outer__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__inner__get__voltage__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__inner__get__voltage__t">motor_inner_get_voltage_t</a></td></tr>
+<tr class="separator:structmotor__inner__get__voltage__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__mode__inner__to__outer__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__mode__inner__to__outer__t">motor_mode_inner_to_outer_t</a></td></tr>
+<tr class="separator:structmotor__mode__inner__to__outer__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__pm__foc__outer__loop__func__table__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__outer__loop__func__table__t">motor_pm_foc_outer_loop_func_table_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__outer__loop__func__table__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__outer__design__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__outer__design__params__t">motor_outer_design_params_t</a></td></tr>
+<tr class="separator:structmotor__outer__design__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__pm__foc__outer__instance__signals__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__outer__instance__signals__ctrl__t">motor_pm_foc_outer_instance_signals_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__outer__instance__signals__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__pm__foc__inner__instance__signals__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__inner__instance__signals__ctrl__t">motor_pm_foc_inner_instance_signals_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__inner__instance__signals__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__pm__foc__extended__data__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__extended__data__cfg__t">motor_pm_foc_extended_data_cfg_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__extended__data__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__pm__foc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__pm__foc__instance__ctrl__t">motor_pm_foc_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__pm__foc__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gac1d21ca51e3c69f2d6c50d2f9fc3623a"><td class="memItemLeft" align="right" valign="top"><a id="gac1d21ca51e3c69f2d6c50d2f9fc3623a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gac1d21ca51e3c69f2d6c50d2f9fc3623a">MOTOR_PM_FOC_SHARED_BUFFER_COUNT</a></td></tr>
+<tr class="memdesc:gac1d21ca51e3c69f2d6c50d2f9fc3623a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of double-buffered shared data structures. <br /></td></tr>
+<tr class="separator:gac1d21ca51e3c69f2d6c50d2f9fc3623a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga78704498b533820b746dc6c524b59139"><td class="memItemLeft" align="right" valign="top">typedef void()&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga78704498b533820b746dc6c524b59139">OuterLoopFunction</a>(void *p_ctrl, void *p_cfg)</td></tr>
+<tr class="separator:ga78704498b533820b746dc6c524b59139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gab9c1e1631436408fcf376f899ca979bc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gab9c1e1631436408fcf376f899ca979bc">motor_error_pm_foc_t</a> </td></tr>
+<tr class="separator:gab9c1e1631436408fcf376f899ca979bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a85a2f2d209145fd1d68f9927f84ee2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga6a85a2f2d209145fd1d68f9927f84ee2">motor_inner_sample_delay_compensation_t</a> </td></tr>
+<tr class="separator:ga6a85a2f2d209145fd1d68f9927f84ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga315b13ebb7c5de93409da40c7c4bd9bd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga315b13ebb7c5de93409da40c7c4bd9bd">motor_inner_sensor_selected_slot_t</a> </td></tr>
+<tr class="separator:ga315b13ebb7c5de93409da40c7c4bd9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a23092cfae5898410e8d95d580429f3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga8a23092cfae5898410e8d95d580429f3">motor_outer_ctrl_status_t</a> </td></tr>
+<tr class="separator:ga8a23092cfae5898410e8d95d580429f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__pm__foc__inner__cfg__t" id="structmotor__pm__foc__inner__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__inner__cfg__t">&#9670;&nbsp;</a></span>motor_pm_foc_inner_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_inner_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration parameters. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a9fb589601d13dff1b7b61e6c0306af58"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a742cecfe53cb2b4176c3a1a34e358cf1"></a>void const  *</td>
+<td class="fieldname">
+p_extend</td>
+<td class="fielddoc">
+Pointer to extended configuration. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__pm__foc__outer__cfg__t" id="structmotor__pm__foc__outer__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__outer__cfg__t">&#9670;&nbsp;</a></span>motor_pm_foc_outer_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_outer_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration parameters. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:abba6deec8212d0486f251596fb813fa6"><td class="memItemLeft" align="right" valign="top"><a id="abba6deec8212d0486f251596fb813fa6"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#abba6deec8212d0486f251596fb813fa6">p_context</a></td></tr>
+<tr class="memdesc:abba6deec8212d0486f251596fb813fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
+<tr class="separator:abba6deec8212d0486f251596fb813fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6ed1cd93aba9ab44a0478c3b53c16cc"><td class="memItemLeft" align="right" valign="top"><a id="ae6ed1cd93aba9ab44a0478c3b53c16cc"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ae6ed1cd93aba9ab44a0478c3b53c16cc">p_extend</a></td></tr>
+<tr class="memdesc:ae6ed1cd93aba9ab44a0478c3b53c16cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to extended configuration. <br /></td></tr>
+<tr class="separator:ae6ed1cd93aba9ab44a0478c3b53c16cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__inner__get__voltage__t" id="structmotor__inner__get__voltage__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__inner__get__voltage__t">&#9670;&nbsp;</a></span>motor_inner_get_voltage_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_inner_get_voltage_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Structure to retrieve motor voltage references </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a1219bcf29debf07aacfb714ea8080f37"></a>float</td>
+<td class="fieldname">
+v_u_ref</td>
+<td class="fielddoc">
+U phase voltage reference [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a128afd3bdd50a1f2a8c3a40f2f59dbfc"></a>float</td>
+<td class="fieldname">
+v_v_ref</td>
+<td class="fielddoc">
+V phase voltage reference [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6a606c507b18b2a6d002238deadd4d5f"></a>float</td>
+<td class="fieldname">
+v_w_ref</td>
+<td class="fielddoc">
+W phase voltage reference [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae3d0c8f1dc3a2b734cfd13348d287db9"></a>float</td>
+<td class="fieldname">
+v_d_ref</td>
+<td class="fielddoc">
+d-axis voltage reference </td></tr>
+<tr><td class="fieldtype">
+<a id="accad53c420eeba5cd1d0b25a4ca7eb56"></a>float</td>
+<td class="fieldname">
+v_q_ref</td>
+<td class="fielddoc">
+q-axis voltage reference </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__mode__inner__to__outer__t" id="structmotor__mode__inner__to__outer__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__mode__inner__to__outer__t">&#9670;&nbsp;</a></span>motor_mode_inner_to_outer_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_mode_inner_to_outer_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Control mode data structure from inner to outer loop </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5627611552e2ee556006806071da8649"></a>float</td>
+<td class="fieldname">
+id_ref_ow</td>
+<td class="fielddoc">
+d-axis current reference overwrite value [A] </td></tr>
+<tr><td class="fieldtype">
+<a id="aea5484d10ab29e2d783710f60700c4b3"></a>float</td>
+<td class="fieldname">
+iq_ref_ow</td>
+<td class="fielddoc">
+q-axis current reference overwrite value [A] </td></tr>
+<tr><td class="fieldtype">
+<a id="add15329088927b9d5265165caffa4585"></a>uint8_t</td>
+<td class="fieldname">
+mode_outer</td>
+<td class="fielddoc">
+Control mode specification for outer loop. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__pm__foc__outer__loop__func__table__t" id="structmotor__pm__foc__outer__loop__func__table__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__outer__loop__func__table__t">&#9670;&nbsp;</a></span>motor_pm_foc_outer_loop_func_table_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_outer_loop_func_table_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Outerloop Function Pointer Table </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8bc4311558286299cb5ba888a195fed9"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga78704498b533820b746dc6c524b59139">OuterLoopFunction</a> *</td>
+<td class="fieldname">
+control_mode_ctrl</td>
+<td class="fielddoc">
+Position/Speed control function pointer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2154b635f2f14a1c2c4a0080edcedd17"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga78704498b533820b746dc6c524b59139">OuterLoopFunction</a> *</td>
+<td class="fieldname">
+mtpa_ctrl</td>
+<td class="fielddoc">
+MTPA (Maximum Torque Per Ampere) control function pointer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2ace2eb21f95d058b0eae218e4f94515"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga78704498b533820b746dc6c524b59139">OuterLoopFunction</a> *</td>
+<td class="fieldname">
+fw_ctrl</td>
+<td class="fielddoc">
+Fluxweak Control function pointer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7cd0de262ee173a2fa71b7495ad1589c"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga78704498b533820b746dc6c524b59139">OuterLoopFunction</a> *</td>
+<td class="fieldname">
+spdobsv_ctrl</td>
+<td class="fielddoc">
+Speed Observer function pointer. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__outer__design__params__t" id="structmotor__outer__design__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__outer__design__params__t">&#9670;&nbsp;</a></span>motor_outer_design_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_outer_design_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Design parameter structure for outer control </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0473c6de13818c31046cc832e70cab8e"></a>float</td>
+<td class="fieldname">
+speed_omega</td>
+<td class="fielddoc">
+Natural frequency[Hz] for speed loop gain design. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab7274aa71ca49792dea8bed7e1a2e383"></a>float</td>
+<td class="fieldname">
+speed_zeta</td>
+<td class="fielddoc">
+Damping ratio for speed loop gain design. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab305217e135a06432a9cca6b59e9466a"></a>float</td>
+<td class="fieldname">
+observer_omega</td>
+<td class="fielddoc">
+Natural frequency[Hz] for speed observer and extended observer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7d2cfb83722f5cd0dd7f5961e4bcb579"></a>float</td>
+<td class="fieldname">
+observer_zeta</td>
+<td class="fielddoc">
+Damping ratio for speed observer. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__pm__foc__outer__instance__signals__ctrl__t" id="structmotor__pm__foc__outer__instance__signals__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__outer__instance__signals__ctrl__t">&#9670;&nbsp;</a></span>motor_pm_foc_outer_instance_signals_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_outer_instance_signals_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor outer control instance control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa9e0bdc30197ba86babce005f54d185f"></a>uint32_t</td>
+<td class="fieldname">
+error_info</td>
+<td class="fielddoc">
+Error flags detected during outer loop execution. </td></tr>
+<tr><td class="fieldtype">
+<a id="af7df980a21632b503cbe7d6babefa330"></a>uint8_t</td>
+<td class="fieldname">
+active</td>
+<td class="fielddoc">
+Flag to set active/inactive the speed control. </td></tr>
+<tr><td class="fieldtype">
+<a id="acbb56c761685c382dee9267c62912c82"></a>float</td>
+<td class="fieldname">
+i_q_ref_disturbance</td>
+<td class="fielddoc">
+Anti disturbance Q-axis current reference [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a13a307d19e86a319e85d74d4028f732c"></a>float</td>
+<td class="fieldname">
+speed_mech_que_ref</td>
+<td class="fielddoc">
+Command speed value for speed PI control[rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a18baf51598f87257d26f2b4ae47a4c0d"></a>float</td>
+<td class="fieldname">
+speed_mech_ref</td>
+<td class="fielddoc">
+Speed reference value [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5099a394cb99a136d255e47aa88b20e5"></a>float</td>
+<td class="fieldname">
+speed_mech_lpf</td>
+<td class="fielddoc">
+Low-pass filtered speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeb09e5f460176649789eb6842269b25b"></a>float</td>
+<td class="fieldname">
+speed_mech</td>
+<td class="fielddoc">
+Mechanical Speed used by outer control loop [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a09295488969a8e162b26308ad8062031"></a>float</td>
+<td class="fieldname">
+angle_mech</td>
+<td class="fielddoc">
+Mechanical Angle Position used by outer control loop [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="af9d999fba1c764d37ad1cd4d01272bdd"></a>motor_flux_weakening_t</td>
+<td class="fieldname">
+flux_weakening_ctrl</td>
+<td class="fielddoc">
+Flux-weakening control data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a909083f863ff624b9e330a2d329e6328"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#structmotor__mode__inner__to__outer__t">motor_mode_inner_to_outer_t</a></td>
+<td class="fieldname">
+inner_mode_data</td>
+<td class="fielddoc">
+control mode data from inner loop (request to overwrite references) </td></tr>
+<tr><td class="fieldtype">
+<a id="af2ab1e8f8712e2868f9d9148d63e06c5"></a>pi_ctrl_t</td>
+<td class="fieldname">
+speed_pi_ctrl</td>
+<td class="fielddoc">
+Speed PI controller data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a232a551e1108a816e9b8f6923e0ccea1"></a>motor_common_lpf_t</td>
+<td class="fieldname">
+speed_lpf_ctrl</td>
+<td class="fielddoc">
+Speed low-pass filter data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a74fb8bfcb8367fc7ffb84c82dd084ef1"></a>motor_spdobserver_t</td>
+<td class="fieldname">
+speed_observer_ctrl</td>
+<td class="fielddoc">
+Speed observer data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a68741556b6ca15021c17f57f88b3bc8c"></a>motor_extobserver_t</td>
+<td class="fieldname">
+extobserver_ctrl</td>
+<td class="fielddoc">
+Disturbance torque/speed observer data. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__pm__foc__inner__instance__signals__ctrl__t" id="structmotor__pm__foc__inner__instance__signals__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__inner__instance__signals__ctrl__t">&#9670;&nbsp;</a></span>motor_pm_foc_inner_instance_signals_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_inner_instance_signals_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor inner control instance control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aedbf3c0eba53645318d027f00d37d0d9"></a>uint32_t</td>
+<td class="fieldname">
+error_info</td>
+<td class="fielddoc">
+Error flags detected during inner loop execution. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4095cebbb561f368fb6c22d0b7f12fbc"></a>uint8_t</td>
+<td class="fieldname">
+active</td>
+<td class="fielddoc">
+Flag to set active/inactive the current control. </td></tr>
+<tr><td class="fieldtype">
+<a id="a99d98cab2df390c775d52be0a0ca2037"></a><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a></td>
+<td class="fieldname">
+control_mode</td>
+<td class="fielddoc">
+Current control mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5e76f97188a2be9e2ef26fdada75e25f"></a>motor_shared_inner_to_position_speed_t</td>
+<td class="fieldname">
+to_pos_speed</td>
+<td class="fielddoc">
+Data structure for sensor module (it includes iu, iv, iw) </td></tr>
+<tr><td class="fieldtype">
+<a id="a636b8479237d086b885108420cbc4e01"></a>float</td>
+<td class="fieldname">
+v_dc</td>
+<td class="fielddoc">
+DC bus voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7a52be97dcc3965329a435c2fd31a0e0"></a>float</td>
+<td class="fieldname">
+angle_el</td>
+<td class="fielddoc">
+Electrical rotor angle [radian]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a11d2190a5b97ffd52230a2a1a4bcf2ed"></a>float</td>
+<td class="fieldname">
+speed_el</td>
+<td class="fielddoc">
+Electrical rotor speed [radian/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab739f1de03a1d002c7690dc62536a8f2"></a>float</td>
+<td class="fieldname">
+v_u_ref</td>
+<td class="fielddoc">
+U phase voltage reference [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="af0444026ed1537d846a06d7fa497adbf"></a>float</td>
+<td class="fieldname">
+v_v_ref</td>
+<td class="fielddoc">
+V phase voltage reference [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aff066b0c1c24829f0951dcc67453e40e"></a>float</td>
+<td class="fieldname">
+v_w_ref</td>
+<td class="fielddoc">
+W phase voltage reference [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a42583cabd3d75b77a684fdf5eb406f80"></a>pi_ctrl_t</td>
+<td class="fieldname">
+id_pi_ctrl</td>
+<td class="fielddoc">
+D-axis current PI controller. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab54a2110397c7b02ae6a6bec793ce1ca"></a>pi_ctrl_t</td>
+<td class="fieldname">
+iq_pi_ctrl</td>
+<td class="fielddoc">
+Q-axis current PI controller. </td></tr>
+<tr><td class="fieldtype">
+<a id="a241014404905ef691a87dbaca6a8f64a"></a>motor_volt_error_comp_t</td>
+<td class="fieldname">
+vcomp_ctrl</td>
+<td class="fielddoc">
+Voltage error compensation data. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__pm__foc__extended__data__cfg__t" id="structmotor__pm__foc__extended__data__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__extended__data__cfg__t">&#9670;&nbsp;</a></span>motor_pm_foc_extended_data_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_extended_data_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configurations for motor PM FOC control </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ab51f54a6c7faa4b965f369f0045e04b4"></a>float</td>
+<td class="fieldname">
+comp_v[MOTOR_VOLT_ERR_COMP_TABLE_ARRAY_SIZE]</td>
+<td class="fielddoc">
+Voltage error compensation table: voltage axis. </td></tr>
+<tr><td class="fieldtype">
+<a id="a32f9bdfa40cf289f0f55d5edd2be1dcc"></a>float</td>
+<td class="fieldname">
+comp_i[MOTOR_VOLT_ERR_COMP_TABLE_ARRAY_SIZE]</td>
+<td class="fielddoc">
+Voltage error compensation table: current axis. </td></tr>
+<tr><td class="fieldtype">
+<a id="af8d0dcd159f71c9c901049f64a1a74c0"></a>float</td>
+<td class="fieldname">
+comp_vdc_ref</td>
+<td class="fielddoc">
+Voltage error compensation: DC bus reference voltage for table. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8740ff32d6170b3f36b159f595ad0738"></a>float</td>
+<td class="fieldname">
+comp_limit_factor</td>
+<td class="fielddoc">
+Voltage error compensation: limit factor. </td></tr>
+<tr><td class="fieldtype">
+<a id="a141a69e7054fb35ba14d79c267d1a580"></a>motor_volt_error_comp_select_t</td>
+<td class="fieldname">
+vcomp_enable</td>
+<td class="fielddoc">
+Enable/disable voltage error compensation. </td></tr>
+<tr><td class="fieldtype">
+<a id="aac5785c1a91e755fc7620b12af173bbb"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga6a85a2f2d209145fd1d68f9927f84ee2">motor_inner_sample_delay_compensation_t</a></td>
+<td class="fieldname">
+sample_delay_comp_enable</td>
+<td class="fielddoc">
+Enable/disable sample delay compensation. </td></tr>
+<tr><td class="fieldtype">
+<a id="a43da195ea56034c66f6cb62767321ead"></a><a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga315b13ebb7c5de93409da40c7c4bd9bd">motor_inner_sensor_selected_slot_t</a></td>
+<td class="fieldname">
+sensor_slot</td>
+<td class="fielddoc">
+Selected sensor slot. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1cf77e59aa7765101a972a89e994306a"></a>float</td>
+<td class="fieldname">
+period_magnitude_value</td>
+<td class="fielddoc">
+Period magnification value for sampling delay compensation. </td></tr>
+<tr><td class="fieldtype">
+<a id="aef20b1d9b165cbf45ae3f34465ef1add"></a>float</td>
+<td class="fieldname">
+inner_control_period</td>
+<td class="fielddoc">
+Current control period [usec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="af92e669b2c5880c0cd6ae40781aea7ef"></a>float</td>
+<td class="fieldname">
+current_limit</td>
+<td class="fielddoc">
+Current limit [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0928168cc2accfabe71f2a4b57988657"></a>float</td>
+<td class="fieldname">
+outer_control_period</td>
+<td class="fielddoc">
+Speed control period [sec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ace86cadc9c510f26fa06378af03e852b"></a>float</td>
+<td class="fieldname">
+speed_mech_change_limit</td>
+<td class="fielddoc">
+Maximum speed reference change rate [rad/s^2]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac2df680b29758ddbef3d8b70c5ba7c4b"></a>float</td>
+<td class="fieldname">
+speed_mech_cmd_limit</td>
+<td class="fielddoc">
+Maximum speed command value [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa2fc20dafd4174eb56b609448ffa426b"></a>float</td>
+<td class="fieldname">
+speed_lpf_omega_t</td>
+<td class="fielddoc">
+Speed LPF design value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a549c62d3517f56e9a5964c973d157340"></a>float</td>
+<td class="fieldname">
+iq_limit</td>
+<td class="fielddoc">
+Limit of q-axis current [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a117927d76af285aac8de84cc43fe1f50"></a>float</td>
+<td class="fieldname">
+overcurrent_limit</td>
+<td class="fielddoc">
+Over-current detection limit [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a61c20f737a3122fe3404357f2861f9df"></a>float</td>
+<td class="fieldname">
+overvoltage_limit</td>
+<td class="fielddoc">
+Over-voltage detection limit [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a653898a21655d0ccf0c2fc2f62c91f96"></a>float</td>
+<td class="fieldname">
+lowvoltage_limit</td>
+<td class="fielddoc">
+Low-voltage detection limit [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0ecef1013b229082a43854624837075a"></a>float</td>
+<td class="fieldname">
+overspeed_limit</td>
+<td class="fielddoc">
+Over-speed detection limit [rpm]. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__pm__foc__instance__ctrl__t" id="structmotor__pm__foc__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__pm__foc__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_pm_foc_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_pm_foc_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>PM FOC control instance control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa49673f97bbbb1f6c90fdd1299dcf7ce"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Vector control open flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a856279787af4e36b7f82e3689ce61ae4"></a>uint8_t</td>
+<td class="fieldname">
+sensor_control_mode</td>
+<td class="fielddoc">
+Sensor control mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2a7d5ff75fb2672ad1a130f872c20cf0"></a>uint8_t</td>
+<td class="fieldname">
+motor_status</td>
+<td class="fielddoc">
+Motor Status. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad99a5a83b24ca25cfada8133d61b6de6"></a>motor_pm_foc_inner_instance_ctrl_t *</td>
+<td class="fieldname">
+p_inner_instance_ctrl</td>
+<td class="fielddoc">
+Pointer to inner control instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3d60b0ee11767fb34238d19c57821b27"></a>motor_pm_foc_outer_instance_ctrl_t *</td>
+<td class="fieldname">
+p_outer_instance_ctrl</td>
+<td class="fielddoc">
+Pointer to outer control instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="af7342a9e20c9dfdc991bcd7054efad7a"></a><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga78704498b533820b746dc6c524b59139"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78704498b533820b746dc6c524b59139">&#9670;&nbsp;</a></span>OuterLoopFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void() OuterLoopFunction(void *p_ctrl, void *p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outer loop function pointer type definition </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gab9c1e1631436408fcf376f899ca979bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab9c1e1631436408fcf376f899ca979bc">&#9670;&nbsp;</a></span>motor_error_pm_foc_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#gab9c1e1631436408fcf376f899ca979bc">motor_error_pm_foc_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Error information </p>
+
+</div>
+</div>
+<a id="ga6a85a2f2d209145fd1d68f9927f84ee2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6a85a2f2d209145fd1d68f9927f84ee2">&#9670;&nbsp;</a></span>motor_inner_sample_delay_compensation_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga6a85a2f2d209145fd1d68f9927f84ee2">motor_inner_sample_delay_compensation_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sample delay compensation enable/disable selection </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6a85a2f2d209145fd1d68f9927f84ee2a0f40e69714901a562d9d0f3869ba3b6c"></a>MOTOR_INNER_SAMPLE_DELAY_COMPENSATION_DISABLE&#160;</td><td class="fielddoc"><p>Sample delay compensation disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6a85a2f2d209145fd1d68f9927f84ee2ab24d99d05a7eb16cb7b7635a5b1ed891"></a>MOTOR_INNER_SAMPLE_DELAY_COMPENSATION_ENABLE&#160;</td><td class="fielddoc"><p>Sample delay compensation enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga315b13ebb7c5de93409da40c7c4bd9bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga315b13ebb7c5de93409da40c7c4bd9bd">&#9670;&nbsp;</a></span>motor_inner_sensor_selected_slot_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga315b13ebb7c5de93409da40c7c4bd9bd">motor_inner_sensor_selected_slot_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sensor slot selection for inner control </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga315b13ebb7c5de93409da40c7c4bd9bdae7745953b8294feb39a4bc03d663b4ff"></a>MOTOR_INNER_SLOT_1_ENABLE&#160;</td><td class="fielddoc"><p>Use sensor slot 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga315b13ebb7c5de93409da40c7c4bd9bda43394b2eb391d9bdb923bf7e67f65bb7"></a>MOTOR_INNER_SLOT_2_ENABLE&#160;</td><td class="fielddoc"><p>Use sensor slot 2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga8a23092cfae5898410e8d95d580429f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a23092cfae5898410e8d95d580429f3">&#9670;&nbsp;</a></span>motor_outer_ctrl_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___m_o_t_o_r___p_m___f_o_c.html#ga8a23092cfae5898410e8d95d580429f3">motor_outer_ctrl_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outer control status enumeration </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8a23092cfae5898410e8d95d580429f3a6936f7c5bbcfd6b97955d70ea93e2546"></a>MOTOR_SPEED_CTRL_STATUS_INIT&#160;</td><td class="fielddoc"><p>Speed control initialization state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8a23092cfae5898410e8d95d580429f3afbeb539f583a51591b1847f6b52622dc"></a>MOTOR_SPEED_CTRL_STATUS_BOOT&#160;</td><td class="fielddoc"><p>Speed control bootstrap state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8a23092cfae5898410e8d95d580429f3ad40d82827f0a7c62274666d0c238b83e"></a>MOTOR_SPEED_CTRL_STATUS_RUN&#160;</td><td class="fielddoc"><p>Speed control running state. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga0d0cf3dbd5b6ee29ba362053ad985ba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0d0cf3dbd5b6ee29ba362053ad985ba3">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens and configures the Vector control module. Implements <a class="el" href="group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a8429930c08fa6bdb6222d8ab066c5aa9">motor_driver_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Motor Driver successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga459a0df88ac9cbcfe81a818ea4009ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga459a0df88ac9cbcfe81a818ea4009ff1">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified Motor Current Module. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf0c8bc98e8f953ca1ab58154b466de50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf0c8bc98e8f953ca1ab58154b466de50">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified Motor Current Module. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga542bbc27e1f6739a896866e49255d5f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga542bbc27e1f6739a896866e49255d5f7">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_Run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_Run </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Active run motor. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga41b4b624bb931c9e2165a1446abfb513"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41b4b624bb931c9e2165a1446abfb513">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Motor Stop. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac6bf6209872725451c851b854703811e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac6bf6209872725451c851b854703811e">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_ControlModeGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_ControlModeGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a> *&#160;</td>
+          <td class="paramname"><em>p_control_mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ControlModeGet. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga18e4ffc70533028a54066e0604102fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga18e4ffc70533028a54066e0604102fbf">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_ControlModeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_ControlModeSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#ga8c52c3212282d11bdc4e0919737382c3">motor_algorithm_control_mode_t</a>&#160;</td>
+          <td class="paramname"><em>control_mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ControlModeSet. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa5d2cbf80e7e386055f1912064576140"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5d2cbf80e7e386055f1912064576140">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>StatusGet. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8a41012fe3b8c044f5cfff7c9a040aef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a41012fe3b8c044f5cfff7c9a040aef">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_ParameterUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_ParameterUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#structmotor__algorithm__cfg__t">motor_algorithm_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the parameters of the motor control module. </p>
+<p>This function overwrites the configuration pointer of the motor control instance and updates managed variables such as current limits in the inner instance. It does not modify any gain parameters directly, but ensures that the new configuration is applied to the instance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the motor algorithm control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the new motor algorithm configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully updated parameters. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga935e192f3f5364562d2430edee813fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga935e192f3f5364562d2430edee813fbf">&#9670;&nbsp;</a></span>RM_MOTOR_PM_FOC_ErrorGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_PM_FOC_ErrorGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e">motor_algorithm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>p_error_flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ErrorGet. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa44178c7b77883da0ab4cb627df0df79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa44178c7b77883da0ab4cb627df0df79">&#9670;&nbsp;</a></span>algorithm_disabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void algorithm_disabled </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dummy function for disabled algorithms. </p>
+<p>This function is used as a placeholder in the function pointer table when a specific algorithm (e.g., MTPA, flux weakening, speed observer) is disabled in the configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure (unused) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure (unused)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td>Dammy configured function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaaec16525ab2a9701d95faa7c3df3cfa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaec16525ab2a9701d95faa7c3df3cfa4">&#9670;&nbsp;</a></span>motor_outer_fnctbl_spdobsrv_ctrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_fnctbl_spdobsrv_ctrl </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Speed observer control function. </p>
+<p>This function applies the speed observer algorithm to estimate the mechanical speed based on q-axis current reference and measured speed. The estimated speed is stored in the low-pass filtered speed variable.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to motor outer control instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to extended configuration</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td>Speed Observer related for function pointer table </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0ed42d7a5225d2dc530b26c05952b402"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0ed42d7a5225d2dc530b26c05952b402">&#9670;&nbsp;</a></span>motor_outer_fnctbl_spddirct_ctrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_fnctbl_spddirct_ctrl </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Direct speed assignment control function. </p>
+<p>This function directly assigns the measured mechanical speed to the low-pass filtered speed variable without applying any filtering or observer algorithm.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to motor outer control instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to extended configuration (unused)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9d0d7573ff6935fbc5ea18e6ecee04ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d0d7573ff6935fbc5ea18e6ecee04ff">&#9670;&nbsp;</a></span>motor_outer_fnctbl_spdlpf_ctrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_fnctbl_spdlpf_ctrl </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Low-pass filter processing for speed. </p>
+<p>This function applies a first-order low-pass filter to the measured mechanical speed and updates the filtered speed value in the control instance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to motor outer control instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to extended configuration (unused)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga695ce8e1f215489774f92a0cff189e56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga695ce8e1f215489774f92a0cff189e56">&#9670;&nbsp;</a></span>motor_outer_fnctbl_extobsrv_ctrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_fnctbl_extobsrv_ctrl </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extended observer for disturbance torque and speed estimation. </p>
+<p>This function applies an extended observer to estimate mechanical speed excluding disturbance torque effects. It also generates a disturbance compensation current reference for torque ripple suppression.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to motor outer control instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to extended configuration</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7231ecabcd16390df2862242366faedd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7231ecabcd16390df2862242366faedd">&#9670;&nbsp;</a></span>motor_outer_fnctbl_mtpa_ctrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_fnctbl_mtpa_ctrl </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>MTPA (Maximum Torque Per Ampere) control function. </p>
+<p>This function applies the MTPA algorithm to optimize d- and q-axis current references for maximum torque efficiency. If flux weakening is active, it integrates flux weakening control with MTPA to select appropriate current commands. The function ensures that d-axis current reference remains non-positive for non-salient PMSM.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to motor outer control instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to extended configuration</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td>MTPA for function pointer table </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga02f613097933624b0effc250ad6ac6b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga02f613097933624b0effc250ad6ac6b6">&#9670;&nbsp;</a></span>motor_outer_fnctbl_fw_ctrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_fnctbl_fw_ctrl </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flux weakening control function. </p>
+<p>This function applies flux weakening control to adjust d- and q-axis current references for high-speed motor operation, ensuring the voltage limit is not exceeded. The function overwrites the dq-axis current commands when flux weakening is enabled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to motor outer control instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to extended configuration</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td>Fluxweak control for function pointer table </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga52795dfb3a5d9517c2f482547d641475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52795dfb3a5d9517c2f482547d641475">&#9670;&nbsp;</a></span>motor_outer_speed_control()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_speed_control </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the d/q-axis current reference for speed control. </p>
+<p>Control mode function for function pointer table</p>
+<p>This function performs the main process of outer control, including speed filtering, trajectory control, speed reference setting, and current reference calculation. It also applies MTPA and flux weakening control via function pointers.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9edf9220e7d84a537e0c2347cf9b8787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9edf9220e7d84a537e0c2347cf9b8787">&#9670;&nbsp;</a></span>motor_outer_position_control()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void motor_outer_position_control </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the d/q-axis current reference for position control. </p>
+<p>This function is reserved for future implementation of position control.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

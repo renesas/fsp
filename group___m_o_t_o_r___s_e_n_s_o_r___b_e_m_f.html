@@ -1,0 +1,1154 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor Sensor BEMF middleware (rm_motor_sensor_bemf)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor Sensor BEMF middleware (rm_motor_sensor_bemf)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa7f29531038aa9dd786946d057870206"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaa7f29531038aa9dd786946d057870206">RM_MOTOR_SENSOR_BEMF_Open</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:gaa7f29531038aa9dd786946d057870206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures the Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#adc246e01c1578ad84994df298694f455">motor_sensor_api_t::open</a>.  <a href="#gaa7f29531038aa9dd786946d057870206">More...</a><br /></td></tr>
+<tr class="separator:gaa7f29531038aa9dd786946d057870206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad552e8ddd1976c07bb5afd6a483c119f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gad552e8ddd1976c07bb5afd6a483c119f">RM_MOTOR_SENSOR_BEMF_Close</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gad552e8ddd1976c07bb5afd6a483c119f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#a0d2d27c9370e79f80a7d07e7dc33e2ac">motor_sensor_api_t::close</a>.  <a href="#gad552e8ddd1976c07bb5afd6a483c119f">More...</a><br /></td></tr>
+<tr class="separator:gad552e8ddd1976c07bb5afd6a483c119f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49fa31fbdc73e5b54ca1634bc83892f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga49fa31fbdc73e5b54ca1634bc83892f6">RM_MOTOR_SENSOR_BEMF_Reset</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga49fa31fbdc73e5b54ca1634bc83892f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset variables of Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#afba227dac4f9a1538f420c301500c93c">motor_sensor_api_t::reset</a>.  <a href="#ga49fa31fbdc73e5b54ca1634bc83892f6">More...</a><br /></td></tr>
+<tr class="separator:ga49fa31fbdc73e5b54ca1634bc83892f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d8f439489c73557100707facd974142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga1d8f439489c73557100707facd974142">RM_MOTOR_SENSOR_BEMF_ParameterUpdate</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga1d8f439489c73557100707facd974142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the parameters of Angle&amp;Speed Estimation. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#a4f574fe01b9a3d199441c0ac42cc6840">motor_sensor_api_t::parameterUpdate</a>.  <a href="#ga1d8f439489c73557100707facd974142">More...</a><br /></td></tr>
+<tr class="separator:ga1d8f439489c73557100707facd974142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2654732bafe1326a6f280df887b0a18f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga2654732bafe1326a6f280df887b0a18f">RM_MOTOR_SENSOR_BEMF_AngleSpeedInit</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, float **pp_speed, float **pp_angle, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#gac4b190661cfe803ea577ebdac1302352">motor_sensor_data_exchange_t</a> *const p_out_extra_data)</td></tr>
+<tr class="memdesc:ga2654732bafe1326a6f280df887b0a18f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets pointers to angle and speed variables, and configures extra data structures for the BEMF observer.  <a href="#ga2654732bafe1326a6f280df887b0a18f">More...</a><br /></td></tr>
+<tr class="separator:ga2654732bafe1326a6f280df887b0a18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga939683f4e872f8044acf081d88939696"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga939683f4e872f8044acf081d88939696">RM_MOTOR_SENSOR_BEMF_AngleSpeedCalc</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *const p_input_inner, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *const p_input_outer)</td></tr>
+<tr class="memdesc:ga939683f4e872f8044acf081d88939696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates angle and speed using BEMF observer and open-loop estimator.  <a href="#ga939683f4e872f8044acf081d88939696">More...</a><br /></td></tr>
+<tr class="separator:ga939683f4e872f8044acf081d88939696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0728b91c83b49554fc5b2c3043604ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaf0728b91c83b49554fc5b2c3043604ad">RM_MOTOR_SENSOR_BEMF_PositionSpeedGet</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, float *const p_pos, float *const p_speed)</td></tr>
+<tr class="memdesc:gaf0728b91c83b49554fc5b2c3043604ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the rotor position and speed in mechanical [rad] and [rad/s].  <a href="#gaf0728b91c83b49554fc5b2c3043604ad">More...</a><br /></td></tr>
+<tr class="separator:gaf0728b91c83b49554fc5b2c3043604ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Motor Sensor BEMF on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html">Motor sensor Interface</a>. </p>
+<h1><a class="anchor" id="rm_motor_sensor_bemf-overview"></a>
+Overview</h1>
+<p>The Motor Sensor BEMF module provides sensorless rotor angle and speed estimation using a Back-EMF (BEMF) observer combined with a Phase-Locked Loop (PLL). This module is designed for brushless DC (BLDC) and permanent magnet synchronous motor (PMSM) control applications where encoder or Hall sensor feedback is not available.</p>
+<h2><a class="anchor" id="rm_motor_sensor_bemf-features"></a>
+Features</h2>
+<p>The Motor Sensor BEMF module has the following key features:</p><ul>
+<li>Sensorless rotor angle estimation using BEMF observer</li>
+<li>Speed estimation using PLL (Phase-Locked Loop)</li>
+<li>Open-loop startup with configurable d-axis current injection</li>
+<li>Smooth transition from open-loop to sensorless control</li>
+<li>Optional open-loop damping for improved stability</li>
+<li>Configurable observer and PLL bandwidth parameters</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_sensor_bemf-configuration"></a>
+Configuration</h1>
+<h2>BEMF Observer Parameters</h2>
+<table class="doxtable">
+<tr>
+<th>Parameter </th><th>Description  </th></tr>
+<tr>
+<td>e_obs_omega </td><td>Natural frequency of BEMF observer [Hz] </td></tr>
+<tr>
+<td>e_obs_zeta </td><td>Damping ratio of BEMF observer </td></tr>
+<tr>
+<td>pll_est_omega </td><td>Natural frequency of PLL speed estimate loop [Hz] </td></tr>
+<tr>
+<td>pll_est_zeta </td><td>Damping ratio of PLL speed estimate loop </td></tr>
+</table>
+<h2>Open-Loop Parameters</h2>
+<table class="doxtable">
+<tr>
+<th>Parameter </th><th>Description  </th></tr>
+<tr>
+<td>f4_ol_id_ref </td><td>Open-loop d-axis current reference [A] </td></tr>
+<tr>
+<td>f4_id_up_speed_mech_rad </td><td>Speed threshold for Id ramp-up [rad/s mech] </td></tr>
+<tr>
+<td>f4_id_down_speed_mech_rad </td><td>Speed threshold for Id ramp-down [rad/s mech] </td></tr>
+</table>
+<p><h2>Build Time Configurations for rm_motor_sensor_bemf</h2>
+The following build time configurations are defined in fsp_cfg/rm_motor_sensor_bemf_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Motor &gt; Advanced Motor Middleware &gt; Motor Angle and Speed Calculation with BEMF sensors (rm_motor_sensor_bemf)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Advanced Motor Middleware &gt; Motor Angle and Speed Calculation with BEMF sensors (rm_motor_sensor_bemf).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor0_sensor_bemf </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Open Loop  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Open Loop &gt; Current Reference  </td></tr>
+<tr>
+<td>Open Loop &gt; Current Reference &gt; Id Reference[A] </td><td>Must be a valid non-negative value.</td><td>0.5 </td><td>The d-axis current reference [A] in open-loop drive </td></tr>
+<tr>
+<td>Open Loop &gt; Current Reference &gt; Id Up Step [step]</td><td>Must be a valid non-negative value.</td><td>256 </td><td>Number of steps required to reach the Id reference, with one step applied each inner-loop period. </td></tr>
+<tr>
+<td>Open Loop &gt; Current Reference &gt; Id Down Step [step]</td><td>Must be a valid non-negative value.</td><td>500 </td><td>Number of steps required to ramp-down from the Id reference, with one step applied each inner-loop period. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Iq Down Proportion</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>The Iq reference ramping down proportion to Iqref before open-loop </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Open Loop &gt; Transition  </td></tr>
+<tr>
+<td>Open Loop &gt; Transition &gt; Speed Threshold to FOC [rpm]</td><td>Must be a valid non-negative value.</td><td>600.0 </td><td>The control method switches from Open-loop to FOC when speed exceeds this value </td></tr>
+<tr>
+<td>Open Loop &gt; Transition &gt; Speed Thereshold to Open-loop [rpm]</td><td>Must be a valid non-negative value.</td><td>400.0 </td><td>The control method switches from FOC to Open-loop when speed falls below this value </td></tr>
+<tr>
+<td>Open Loop &gt; Transition &gt; Transition Time to FOC [s]</td><td>Must be a valid non-negative value.</td><td>0.025 </td><td>Transition time from Open-loop to FOC </td></tr>
+<tr>
+<td>Open Loop &gt; Transition &gt; Phase Error Threshold to FOC [degree]</td><td>Must be a valid non-negative value.</td><td>10.0 </td><td>Switches from Open-loop to FOC only when the phase error is below this threshold. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Open Loop &gt; Design Parameter  </td></tr>
+<tr>
+<td>Open Loop &gt; Design Parameter &gt; Ed HPF Cut-off Frequency [Hz]</td><td>Must be a valid non-negative value.</td><td>2.5 </td><td>Cut-off frequency for High Pass Filter in open-loop damping gain design </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Open-loop Damping Zeta</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>Damping ratio for open-loop damping gain design </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Open Loop Damping</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Enable </td><td>Enables damping control in Open-loop </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Soft Switch</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Enable </td><td>Enables soft switching to eliminate phase error during the transition from open-loop to FOC </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit of Speed Feedback Rate</td><td>Must be a valid non-negative value.</td><td>0.2 </td><td>The limit of speed feedback rate </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> BEMF Observer  </td></tr>
+<tr>
+<td>BEMF Observer &gt; Natural Frequency [Hz]</td><td>Must be a valid non-negative value.</td><td>1000.0 </td><td>Natural frequency of BEMF observer </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Damping Ratio</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>Damping ratio of BEMF observer </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> PLL  </td></tr>
+<tr>
+<td>PLL &gt; Natural Frequency [Hz]</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Natural frequency of PLL Speed estimate loop </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Damping Ratio</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>Damping ratio of PLL Speed estimate loop </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm_motor_sensor_bemf-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not use I/O pins directly. Current and voltage measurements are provided by the inner loop (FOC) module.</p>
+<h1><a class="anchor" id="rm_motor_sensor_bemf-usage_notes"></a>
+Usage Notes</h1>
+<h2>Startup Sequence</h2>
+<p>The BEMF observer requires sufficient back-EMF voltage for accurate angle estimation. During startup:</p>
+<ol type="1">
+<li>The module injects d-axis current (Id) to establish rotor flux</li>
+<li>Speed reference is ramped up in open-loop mode</li>
+<li>When speed exceeds the threshold (<code>f4_id_down_speed_mech_rad</code>), the module transitions to sensorless mode</li>
+<li>The PLL locks onto the estimated angle and provides continuous tracking</li>
+</ol>
+<h2>Parameter Tuning</h2>
+<ul>
+<li><b>Observer bandwidth (e_obs_omega)</b>: Higher values provide faster response but may amplify noise</li>
+<li><b>PLL bandwidth (pll_est_omega)</b>: Should be lower than observer bandwidth for stability</li>
+<li><b>Damping ratios (e_obs_zeta, pll_est_zeta)</b>: Values around 1.0 provide critically damped response</li>
+</ul>
+<h2>Open-Loop Damping</h2>
+<p>When <code>openloop_damping</code> is enabled, the module applies active damping during open-loop operation to suppress oscillations. This is particularly useful for motors with low inertia.</p>
+<h2><a class="anchor" id="rm_motor_sensor_bemf-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations:</p>
+<ul>
+<li>The BEMF observer requires minimum motor speed for accurate estimation (typically &gt; 5% of rated speed)</li>
+<li>Estimation accuracy depends on accurate motor parameter values (resistance, inductance, flux linkage)</li>
+<li>High-frequency noise in current measurements can affect estimation quality</li>
+<li>The module assumes sinusoidal back-EMF waveform</li>
+<li>Only the functions/types/macros exposed via rm_motor_sensor_bemf.h and rm_motor_sensor_api.h should be accessed by user code and that the contents of the other headers is subject to change.</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_sensor_bemf-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the Motor Sensor BEMF module in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Configure BEMF observer extended parameters */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__sensor__bemf__extended__cfg__t">motor_sensor_bemf_extended_cfg_t</a> g_motor_sensor_bemf_ext_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#a6c288e341a6ec095a0c0516fac478bc6">e_obs_omega</a>   = 300.0F,           <span class="comment">/* Natural frequency of BEMF observer [Hz] */</span></div><div class="line">    .e_obs_zeta    = 1.0F,             <span class="comment">/* Damping ratio of BEMF observer */</span></div><div class="line">    .pll_est_omega = 20.0F,            <span class="comment">/* Natural frequency of PLL speed estimate loop [Hz] */</span></div><div class="line">    .pll_est_zeta  = 1.0F,             <span class="comment">/* Damping ratio of PLL speed estimate loop */</span></div><div class="line"></div><div class="line">    .openloop_damping = MOTOR_MCSENSOR_OPENLOOP_DAMPING_DISABLE,</div><div class="line">    .less_switch      = MOTOR_MCSENSOR_LESS_SWITCH_DISABLE,</div><div class="line"></div><div class="line">    .ol_param                      =</div><div class="line">    {</div><div class="line">        .f4_ol_id_ref              = 1.0F,   <span class="comment">/* Open-loop d-axis current reference [A] */</span></div><div class="line">        .f4_ol_id_up_step          = 0.001F, <span class="comment">/* Id ramp-up step [A/control period] */</span></div><div class="line">        .f4_ol_id_down_step        = 0.001F, <span class="comment">/* Id ramp-down step [A/control period] */</span></div><div class="line">        .f4_ol_iq_down_step_ratio  = 0.1F,   <span class="comment">/* Iq ramp-down step ratio */</span></div><div class="line">        .f4_id_up_speed_mech_rad   = 10.0F,  <span class="comment">/* Speed threshold for Id ramp-up [rad/s mech] */</span></div><div class="line">        .f4_id_down_speed_mech_rad = 50.0F,  <span class="comment">/* Speed threshold for Id ramp-down [rad/s mech] */</span></div><div class="line">        .f4_opl2less_sw_time       = 0.5F,   <span class="comment">/* Open-loop to sensorless switching time [s] */</span></div><div class="line">        .f4_switch_phase_err_rad   = 5.0F,   <span class="comment">/* Phase error threshold for switching [deg] */</span></div><div class="line">    },</div><div class="line"></div><div class="line">    .ol_sub_param                  =</div><div class="line">    {</div><div class="line">        .f_fb_speed_limit_rate     = 1.0F,</div><div class="line">    },</div><div class="line"></div><div class="line">    .d_param                       =</div><div class="line">    {</div><div class="line">        .ed_hpf_omega    = 10.0F,      <span class="comment">/* HPF natural frequency for open-loop damping [Hz] */</span></div><div class="line">        .ol_damping_zeta = 1.0F,       <span class="comment">/* Damping ratio for open-loop damping */</span></div><div class="line">    },</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Configure BEMF sensor module */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> g_motor_sensor_bemf_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ae08facccf6bafca7d647cd7a57f30887">p_context</a> = NULL,</div><div class="line">    .p_extend  = &amp;g_motor_sensor_bemf_ext_cfg,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Control structure */</span></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__sensor__bemf__instance__ctrl__t">motor_sensor_bemf_instance_ctrl_t</a> g_motor_sensor_bemf_ctrl;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_motor_sensor_bemf_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open and configure the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaa7f29531038aa9dd786946d057870206">RM_MOTOR_SENSOR_BEMF_Open</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the BEMF sensor module variables */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga49fa31fbdc73e5b54ca1634bc83892f6">RM_MOTOR_SENSOR_BEMF_Reset</a>(&amp;g_motor_sensor_bemf_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gad552e8ddd1976c07bb5afd6a483c119f">RM_MOTOR_SENSOR_BEMF_Close</a>(&amp;g_motor_sensor_bemf_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Advanced Example</h2>
+<p>This example demonstrates the complete usage including angle/speed calculation in a control loop.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Pointers for angle and speed output */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">float</span>                 * gp_speed_el;</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">float</span>                 * gp_angle_el;</div><div class="line"><span class="keyword">static</span> <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga7524d2bdf93b616395e767a37b46a991">motor_sensor_output_t</a> * gp_sensor_output;</div><div class="line"></div><div class="line"><span class="comment">/* Example inner loop shared data (normally provided by FOC module) */</span></div><div class="line"><span class="keyword">static</span> motor_shared_inner_to_position_speed_t g_from_inner;</div><div class="line"><span class="keyword">static</span> motor_shared_inner_to_outer_foc_t      g_inner_data;</div><div class="line"><span class="keyword">static</span> motor_shared_outer_to_position_speed_t g_outer_data;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_motor_sensor_bemf_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaa7f29531038aa9dd786946d057870206">RM_MOTOR_SENSOR_BEMF_Open</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set pointers for angle and speed, and configure shared data */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga2654732bafe1326a6f280df887b0a18f">RM_MOTOR_SENSOR_BEMF_AngleSpeedInit</a>(&amp;g_motor_sensor_bemf_ctrl,</div><div class="line">                                              &amp;gp_speed_el,</div><div class="line">                                              &amp;gp_angle_el,</div><div class="line">                                              &amp;gp_sensor_output,</div><div class="line">                                              (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;g_from_inner);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Update parameters (e.g., after motor parameter identification) */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga1d8f439489c73557100707facd974142">RM_MOTOR_SENSOR_BEMF_ParameterUpdate</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Main control loop example */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* (Inner loop would update g_inner_data with measured currents and voltages) */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Calculate angle and speed estimation */</span></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga939683f4e872f8044acf081d88939696">RM_MOTOR_SENSOR_BEMF_AngleSpeedCalc</a>(&amp;g_motor_sensor_bemf_ctrl,</div><div class="line">                                                  (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;g_inner_data,</div><div class="line">                                                  (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *) &amp;g_outer_data);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Access estimated angle and speed via pointers */</span></div><div class="line">        <span class="keywordtype">float</span> current_angle_el = *gp_angle_el;</div><div class="line">        <span class="keywordtype">float</span> current_speed_el = *gp_speed_el;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get mechanical position and speed */</span></div><div class="line">        <span class="keywordtype">float</span> pos_mech   = 0.0F;</div><div class="line">        <span class="keywordtype">float</span> speed_mech = 0.0F;</div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaf0728b91c83b49554fc5b2c3043604ad">RM_MOTOR_SENSOR_BEMF_PositionSpeedGet</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;pos_mech, &amp;speed_mech);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Use estimated values for motor control */</span></div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(current_angle_el);</div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(current_speed_el);</div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(pos_mech);</div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(speed_mech);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>API Usage Examples</h2>
+<h3>Opening the Module</h3>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open and configure the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaa7f29531038aa9dd786946d057870206">RM_MOTOR_SENSOR_BEMF_Open</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line"></div></div><!-- fragment --> <h3>Setting Angle and Speed Pointers</h3>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set pointers for angle and speed, and configure shared data */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga2654732bafe1326a6f280df887b0a18f">RM_MOTOR_SENSOR_BEMF_AngleSpeedInit</a>(&amp;g_motor_sensor_bemf_ctrl,</div><div class="line">                                              &amp;gp_speed_el,</div><div class="line">                                              &amp;gp_angle_el,</div><div class="line">                                              &amp;gp_sensor_output,</div><div class="line">                                              (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;g_from_inner);</div><div class="line"></div></div><!-- fragment --> <h3>Calculating Angle and Speed</h3>
+<div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Calculate angle and speed estimation */</span></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga939683f4e872f8044acf081d88939696">RM_MOTOR_SENSOR_BEMF_AngleSpeedCalc</a>(&amp;g_motor_sensor_bemf_ctrl,</div><div class="line">                                                  (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;g_inner_data,</div><div class="line">                                                  (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *) &amp;g_outer_data);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <h3>Getting Mechanical Position and Speed</h3>
+<div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Get mechanical position and speed */</span></div><div class="line">        <span class="keywordtype">float</span> pos_mech   = 0.0F;</div><div class="line">        <span class="keywordtype">float</span> speed_mech = 0.0F;</div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaf0728b91c83b49554fc5b2c3043604ad">RM_MOTOR_SENSOR_BEMF_PositionSpeedGet</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;pos_mech, &amp;speed_mech);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <h3>Updating Parameters</h3>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Update parameters (e.g., after motor parameter identification) */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga1d8f439489c73557100707facd974142">RM_MOTOR_SENSOR_BEMF_ParameterUpdate</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line"></div></div><!-- fragment --> <h3>Resetting the Module</h3>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Reset the BEMF sensor module variables */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga49fa31fbdc73e5b54ca1634bc83892f6">RM_MOTOR_SENSOR_BEMF_Reset</a>(&amp;g_motor_sensor_bemf_ctrl);</div><div class="line"></div></div><!-- fragment --> <h3>Closing the Module</h3>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gad552e8ddd1976c07bb5afd6a483c119f">RM_MOTOR_SENSOR_BEMF_Close</a>(&amp;g_motor_sensor_bemf_ctrl);</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__ol__adjust__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__ol__adjust__t">motor_ol_adjust_t</a></td></tr>
+<tr class="separator:structmotor__ol__adjust__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__mcsensor__design__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__mcsensor__design__params__t">motor_mcsensor_design_params_t</a></td></tr>
+<tr class="separator:structmotor__mcsensor__design__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__sensor__bemf__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__sensor__bemf__extended__cfg__t">motor_sensor_bemf_extended_cfg_t</a></td></tr>
+<tr class="separator:structmotor__sensor__bemf__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__sensor__bemf__instance__signals__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__sensor__bemf__instance__signals__ctrl__t">motor_sensor_bemf_instance_signals_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__sensor__bemf__instance__signals__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__sensor__bemf__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__sensor__bemf__instance__ctrl__t">motor_sensor_bemf_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__sensor__bemf__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__ol__adjust__t" id="structmotor__ol__adjust__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__ol__adjust__t">&#9670;&nbsp;</a></span>motor_ol_adjust_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_ol_adjust_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>For switching open-loop to sensorless FOC </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a99072914e012cc6170c801f0392e8ab4"></a>motor_bemf_observer_t</td>
+<td class="fieldname">
+bemf_obs_ctrl</td>
+<td class="fielddoc">
+BEMF observer structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad7e305c59184dc9051e5bce7d0b31578"></a>motor_pll_est_t</td>
+<td class="fieldname">
+pll_est_ctrl</td>
+<td class="fielddoc">
+PLL estimator structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a355304eca114703b1a26302ba317eaaf"></a>uint8_t</td>
+<td class="fieldname">
+activate_ol_adjust_mode</td>
+<td class="fielddoc">
+Open loop adjust mode activation flag (1: activated) </td></tr>
+<tr><td class="fieldtype">
+<a id="aa34a77cc2557a0e956123a3a52f34f02"></a>uint8_t</td>
+<td class="fieldname">
+pll_engage_status</td>
+<td class="fielddoc">
+PLL engage status (0: not engaged, 1: engaged) </td></tr>
+<tr><td class="fieldtype">
+<a id="a639cf188ea2dd19d35d1ab8713c2dfdb"></a>float</td>
+<td class="fieldname">
+pll_start_speed</td>
+<td class="fielddoc">
+Speed threshold for PLL activation [rad/s electrical]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a01a73597f5523fd73f8f667e402f3ae0"></a>float</td>
+<td class="fieldname">
+speed_el_pll</td>
+<td class="fielddoc">
+PLL estimated electrical speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="adb3f2bf099fc10658114ccc8f742b45c"></a>float</td>
+<td class="fieldname">
+angle_el_pll</td>
+<td class="fielddoc">
+PLL estimated electrical angle [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a42d29db2a312e36690485f158a7946bf"></a>float</td>
+<td class="fieldname">
+e_d</td>
+<td class="fielddoc">
+Estimated d-axis back-EMF voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad4b0068278396e251fe4937c16a6b2b1"></a>float</td>
+<td class="fieldname">
+e_q</td>
+<td class="fielddoc">
+Estimated q-axis back-EMF voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7ee9f08138034f7ede1647f148904724"></a>float</td>
+<td class="fieldname">
+angle_err_el</td>
+<td class="fielddoc">
+Estimated electrical angle error [rad]. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__mcsensor__design__params__t" id="structmotor__mcsensor__design__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__mcsensor__design__params__t">&#9670;&nbsp;</a></span>motor_mcsensor_design_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_mcsensor_design_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Design parameter for open-loop damping </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ada5920f5655d48519d970d6b331d5026"></a>float</td>
+<td class="fieldname">
+ed_hpf_omega</td>
+<td class="fielddoc">
+Natural frequency[Hz] for HPF in open-loop damping gain design. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6777ef397e85d158dc29b2cad6b2f1c2"></a>float</td>
+<td class="fieldname">
+ol_damping_zeta</td>
+<td class="fielddoc">
+Damping ratio for open-loop damping gain design. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__sensor__bemf__extended__cfg__t" id="structmotor__sensor__bemf__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__sensor__bemf__extended__cfg__t">&#9670;&nbsp;</a></span>motor_sensor_bemf_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_sensor_bemf_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration for sensor bemf module </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0717d773616e54885cf5184bde669728"></a>motor_oldamp_t</td>
+<td class="fieldname">
+ol_param</td>
+<td class="fielddoc">
+Parameter for open-loop damping. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0df14e43826edb71ac842af05aee64cf"></a>motor_oldamp_sub_t</td>
+<td class="fieldname">
+ol_sub_param</td>
+<td class="fielddoc">
+Sub parameter for open-loop damping. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4f7725bef1f487cac5e084c7aa333ac7"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__mcsensor__design__params__t">motor_mcsensor_design_params_t</a></td>
+<td class="fieldname">
+d_param</td>
+<td class="fielddoc">
+Design parameter for speed control. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2fa829fbbb729a59041ba3618b3713e1"></a>motor_openloop_damping_t</td>
+<td class="fieldname">
+openloop_damping</td>
+<td class="fielddoc">
+*Openloop damping active flag </td></tr>
+<tr><td class="fieldtype">
+<a id="ab8917d42a7d070567691f8e8deb22d50"></a>motor_mcsensor_less_switch_t</td>
+<td class="fieldname">
+less_switch</td>
+<td class="fielddoc">
+*Soft switching active flag </td></tr>
+<tr><td class="fieldtype">
+<a id="a6c288e341a6ec095a0c0516fac478bc6"></a>float</td>
+<td class="fieldname">
+e_obs_omega</td>
+<td class="fielddoc">
+Natural frequency of BEMF observer [Hz]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a27f3638aa8674947edefe09889a0fe69"></a>float</td>
+<td class="fieldname">
+e_obs_zeta</td>
+<td class="fielddoc">
+Damping ratio of BEMF observer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4890325144f4b066d236858272f56210"></a>float</td>
+<td class="fieldname">
+pll_est_omega</td>
+<td class="fielddoc">
+Natural frequency of PLL speed estimate loop [Hz]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a729b503568f330f41515ea92f05e6fea"></a>float</td>
+<td class="fieldname">
+pll_est_zeta</td>
+<td class="fielddoc">
+Damping ratio of PLL speed estimate loop. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__sensor__bemf__instance__signals__ctrl__t" id="structmotor__sensor__bemf__instance__signals__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__sensor__bemf__instance__signals__ctrl__t">&#9670;&nbsp;</a></span>motor_sensor_bemf_instance_signals_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_sensor_bemf_instance_signals_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Signals for BEMF sensorless control </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="adaae9f0b9e2509aa37e2170d30eda31f"></a>float</td>
+<td class="fieldname">
+speed_el</td>
+<td class="fielddoc">
+Estimated electrical speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0d9ce95314952dc871d4b6bd62a4d4b0"></a>float</td>
+<td class="fieldname">
+angle_el</td>
+<td class="fielddoc">
+Estimated electrical angle [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1edf87e61465aa5e5b166ef7ed1fa742"></a>float</td>
+<td class="fieldname">
+inner_control_period</td>
+<td class="fielddoc">
+Inner control cycle period [sec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="af3f0bdb4e7c92f5bad0d4b99cee70f6d"></a>float</td>
+<td class="fieldname">
+outer_control_period</td>
+<td class="fielddoc">
+Outer control cycle period [sec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa03b2e0d8af0cd327f4fc897059ec8fa"></a>float</td>
+<td class="fieldname">
+e_d</td>
+<td class="fielddoc">
+Estimated d-axis back-EMF voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="afec72134bb60f60b50abab7dbe2b4d20"></a>float</td>
+<td class="fieldname">
+e_q</td>
+<td class="fielddoc">
+Estimated q-axis back-EMF voltage [V]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8ce8b05db4df1453ca1b0a6db6ad1846"></a>float</td>
+<td class="fieldname">
+angle_err_el</td>
+<td class="fielddoc">
+Estimated electrical angle error [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aef2dd4ed4c69ba8d82887f44bc6618b8"></a>uint8_t</td>
+<td class="fieldname">
+speed_pi_status_flag</td>
+<td class="fielddoc">
+Flag for speed pi ctrl. </td></tr>
+<tr><td class="fieldtype">
+<a id="afda2c836f5bdb933dadf8f8f63897ba0"></a>uint8_t</td>
+<td class="fieldname">
+pll_status_flag</td>
+<td class="fielddoc">
+Flag to start pll. </td></tr>
+<tr><td class="fieldtype">
+<a id="a927e129cbccfb0a6e23a188e8078c0f9"></a>uint8_t</td>
+<td class="fieldname">
+flag_id_up_executed</td>
+<td class="fielddoc">
+Initial rotor pole position detection executed flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab21a5c5c5a835ed432a0591c6c296bbf"></a>uint8_t</td>
+<td class="fieldname">
+flag_down_to_ol</td>
+<td class="fielddoc">
+Open-loop drive transition flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab33115bfeccee86ddf37043a9f18037c"></a>float</td>
+<td class="fieldname">
+ol_iq_down_step</td>
+<td class="fielddoc">
+Q-axis current reference ramping down rate [A/control period]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaf2443812953bcbc83d54ad9b68c7f48"></a>float</td>
+<td class="fieldname">
+phase_err_rad_lpf</td>
+<td class="fielddoc">
+LPF value of phase error [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3f6a5237a52235225d940f820ce95c3e"></a>float</td>
+<td class="fieldname">
+init_phase_err_rad</td>
+<td class="fielddoc">
+Initialization value of phase error. </td></tr>
+<tr><td class="fieldtype">
+<a id="a233a9f19a0d1f268b69a391032178ec3"></a>float</td>
+<td class="fieldname">
+opl_torque_current</td>
+<td class="fielddoc">
+Torque current (Iq) in sensor-less switching [A]. </td></tr>
+<tr><td class="fieldtype">
+<a id="adeb0b86486ed112aced6fb622d0c2185"></a>float</td>
+<td class="fieldname">
+speed_el_damp_comp</td>
+<td class="fielddoc">
+Speed compensation for open-loop damping [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a05b77c6638c6032e0afc16f60623f8a9"></a>float</td>
+<td class="fieldname">
+speed_el_lpf</td>
+<td class="fielddoc">
+Low-pass filtered electrical speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a495ab1cfc6f7d1d2fd28190deb20ff41"></a>uint8_t</td>
+<td class="fieldname">
+state_id_ref</td>
+<td class="fielddoc">
+D-axis current command state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a463cc48b468d570e04a88fe137990b16"></a>uint8_t</td>
+<td class="fieldname">
+state_iq_ref</td>
+<td class="fielddoc">
+Q-axis current command state. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae2a74a0d33689d0bf4839fcb4c5f5e40"></a>float</td>
+<td class="fieldname">
+speed_ref_el_ctrl</td>
+<td class="fielddoc">
+Command electrical speed value [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1f489ba552b79f4b1cd6a0479dce4180"></a>motor_shared_pos_speed_to_inner_t</td>
+<td class="fieldname">
+to_inner</td>
+<td class="fielddoc">
+Structure of data to be sent to inner loop. </td></tr>
+<tr><td class="fieldtype">
+<a id="a72445c56aa8662e54d73622bcce5ff5a"></a>motor_oldamp_sub_t</td>
+<td class="fieldname">
+openloop_ctrl</td>
+<td class="fielddoc">
+Open-loop damping control structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a80ae399c7680c2ccbd7e6dde1642a850"></a>motor_bemf_observer_t</td>
+<td class="fieldname">
+bemf_obs_ctrl</td>
+<td class="fielddoc">
+BEMF observer control structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab7e2ea3f04983f79f5140f0c48826989"></a>motor_pll_est_t</td>
+<td class="fieldname">
+pll_est_ctrl</td>
+<td class="fielddoc">
+PLL estimator control structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a400620d38a2eebb5fb9166c3e5ef0336"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__ol__adjust__t">motor_ol_adjust_t</a></td>
+<td class="fieldname">
+ol_adjust_ctrl</td>
+<td class="fielddoc">
+BEMF and PLL adjust/tuning structure for open-loop mode. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__sensor__bemf__instance__ctrl__t" id="structmotor__sensor__bemf__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__sensor__bemf__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_sensor_bemf_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_sensor_bemf_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>BEMF sensor instance control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acd832a9263b32b95b87e3aa128c2c0ad"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+module open flag </td></tr>
+<tr><td class="fieldtype">
+<a id="ad7b96f40f68f367b2929ba5ed5e524ce"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#structmotor__sensor__bemf__instance__signals__ctrl__t">motor_sensor_bemf_instance_signals_ctrl_t</a></td>
+<td class="fieldname">
+signals</td>
+<td class="fielddoc">
+Signals and controls structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae06984fb5ad01ed53793998e40ebf0bf"></a>const <br class="typebreak" />
+motor_shared_inner_to_position_speed_t *</td>
+<td class="fieldname">
+p_from_inner</td>
+<td class="fielddoc">
+pointer to data from inner loop </td></tr>
+<tr><td class="fieldtype">
+<a id="acd5900ed1a4bb2ceaaefab47ed8b10cd"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Angle related configuration structure. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaa7f29531038aa9dd786946d057870206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa7f29531038aa9dd786946d057870206">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens and configures the Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#adc246e01c1578ad84994df298694f455">motor_sensor_api_t::open</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open and configure the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaa7f29531038aa9dd786946d057870206">RM_MOTOR_SENSOR_BEMF_Open</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>MTR_ANGL_EST successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Configuration parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad552e8ddd1976c07bb5afd6a483c119f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad552e8ddd1976c07bb5afd6a483c119f">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#a0d2d27c9370e79f80a7d07e7dc33e2ac">motor_sensor_api_t::close</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the BEMF sensor module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gad552e8ddd1976c07bb5afd6a483c119f">RM_MOTOR_SENSOR_BEMF_Close</a>(&amp;g_motor_sensor_bemf_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga49fa31fbdc73e5b54ca1634bc83892f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga49fa31fbdc73e5b54ca1634bc83892f6">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset variables of Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#afba227dac4f9a1538f420c301500c93c">motor_sensor_api_t::reset</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Reset the BEMF sensor module variables */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga49fa31fbdc73e5b54ca1634bc83892f6">RM_MOTOR_SENSOR_BEMF_Reset</a>(&amp;g_motor_sensor_bemf_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully reset. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1d8f439489c73557100707facd974142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1d8f439489c73557100707facd974142">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_ParameterUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_ParameterUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the parameters of Angle&amp;Speed Estimation. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#a4f574fe01b9a3d199441c0ac42cc6840">motor_sensor_api_t::parameterUpdate</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Update parameters (e.g., after motor parameter identification) */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga1d8f439489c73557100707facd974142">RM_MOTOR_SENSOR_BEMF_ParameterUpdate</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;g_motor_sensor_bemf_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is update. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2654732bafe1326a6f280df887b0a18f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2654732bafe1326a6f280df887b0a18f">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_AngleSpeedInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_AngleSpeedInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float **&#160;</td>
+          <td class="paramname"><em>pp_speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float **&#160;</td>
+          <td class="paramname"><em>pp_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#gac4b190661cfe803ea577ebdac1302352">motor_sensor_data_exchange_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_out_extra_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets pointers to angle and speed variables, and configures extra data structures for the BEMF observer. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set pointers for angle and speed, and configure shared data */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga2654732bafe1326a6f280df887b0a18f">RM_MOTOR_SENSOR_BEMF_AngleSpeedInit</a>(&amp;g_motor_sensor_bemf_ctrl,</div><div class="line">                                              &amp;gp_speed_el,</div><div class="line">                                              &amp;gp_angle_el,</div><div class="line">                                              &amp;gp_sensor_output,</div><div class="line">                                              (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;g_from_inner);</div><div class="line"></div></div><!-- fragment --><p> This function initializes pointer outputs for speed and angle, sets up shared data pointers for communication between control layers, and updates motor parameters from the inner loop input. It also triggers parameter recalculation for the observer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to motor angle control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_speed</td><td>Pointer to output variable for speed pointer. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_angle</td><td>Pointer to output variable for angle pointer. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_out_extra_data</td><td>Pointer to extra output data structure pointer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set pointers. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga939683f4e872f8044acf081d88939696"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga939683f4e872f8044acf081d88939696">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_AngleSpeedCalc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_AngleSpeedCalc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_input_inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_input_outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates angle and speed using BEMF observer and open-loop estimator. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Calculate angle and speed estimation */</span></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#ga939683f4e872f8044acf081d88939696">RM_MOTOR_SENSOR_BEMF_AngleSpeedCalc</a>(&amp;g_motor_sensor_bemf_ctrl,</div><div class="line">                                                  (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;g_inner_data,</div><div class="line">                                                  (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *) &amp;g_outer_data);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --><p> This function estimates the rotor angle and speed based on motor feedback and control mode. It updates internal references and manages open-loop/PI transitions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to motor angle control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_input_inner</td><td>Pointer to inner loop input data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_input_outer</td><td>Pointer to outer loop input data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calculation successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer or not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf0728b91c83b49554fc5b2c3043604ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf0728b91c83b49554fc5b2c3043604ad">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_BEMF_PositionSpeedGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_BEMF_PositionSpeedGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *const&#160;</td>
+          <td class="paramname"><em>p_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *const&#160;</td>
+          <td class="paramname"><em>p_speed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieves the rotor position and speed in mechanical [rad] and [rad/s]. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Get mechanical position and speed */</span></div><div class="line">        <span class="keywordtype">float</span> pos_mech   = 0.0F;</div><div class="line">        <span class="keywordtype">float</span> speed_mech = 0.0F;</div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___b_e_m_f.html#gaf0728b91c83b49554fc5b2c3043604ad">RM_MOTOR_SENSOR_BEMF_PositionSpeedGet</a>(&amp;g_motor_sensor_bemf_ctrl, &amp;pos_mech, &amp;speed_mech);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --><p> This function calculates the mechanical speed from the internal electrical speed state, converting it using the motor's pole pair count. The position output is currently not implemented.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the motor sensor control instance. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_pos</td><td>Pointer to store the calculated mechanical position [rad]. (Currently not implemented.) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_speed</td><td>Pointer to store the calculated mechanical speed [rad/s].</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calculation successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer or not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -14,6 +14,7 @@ var searchData=
   ['capture_20engine_20unit_20_28r_5fceu_29',['Capture Engine Unit (r_ceu)',['../group___c_e_u.html',1,'']]],
   ['clock_20generation_20circuit_20_28r_5fcgc_29',['Clock Generation Circuit (r_cgc)',['../group___c_g_c.html',1,'']]],
   ['cgc_20interface',['CGC Interface',['../group___c_g_c___a_p_i.html',1,'']]],
+  ['command_20code',['Command Code',['../group___command.html',1,'']]],
   ['comparator_20interface',['Comparator Interface',['../group___c_o_m_p_a_r_a_t_o_r___a_p_i.html',1,'']]],
   ['crc_20_28r_5fcrc_29',['CRC (r_crc)',['../group___c_r_c.html',1,'']]],
   ['crc_20interface',['CRC Interface',['../group___c_r_c___a_p_i.html',1,'']]],

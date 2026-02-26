@@ -65,6 +65,8 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
       [ "RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235ad302f44eb6bb360373f2c52ce0172993", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235a7badc0530a3b1b5df7bd54bd584188e3", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235a8a50d105d8063b649c1ca5cb10f0f4ed", null ],
+      [ "RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA512_224", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235afe6db694f7193ae6dd43e872854996d4", null ],
+      [ "RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA512_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235a54cd60ec829f9278f5e9a66aa43c6beb", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235af3d23f6d810fac2ea403720c9dd794e7", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235ac307cd90e74d6e1e85657ee59023afb1", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga385f2388cc3e87db6a1f385351b47235a98b776e2c93ae7037fc2372e2348c839", null ],
@@ -106,6 +108,8 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
       [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afca4cbdce8dc08586f932817e00b6dc123d", null ],
       [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afcae9bb816b5de9ff001daf568217777ce0", null ],
       [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afca3076eb757fc9660912c53e1360a6e407", null ],
+      [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA512_224", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afcaf246807bef811fd129de0dba6331a945", null ],
+      [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA512_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afcae1735e9972c54e42b442869b780a979a", null ],
       [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_KDF_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afcac9343bc4df23b91487970ee3978e6139", null ],
       [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_KDF_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afca0d8394cf94bb3ec563236261979c5a9f", null ],
       [ "RSIP_BYTE_SIZE_ENCRYPTED_KEY_KDF_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga5738fc5deb16a1262b243ce41dc37afca4d9e619e1762b80e53527f2b85768133", null ],
@@ -116,6 +120,9 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
       [ "RSIP_BYTE_SIZE_WRAPPED_DKM_BLOCK_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ggab895895d16213aa6873764cb14ee4327a66cc8d7aaedd035fcfa0562906ad05d3", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_DKM_BLOCK_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ggab895895d16213aa6873764cb14ee4327a85381128d1c466bca9d4ec97c0ea0740", null ],
       [ "RSIP_BYTE_SIZE_WRAPPED_DKM_BLOCK_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ggab895895d16213aa6873764cb14ee4327a213fde9207edbc59b81cc1d101d18604", null ]
+    ] ],
+    [ "rsip_byte_size_wrapped_iv_t", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga67d764f83e8ada3c4cbefbd79e90f28c", [
+      [ "RSIP_BYTE_SIZE_WRAPPED_IV", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gga67d764f83e8ada3c4cbefbd79e90f28ca1b89215ca3d9dbde73eb75867daa317c", null ]
     ] ],
     [ "R_RSIP_Open", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga0f3222e34aedf16a9eeba214db0aeeac", null ],
     [ "R_RSIP_Close", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gac7848f48d9f8484cb17e156e299046fe", null ],
@@ -147,6 +154,7 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
     [ "R_RSIP_ChaCha20_Poly1305_Update", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga6a77fa1c0278797acd65b28366341322", null ],
     [ "R_RSIP_ChaCha20_Poly1305_Finish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga4cb40eaa9c967e8eaafa660a8aa2a1a7", null ],
     [ "R_RSIP_ChaCha20_Poly1305_Verify", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga2528b58c29a09b915b4dacf3d8c92ac0", null ],
+    [ "R_RSIP_xDLMS_InitiateRequest_Decrypt", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gabe86478c42b80b0de0dbc43d58a7afd4", null ],
     [ "R_RSIP_ECDSA_Sign", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga51b427c5ed2f8d2980d6c29a68951f3c", null ],
     [ "R_RSIP_ECDSA_Verify", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga4001cf997810be799f9873f7f19f515c", null ],
     [ "R_RSIP_PKI_ECDSA_CertVerify", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga360320c93f4aa6faf165f9598d2a6602", null ],

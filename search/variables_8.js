@@ -2,7 +2,12 @@ var searchData=
 [
   ['h_5foutput_5fsize',['h_output_size',['../group___c_e_u.html#af9ab59d5dc98a2eeea0d1bee7a39aef9',1,'ceu_extended_cfg_t']]],
   ['hall_5finterrupt_5fargs',['hall_interrupt_args',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#af1a0458558c196cdd177c9b5d4f4c43e',1,'motor_120_control_hall_instance_ctrl_t']]],
-  ['hall_5fsignal_5fstatus',['hall_signal_status',['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a2ecf35fdff5fad6a46e17dc3f792855b',1,'motor_sense_hall_instance_ctrl_t']]],
+  ['hall_5fpattern',['hall_pattern',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#a5250150d584ebb2cdb88638cd5fea2fb',1,'motor_sensor_hall_extended_cfg_t']]],
+  ['hall_5fperiod',['hall_period',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#abebba830b2a8e1c903bb64af2632a2fe',1,'motor_sensor_hall_instance_signals_ctrl_t']]],
+  ['hall_5fsignal',['hall_signal',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#a54cd8e7baa7f336b13ca7a598bbb94c8',1,'motor_sensor_hall_instance_signals_ctrl_t']]],
+  ['hall_5fsignal_5fcount',['hall_signal_count',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#a8e11160a6d7224930c430e0541eee1a6',1,'motor_sensor_hall_instance_signals_ctrl_t']]],
+  ['hall_5fsignal_5fmemory',['hall_signal_memory',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#a25c0e88f37c050b8118268db60cbd16e',1,'motor_sensor_hall_instance_signals_ctrl_t']]],
+  ['hall_5fsignal_5fstatus',['hall_signal_status',['../group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#a149b487dce6c36e9f23f3ab0f9f7971a',1,'motor_sensor_hall_instance_signals_ctrl_t::hall_signal_status()'],['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a2ecf35fdff5fad6a46e17dc3f792855b',1,'motor_sense_hall_instance_ctrl_t::hall_signal_status()']]],
   ['handle',['handle',['../group___g_a_p___a_p_i.html#ad144c97ec49261480cd46be04b48bc24',1,'st_ble_gap_enhanced_read_tx_power_level_evt_t::handle()'],['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ab48325bd1a7f55e541dc510c3c020c9f',1,'rm_ble_mesh_access_model_req_msg_context_t::handle()'],['../group__access__cb.html#a9156fe3129e04a6cdaa353ab59f2a3b1',1,'rm_ble_mesh_access_timeout_callback_args_t::handle()']]],
   ['hbp_5fno_5flp',['hbp_no_lp',['../group___m_i_p_i___d_s_i___a_p_i.html#a9c584a3b6e23cc9b63591cd4ac6ea31d',1,'mipi_dsi_cfg_t']]],
   ['hci_5frev',['hci_rev',['../group___g_a_p___a_p_i.html#ad9f06ac16c9c78cfb475e1b013e88cae',1,'st_ble_gap_loc_ver_info_t']]],

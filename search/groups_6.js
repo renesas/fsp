@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['fault_20return_20code',['Fault return code',['../group___fault_ret.html',1,'']]],
   ['flash_20interface',['Flash Interface',['../group___f_l_a_s_h___a_p_i.html',1,'']]],
   ['flash_20_28r_5fflash_5fhp_29',['Flash (r_flash_hp)',['../group___f_l_a_s_h___h_p.html',1,'']]],
   ['flash_20_28r_5fflash_5flp_29',['Flash (r_flash_lp)',['../group___f_l_a_s_h___l_p.html',1,'']]],

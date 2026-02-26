@@ -3,12 +3,22 @@ var searchData=
   ['mipi_5fdsi_5fctrl_5ft',['mipi_dsi_ctrl_t',['../group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6',1,'r_mipi_dsi_api.h']]],
   ['motor_5f120_5fcontrol_5fctrl_5ft',['motor_120_control_ctrl_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#ga52699a76491c24c80ad8a0d7d58f9b79',1,'rm_motor_120_control_api.h']]],
   ['motor_5f120_5fdriver_5fctrl_5ft',['motor_120_driver_ctrl_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#gac22e2165fbe216b6ca99369b706ad175',1,'rm_motor_120_driver_api.h']]],
+  ['motor_5falgorithm_5fctrl_5ft',['motor_algorithm_ctrl_t',['../group___m_o_t_o_r___a_l_g_o_r_i_t_h_m___a_p_i.html#gaf61a0f93747ec53648bcefb4ce86c31e',1,'rm_motor_algorithm_api.h']]],
   ['motor_5fangle_5fctrl_5ft',['motor_angle_ctrl_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e',1,'rm_motor_angle_api.h']]],
   ['motor_5fctrl_5ft',['motor_ctrl_t',['../group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2',1,'rm_motor_api.h']]],
   ['motor_5fcurrent_5fctrl_5ft',['motor_current_ctrl_t',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ga151de5363c2dcaa7f377c7caec25dea9',1,'rm_motor_current_api.h']]],
   ['motor_5fdriver_5fctrl_5ft',['motor_driver_ctrl_t',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#gafa26e3bdab89f248d2798b0d7f6c2e73',1,'rm_motor_driver_api.h']]],
+  ['motor_5fhal_5fdriver_5fctrl_5ft',['motor_hal_driver_ctrl_t',['../group___m_o_t_o_r___h_a_l___d_r_i_v_e_r___a_p_i.html#gae10c1858cbc59a24a2b404c8ce22bfaf',1,'rm_motor_hal_driver_api.h']]],
   ['motor_5finertia_5festimate_5fctrl_5ft',['motor_inertia_estimate_ctrl_t',['../group___m_o_t_o_r___i_n_e_r_t_i_a___e_s_t_i_m_a_t_e___a_p_i.html#ga2e32533e9bc69cf3ed4ebab356df0a55',1,'rm_motor_inertia_estimate_api.h']]],
   ['motor_5fposition_5fctrl_5ft',['motor_position_ctrl_t',['../group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576',1,'rm_motor_position_api.h']]],
   ['motor_5freturn_5forigin_5fctrl_5ft',['motor_return_origin_ctrl_t',['../group___m_o_t_o_r___r_e_t_u_r_n___o_r_i_g_i_n___a_p_i.html#gac3a106aa6b158306599847df0ba60641',1,'rm_motor_return_origin_api.h']]],
-  ['motor_5fspeed_5fctrl_5ft',['motor_speed_ctrl_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d',1,'rm_motor_speed_api.h']]]
+  ['motor_5fsensor_5fctrl_5ft',['motor_sensor_ctrl_t',['../group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123',1,'rm_motor_sensor_api.h']]],
+  ['motor_5fsensor_5fdata_5fexchange_5ft',['motor_sensor_data_exchange_t',['../group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#gac4b190661cfe803ea577ebdac1302352',1,'rm_motor_sensor_api.h']]],
+  ['motor_5fsensor_5finput_5finner_5ft',['motor_sensor_input_inner_t',['../group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70',1,'rm_motor_sensor_api.h']]],
+  ['motor_5fsensor_5finput_5fouter_5ft',['motor_sensor_input_outer_t',['../group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986',1,'rm_motor_sensor_api.h']]],
+  ['motor_5fsensor_5foutput_5ft',['motor_sensor_output_t',['../group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga7524d2bdf93b616395e767a37b46a991',1,'rm_motor_sensor_api.h']]],
+  ['motor_5fspeed_5fctrl_5ft',['motor_speed_ctrl_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d',1,'rm_motor_speed_api.h']]],
+  ['motor_5ftrajectory_5fcommand_5fflags_5ft',['motor_trajectory_command_flags_t',['../group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gab2c2bf85c8dff7023c2d9c7d9a2d9a00',1,'rm_motor_trajectory_api.h']]],
+  ['motor_5ftrajectory_5fctrl_5ft',['motor_trajectory_ctrl_t',['../group___m_o_t_o_r___t_r_a_j_e_c_t_o_r_y___a_p_i.html#gae0a2dd66bd9ef850753c51e95c806bb0',1,'rm_motor_trajectory_api.h']]],
+  ['motor_5ftuner_5fctrl_5ft',['motor_tuner_ctrl_t',['../group___m_o_t_o_r___t_u_n_e_r___a_p_i.html#ga0b12a578a13e415ab842aa02d7d12115',1,'rm_motor_tuner_api.h']]]
 ];

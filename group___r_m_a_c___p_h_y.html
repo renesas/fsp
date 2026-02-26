@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -298,6 +298,15 @@ Features</h2>
 <p>Following features are not supported:</p><ul>
 <li>Extensions to management frame format defined in IEEE802.3 clause 45</li>
 </ul>
+<h2><a class="anchor" id="r-rmac-phy-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA8</td><td>RA8D2, RA8M2, RA8P1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-rmac-phy-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_rmac_phy</h2>
@@ -356,13 +365,21 @@ Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Select whether to use GPY111 PHY-LSI or not. </td></tr>
 <tr class="tree_none">
+<td>VSC8541 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use VSC8541 Phy LSI or not. </td></tr>
+<tr class="tree_none">
 <td>User Own Target</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to use User own PHY-LSI or not. </td></tr>
+</td><td>Disabled </td><td>Select whether to use User own Phy LSI or not. </td></tr>
 <tr class="tree_none">
 <td>Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -555,6 +572,7 @@ Limitations</h2>
 <li>DP83620</li>
 <li>ICS1894</li>
 <li>GPY111</li>
+<li>VSC8541</li>
 </ul>
 </li>
 </ul>
@@ -1151,7 +1169,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

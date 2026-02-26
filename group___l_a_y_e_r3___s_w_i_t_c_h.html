@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -299,9 +299,22 @@ Features</h2>
 <li>Transmit/receive data using a descriptor.</li>
 <li>Timestamp feature</li>
 <li>Optional callback function when transmit/receive complete or an error occurs</li>
-<li>Frame Replication and Elimination for Reliability (FRER) feature.</li>
-<li>Per Stream Filtering and Policing (PSFP) feature</li>
+<li>Port based Forwarding [MFWD]</li>
+<li>Direct Forwarding [MFWD]</li>
+<li>L2/L3 Forwarding [MFWD/GWCA]</li>
+<li>L2/L3 Update [MFWD]</li>
+<li>Frame Replication and Elimination for Reliability (FRER) feature [MFWD]</li>
+<li>Per Stream Filtering and Policing (PSFP) feature [MFWD]</li>
 </ul>
+<h2><a class="anchor" id="r-layer3-switch-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA8</td><td>RA8D2, RA8M2, RA8P1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-layer3-switch-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_layer3_switch</h2>
@@ -374,7 +387,7 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Sw
 <tr class="tree_lvl_3_item">
 <td class="tree_lvl_3_cell">Queue 7</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue7 dept of port 0. </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 0 fowarding </td></tr>
+<td class="tree_lvl_2_cell">Forwarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 0 forwarding </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">IPV queues for preemptable frames</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -442,7 +455,7 @@ Timer 1</li>
 <tr class="tree_lvl_3_item">
 <td class="tree_lvl_3_cell">Queue 7</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue7 dept of port 1. </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 1 fowarding </td></tr>
+<td class="tree_lvl_2_cell">Forwarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 1 forwarding </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">IPV queues for preemptable frames</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -489,6 +502,16 @@ Timer 0</li>
 Timer 1</li>
 </ul>
 </td><td>Timer 1 </td><td>GPTP timer number of port 1. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Ports &gt; CPU  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Forwarding</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Port 0</li>
+<li>
+Port 1</li>
+</ul>
+</td><td></td><td>Destination ports for CPU forwarding </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> CBS  </td></tr>
 <tr class="tree_lvl_2">
@@ -1991,9 +2014,9 @@ p_gptp_instance</td>
 <td class="fielddoc">
 Pointer to a gPTP instance. </td></tr>
 <tr><td class="fieldtype">
-<a id="afdfe4de0b2b55880bb33486afde41347"></a>uint32_t</td>
+<a id="ad16d956b9dc1ab6eddd1312eaba240cb"></a>uint32_t</td>
 <td class="fieldname">
-fowarding_target_port_masks[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
+fowarding_target_port_masks[BSP_FEATURE_ETHER_NUM_CHANNELS+1]</td>
 <td class="fielddoc">
 List of ports to which incoming frames are forwarded. </td></tr>
 <tr><td class="fieldtype">
@@ -3630,7 +3653,7 @@ List of TAS gate configurations. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

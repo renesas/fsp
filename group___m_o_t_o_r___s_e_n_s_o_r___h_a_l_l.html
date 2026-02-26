@@ -1,0 +1,1140 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Motor Sensor Hall middleware (rm_motor_sensor_hall)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Motor Sensor Hall middleware (rm_motor_sensor_hall)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html">Advanced Motor Middleware</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga118f01736bbe263f979d1c76c54fde6a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga118f01736bbe263f979d1c76c54fde6a">RM_MOTOR_SENSOR_HALL_Open</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga118f01736bbe263f979d1c76c54fde6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures the Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#adc246e01c1578ad84994df298694f455">motor_sensor_api_t::open</a>.  <a href="#ga118f01736bbe263f979d1c76c54fde6a">More...</a><br /></td></tr>
+<tr class="separator:ga118f01736bbe263f979d1c76c54fde6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8a1c062ae7025980251a85a637ec164"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaf8a1c062ae7025980251a85a637ec164">RM_MOTOR_SENSOR_HALL_Close</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gaf8a1c062ae7025980251a85a637ec164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#a0d2d27c9370e79f80a7d07e7dc33e2ac">motor_sensor_api_t::close</a>.  <a href="#gaf8a1c062ae7025980251a85a637ec164">More...</a><br /></td></tr>
+<tr class="separator:gaf8a1c062ae7025980251a85a637ec164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ebbefae9176fc52f972f11adeb772e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9ebbefae9176fc52f972f11adeb772e7">RM_MOTOR_SENSOR_HALL_Reset</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga9ebbefae9176fc52f972f11adeb772e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset variables of Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#afba227dac4f9a1538f420c301500c93c">motor_sensor_api_t::reset</a>.  <a href="#ga9ebbefae9176fc52f972f11adeb772e7">More...</a><br /></td></tr>
+<tr class="separator:ga9ebbefae9176fc52f972f11adeb772e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0492a9a76c0666c944ec08e7d13111e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga0492a9a76c0666c944ec08e7d13111e8">RM_MOTOR_SENSOR_HALL_AngleSpeedInit</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, float **pp_speed, float **pp_angle, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#gac4b190661cfe803ea577ebdac1302352">motor_sensor_data_exchange_t</a> *const p_out_extra_data)</td></tr>
+<tr class="memdesc:ga0492a9a76c0666c944ec08e7d13111e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets output pointers for speed, angle, and extra data for the inner loop estimation.  <a href="#ga0492a9a76c0666c944ec08e7d13111e8">More...</a><br /></td></tr>
+<tr class="separator:ga0492a9a76c0666c944ec08e7d13111e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe543dd60b7c4d56b476ab0a47df3df8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gafe543dd60b7c4d56b476ab0a47df3df8">RM_MOTOR_SENSOR_HALL_AngleSpeedCalc</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *const p_inner, <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *const p_outer)</td></tr>
+<tr class="memdesc:gafe543dd60b7c4d56b476ab0a47df3df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates angle and speed based on Hall sensor inputs.  <a href="#gafe543dd60b7c4d56b476ab0a47df3df8">More...</a><br /></td></tr>
+<tr class="separator:gafe543dd60b7c4d56b476ab0a47df3df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9963adae956243b82ad734fb6fe710cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9963adae956243b82ad734fb6fe710cc">RM_MOTOR_SENSOR_HALL_PositionSpeedGet</a> (<a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const p_ctrl, float *const p_pos, float *const p_speed)</td></tr>
+<tr class="memdesc:ga9963adae956243b82ad734fb6fe710cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get mechanical position and speed from Hall sensor measurements.  <a href="#ga9963adae956243b82ad734fb6fe710cc">More...</a><br /></td></tr>
+<tr class="separator:ga9963adae956243b82ad734fb6fe710cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Motor Sensor Hall on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html">Motor sensor Interface</a>. </p>
+<h1><a class="anchor" id="rm_motor_sensor_hall-overview"></a>
+Overview</h1>
+<p>The Motor Sensor Hall module provides rotor angle estimation and rotational speed calculation using Hall effect sensors. Hall sensors detect the magnetic field of the rotor and output digital signals that indicate the rotor position. By monitoring the transitions of these Hall signals, the module calculates the electrical angle and speed of the motor.</p>
+<h2><a class="anchor" id="rm_motor_sensor_hall-features"></a>
+Features</h2>
+<p>The Motor Sensor Hall module has the following key features:</p><ul>
+<li>Rotor electrical angle estimation based on Hall sensor signals (U, V, W)</li>
+<li>Rotational speed calculation with multiple estimation methods:<ul>
+<li>Moving average speed estimation</li>
+<li>Last pulse speed estimation</li>
+<li>Automatic weighted mixing of both methods</li>
+</ul>
+</li>
+<li>Rotation direction detection (CW/CCW)</li>
+<li>Configurable Hall signal pattern for different motor configurations</li>
+<li>Angle correction coefficient for alignment adjustment</li>
+<li>Speed output clamping based on elapsed time for stability</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_sensor_hall-configuration"></a>
+Configuration</h1>
+<h2>Build Time Configurations for rm_motor_sensor_hall</h2>
+<p>The following build time configurations are available for this module:</p>
+<table class="doxtable">
+<tr>
+<th>Configuration </th><th>Description </th><th>Default  </th></tr>
+<tr>
+<td>Parameter Checking </td><td>Enables parameter checking for API functions </td><td>Enabled </td></tr>
+</table>
+<h2>Configurations for Motor Sensor Hall on Motor Sensor Hall</h2>
+<p>The following configurations are available when adding the Motor Sensor Hall module:</p>
+<table class="doxtable">
+<tr>
+<th>Configuration </th><th>Description </th><th>Default  </th></tr>
+<tr>
+<td>Hall Sensor U Port </td><td>GPIO port pin for Hall sensor U signal input </td><td>- </td></tr>
+<tr>
+<td>Hall Sensor V Port </td><td>GPIO port pin for Hall sensor V signal input </td><td>- </td></tr>
+<tr>
+<td>Hall Sensor W Port </td><td>GPIO port pin for Hall sensor W signal input </td><td>- </td></tr>
+<tr>
+<td>Hall Pattern </td><td>The order of Hall signal pattern (6 patterns + wrap) </td><td>{5, 4, 6, 2, 3, 1, 5} </td></tr>
+<tr>
+<td>Angle Correction </td><td>Coefficient to correct the estimated angle [rad] </td><td>0.0 </td></tr>
+<tr>
+<td>Default Counts </td><td>Default counts for Hall signal period reset </td><td>1000 </td></tr>
+<tr>
+<td>Maximum Period </td><td>Maximum counts of Hall signal period before speed is assumed zero </td><td>60000 </td></tr>
+<tr>
+<td>Speed Mix Deviation Threshold </td><td>Deviation threshold (0~1) for speed mixing weight adjustment </td><td>0.1 </td></tr>
+<tr>
+<td>Speed Mix Switch Threshold </td><td>Speed threshold [rad/s] for switching between estimation methods </td><td>100.0 </td></tr>
+<tr>
+<td>Speed Select </td><td>Speed output selection method </td><td>Auto </td></tr>
+</table>
+<p><h2>Build Time Configurations for rm_motor_sensor_hall</h2>
+The following build time configurations are defined in fsp_cfg/rm_motor_sensor_hall_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Motor &gt; Advanced Motor Middleware &gt; Motor Angle and Speed Calculation with Hall sensors (rm_motor_sensor_hall)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Advanced Motor Middleware &gt; Motor Angle and Speed Calculation with Hall sensors (rm_motor_sensor_hall).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor0_sensor_hall </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Sensor Configuration  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Sensor Configuration &gt; Port  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">U phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_02 </td><td>Hall sensor port U </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">V phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_12_PIN_00 </td><td>Hall sensor port V </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">W phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_10 </td><td>Hall sensor port W </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Sensor Configuration &gt; Hall Sensor pattern  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pattern #1</td><td>Must be a valid integer</td><td>1 </td><td>The order of hall signal pattern </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pattern #2</td><td>Must be a valid integer</td><td>5 </td><td>The order of hall signal pattern </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pattern #3</td><td>Must be a valid integer</td><td>4 </td><td>The order of hall signal pattern </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pattern #4</td><td>Must be a valid integer</td><td>6 </td><td>The order of hall signal pattern </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pattern #5</td><td>Must be a valid integer</td><td>2 </td><td>The order of hall signal pattern </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pattern #6</td><td>Must be a valid integer</td><td>3 </td><td>The order of hall signal pattern </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Estimator Configuration  </td></tr>
+<tr>
+<td>Estimator Configuration &gt; Compensation Angle [rad]</td><td>Must be a valid value</td><td>0.0F </td><td>parameter for rotor angle compensation </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Default Counts</td><td>Must be a valid non-negative value.</td><td>300U </td><td>Default counts set to period of hall signal  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Counts</td><td>Must be a valid non-negative value.</td><td>500U </td><td>Maximum count limit for hall signal period </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Speed Calculation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed Calculation Method</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Select Auto</li>
+<li>
+Moving Average</li>
+<li>
+Last Pulse</li>
+</ul>
+</td><td>Select Auto </td><td>Method used for calculating speed </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed Mixing Deviation Threshold</td><td>Must be a value between 0.0 and 1.0.</td><td>0.1 </td><td>Speed mixing deviation threshold (0 ~ 1), if the deviation ratio is above this value, the weight of faster speed estimation will be increased. Used when Speed Calculation method is [Select Auto] </td></tr>
+<tr>
+<td>Speed Calculation &gt; Speed Mixing Threshold [rad/s]</td><td>Must be a valid value</td><td>100.0 </td><td>Speed mixing switching threshold in [rad/s], the weight of more precise speed estimation will increase very fast above this value. Used when Speed Calculation method is [Select Auto].  </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm_motor_sensor_hall-clock-configuration"></a>
+Clock Configuration</h2>
+<p>This module does not require specific clock configuration. The speed calculation is based on the carrier interrupt period provided by the inner control loop.</p>
+<h2><a class="anchor" id="rm_motor_sensor_hall-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module requires three GPIO pins configured as inputs for the Hall sensor signals:</p>
+<table class="doxtable">
+<tr>
+<th>Pin </th><th>Description  </th></tr>
+<tr>
+<td>Hall U </td><td>Hall sensor U-phase signal input </td></tr>
+<tr>
+<td>Hall V </td><td>Hall sensor V-phase signal input </td></tr>
+<tr>
+<td>Hall W </td><td>Hall sensor W-phase signal input </td></tr>
+</table>
+<p>Configure these pins as digital inputs in the Pin Configuration tool.</p>
+<h1><a class="anchor" id="rm_motor_sensor_hall-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm_motor_sensor_hall-hall-pattern"></a>
+Hall Sensor Signal Pattern</h2>
+<p>The Hall sensor signal pattern must be configured according to the motor and sensor arrangement. The pattern array defines the sequence of Hall signal combinations (3-bit value from U, V, W signals) for one electrical revolution. The pattern should include 6 unique values plus a wrap-around value.</p>
+<p>Example pattern for a typical BLDC motor: {5, 4, 6, 2, 3, 1, 5} // Pattern wraps from index 6 back to index 0</p>
+<h2><a class="anchor" id="rm_motor_sensor_hall-speed-estimation"></a>
+Speed Estimation Methods</h2>
+<p>The module supports three speed estimation methods selectable via the <code>speed_select</code> configuration:</p>
+<table class="doxtable">
+<tr>
+<th>Method </th><th>Description </th><th>Use Case  </th></tr>
+<tr>
+<td>MOTOR_SENSOR_HALL_SPEED_SELECT_AUTO </td><td>Weighted average of both methods </td><td>General purpose (recommended) </td></tr>
+<tr>
+<td>MOTOR_SENSOR_HALL_SPEED_SELECT_MOVAVG </td><td>Moving average over 6 Hall periods </td><td>Smooth speed output, higher latency </td></tr>
+<tr>
+<td>MOTOR_SENSOR_HALL_SPEED_SELECT_LAST_PULSE </td><td>Speed from latest Hall period </td><td>Fast response, more noise </td></tr>
+</table>
+<p>When using automatic mode, the weight between fast and precise estimation is dynamically calculated based on:</p><ul>
+<li>Absolute speed (lower speeds favor precise estimation)</li>
+<li>Deviation between the two estimates (larger deviation favors fast estimation)</li>
+</ul>
+<h2><a class="anchor" id="rm_motor_sensor_hall-angle-correction"></a>
+Angle Correction</h2>
+<p>The <code>angle_correct</code> parameter allows adjustment of the estimated angle to compensate for:</p><ul>
+<li>Hall sensor mounting offset</li>
+<li>Motor phase alignment</li>
+<li>System-specific calibration</li>
+</ul>
+<p>The correction value is added to the calculated angle in radians.</p>
+<h2><a class="anchor" id="rm_motor_sensor_hall-speed-clamping"></a>
+Speed Clamping at Low Speed</h2>
+<p>When the time elapsed since the last Hall signal transition exceeds the <code>maximum_period</code> count, the estimated speed is automatically set to zero. This prevents erroneous speed readings when the motor is stationary or rotating very slowly.</p>
+<h2><a class="anchor" id="rm_motor_sensor_hall-integration"></a>
+Integration with Motor Control Loop</h2>
+<p>The Motor Sensor Hall module is designed to work with the motor control inner loop:</p>
+<ol type="1">
+<li>Call <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga118f01736bbe263f979d1c76c54fde6a">RM_MOTOR_SENSOR_HALL_Open</a> to initialize the module</li>
+<li>Call <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga0492a9a76c0666c944ec08e7d13111e8">RM_MOTOR_SENSOR_HALL_AngleSpeedInit</a> to set up data exchange pointers</li>
+<li>Call <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gafe543dd60b7c4d56b476ab0a47df3df8">RM_MOTOR_SENSOR_HALL_AngleSpeedCalc</a> periodically from the carrier interrupt to update angle and speed</li>
+<li>Call <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9963adae956243b82ad734fb6fe710cc">RM_MOTOR_SENSOR_HALL_PositionSpeedGet</a> to retrieve mechanical position and speed</li>
+<li>Call <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaf8a1c062ae7025980251a85a637ec164">RM_MOTOR_SENSOR_HALL_Close</a> to finalize the module when done</li>
+</ol>
+<h2><a class="anchor" id="rm_motor_sensor_hall-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the Motor Sensor Hall module:</p>
+<ul>
+<li>The module requires a minimum rotational speed for accurate speed estimation. At very low speeds, the estimation accuracy decreases due to the discrete nature of Hall sensor signals.</li>
+<li>The angular resolution is limited to 60 electrical degrees (π/3 rad) between Hall signal transitions. Interpolation is used between transitions, but accuracy depends on speed consistency.</li>
+<li>Direction detection requires at least one Hall signal transition. Initial direction after startup may be incorrect until the first transition occurs.</li>
+<li>The <code>maximum_period</code> should be set appropriately for the application's minimum expected speed to avoid premature zero-speed detection.</li>
+<li>Only the functions/types/macros exposed via rm_motor_sensor_hall.h and rm_motor_sesnor_api.h should be accessed by user code and that the contents of the other headers is subject to change.</li>
+</ul>
+<h1><a class="anchor" id="rm_motor_sensor_hall-examples"></a>
+Examples</h1>
+<h2>Motor Sensor Hall Basic Example</h2>
+<p>This is a basic example of minimal use of the Motor Sensor Hall module in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_motor_sensor_hall_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga118f01736bbe263f979d1c76c54fde6a">RM_MOTOR_SENSOR_HALL_Open</a>(&amp;g_motor_sensor_hall_ctrl, &amp;g_motor_sensor_hall_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the module variables. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9ebbefae9176fc52f972f11adeb772e7">RM_MOTOR_SENSOR_HALL_Reset</a>(&amp;g_motor_sensor_hall_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaf8a1c062ae7025980251a85a637ec164">RM_MOTOR_SENSOR_HALL_Close</a>(&amp;g_motor_sensor_hall_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Motor Sensor Hall Advanced Example</h2>
+<p>This example demonstrates using data exchange pointers and angle/speed calculation in a control loop.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Pointers for angle and speed data exchange */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">float</span>                 * gp_speed_el;</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">float</span>                 * gp_angle_el;</div><div class="line"><span class="keyword">static</span> <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga7524d2bdf93b616395e767a37b46a991">motor_sensor_output_t</a> * gp_sensor_output;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_motor_sensor_hall_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the Motor Sensor Hall module */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga118f01736bbe263f979d1c76c54fde6a">RM_MOTOR_SENSOR_HALL_Open</a>(&amp;g_motor_sensor_hall_ctrl, &amp;g_motor_sensor_hall_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set up data exchange pointers with inner loop */</span></div><div class="line">    motor_shared_inner_to_position_speed_t inner_data;</div><div class="line">    inner_data.inner_control_period = 0.0001f; <span class="comment">/* 100us control period */</span></div><div class="line">    inner_data.outer_control_period = 0.001f;  <span class="comment">/* 1ms outer loop period */</span></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga0492a9a76c0666c944ec08e7d13111e8">RM_MOTOR_SENSOR_HALL_AngleSpeedInit</a>(&amp;g_motor_sensor_hall_ctrl,</div><div class="line">                                              &amp;gp_speed_el,</div><div class="line">                                              &amp;gp_angle_el,</div><div class="line">                                              &amp;gp_sensor_output,</div><div class="line">                                              (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;inner_data);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Main control loop - typically called from carrier interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Calculate angle and speed from Hall sensor signals */</span></div><div class="line">        <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> inner_input;</div><div class="line">        <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> outer_input;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gafe543dd60b7c4d56b476ab0a47df3df8">RM_MOTOR_SENSOR_HALL_AngleSpeedCalc</a>(&amp;g_motor_sensor_hall_ctrl, &amp;inner_input, &amp;outer_input);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Access estimated values through pointers */</span></div><div class="line">        <span class="keywordtype">float</span> current_speed_el = *gp_speed_el; <span class="comment">/* Electrical speed [rad/s] */</span></div><div class="line">        <span class="keywordtype">float</span> current_angle_el = *gp_angle_el; <span class="comment">/* Electrical angle [rad] */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Use angle and speed for motor control... */</span></div><div class="line">        (void) current_speed_el;</div><div class="line">        (void) current_angle_el;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get mechanical position and speed */</span></div><div class="line">        <span class="keywordtype">float</span> mechanical_position;</div><div class="line">        <span class="keywordtype">float</span> mechanical_speed;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9963adae956243b82ad734fb6fe710cc">RM_MOTOR_SENSOR_HALL_PositionSpeedGet</a>(&amp;g_motor_sensor_hall_ctrl, &amp;mechanical_position, &amp;mechanical_speed);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* mechanical_speed is in [rad/s mech] */</span></div><div class="line">        <span class="comment">/* mechanical_position is in [rad mech] */</span></div><div class="line">        (void) mechanical_position;</div><div class="line">        (void) mechanical_speed;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_motor_sensor_hall_parameter_update_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Update parameters at runtime */</span></div><div class="line">    <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#structmotor__sensor__hall__extended__cfg__t">motor_sensor_hall_extended_cfg_t</a> new_ext_cfg = g_motor_sensor_hall_ext_cfg;</div><div class="line">    new_ext_cfg.<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ac01ad1985237ddf2d2cc5375ecb006e2">angle_correct</a> = 0.1f;  <span class="comment">/* Adjust angle correction */</span></div><div class="line"></div><div class="line">    <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> new_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ae08facccf6bafca7d647cd7a57f30887">p_context</a> = NULL,</div><div class="line">        .p_extend  = &amp;new_ext_cfg,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = RM_MOTOR_SENSOR_HALL_ParameterUpdate(&amp;g_motor_sensor_hall_ctrl, &amp;new_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"></div></div><!-- fragment --> <h2>Motor Sensor Hall Parameter Update Example</h2>
+<p>This example demonstrates updating parameters at runtime.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_motor_sensor_hall_parameter_update_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Update parameters at runtime */</span></div><div class="line">    <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#structmotor__sensor__hall__extended__cfg__t">motor_sensor_hall_extended_cfg_t</a> new_ext_cfg = g_motor_sensor_hall_ext_cfg;</div><div class="line">    new_ext_cfg.<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ac01ad1985237ddf2d2cc5375ecb006e2">angle_correct</a> = 0.1f;  <span class="comment">/* Adjust angle correction */</span></div><div class="line"></div><div class="line">    <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> new_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ae08facccf6bafca7d647cd7a57f30887">p_context</a> = NULL,</div><div class="line">        .p_extend  = &amp;new_ext_cfg,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = RM_MOTOR_SENSOR_HALL_ParameterUpdate(&amp;g_motor_sensor_hall_ctrl, &amp;new_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__sensor__hall__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#structmotor__sensor__hall__extended__cfg__t">motor_sensor_hall_extended_cfg_t</a></td></tr>
+<tr class="separator:structmotor__sensor__hall__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__sensor__hall__instance__signals__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#structmotor__sensor__hall__instance__signals__ctrl__t">motor_sensor_hall_instance_signals_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__sensor__hall__instance__signals__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__sensor__hall__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#structmotor__sensor__hall__instance__ctrl__t">motor_sensor_hall_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__sensor__hall__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaad5f62b75332865f6dea7254b93e2309"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaad5f62b75332865f6dea7254b93e2309">motor_sensor_hall_direction_t</a> </td></tr>
+<tr class="separator:gaad5f62b75332865f6dea7254b93e2309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga602773d478c440943d77ba59e1eebfe8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga602773d478c440943d77ba59e1eebfe8">motor_sensor_hall_speed_select_t</a> </td></tr>
+<tr class="separator:ga602773d478c440943d77ba59e1eebfe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a785de473887941930ba0218d041391"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga3a785de473887941930ba0218d041391">motor_sensor_hall_signal_status_t</a> </td></tr>
+<tr class="separator:ga3a785de473887941930ba0218d041391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__sensor__hall__extended__cfg__t" id="structmotor__sensor__hall__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__sensor__hall__extended__cfg__t">&#9670;&nbsp;</a></span>motor_sensor_hall_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_sensor_hall_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration for hall sensor module </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae5f10305254e6eadb06c775c8d9eb8ec"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_hall_sensor_u</td>
+<td class="fielddoc">
+Hall U-signal input port. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa707bd0470d8a1a428849de5c87eebe0"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_hall_sensor_v</td>
+<td class="fielddoc">
+Hall V-signal input port. </td></tr>
+<tr><td class="fieldtype">
+<a id="a02597bf94bbe70f7d0d2239837450189"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+port_hall_sensor_w</td>
+<td class="fielddoc">
+Hall W-signal input port. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5250150d584ebb2cdb88638cd5fea2fb"></a>uint8_t</td>
+<td class="fieldname">
+hall_pattern[MOTOR_SENSOR_HALL_SPEED_COUNTS+1]</td>
+<td class="fielddoc">
+The order of hall signal pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac01ad1985237ddf2d2cc5375ecb006e2"></a>float</td>
+<td class="fieldname">
+angle_correct</td>
+<td class="fielddoc">
+Coefficient to correct angle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8cf96364060252a2a32c963f7f1674f1"></a>uint16_t</td>
+<td class="fieldname">
+default_counts</td>
+<td class="fielddoc">
+Default counts for period of hall signal to reset. </td></tr>
+<tr><td class="fieldtype">
+<a id="aad80035435eecce30c3703bd0933366a"></a>uint16_t</td>
+<td class="fieldname">
+maximum_period</td>
+<td class="fielddoc">
+Maximum counts of hall signal period. </td></tr>
+<tr><td class="fieldtype">
+<a id="a035e5103d8fe86143e05f7f3c647cdda"></a>float</td>
+<td class="fieldname">
+speed_mix_deviation_threshold</td>
+<td class="fielddoc">
+Speed mixing deviation threshold. </td></tr>
+<tr><td class="fieldtype">
+<a id="add840068f71762f318500117b7d1400b"></a>float</td>
+<td class="fieldname">
+speed_mix_switch_threshold</td>
+<td class="fielddoc">
+Speed mixing switching threshold in [rad/s], the weight of more precise speed estimation will increase very fast above this value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a26e7e0d9884e1bb4ebe7ee0a453b58b3"></a>uint8_t</td>
+<td class="fieldname">
+speed_select</td>
+<td class="fielddoc">
+Speed output selection <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga602773d478c440943d77ba59e1eebfe8">motor_sensor_hall_speed_select_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__sensor__hall__instance__signals__ctrl__t" id="structmotor__sensor__hall__instance__signals__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__sensor__hall__instance__signals__ctrl__t">&#9670;&nbsp;</a></span>motor_sensor_hall_instance_signals_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_sensor_hall_instance_signals_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Signals for hall FOC </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af2efb0cb3ef8d3b278fff0da39e3b789"></a>float</td>
+<td class="fieldname">
+speed_el</td>
+<td class="fielddoc">
+Estimated electrical speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a385add5a401c5fb5fcd3b1171b7eb906"></a>float</td>
+<td class="fieldname">
+angle_el</td>
+<td class="fielddoc">
+Estimated electrical angle [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a623c979cb042d11c978ec50646b78c59"></a>float</td>
+<td class="fieldname">
+inner_control_period</td>
+<td class="fielddoc">
+Inner control cycle period [sec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae47880e6afc98b2e2e7b6785055afae2"></a>float</td>
+<td class="fieldname">
+outer_control_period</td>
+<td class="fielddoc">
+Outer control cycle period [sec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a81b24df4d18e7e1e8cadf54e4fa2118a"></a>uint8_t</td>
+<td class="fieldname">
+state_id_ref</td>
+<td class="fielddoc">
+State of Id reference control. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8ac728251b5bb62e72ef9449a93d800c"></a>uint8_t</td>
+<td class="fieldname">
+state_iq_ref</td>
+<td class="fielddoc">
+State of Iq reference control. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae485bf36cabf297535aec875e0023810"></a>float</td>
+<td class="fieldname">
+speed_ref_el_ctrl</td>
+<td class="fielddoc">
+Command electrical speed value [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a54cd8e7baa7f336b13ca7a598bbb94c8"></a>uint8_t</td>
+<td class="fieldname">
+hall_signal</td>
+<td class="fielddoc">
+Current hall signal pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7562a012c3c6fb1e90f4ee88fbc90c74"></a>uint8_t</td>
+<td class="fieldname">
+last_hall_signal</td>
+<td class="fielddoc">
+Previous hall signal pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="af7ed791ce1162fa328543fa6cc15bf9e"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaad5f62b75332865f6dea7254b93e2309">motor_sensor_hall_direction_t</a></td>
+<td class="fieldname">
+direction</td>
+<td class="fielddoc">
+Current rotation direction. </td></tr>
+<tr><td class="fieldtype">
+<a id="acc9476b7695397ced0c5f098586ef18e"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaad5f62b75332865f6dea7254b93e2309">motor_sensor_hall_direction_t</a></td>
+<td class="fieldname">
+last_direction</td>
+<td class="fielddoc">
+Previous rotation direction. </td></tr>
+<tr><td class="fieldtype">
+<a id="a08f33596e6ba8687b7f50736cc469a32"></a>uint16_t</td>
+<td class="fieldname">
+carrier_count</td>
+<td class="fielddoc">
+Carrier interrupt count. </td></tr>
+<tr><td class="fieldtype">
+<a id="abebba830b2a8e1c903bb64af2632a2fe"></a>uint16_t</td>
+<td class="fieldname">
+hall_period[MOTOR_SENSOR_HALL_SPEED_COUNTS]</td>
+<td class="fielddoc">
+Array of carrier counts for 2PI calculation. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaa1605216250eb2fdbc1a24e03f5daa5"></a>uint8_t</td>
+<td class="fieldname">
+period_counter</td>
+<td class="fielddoc">
+Counter index for hall_period array. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9da606c02bd4086786785fa816f14126"></a>float</td>
+<td class="fieldname">
+calculated_angle_el</td>
+<td class="fielddoc">
+Calculated rotor electrical angle [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5dae2c58d02821a3329cc89e424cfd80"></a>float</td>
+<td class="fieldname">
+calculated_angle_el_per_count</td>
+<td class="fielddoc">
+Angle increment per carrier count [rad]. </td></tr>
+<tr><td class="fieldtype">
+<a id="ade885e36ae3ea3f9ee130bee368f158b"></a>float</td>
+<td class="fieldname">
+calculated_speed_el</td>
+<td class="fielddoc">
+Calculated electrical speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a30f24899f21a74fb7af8ea70e06c220f"></a>float</td>
+<td class="fieldname">
+calculated_speed_el_last_pulse</td>
+<td class="fielddoc">
+Electrical speed from last pulse [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2a6610c142d381b8a710c43ff999dd44"></a>float</td>
+<td class="fieldname">
+calculated_speed_el_mvavg</td>
+<td class="fielddoc">
+Moving average electrical speed [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9dc8a7c38681a4749472503f369eebe8"></a>float</td>
+<td class="fieldname">
+weight</td>
+<td class="fielddoc">
+Weight of speed estimated by last pulse. </td></tr>
+<tr><td class="fieldtype">
+<a id="a25c0e88f37c050b8118268db60cbd16e"></a>uint8_t</td>
+<td class="fieldname">
+hall_signal_memory</td>
+<td class="fielddoc">
+Memorized hall signal at startup. </td></tr>
+<tr><td class="fieldtype">
+<a id="a149b487dce6c36e9f23f3ab0f9f7971a"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga3a785de473887941930ba0218d041391">motor_sensor_hall_signal_status_t</a></td>
+<td class="fieldname">
+hall_signal_status</td>
+<td class="fielddoc">
+Hall signal capture status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8e11160a6d7224930c430e0541eee1a6"></a>uint8_t</td>
+<td class="fieldname">
+hall_signal_count</td>
+<td class="fielddoc">
+Rotation counter. </td></tr>
+<tr><td class="fieldtype">
+<a id="a26ccd74070a07ebb2bb96854a7cba97f"></a>float</td>
+<td class="fieldname">
+pseudo_speed_rad</td>
+<td class="fielddoc">
+Pseudo speed for startup [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a39ea382e05bce5c33b2e53f475bbd477"></a>float</td>
+<td class="fieldname">
+add_pseudo_speed_rad</td>
+<td class="fielddoc">
+Step of pseudo speed to update [rad/s]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a65422104c06d2e6ef233a5119c2818c4"></a>uint16_t</td>
+<td class="fieldname">
+startup_carrier_count</td>
+<td class="fielddoc">
+Counter of carrier interrupt for startup. </td></tr>
+<tr><td class="fieldtype">
+<a id="a762ad2751fcaa8172160a21641f60053"></a>uint8_t</td>
+<td class="fieldname">
+startup_flag</td>
+<td class="fielddoc">
+Flag for startup sequence. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__sensor__hall__instance__ctrl__t" id="structmotor__sensor__hall__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__sensor__hall__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_sensor_hall_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_sensor_hall_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Hall sensor instane control block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aaf8a9085b17d1c31e550bbd74e91c566"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+module open flag </td></tr>
+<tr><td class="fieldtype">
+<a id="a8abc782606b63d36191f11f273bbe8c8"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#structmotor__sensor__hall__instance__signals__ctrl__t">motor_sensor_hall_instance_signals_ctrl_t</a></td>
+<td class="fieldname">
+signals</td>
+<td class="fielddoc">
+Signals and controls structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5752c842a84947d2fa098ace74c11b61"></a>motor_shared_pos_speed_to_inner_t</td>
+<td class="fieldname">
+to_inner</td>
+<td class="fielddoc">
+Structure of data to be sent to inner loop. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad42818783fead08d31fd7b588a7dd504"></a>const <br class="typebreak" />
+motor_shared_inner_to_position_speed_t *</td>
+<td class="fieldname">
+p_from_inner</td>
+<td class="fielddoc">
+pointer to data from inner loop </td></tr>
+<tr><td class="fieldtype">
+<a id="a7f2b287961a0db721033e99748e2d3e6"></a><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Angle related configuration structure. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaad5f62b75332865f6dea7254b93e2309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad5f62b75332865f6dea7254b93e2309">&#9670;&nbsp;</a></span>motor_sensor_hall_direction_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaad5f62b75332865f6dea7254b93e2309">motor_sensor_hall_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Motor rotation direction </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaad5f62b75332865f6dea7254b93e2309af2a6efd3ecc5527c06a8033b0f191e7f"></a>MOTOR_SENSOR_HALL_DIRECTION_CW&#160;</td><td class="fielddoc"><p>Clockwise rotation direction. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaad5f62b75332865f6dea7254b93e2309a1e11a32e4e5bda933131355d51edcdcc"></a>MOTOR_SENSOR_HALL_DIRECTION_CCW&#160;</td><td class="fielddoc"><p>Counter-clockwise rotation direction. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga602773d478c440943d77ba59e1eebfe8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga602773d478c440943d77ba59e1eebfe8">&#9670;&nbsp;</a></span>motor_sensor_hall_speed_select_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga602773d478c440943d77ba59e1eebfe8">motor_sensor_hall_speed_select_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Speed estimation post-process method definitions </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga602773d478c440943d77ba59e1eebfe8ada86b126412036bd651246944279c824"></a>MOTOR_SENSOR_HALL_SPEED_SELECT_AUTO&#160;</td><td class="fielddoc"><p>Use weighted average (weights depend on speed and difference) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga602773d478c440943d77ba59e1eebfe8aa55a999c362e8e8dcc027fd38e1f5fb4"></a>MOTOR_SENSOR_HALL_SPEED_SELECT_MOVAVG&#160;</td><td class="fielddoc"><p>Use moving averaged speed as output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga602773d478c440943d77ba59e1eebfe8a8e00aa72d7c685632bdd1fde8d4b09be"></a>MOTOR_SENSOR_HALL_SPEED_SELECT_LAST_PULSE&#160;</td><td class="fielddoc"><p>Use the latest speed as output. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga3a785de473887941930ba0218d041391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a785de473887941930ba0218d041391">&#9670;&nbsp;</a></span>motor_sensor_hall_signal_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga3a785de473887941930ba0218d041391">motor_sensor_hall_signal_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Status for hall signal capture </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3a785de473887941930ba0218d041391ab3b64661b53dab6e437124b85659131e"></a>MOTOR_SENSOR_HALL_SIGNAL_STATUS_INITIAL&#160;</td><td class="fielddoc"><p>Hall signal is not captured (Initial state) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a785de473887941930ba0218d041391a8994621cd09c51bc4f3d48173ddc79df"></a>MOTOR_SENSOR_HALL_SIGNAL_STATUS_CAPTURED&#160;</td><td class="fielddoc"><p>Hall signal is captured. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga118f01736bbe263f979d1c76c54fde6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga118f01736bbe263f979d1c76c54fde6a">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_HALL_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_HALL_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#structmotor__sensor__cfg__t">motor_sensor_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens and configures the Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#adc246e01c1578ad84994df298694f455">motor_sensor_api_t::open</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga118f01736bbe263f979d1c76c54fde6a">RM_MOTOR_SENSOR_HALL_Open</a>(&amp;g_motor_sensor_hall_ctrl, &amp;g_motor_sensor_hall_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>MTR_ANGL_EST successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Configuration parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf8a1c062ae7025980251a85a637ec164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8a1c062ae7025980251a85a637ec164">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_HALL_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_HALL_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables specified Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#a0d2d27c9370e79f80a7d07e7dc33e2ac">motor_sensor_api_t::close</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gaf8a1c062ae7025980251a85a637ec164">RM_MOTOR_SENSOR_HALL_Close</a>(&amp;g_motor_sensor_hall_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9ebbefae9176fc52f972f11adeb772e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9ebbefae9176fc52f972f11adeb772e7">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_HALL_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_HALL_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset variables of Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#afba227dac4f9a1538f420c301500c93c">motor_sensor_api_t::reset</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Reset the module variables. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9ebbefae9176fc52f972f11adeb772e7">RM_MOTOR_SENSOR_HALL_Reset</a>(&amp;g_motor_sensor_hall_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully reset. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0492a9a76c0666c944ec08e7d13111e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0492a9a76c0666c944ec08e7d13111e8">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_HALL_AngleSpeedInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_HALL_AngleSpeedInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float **&#160;</td>
+          <td class="paramname"><em>pp_speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float **&#160;</td>
+          <td class="paramname"><em>pp_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#gac4b190661cfe803ea577ebdac1302352">motor_sensor_data_exchange_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_out_extra_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets output pointers for speed, angle, and extra data for the inner loop estimation. </p>
+<p>This function assigns the addresses of the internal speed and angle variables to the provided pointers, and sets up the pointer to extra output data for the inner loop. Also copies control period values from the inner loop input data to the internal signal structure and stores a reference to the inner data.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set up data exchange pointers with inner loop */</span></div><div class="line">    motor_shared_inner_to_position_speed_t inner_data;</div><div class="line">    inner_data.inner_control_period = 0.0001f; <span class="comment">/* 100us control period */</span></div><div class="line">    inner_data.outer_control_period = 0.001f;  <span class="comment">/* 1ms outer loop period */</span></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga0492a9a76c0666c944ec08e7d13111e8">RM_MOTOR_SENSOR_HALL_AngleSpeedInit</a>(&amp;g_motor_sensor_hall_ctrl,</div><div class="line">                                              &amp;gp_speed_el,</div><div class="line">                                              &amp;gp_angle_el,</div><div class="line">                                              &amp;gp_sensor_output,</div><div class="line">                                              (<a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *) &amp;inner_data);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the motor sensor control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_speed</td><td>Address of pointer to store the speed variable address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_angle</td><td>Address of pointer to store the angle variable address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_out_extra_data</td><td>Address of pointer to store extra output data address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Pointers set successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafe543dd60b7c4d56b476ab0a47df3df8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafe543dd60b7c4d56b476ab0a47df3df8">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_HALL_AngleSpeedCalc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_HALL_AngleSpeedCalc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates angle and speed based on Hall sensor inputs. </p>
+<p>This function reads Hall sensor signals, determines rotation direction, calculates speed and angle, and updates the relevant output pointers.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Calculate angle and speed from Hall sensor signals */</span></div><div class="line">        <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga2919fb22cfa69a2be2526ed10ec90b70">motor_sensor_input_inner_t</a> inner_input;</div><div class="line">        <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga5679d1080cde3e19529ebe1c073c4986">motor_sensor_input_outer_t</a> outer_input;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#gafe543dd60b7c4d56b476ab0a47df3df8">RM_MOTOR_SENSOR_HALL_AngleSpeedCalc</a>(&amp;g_motor_sensor_hall_ctrl, &amp;inner_input, &amp;outer_input);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to motor angle control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_inner</td><td>Pointer to inner loop input data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_outer</td><td>Pointer to outer loop input data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calculation performed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer or invalid state detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9963adae956243b82ad734fb6fe710cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9963adae956243b82ad734fb6fe710cc">&#9670;&nbsp;</a></span>RM_MOTOR_SENSOR_HALL_PositionSpeedGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSOR_HALL_PositionSpeedGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r___a_p_i.html#ga91d1c4ead29af8f6a11b50b45d17f123">motor_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *const&#160;</td>
+          <td class="paramname"><em>p_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *const&#160;</td>
+          <td class="paramname"><em>p_speed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get mechanical position and speed from Hall sensor measurements. </p>
+<p>This function retrieves the current mechanical rotational position and speed from the Hall sensor controller. The speed output is normalized to mechanical units [rad/s mech] by dividing the electrical speed by the number of pole pairs. The position output is currently set to zero and must be implemented.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Get mechanical position and speed */</span></div><div class="line">        <span class="keywordtype">float</span> mechanical_position;</div><div class="line">        <span class="keywordtype">float</span> mechanical_speed;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___m_o_t_o_r___s_e_n_s_o_r___h_a_l_l.html#ga9963adae956243b82ad734fb6fe710cc">RM_MOTOR_SENSOR_HALL_PositionSpeedGet</a>(&amp;g_motor_sensor_hall_ctrl, &amp;mechanical_position, &amp;mechanical_speed);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the Hall sensor instance control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_pos</td><td>Pointer to store the resulting mechanical position [rad mech]. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_speed</td><td>Pointer to store the resulting mechanical speed [rad/s mech].</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Always returns success. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

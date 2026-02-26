@@ -227,6 +227,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_CRYPTO_RSIP_FAIL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a60c968af6956a26f96803e39d254c128", null ],
       [ "FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a2da98c37d8c505110bf218ea9afbb015", null ],
       [ "FSP_ERR_CRYPTO_RSIP_AUTHENTICATION", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a494acebc3337cc69f3a09c377a5e19b4", null ],
+      [ "FSP_ERR_CRYPTO_RSIP_DLMS_ERROR", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a8614fed040aad9000767a5b11fe11f4d", null ],
       [ "FSP_ERR_CRYPTO_RSIP_LBIST_CHECK_BUSY", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a59b6fdbee3629977caa0e5b454e00700", null ],
       [ "FSP_ERR_CRYPTO_COMMON_NOT_OPENED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8acfbdf09c1ae8d64e7eb388094bf54b9b", null ],
       [ "FSP_ERR_CRYPTO_HAL_ERROR", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ac42e16e1358505398e631062a1afbd45", null ],

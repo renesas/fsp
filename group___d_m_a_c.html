@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.3.1</span>
+   &#160;<span id="projectnumber">Release v6.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -290,8 +290,21 @@ Features</h2>
 <li>Some exceptions apply, see the Event table in the Event Numbers section of the Interrupt Controller Unit chapter of the hardware manual</li>
 </ul>
 </li>
-<li>Supports 1, 2, and 4 byte data units<a class="anchor" id="um_transfer_unit"></a></li>
+<li>Supports 1, 2, 4 and 8 byte data units<a class="anchor" id="um_transfer_unit"></a></li>
 </ul>
+<h2><a class="anchor" id="r-dmac-supported-devices"></a>
+Supported Devices</h2>
+<p><table class="doxtable">
+<tr>
+<th>Device Group</th><th>Devices </th></tr>
+<tr>
+<td>RA4</td><td>RA4C1, RA4E1, RA4E2, RA4L1, RA4M1, RA4M2, RA4M3, RA4T1, RA4W1 </td></tr>
+<tr>
+<td>RA6</td><td>RA6E1, RA6E2, RA6M1, RA6M2, RA6M3, RA6M4, RA6M5, RA6T1, RA6T2, RA6T3 </td></tr>
+<tr>
+<td>RA8</td><td>RA8D1, RA8D2, RA8E1, RA8E2, RA8M1, RA8M2, RA8P1, RA8T1, RA8T2 </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="r-dmac-configuration"></a>
 Configuration</h1>
 <p><a class="anchor" id="um_transfer_normal_mode"></a><a class="anchor" id="um_transfer_repeat_mode"></a><a class="anchor" id="um_transfer_block_mode"></a><a class="anchor" id="um_transfer_activation_source"></a><a class="anchor" id="um_transfer_block_repeat_area"></a><a class="anchor" id="um_transfer_repeat_area"></a><a class="anchor" id="um_dmac_each_block_interrupt"></a><a class="anchor" id="um_dmac_end_interrupt"></a><a class="anchor" id="um_dmac_offset_mode"></a> <h2>Build Time Configurations for r_dmac</h2>
@@ -322,15 +335,7 @@ This module can be added to the Stacks tab via New Stack &gt; Transfer &gt; Tran
 <tr class="tree_none">
 <td>Mode</td><td>MCU Specific Options</td><td></td><td>Select the transfer mode. Normal: One transfer per activation, transfer ends after Number of Transfers; Repeat: One transfer per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks; Block: Number of Blocks per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks. </td></tr>
 <tr class="tree_none">
-<td>Transfer Size</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-1 Byte</li>
-<li>
-2 Bytes</li>
-<li>
-4 Bytes</li>
-</ul>
-</td><td>2 Bytes </td><td>Select the transfer size. </td></tr>
+<td>Transfer Size</td><td>MCU Specific Options</td><td></td><td>Select the transfer size. </td></tr>
 <tr class="tree_none">
 <td>Destination Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -400,7 +405,7 @@ Usage Notes</h1>
 <h2>Transfer Modes</h2>
 <p>The DMAC Module supports three modes of operation.</p>
 <ul>
-<li><b>Normal Mode</b> - In normal mode, a single data unit is transferred every time the configured ELC event is received by the DMAC channel. A data unit can be 1-byte, 2-bytes, or 4-bytes. The source and destination addresses can be fixed, increment, decrement, or add an offset to the next data unit after each transfer. A 16-bit counter decrements after each transfer. When the counter reaches 0, transfers will no longer be triggered by the ELC event and the CPU can be interrupted to signal that all transfers have finished.</li>
+<li><b>Normal Mode</b> - In normal mode, a single data unit is transferred every time the configured ELC event is received by the DMAC channel. A data unit can be 1-byte, 2-bytes, 4-bytes or 8-bytes. The source and destination addresses can be fixed, increment, decrement, or add an offset to the next data unit after each transfer. A 16-bit counter decrements after each transfer. When the counter reaches 0, transfers will no longer be triggered by the ELC event and the CPU can be interrupted to signal that all transfers have finished.</li>
 <li><b>Repeat Mode</b> - Repeat mode works the same way as normal mode, however the length is limited to an integer in the range[1,1024]. When the transfer counter reaches 0, the counter is reset to its configured value, the repeat area (source or destination address) resets to its starting address and the block count remaining will decrement by 1. When the block count reaches 0, transfers will no longer be triggered by the ELC event and the CPU may be interrupted to signal that all transfers have finished.</li>
 <li><b>Block Mode</b> - In block mode, the amount of data units transferred by each interrupt can be set to an integer in the range [1,1024]. The number of blocks to transfer can also be configured to a 16-bit number. After each block transfer the repeat area (source or destination address) will reset to the original address and the other address will be incremented or decremented to the next block.</li>
 <li><b>Repeat-Block Mode</b> - In repeat-block mode, the amount of data units transferred by each interrupt can be set to an integer in the range [1,1024]. The number of blocks to transfer can be configured to a 16 bit number. If the destination address mode is offset mode, maximum configurable number of blocks is 0xFFFF for block size(length) of one with data transfer size as byte,0x7FFF for block size of one with data transfer size as half word and 0x3FFF for block size of one with data size as word. After each block transfer the source address and the destination address will be incremented or decremented to the next block address. In case of offset address mode for source address, the source address size is the total size of source buffer after which the source area is rolled over, block size can be smaller than the source buffer size.For source address mode as offset mode, the maximum configurable source buffer size is 0xFFFF for transfer data size of a byte,0x7FFF for transfer data size of half word and 0x3FFF for transfer data size of word. Repeat-block mode can be used to implement single ring buffer to multiple ring buffer transfer type design.</li>
@@ -415,23 +420,23 @@ Usage Notes</h1>
 <li>
 Repeats forever</li>
 <li>
-Max repeat size is 256 x 4 bytes</li>
+Max repeat size is MCU specific (256 x 4 bytes or 256 x 8 bytes)</li>
 </ul>
 </td><td><ul>
 <li>
 Configurable number of repeats</li>
 <li>
-Max repeat size is 1024 x 4 bytes</li>
+Max repeat size is MCU specific (1024 x 4 bytes or 1024 x 8 bytes)</li>
 </ul>
 </td></tr>
 <tr>
 <td>Block Mode </td><td><ul>
 <li>
-Max block size is 256 x 4 bytes</li>
+Max block size is MCU specific (256 x 4 bytes or 256 x 8 bytes)</li>
 </ul>
 </td><td><ul>
 <li>
-Max block size is 1024 x 4 bytes</li>
+Max block size is MCU specific (1024 x 4 bytes or 1024 x 8 bytes)</li>
 </ul>
 </td></tr>
 <tr>
@@ -818,6 +823,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>DMAC is not enabled. The current configuration must not be valid. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Handle is not initialized. Call R_DMAC_Open to initialize the control block. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Transfer 8 byte is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1159,7 +1165,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.3.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
