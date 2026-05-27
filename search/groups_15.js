@@ -19,6 +19,8 @@ var searchData=
   ['usb_20hhid_20interface',['USB HHID Interface',['../group___u_s_b___h_h_i_d___a_p_i.html',1,'']]],
   ['usb_20hmsc_20_28r_5fusb_5fhmsc_29',['USB HMSC (r_usb_hmsc)',['../group___u_s_b___h_m_s_c.html',1,'']]],
   ['usb_20hmsc_20interface',['USB HMSC Interface',['../group___u_s_b___h_m_s_c___a_p_i.html',1,'']]],
+  ['usb_20huvc_20_28r_5fusb_5fhuvc_29',['USB HUVC (r_usb_huvc)',['../group___u_s_b___h_u_v_c.html',1,'']]],
+  ['usb_20huvc_20interface',['USB HUVC Interface',['../group___u_s_b___h_u_v_c___a_p_i.html',1,'']]],
   ['usb_20host_20vendor_20class_20_28r_5fusb_5fhvnd_29',['USB Host Vendor class (r_usb_hvnd)',['../group___u_s_b___h_v_n_d.html',1,'']]],
   ['usb_20paud_20_28r_5fusb_5fpaud_29',['USB PAUD (r_usb_paud)',['../group___u_s_b___p_a_u_d.html',1,'']]],
   ['usb_20paud_20interface',['USB PAUD Interface',['../group___u_s_b___p_a_u_d___a_p_i.html',1,'']]],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -944,6 +944,7 @@ The event links for the ELC must be configured outside this module.</dd></dl>
 <h2>Enabling External Sources for Start, Stop, Clear, or Capture</h2>
 <p><a class="anchor" id="um_timer_enable_disable"></a> <a class="el" href="group___g_p_t.html#ga6e14d15c781e316e640c280b4983be28">R_GPT_Enable()</a> must be called when external sources are used for start, stop, clear, or capture.</p>
 <h2>Compare Match Feature</h2>
+<p>In Periodic mode, if pin output support is enabled with the Compare Match feature, the output signal is no longer a default 50% duty cycle square wave. Instead, the duty cycle of the PWM waveform is determined by the configured compare match value.</p>
 <p>In One-Shot mode, Overflow event must be enabled when using Compare match feature. The interrupt progress of Compare match in One-Shot mode is: CMP_1 -&gt; CMP_2 -&gt; ... -&gt; OVF. The Overflow isr will stop the timer counter at the end of period so all Compare match events will not occur again.</p>
 <p>Additionally, the priorities of Overflow and Compare match events in One-shot mode must be equal to ensure the expected order of interrupt occurrence.</p>
 <h2>Interrupt Skipping</h2>
@@ -955,6 +956,11 @@ Crest interrupt skipping in triangle-wave PWM modes (skip count 2)</div></div>
  <h2>Complementary Output</h2>
 <p>By using the Custom Waveform option the output pins can be made to output complementary waveforms. To ensure these waveforms stay in sync, the duty cycle for both pins can be set simultaneously by calling R_GPT_DutyCycleSet once with a pin parameter of GPT_IO_PIN_GTIOCA_AND_GTIOCB.</p>
 <dl class="section note"><dt>Note</dt><dd>The pin level for 0% and 100% duty cycle is determined by the Cycle End Output Level in normal PWM mode and the Initial Output Level in triangle PWM modes. 100% duty will output the configured level and 0% will output the opposite. Do not use Pin Level Toggle or Pin Level Retain for the Cycle End Output Level if normal PWM waveforms are desired.</dd></dl>
+<h2>Limitations</h2>
+<p>Developers should be aware of the following limitations when using GPT:</p>
+<ul>
+<li>When pin output is used on the same channel that compare match is enabled on then the pin duty cycle should NOT be updated while the timer is running to avoid resulting in erroneous output.</li>
+</ul>
 <h1><a class="anchor" id="r-gpt-examples"></a>
 Examples</h1>
 <h2>GPT Basic Example</h2>
@@ -2590,7 +2596,7 @@ Polarity control for GTIOCxB input/output pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

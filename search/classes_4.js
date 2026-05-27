@@ -23,6 +23,7 @@ var searchData=
   ['ether_5fswitch_5fcallback_5fargs_5ft',['ether_switch_callback_args_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t',1,'']]],
   ['ether_5fswitch_5fcfg_5ft',['ether_switch_cfg_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__cfg__t',1,'']]],
   ['ether_5fswitch_5finstance_5ft',['ether_switch_instance_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__instance__t',1,'']]],
+  ['ether_5fswitch_5flink_5fstatus_5fbitmaps_5ft',['ether_switch_link_status_bitmaps_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__link__status__bitmaps__t',1,'']]],
   ['ethercat_5fphy_5fextended_5fcfg_5ft',['ethercat_phy_extended_cfg_t',['../group___e_t_h_e_r_c_a_t___p_h_y.html#structethercat__phy__extended__cfg__t',1,'']]],
   ['ethercat_5fphy_5finstance_5fctrl_5ft',['ethercat_phy_instance_ctrl_t',['../group___e_t_h_e_r_c_a_t___p_h_y.html#structethercat__phy__instance__ctrl__t',1,'']]],
   ['ethercat_5fssc_5fport_5fapi_5ft',['ethercat_ssc_port_api_t',['../group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__api__t',1,'']]],

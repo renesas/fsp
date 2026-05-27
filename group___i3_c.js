@@ -1,16 +1,25 @@
 var group___i3_c =
 [
     [ "i3c_clock_stalling_t", "group___i3_c.html#structi3c__clock__stalling__t", [
+      [ "clock_stalling_time", "group___i3_c.html#aff490c93f6fc8f2d99b20f3412eb6492", null ],
       [ "assigned_address_phase_enable", "group___i3_c.html#a90d888a3f9282b6f804158f677748d5d", null ],
       [ "transition_phase_enable", "group___i3_c.html#a3e01b4b5d6f92830c93dce6ee739b616", null ],
       [ "parity_phase_enable", "group___i3_c.html#a8ba10b8615a7966c368df3ebe865686a", null ],
-      [ "ack_phase_enable", "group___i3_c.html#a3bd84a0f2ef1a6aa0066d5efee370480", null ],
-      [ "clock_stalling_time", "group___i3_c.html#a3ecd785c56605cbb305942aafbe4e84e", null ]
+      [ "ack_phase_enable", "group___i3_c.html#a3bd84a0f2ef1a6aa0066d5efee370480", null ]
     ] ],
     [ "i3c_bitrate_settings_t", "group___i3_c.html#structi3c__bitrate__settings__t", [
       [ "stdbr", "group___i3_c.html#aced88be1a62f5447e7eae3c63d5ed688", null ],
-      [ "extbr", "group___i3_c.html#a3731a8178d0facafb466579901cd19e2", null ],
-      [ "clock_stalling", "group___i3_c.html#a98a55a8fa433bfd37efac64274f116ac", null ]
+      [ "extbr", "group___i3_c.html#a3731a8178d0facafb466579901cd19e2", null ]
+    ] ],
+    [ "i3c_bitrate_settings_t.__unnamed__", "group___i3_c.html#unioni3c__bitrate__settings__t_8____unnamed____", [
+      [ "scstlctl", "group___i3_c.html#a1b897e125f20d2e789046965ebc6a694", null ],
+      [ "__PACKED_STRUCT", "group___i3_c.html#ab8b9a8f7f746c73a08b47755db78c2b8", null ],
+      [ "assigned_address_phase_enable", "group___i3_c.html#a68a829ba721db26d872d05e0d9b77db5", null ],
+      [ "transition_phase_enable", "group___i3_c.html#ae5cc71575ce57a4876cc2f9190f159e1", null ],
+      [ "parity_phase_enable", "group___i3_c.html#ad83bd006efaed0c05245ced4e6aa7311", null ],
+      [ "ack_phase_enable", "group___i3_c.html#a06b72b8db529f75692fc64497fcb9d16", null ],
+      [ "scstlctl_b", "group___i3_c.html#a63b73a96cd8a997612219bd1ba5c5372", null ],
+      [ "clock_stalling", "group___i3_c.html#a5b5fc75bdae5969ad071e681956a9437", null ]
     ] ],
     [ "i3c_ibi_control_t", "group___i3_c.html#structi3c__ibi__control__t", [
       [ "hot_join_acknowledge", "group___i3_c.html#ad133fd358ad1427198b13d2703f820e6", null ],

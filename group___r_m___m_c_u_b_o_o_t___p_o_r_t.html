@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -436,7 +436,7 @@ Getting Started: Converting an Application Project to an MCUboot Image</h2>
 </ol>
 <h3><a class="anchor" id="r-mcuboot-solution-section-naming-dummy3"></a>
 FSP 6.0.0 and newer</h3>
-<p>An FSP Solution project must be created in order to set up the bootloader slots; the slot size and header information was previously in the MCUboot module.</p>
+<p>An FSP Solution project must be created in order to set up the bootloader slots; the slot size and header information was previously in the MCUboot module. Below is a description of the region naming rules and how to manually create the Solution for a single and multi-image use case. There are also templates that can be used as a starting point instead.</p>
 <h4><a class="anchor" id="r-mcuboot-solution-section-naming"></a>
 Bootloader region encoding in FSP 6.0.0</h4>
 <p>The header and image regions have to be named in the manner described below in the Solution project:</p>
@@ -480,6 +480,52 @@ Bootloader region encoding in FSP 6.0.0</h4>
 </ul>
 </li>
 </ul>
+<h4><a class="anchor" id="r-mcuboot-solution-template-steps"></a>
+Using Bootloader Solution Templates</h4>
+<p>MCUBoot templates can be used to generate a pre-configured Solution and required projects. The templates are available in the New C/C++ Project wizard in MCUBoot.</p>
+<p>Below is a list of the currently supported templates in FSP.</p>
+<table class="doxtable">
+<tr>
+<th>Device </th><th>Crypto engine </th><th>MCUboot mode </th><th>Crypto stack </th><th align="center">Flat </th><th align="center">TrustZone  </th></tr>
+<tr>
+<td><b>RA0 series — Cortex-M23</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA0L1 </td><td>- </td><td>Overwrite </td><td>OCrypto </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td><b>RA2 series — Cortex-M23</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA2A2 </td><td>AES_b </td><td>XIP via MMF </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td>RA2E1 / RA2E2 / RA2L1 </td><td>AES </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td></td><td></td><td>Overwrite </td><td>OCrypto </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td><b>RA6 series — Cortex-M4</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA6M1 / RA6M2 / RA6M3 / RA6T1 </td><td>SCE7 </td><td>XIP via MMF </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td><b>RA4 series — Cortex-M33</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA4E2 / RA4T1 </td><td>TRNG Only </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td>RA4E1 / RA4M2 / RA4M3 </td><td>SCE9 / SCE9_TRNG </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td><b>RA6 series — Cortex-M33</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA6E2 / RA6T3 </td><td>TRNG Only </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td>RA6E1 / RA6M4 / RA6M5 </td><td>SCE9 / SCE9_TRNG </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td><b>RA8 series — Cortex-M85</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA8E1 / RA8E2 </td><td>RSIP-E51A_TRNG </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td>RA8D1 / RA8M1 / RA8T1 </td><td>RSIP-E51A </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<tr>
+<td><b>RA8 series — dual core (M85 + M33)</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
+<tr>
+<td>RA8D2 / RA8M2 / RA8P1 / RA8T2 </td><td>RSIP-E50D </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+</table>
 <h4><a class="anchor" id="r-mcuboot-solution-single-images-steps"></a>
 Single-Image Bootloader Setup</h4>
 <ul>
@@ -662,7 +708,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

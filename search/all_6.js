@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['e2_20studio_202025_2d12_20pin_20configuration_20workarounds',['e2 Studio 2025-12 Pin Configuration Workarounds',['../_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html',1,'REF_MATERIALS']]],
+  ['e2_20studio_202026_2d04_20pin_20configuration_20workarounds',['e2 Studio 2026-04 Pin Configuration Workarounds',['../_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html',1,'REF_MATERIALS']]],
   ['e_5fadjust_5fstatus',['e_adjust_status',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a73e470b5d97213689ecf2603e8fa68ce',1,'motor_angle_encoder_info_t']]],
   ['e_5fble_5fgap_5fevt_5ft',['e_ble_gap_evt_t',['../group___g_a_p___a_p_i.html#gae2663e6d4f0cb98892400997e4479791',1,'r_ble_api.h']]],
   ['e_5fble_5fiso_5fevt_5ft',['e_ble_iso_evt_t',['../group___i_s_o___a_p_i.html#ga38cfc9b28ef377abe7773a7ad6c0fb17',1,'r_ble_api.h']]],
@@ -167,7 +167,7 @@ var searchData=
   ['etha_5ferror_5fipl_5fport_5f1',['etha_error_ipl_port_1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a22e478c02b9e0ba43a4750a6257c63f5',1,'layer3_switch_extended_cfg_t']]],
   ['etha_5ferror_5firq_5fport_5f0',['etha_error_irq_port_0',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a4d7adf3c5d4676c2b444d19eeddf0168',1,'layer3_switch_extended_cfg_t']]],
   ['etha_5ferror_5firq_5fport_5f1',['etha_error_irq_port_1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#aa76ccc390c654ed65fb78e3db5ccb43e',1,'layer3_switch_extended_cfg_t']]],
-  ['ether',['ether',['../group___p_t_p___a_p_i.html#ac2f1d148e01e662b9fe8b3e27bd5f0bb',1,'ptp_synfp_cfg_t::ether()'],['../group___e_t_h_e_r.html',1,'(Global Namespace)']]],
+  ['ether',['ether',['../group___p_t_p___a_p_i.html#a926c5b230b29fc53b00b4d3fe1f10b31',1,'ptp_synfp_cfg_t::ether()'],['../group___e_t_h_e_r.html',1,'(Global Namespace)']]],
   ['ethernet_20interface',['Ethernet Interface',['../group___e_t_h_e_r___a_p_i.html',1,'']]],
   ['ether_5fapi_5ft',['ether_api_t',['../group___e_t_h_e_r___a_p_i.html#structether__api__t',1,'']]],
   ['ether_5fbuffer_5fsize',['ether_buffer_size',['../group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256',1,'ether_cfg_t']]],
@@ -288,6 +288,7 @@ var searchData=
   ['ether_5fswitch_5fcallback_5fargs_5ft',['ether_switch_callback_args_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t',1,'']]],
   ['ether_5fswitch_5fcfg_5ft',['ether_switch_cfg_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__cfg__t',1,'']]],
   ['ether_5fswitch_5fctrl_5ft',['ether_switch_ctrl_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed',1,'r_ether_switch_api.h']]],
+  ['ether_5fswitch_5fevent_5flink_5fchange',['ETHER_SWITCH_EVENT_LINK_CHANGE',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524ab169af7dabcf0471a530ce24997bdf8d',1,'r_ether_switch_api.h']]],
   ['ether_5fswitch_5fevent_5frx_5fcomplete',['ETHER_SWITCH_EVENT_RX_COMPLETE',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524aa0a0514df6bac40c835e4fcda32073b4',1,'r_ether_switch_api.h']]],
   ['ether_5fswitch_5fevent_5frx_5fmessage_5flost',['ETHER_SWITCH_EVENT_RX_MESSAGE_LOST',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e',1,'r_ether_switch_api.h']]],
   ['ether_5fswitch_5fevent_5frx_5fqueue_5ffull',['ETHER_SWITCH_EVENT_RX_QUEUE_FULL',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f',1,'r_ether_switch_api.h']]],
@@ -295,6 +296,7 @@ var searchData=
   ['ether_5fswitch_5fevent_5ftas_5ferror',['ETHER_SWITCH_EVENT_TAS_ERROR',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524ac49554d86f33aab93cc7d939089fca1f',1,'r_ether_switch_api.h']]],
   ['ether_5fswitch_5fevent_5ftx_5fcomplete',['ETHER_SWITCH_EVENT_TX_COMPLETE',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7',1,'r_ether_switch_api.h']]],
   ['ether_5fswitch_5finstance_5ft',['ether_switch_instance_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__instance__t',1,'']]],
+  ['ether_5fswitch_5flink_5fstatus_5fbitmaps_5ft',['ether_switch_link_status_bitmaps_t',['../group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__link__status__bitmaps__t',1,'']]],
   ['ether_5fwake_5fon_5flan_5fdisable',['ETHER_WAKE_ON_LAN_DISABLE',['../group___e_t_h_e_r___a_p_i.html#gga9bc17e8981b3bb4f3d42d31c1f11bcd7abd10fd1d451781553f66ff90195509d6',1,'r_ether_api.h']]],
   ['ether_5fwake_5fon_5flan_5fenable',['ETHER_WAKE_ON_LAN_ENABLE',['../group___e_t_h_e_r___a_p_i.html#gga9bc17e8981b3bb4f3d42d31c1f11bcd7ad47e9527c645139d93c916e83d14e129',1,'r_ether_api.h']]],
   ['ether_5fwake_5fon_5flan_5ft',['ether_wake_on_lan_t',['../group___e_t_h_e_r___a_p_i.html#ga9bc17e8981b3bb4f3d42d31c1f11bcd7',1,'r_ether_api.h']]],

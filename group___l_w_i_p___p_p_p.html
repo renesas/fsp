@@ -1,0 +1,580 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: lwIP PPP</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.5.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_w_i_p___p_p_p.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">lwIP PPP<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This module provides the lwIP PPP (Point-to-Point Protocol) integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip_ppp-overview"></a>
+Overview</h1>
+<p>The lwIP PPP module enables IP communication over serial or USB-based links by implementing the Point-to-Point Protocol (PPP). This library provides both <b>PPP client and server</b> roles, supporting multiple link types such as:</p>
+<ul>
+<li>PPP over Serial (PPPoS)</li>
+<li>PPP over Ethernet (PPPoE)</li>
+<li>PPP over L2TP (PPPoL2TP)</li>
+</ul>
+<p>The original lwIP PPP implementation is documented here: <a href="https://www.nongnu.org/lwip/2_1_x/group__ppp.html">PPP in lwIP</a></p>
+<h2><a class="anchor" id="rm-lwip_ppp-features"></a>
+Features</h2>
+<p>For detail information about PPP feature, refer to <b>Section 1</b> in <a href="https://www.nongnu.org/lwip/2_1_x/group__ppp.html">PPP in lwIP</a>.</p>
+<h1><a class="anchor" id="rm-lwip_ppp-configuration"></a>
+Configuration</h1>
+<p>Configuration options for the lwIP PPP module are available in the FSP configuration editor. Detailed parameter descriptions can be found in the following document:</p>
+<p><h2>Build Time Configurations for Source</h2>
+The following build time configurations are defined in lwip/pppopts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> PPPoL2TP  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LwIP support PPPoL2TP</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable PPP over L2TP (Layer 2 Tunneling Protocol) support. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LwIP support PPPoL2TP AUTH</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable PPP Over L2TP Auth (enable MD5 support) </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Authentication  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP support PAP</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Password Authentication Protocol. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP support CHAP</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Challenge Handshake Authentication Protocol. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP support MSCHAP</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Microsoft Challenge Handshake Authentication Protocol (MS-CHAP) for enhanced PPP authentication with stronger security than standard CHAP. Required for MPPE encryption. Automatically enables CHAP support. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP support EAP</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Extensible Authentication Protocol. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP support MD5-RANDM</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+(CHAP_SUPPORT || EAP_SUPPORT || PPPOL2TP_AUTH_SUPPORT)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>(CHAP_SUPPORT || EAP_SUPPORT || PPPOL2TP_AUTH_SUPPORT) </td><td>Enable MD5-RANDM support for PPP authentication. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use external PolarSSL library</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Use an external PolarSSL library for cryptographic operations in PPP authentication. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use external mbedTLS library</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Use external mbedTLS library for cryptographic operations in PPP authentication and TLS connections. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max username length</td><td>Username length must be between 1 and 256.</td><td>256 </td><td>Maximum length of hostname or name for auth. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max secret length</td><td>Secret length must be between 1 and 256.</td><td>256 </td><td>Maximum length of password or secret. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Internal memory pools  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP num connections</td><td>Must be a positive integer (minimum 1). Specifies the number of concurrent PPP connections supported.</td><td>1 </td><td>Number of simultaneously active PPP connections (requires the PPP_SUPPORT option). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP num API messages</td><td>Must be a positive integer (minimum 1). Represents the number of available PPP API message buffers.</td><td>5 </td><td>Number of concurrent PPP API messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPPoL2TP num connections</td><td>At least 1 PPPoL2TP connection is required. Please enter a positive integer value.</td><td>1 </td><td>Number of concurrently active PPPoL2TP interfaces (only used with PPPOL2TP_SUPPORT==1). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP num timeouts per PCB</td><td>Enter a positive integer greater than 1</td><td>2 + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT </td><td>The number of sys_timeouts running in parallel per ppp_pcb. See the detailed explanation at the end of ppp_impl.h about simultaneous timers analysis. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Debugging  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP debug</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LWIP_DBG_OFF</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>LWIP_DBG_OFF </td><td>Enable debugging in PPP. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP packet print support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable PPP print packet support. It displays exchanged packet content in debug trace. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Notification/Callback Options  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP phase notifications</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable PPP notify phase support. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Compression/Optimization  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable Link Quality Reporting (LQR)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Support Link Quality Report. Do nothing except exchanging some LCP packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable VJ header compression</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Support VJ header compression. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Role Configuration  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable PPP server mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable PPP server mode. When enabled, the device acts as a PPP server and waits for the client to initiate the connection. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP local hostname</td><td>Name must be a valid C symbol</td><td>lwip_ppp </td><td>Local hostname used for authentication purposes. This name identifies the PPP peer when acting as a client or server. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> MRU/MTU  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP max MRU</td><td>Value must be positive integer.</td><td>1500 </td><td>This is the upper limit value to which we set our interface MTU. If the peer sends a larger number, we will just ignore it as we are not required to maximize the use of the peer capacity. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP min MRU</td><td>Value must be positive integer.</td><td>128 </td><td>Peer must be able to receive at least our minimum MTU. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPPoL2TP default MRU</td><td>Value must be positive integer.</td><td>1450 </td><td>Default MTU and MRU for L2TP. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Timing/Retry Settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">FSM default timeout</td><td>Value must be between 0 and 255</td><td>6 </td><td>Default timeout (in seconds) for Finite State Machine (FSM) retransmissions. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">FSM max terminate requests</td><td>Value must be between 0 and 255</td><td>2 </td><td>Maximum number of Terminate-Request packets sent before giving up. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">FSM max configure requests</td><td>Value must be between 0 and 255</td><td>10 </td><td>Maximum number of Configure-Request packets sent before giving up. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">FSM max NAK loops</td><td>Value must be between 0 and 255</td><td>5 </td><td>Maximum number of NAK loops allowed during negotiation. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PAP default timeout</td><td>Value must be between 0 and 255</td><td>6 </td><td>Default timeout (in seconds) for PAP authentication response. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PAP max transmits</td><td>Value must be between 0 and 255</td><td>10 </td><td>Maximum number of PAP Authenticate-Request transmissions before giving up. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PAP request timeout</td><td>Value must be between 0 and 255</td><td>30 </td><td>Request timeout (in seconds) before retransmitting PAP Authenticate-Request. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">CHAP default timeout</td><td>Value must be between 0 and 255</td><td>6 </td><td>Default timeout (in seconds) for CHAP challenge response. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">CHAP max transmits</td><td>Value must be between 0 and 255</td><td>10 </td><td>Maximum number of CHAP Challenge-Requests transmitted before giving up. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">CHAP re-challenge time</td><td>Value must be between 0 and 255</td><td>0 </td><td>Interval (in seconds) between periodic CHAP re-challenges. If this option is &gt; 0, rechallenge the peer every n seconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EAP request time</td><td>Value must be between 0 and 255</td><td>6 </td><td>Default request timeout (in seconds) for EAP authentication. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EAP allowed requests</td><td>Value must be between 0 and 255</td><td>10 </td><td>Maximum number of EAP Request retries before failure. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EAP default timeout</td><td>Value must be between 0 and 255</td><td>6 </td><td>Timeout (in seconds) for EAP packet acknowledgment. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EAP max transmits</td><td>Value must be between 0 and 255</td><td>10 </td><td>Maximum number of EAP packet retransmissions. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LCP loopback fail threshold</td><td>Value must be between 0 and 255</td><td>10 </td><td>Number of failed echo responses before declaring link down. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LCP echo interval</td><td>Value must be between 0 and 255</td><td>0 </td><td>Time interval (in seconds) between LCP echo requests. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LCP max echo failures</td><td>Value must be between 0 and 255</td><td>3 </td><td>Number of consecutive failed echo replies before declaring link dead. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PPP max idle flag</td><td>Value must be positive integer.</td><td>100 </td><td>Max Xmit idle time (in ms) before resend flag char. </td></tr>
+<tr class="tree_none">
+<td>LwIP support PPP API</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable high-level PPP API functions. </td></tr>
+<tr class="tree_none">
+<td>PPP support CCP</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Compression Control Protocol (CCP) for PPP data compression to reduce bandwidth usage. </td></tr>
+<tr class="tree_none">
+<td>PPP support MPPE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Microsoft Point-to-Point Encryption (MPPE) for PPP data encryption and security. Automatically enables CCP and MS-CHAP support. </td></tr>
+</table>
+</p>
+<p>Specific configuration of PPPoE can be found in the following document:</p>
+<p><h2>Build Time Configurations for Source</h2>
+The following build time configurations are defined in lwip/pppoe_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>LwIP support PPPoE SCNAME</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable PPP Over Ethernet Service Name and Concentrator Name support. </td></tr>
+<tr class="tree_none">
+<td>PPPoE num connections</td><td>At least 1 PPPoE connection is required. Please enter a positive integer value.</td><td>1 </td><td>Number of concurrently active PPPoE interfaces (only used with PPPOE_SUPPORT==1). </td></tr>
+</table>
+</p>
+<p>Specific configuration of PPPoS can be found in the following documents:</p>
+<ul>
+<li>For LwIP PPP on USB: <h2>Build Time Configurations for Source</h2>
+The following build time configurations are defined in lwip/pppos_usb_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>PPPoS num connections</td><td>At least 1 PPPoS connection is required. Please enter a positive integer value.</td><td>MEMP_NUM_PPP_PCB </td><td>Number of concurrently active PPPoS interfaces (only used with PPPOS_SUPPORT==1). </td></tr>
+<tr class="tree_none">
+<td>IRQ safe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If enabled, call pppos_input() using tcpip_callback(). </td></tr>
+<tr class="tree_none">
+<td>Enable FCS lookup table</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Keep a 256*2 byte table to speed up FCS calculation for PPPoS. </td></tr>
+<tr class="tree_none">
+<td>PPP MRU</td><td>Value must be positive integer.</td><td>1500 </td><td>MRU value we want to negotiate (peer MTU). It only affects PPPoS because PPPoE value is derived from the Ethernet interface MTU and PPPoL2TP have a separate setting. </td></tr>
+</table>
+</li>
+<li>For LwIP PPP on UART: <h2>Build Time Configurations for Source</h2>
+The following build time configurations are defined in lwip/pppos_uart_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>PPPoS num connections</td><td>At least 1 PPPoS connection is required. Please enter a positive integer value.</td><td>MEMP_NUM_PPP_PCB </td><td>Number of concurrently active PPPoS interfaces (only used with PPPOS_SUPPORT==1). </td></tr>
+<tr class="tree_none">
+<td>IRQ safe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If enabled, call pppos_input() using tcpip_callback(). </td></tr>
+<tr class="tree_none">
+<td>Enable FCS lookup table</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Keep a 256*2 byte table to speed up FCS calculation for PPPoS. </td></tr>
+<tr class="tree_none">
+<td>PPP MRU</td><td>Value must be positive integer.</td><td>1500 </td><td>MRU value we want to negotiate (peer MTU). It only affects PPPoS because PPPoE value is derived from the Ethernet interface MTU and PPPoL2TP have a separate setting. </td></tr>
+</table>
+</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>The configuration options for PPPoS on USB and UART are the same. This is the general configuration for PPPoS usage.</dd></dl>
+<h1><a class="anchor" id="rm-lwip_ppp-examples"></a>
+Examples</h1>
+<h2>Basic LwIP PPPoS on Uart Example</h2>
+<p>The following demonstrates a basic example of LwIP PPPoS on Uart.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define LWIP_PPP_UART_EXAMPLE_RING_BUF_SIZE    (2048U)</span></div><div class="line"><span class="preprocessor">#define LWIP_PPP_UART_EXAMPLE_READ_BUF_SIZE    (64U)</span></div><div class="line"></div><div class="line">uint8_t g_uart_buf[LWIP_PPP_UART_EXAMPLE_READ_BUF_SIZE] = {0};</div><div class="line"></div><div class="line"><span class="comment">/* Temporary buffer to save data from receive buffer for further processing */</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>st_uart_ring_buffer</div><div class="line">{</div><div class="line">    uint8_t  g_buf[LWIP_PPP_UART_EXAMPLE_RING_BUF_SIZE];</div><div class="line">    uint32_t head;</div><div class="line">    uint32_t tail;</div><div class="line">} uart_ring_buffer_t;</div><div class="line"></div><div class="line"><span class="keyword">static</span> uart_ring_buffer_t g_uart_ring_buffer = {.g_buf = {0}, .head = 0, .tail = 0};</div><div class="line"></div><div class="line"><span class="comment">/* Helper Functions */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> uart_ring_buffer_put (uart_ring_buffer_t * rb, uint8_t data)</div><div class="line">{</div><div class="line">    uint32_t next_head = (rb-&gt;head + 1) % LWIP_PPP_UART_EXAMPLE_RING_BUF_SIZE;</div><div class="line"></div><div class="line">    <span class="comment">/* Check for buffer overflow */</span></div><div class="line">    <span class="keywordflow">if</span> (next_head != rb-&gt;tail)</div><div class="line">    {</div><div class="line">        rb-&gt;g_buf[rb-&gt;head] = data;</div><div class="line">        rb-&gt;head            = next_head;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> uart_ring_buffer_get (uart_ring_buffer_t * rb, uint8_t * data)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (rb-&gt;head == rb-&gt;tail)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    *data    = rb-&gt;g_buf[rb-&gt;tail];</div><div class="line">    rb-&gt;tail = (rb-&gt;tail + 1) % LWIP_PPP_UART_EXAMPLE_RING_BUF_SIZE;</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> user_uart_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a> == p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        uart_ring_buffer_put(&amp;g_uart_ring_buffer, (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a> == p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Get PPPoS specific configuration */</span></div><div class="line">        rm_lwip_pppos_specific_cfg_t * p_pppos_cfg =</div><div class="line">            (rm_lwip_pppos_specific_cfg_t *) ppp_uart.p_cfg-&gt;p_extended_cfg;</div><div class="line"></div><div class="line">        <span class="comment">/* Retrieve the UART instance */</span></div><div class="line">        <a class="code" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> * p_uart = (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> *) p_pppos_cfg-&gt;p_hw_instance;</div><div class="line"></div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read</a>(p_uart-&gt;p_ctrl, g_uart_buf, LWIP_PPP_UART_EXAMPLE_READ_BUF_SIZE);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> pppos_uart_input_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t rx_byte;</div><div class="line">    <span class="keywordflow">while</span> (uart_ring_buffer_get(&amp;g_uart_ring_buffer, &amp;rx_byte))</div><div class="line">    {</div><div class="line">        pppos_input(ppp_uart.p_ctrl-&gt;p_ppp_pcb, &amp;rx_byte, 1);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> pppos_uart_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* The PPP IP interface */</span></div><div class="line">    <span class="keyword">struct </span>netif pppos_netif;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Get PPPoS specific configuration */</span></div><div class="line">    rm_lwip_pppos_specific_cfg_t * p_pppos_cfg =</div><div class="line">        (rm_lwip_pppos_specific_cfg_t *) ppp_uart.p_cfg-&gt;p_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the UART instance */</span></div><div class="line">    <a class="code" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> * p_uart = (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> *) p_pppos_cfg-&gt;p_hw_instance;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open</a>(p_uart-&gt;p_ctrl, p_uart-&gt;p_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read</a>(p_uart-&gt;p_ctrl, g_uart_buf, LWIP_PPP_UART_EXAMPLE_READ_BUF_SIZE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create UART PPPOS Interface */</span></div><div class="line">    ppp_uart.p_ctrl-&gt;p_ppp_pcb =</div><div class="line">        pppos_create(&amp;pppos_netif, pppos_output_uart, pppos_uart_link_status, (<span class="keywordtype">void</span> *) &amp;ppp_uart);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (ppp_uart.p_ctrl-&gt;p_ppp_pcb == NULL)</div><div class="line">    {</div><div class="line">        printf(<span class="stringliteral">&quot;Could not create PPP control interface&quot;</span>);</div><div class="line"></div><div class="line">        <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set this interface as default route */</span></div><div class="line">    ppp_set_default(ppp_uart.p_ctrl-&gt;p_ppp_pcb);</div><div class="line"></div><div class="line"><span class="preprocessor">#if PPP_AUTH_SUPPORT</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set authentication if needed */</span></div><div class="line">    ppp_set_auth(ppp_uart.p_ctrl-&gt;p_ppp_pcb, PPPAUTHTYPE_PAP, <span class="stringliteral">&quot;g_ppp_uart_user&quot;</span>, <span class="stringliteral">&quot;g_ppp_uart_pass&quot;</span>);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Start connection */</span></div><div class="line">    ppp_connect(ppp_uart.p_ctrl-&gt;p_ppp_pcb, 0);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Callback function handles PHY&#39;s link status */</span></div><div class="line">u32_t pppos_output_uart (ppp_pcb * pcb, <span class="keyword">const</span> <span class="keywordtype">void</span> * data, u32_t len, <span class="keywordtype">void</span> * ctx)</div><div class="line">{</div><div class="line">    LWIP_UNUSED_ARG(pcb);</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the instance from context */</span></div><div class="line">    rm_lwip_ppp_instance_t * p_instance = (rm_lwip_ppp_instance_t *) ctx;</div><div class="line"></div><div class="line">    <span class="comment">/* Get PPPoS specific configuration */</span></div><div class="line">    rm_lwip_pppos_specific_cfg_t * p_pppos_cfg =</div><div class="line">        (rm_lwip_pppos_specific_cfg_t *) p_instance-&gt;p_cfg-&gt;p_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the UART instance */</span></div><div class="line">    <a class="code" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> * p_uart = (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> *) p_pppos_cfg-&gt;p_hw_instance;</div><div class="line"></div><div class="line">    <span class="comment">/* Send data over UART here */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga8916449e6e6de86681c04d1931645e7c">R_SCI_UART_Write</a>(p_uart-&gt;p_ctrl, data, len);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> (err == FSP_SUCCESS) ? len : 0;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Callback function handles link status */</span></div><div class="line"><span class="keywordtype">void</span> pppos_uart_link_status (ppp_pcb * pcb, <span class="keywordtype">int</span> err_code, <span class="keywordtype">void</span> * ctx)</div><div class="line">{</div><div class="line">    <span class="keyword">struct </span>netif * pppif = ppp_netif(pcb);</div><div class="line">    LWIP_UNUSED_ARG(ctx);</div><div class="line"></div><div class="line">    <span class="keywordflow">switch</span> (err_code)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> PPPERR_NONE:</div><div class="line">        {</div><div class="line"><span class="preprocessor">#if LWIP_DNS</span></div><div class="line">            <span class="keyword">const</span> ip_addr_t * ns;</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* LWIP_DNS */</span><span class="preprocessor"></span></div><div class="line">            printf(<span class="stringliteral">&quot;status_cb: Connected\n&quot;</span>);</div><div class="line"><span class="preprocessor">#if PPP_IPV4_SUPPORT</span></div><div class="line">            printf(<span class="stringliteral">&quot;   our_ipaddr  = %s\n&quot;</span>, ip4addr_ntoa(netif_ip4_addr(pppif)));</div><div class="line">            printf(<span class="stringliteral">&quot;   his_ipaddr  = %s\n&quot;</span>, ip4addr_ntoa(netif_ip4_gw(pppif)));</div><div class="line">            printf(<span class="stringliteral">&quot;   netmask     = %s\n&quot;</span>, ip4addr_ntoa(netif_ip4_netmask(pppif)));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* PPP_IPV4_SUPPORT */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#if PPP_IPV6_SUPPORT</span></div><div class="line">            printf(<span class="stringliteral">&quot;   our6_ipaddr = %s\n&quot;</span>, ip6addr_ntoa(netif_ip6_addr(pppif, 0)));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* PPP_IPV6_SUPPORT */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#if LWIP_DNS</span></div><div class="line">            ns = dns_getserver(0);</div><div class="line">            printf(<span class="stringliteral">&quot;   dns1        = %s\n&quot;</span>, ipaddr_ntoa(ns));</div><div class="line">            ns = dns_getserver(1);</div><div class="line">            printf(<span class="stringliteral">&quot;   dns2        = %s\n&quot;</span>, ipaddr_ntoa(ns));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* LWIP_DNS */</span><span class="preprocessor"></span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_PARAM:             <span class="comment">/* Invalid parameter. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_PARAM\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_OPEN:              <span class="comment">/* Unable to open PPP session. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_OPEN\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_DEVICE:            <span class="comment">/* Invalid I/O device for PPP. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_DEVICE\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_ALLOC:             <span class="comment">/* Unable to allocate resources. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_ALLOC\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_USER:              <span class="comment">/* User interrupt. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_USER\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_CONNECT:           <span class="comment">/* Connection lost. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_CONNECT\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_AUTHFAIL:          <span class="comment">/* Failed authentication challenge. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_AUTHFAIL\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_PROTOCOL:          <span class="comment">/* Failed to meet protocol. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_PROTOCOL\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_PEERDEAD:          <span class="comment">/* Connection timeout. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_PEERDEAD\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_IDLETIMEOUT:       <span class="comment">/* Idle Timeout. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_IDLETIMEOUT\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_CONNECTTIME:       <span class="comment">/* PPPERR_CONNECTTIME. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_CONNECTTIME\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_LOOPBACK:          <span class="comment">/* Connection timeout. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_LOOPBACK\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: unknown errCode %d\n&quot;</span>, err_code);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_lwip_pppos_uart_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize PPP and UART */</span></div><div class="line">    pppos_uart_init();</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        sys_check_timeouts();</div><div class="line"></div><div class="line">        <span class="comment">/* Process received UART data */</span></div><div class="line">        pppos_uart_input_example();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LwIP PPPoS on USB Example</h2>
+<p>The following demonstrates a basic example of LwIP PPPoS on USB.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define LWIP_PPP_USB_EXAMPLE_RING_BUF_SIZE    (2048U)</span></div><div class="line"><span class="preprocessor">#define LWIP_PPP_USB_EXAMPLE_LENGTH           (0x07U)</span></div><div class="line"><span class="preprocessor">#define LWIP_PPP_USB_EXAMPLE_READ_BUF_SIZE    (64U)</span></div><div class="line"></div><div class="line">usb_event_info_t      event_info;</div><div class="line"><a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>          usb_event;</div><div class="line"><a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__linecoding__t">usb_pcdc_linecoding_t</a> g_line_coding;</div><div class="line">uint8_t               g_usb_buf[LWIP_PPP_USB_EXAMPLE_READ_BUF_SIZE] = {0};</div><div class="line"></div><div class="line"><span class="comment">/* Temporary buffer to save data from receive buffer for further processing */</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>st_usb_ring_buffer</div><div class="line">{</div><div class="line">    uint8_t  g_buf[LWIP_PPP_USB_EXAMPLE_RING_BUF_SIZE];</div><div class="line">    uint32_t head;</div><div class="line">    uint32_t tail;</div><div class="line">} usb_ring_buffer_t;</div><div class="line"></div><div class="line"><span class="keyword">static</span> usb_ring_buffer_t g_usb_ring_buffer = {.g_buf = {0}, .head = 0, .tail = 0};</div><div class="line"></div><div class="line"><span class="comment">/* Helper Functions */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> usb_ring_buffer_put (usb_ring_buffer_t * rb, uint8_t data)</div><div class="line">{</div><div class="line">    uint32_t next_head = (rb-&gt;head + 1) % LWIP_PPP_USB_EXAMPLE_RING_BUF_SIZE;</div><div class="line"></div><div class="line">    <span class="comment">/* Check for buffer overflow */</span></div><div class="line">    <span class="keywordflow">if</span> (next_head != rb-&gt;tail)</div><div class="line">    {</div><div class="line">        rb-&gt;g_buf[rb-&gt;head] = data;</div><div class="line">        rb-&gt;head            = next_head;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> usb_ring_buffer_get (usb_ring_buffer_t * rb, uint8_t * data)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (rb-&gt;head == rb-&gt;tail)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    *data    = rb-&gt;g_buf[rb-&gt;tail];</div><div class="line">    rb-&gt;tail = (rb-&gt;tail + 1) % LWIP_PPP_USB_EXAMPLE_RING_BUF_SIZE;</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> usb_ring_buffer_put_block (uint8_t * data, uint32_t len)</div><div class="line">{</div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; len; i++)</div><div class="line">    {</div><div class="line">        usb_ring_buffer_put(&amp;g_usb_ring_buffer, data[i]);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> user_usb_handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Get PPPoS specific configuration */</span></div><div class="line">    rm_lwip_pppos_specific_cfg_t * p_pppos_cfg =</div><div class="line">        (rm_lwip_pppos_specific_cfg_t *) ppp_usb.p_cfg-&gt;p_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the USB instance */</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#structusb__instance__t">usb_instance_t</a> * p_usb = (<a class="code" href="group___u_s_b___a_p_i.html#structusb__instance__t">usb_instance_t</a> *) p_pppos_cfg-&gt;p_hw_instance;</div><div class="line">    err = <a class="code" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet</a>(&amp;event_info, &amp;usb_event);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* USB event received by R_USB_EventGet */</span></div><div class="line">    <span class="keywordflow">switch</span> (usb_event)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___u_s_b.html#ga42ad1cbad598d06023d83e8a91fd49d4">R_USB_Read</a>(p_usb-&gt;p_ctrl, g_usb_buf, <span class="keyword">sizeof</span>(g_usb_buf), <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (event_info.data_size &gt; 0)</div><div class="line">            {</div><div class="line">                usb_ring_buffer_put_block(g_usb_buf, event_info.data_size);</div><div class="line">            }</div><div class="line"></div><div class="line">            err = <a class="code" href="group___u_s_b.html#ga42ad1cbad598d06023d83e8a91fd49d4">R_USB_Read</a>(p_usb-&gt;p_ctrl, g_usb_buf, <span class="keyword">sizeof</span>(g_usb_buf), <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a8b49ebc4d15054963bdbe8d843a2cf5a">USB_STATUS_REQUEST</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Check for the specific CDC class request IDs */</span></div><div class="line">            <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga9e76ac14dae5e5e44b5df6e8cbee6bd0">USB_PCDC_SET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">            {</div><div class="line">                err = <a class="code" href="group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1">R_USB_PeriControlDataGet</a>(p_usb-&gt;p_ctrl, (uint8_t *) &amp;g_line_coding, LWIP_PPP_USB_EXAMPLE_LENGTH);</div><div class="line"></div><div class="line">                <span class="comment">/* Handle error */</span></div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga3e7ae95dcfc42bd8912fe18339893d82">USB_PCDC_GET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">            {</div><div class="line">                err = <a class="code" href="group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0">R_USB_PeriControlDataSet</a>(p_usb-&gt;p_ctrl, (uint8_t *) &amp;g_line_coding, LWIP_PPP_USB_EXAMPLE_LENGTH);</div><div class="line"></div><div class="line">                <span class="comment">/* Handle error */</span></div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga6f454d69f2a0ee2fcae6793f1b0cd40a">USB_PCDC_SET_CONTROL_LINE_STATE</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">            {</div><div class="line">                err = <a class="code" href="group___u_s_b.html#gaf8976d11f8be52c3f9422563188d6ab9">R_USB_PeriControlStatusSet</a>(p_usb-&gt;p_ctrl, <a class="code" href="group___u_s_b___a_p_i.html#gga386cabe04206e06b3be8dbafc0bc3d86a20a1e7b4a77141981d824649cab7554b">USB_SETUP_STATUS_ACK</a>);</div><div class="line"></div><div class="line">                <span class="comment">/* Handle error */</span></div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                <span class="comment">/* none */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> pppos_usb_input_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t rx_byte;</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (usb_ring_buffer_get(&amp;g_usb_ring_buffer, &amp;rx_byte))</div><div class="line">    {</div><div class="line">        pppos_input(ppp_usb.p_ctrl-&gt;p_ppp_pcb, &amp;rx_byte, 1);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> pppos_usb_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* The PPP IP interface */</span></div><div class="line">    <span class="keyword">struct </span>netif pppos_netif;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Get PPPoS specific configuration */</span></div><div class="line">    rm_lwip_pppos_specific_cfg_t * p_pppos_cfg =</div><div class="line">        (rm_lwip_pppos_specific_cfg_t *) ppp_usb.p_cfg-&gt;p_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the USB instance */</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#structusb__instance__t">usb_instance_t</a> * p_usb = (<a class="code" href="group___u_s_b___a_p_i.html#structusb__instance__t">usb_instance_t</a> *) p_pppos_cfg-&gt;p_hw_instance;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___u_s_b.html#gab9810a1d8e322cb89a9a7f9ca84a368f">R_USB_Open</a>(p_usb-&gt;p_ctrl, p_usb-&gt;p_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create USB PPPOS Interface */</span></div><div class="line">    ppp_usb.p_ctrl-&gt;p_ppp_pcb = pppos_create(&amp;pppos_netif, pppos_output_usb, pppos_usb_link_status, (<span class="keywordtype">void</span> *) &amp;ppp_usb);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (ppp_usb.p_ctrl-&gt;p_ppp_pcb == NULL)</div><div class="line">    {</div><div class="line">        printf(<span class="stringliteral">&quot;Could not create PPP control interface&quot;</span>);</div><div class="line"></div><div class="line">        <span class="keywordflow">return</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set this interface as default route */</span></div><div class="line">    ppp_set_default(ppp_usb.p_ctrl-&gt;p_ppp_pcb);</div><div class="line"></div><div class="line"><span class="preprocessor">#if PPP_AUTH_SUPPORT</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set authentication if needed */</span></div><div class="line">    ppp_set_auth(ppp_usb.p_ctrl-&gt;p_ppp_pcb, PPPAUTHTYPE_PAP, <span class="stringliteral">&quot;g_ppp_usb_user&quot;</span>, <span class="stringliteral">&quot;g_ppp_usb_pass&quot;</span>);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Start connection */</span></div><div class="line">    ppp_connect(ppp_usb.p_ctrl-&gt;p_ppp_pcb, 0);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Callback function handles output data */</span></div><div class="line">u32_t pppos_output_usb (ppp_pcb * pcb, <span class="keyword">const</span> <span class="keywordtype">void</span> * data, u32_t len, <span class="keywordtype">void</span> * ctx)</div><div class="line">{</div><div class="line">    LWIP_UNUSED_ARG(pcb);</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the instance from context */</span></div><div class="line">    rm_lwip_ppp_instance_t * p_instance = (rm_lwip_ppp_instance_t *) ctx;</div><div class="line"></div><div class="line">    <span class="comment">/* Get PPPoS specific configuration */</span></div><div class="line">    rm_lwip_pppos_specific_cfg_t * p_pppos_cfg =</div><div class="line">        (rm_lwip_pppos_specific_cfg_t *) p_instance-&gt;p_cfg-&gt;p_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Retrieve the USB instance */</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#structusb__instance__t">usb_instance_t</a> * p_usb = (<a class="code" href="group___u_s_b___a_p_i.html#structusb__instance__t">usb_instance_t</a> *) p_pppos_cfg-&gt;p_hw_instance;</div><div class="line"></div><div class="line">    <span class="comment">/* Send data over USB PCDC here */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___u_s_b.html#ga001f40866be6438435e65e78871a54d5">R_USB_Write</a>(p_usb-&gt;p_ctrl, (uint8_t *) data, len, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> (err == FSP_SUCCESS) ? len : 0;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Callback function handles link status */</span></div><div class="line"><span class="keywordtype">void</span> pppos_usb_link_status (ppp_pcb * pcb, <span class="keywordtype">int</span> err_code, <span class="keywordtype">void</span> * ctx)</div><div class="line">{</div><div class="line">    <span class="keyword">struct </span>netif * pppif = ppp_netif(pcb);</div><div class="line">    LWIP_UNUSED_ARG(ctx);</div><div class="line"></div><div class="line">    <span class="keywordflow">switch</span> (err_code)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> PPPERR_NONE:</div><div class="line">        {</div><div class="line"><span class="preprocessor">#if LWIP_DNS</span></div><div class="line">            <span class="keyword">const</span> ip_addr_t * ns;</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* LWIP_DNS */</span><span class="preprocessor"></span></div><div class="line">            printf(<span class="stringliteral">&quot;status_cb: Connected\n&quot;</span>);</div><div class="line"><span class="preprocessor">#if PPP_IPV4_SUPPORT</span></div><div class="line">            printf(<span class="stringliteral">&quot;   our_ipaddr  = %s\n&quot;</span>, ip4addr_ntoa(netif_ip4_addr(pppif)));</div><div class="line">            printf(<span class="stringliteral">&quot;   his_ipaddr  = %s\n&quot;</span>, ip4addr_ntoa(netif_ip4_gw(pppif)));</div><div class="line">            printf(<span class="stringliteral">&quot;   netmask     = %s\n&quot;</span>, ip4addr_ntoa(netif_ip4_netmask(pppif)));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* PPP_IPV4_SUPPORT */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#if PPP_IPV6_SUPPORT</span></div><div class="line">            printf(<span class="stringliteral">&quot;   our6_ipaddr = %s\n&quot;</span>, ip6addr_ntoa(netif_ip6_addr(pppif, 0)));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* PPP_IPV6_SUPPORT */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#if LWIP_DNS</span></div><div class="line">            ns = dns_getserver(0);</div><div class="line">            printf(<span class="stringliteral">&quot;   dns1        = %s\n&quot;</span>, ipaddr_ntoa(ns));</div><div class="line">            ns = dns_getserver(1);</div><div class="line">            printf(<span class="stringliteral">&quot;   dns2        = %s\n&quot;</span>, ipaddr_ntoa(ns));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* LWIP_DNS */</span><span class="preprocessor"></span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_PARAM:             <span class="comment">/* Invalid parameter. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_PARAM\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_OPEN:              <span class="comment">/* Unable to open PPP session. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_OPEN\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_DEVICE:            <span class="comment">/* Invalid I/O device for PPP. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_DEVICE\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_ALLOC:             <span class="comment">/* Unable to allocate resources. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_ALLOC\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_USER:              <span class="comment">/* User interrupt. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_USER\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_CONNECT:           <span class="comment">/* Connection lost. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_CONNECT\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_AUTHFAIL:          <span class="comment">/* Failed authentication challenge. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_AUTHFAIL\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_PROTOCOL:          <span class="comment">/* Failed to meet protocol. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_PROTOCOL\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_PEERDEAD:          <span class="comment">/* Connection timeout. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_PEERDEAD\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_IDLETIMEOUT:       <span class="comment">/* Idle Timeout. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_IDLETIMEOUT\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_CONNECTTIME:       <span class="comment">/* PPPERR_CONNECTTIME. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_CONNECTTIME\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> PPPERR_LOOPBACK:          <span class="comment">/* Connection timeout. */</span></div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: PPPERR_LOOPBACK\n&quot;</span>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            printf(<span class="stringliteral">&quot;ppp_link_status_cb: unknown errCode %d\n&quot;</span>, err_code);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_lwip_pppos_usb_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize PPP and USB */</span></div><div class="line">    pppos_usb_init();</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        sys_check_timeouts();</div><div class="line"></div><div class="line">        <span class="comment">/* Handle USB events */</span></div><div class="line">        user_usb_handler();</div><div class="line"></div><div class="line">        <span class="comment">/* Process received USB data */</span></div><div class="line">        pppos_usb_input_example();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

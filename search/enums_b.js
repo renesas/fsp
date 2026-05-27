@@ -8,6 +8,7 @@ var searchData=
   ['layer3_5fswitch_5fip_5fversion_5ft',['layer3_switch_ip_version_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#gac3d5858ccf2af10a68836e0c5a17f2e4',1,'r_layer3_switch.h']]],
   ['layer3_5fswitch_5fl3_5ffilter_5fbitmask_5ft',['layer3_switch_l3_filter_bitmask_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#gaf2e22cc4b55ed27063083f9a7c2570aa',1,'r_layer3_switch.h']]],
   ['layer3_5fswitch_5fl3_5fupdate_5fbitmask_5ft',['layer3_switch_l3_update_bitmask_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#gab8f7c5de38ae1d742608d5ed9729d531',1,'r_layer3_switch.h']]],
+  ['layer3_5fswitch_5fmac_5faddress_5fsearch_5ft',['layer3_switch_mac_address_search_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5947d557f72420fae92ff1926979b001',1,'r_layer3_switch.h']]],
   ['layer3_5fswitch_5fmagic_5fpacket_5fdetection_5ft',['layer3_switch_magic_packet_detection_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1e6fc72445d9c525f90a02be6422665d',1,'r_layer3_switch.h']]],
   ['layer3_5fswitch_5fmeter_5ffilter_5fcoupling_5fstatus_5ft',['layer3_switch_meter_filter_coupling_status_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#gae873ec9f4806a8eea47c8e8097b753e9',1,'r_layer3_switch.h']]],
   ['layer3_5fswitch_5fmeter_5ffilter_5fdei_5fhandling_5fpolicy_5ft',['layer3_switch_meter_filter_dei_handling_policy_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#gaac60bf9f8ad5627e642b94bb972f0ae7',1,'r_layer3_switch.h']]],

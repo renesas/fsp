@@ -135,6 +135,7 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     ] ],
     [ "layer3_switch_forwarding_port_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__forwarding__port__cfg__t", [
       [ "mac_table_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a3bfd9a3b5cc9fa61cc6bd4a7b3569122", null ],
+      [ "mac_address_search", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a4b6256f2b711098b153820568a5234ae", null ],
       [ "mac_reject_unknown", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aab74c4556b9a248596a1a3d61ad71296", null ],
       [ "mac_hardware_learning_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#abdf19795847617a1e1166a622716c681", null ],
       [ "vlan_table_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a63bab2e9e2deb1297eba4b4386356cc7", null ],
@@ -202,6 +203,7 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "frer_sequence_recovery_status", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a4ff072a28aa5e5af6797951a6ff93fe5", null ],
       [ "used_frer_sequence_generator_num", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49b2dfefb121b00bbffe622872dd910", null ],
       [ "frame_preemption_available", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ac2d75d550a43625c3285f7bf5980e4a4", null ],
+      [ "link_status_bitmaps", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a6ce38103550d88fd78f6edd0346158e1", null ],
       [ "p_callback", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa252f8417c88002cef8353a56060156a", null ],
       [ "p_callback_memory", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a15a12fed4bee9a79d56adce303e5cd1c", null ],
       [ "p_context", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a28b4e51a85668041308a749383cbc976", null ]
@@ -221,6 +223,9 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "cycle_time_start_low", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af22b5495960141edc45298452419400f", null ],
       [ "cycle_time", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a37233b0d0c92467f82dd352276071531", null ],
       [ "gate_cfg_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57", null ]
+    ] ],
+    [ "layer3_switch_target_port_bitmaps_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__target__port__bitmaps__t", [
+      [ "ports", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa408e1466000c32e800f68ed230a2a80", null ]
     ] ],
     [ "layer3_switch_descriptor_type_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga6e36f8895c3397d72343e2df2de37a58", [
       [ "LAYER3_SWITCH_DESCRIPTOR_TYPE_LINKFIX", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58a5593fe659def5efa24deb36b8b8fee3e", null ],
@@ -271,6 +276,11 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "layer3_switch_magic_packet_detection_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1e6fc72445d9c525f90a02be6422665d", [
       [ "LAYER3_SWITCH_MAGIC_PACKET_DETECTION_ENABLE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga1e6fc72445d9c525f90a02be6422665dadd9c4678cbdb8da48b0e20dbfb272f8e", null ],
       [ "LAYER3_SWITCH_MAGIC_PACKET_DETECTION_DISABLE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga1e6fc72445d9c525f90a02be6422665daf4e9020f043ed326f7644fd9c059292c", null ]
+    ] ],
+    [ "layer3_switch_mac_address_search_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5947d557f72420fae92ff1926979b001", [
+      [ "LAYER3_SWITCH_MAC_ADDRESS_SEARCH_DESTINATION", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5947d557f72420fae92ff1926979b001a9409b8a209b835d6e079d577b3752e8f", null ],
+      [ "LAYER3_SWITCH_MAC_ADDRESS_SEARCH_SOURCE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5947d557f72420fae92ff1926979b001a460b92e8403456dc328264eefa28ce5a", null ],
+      [ "LAYER3_SWITCH_MAC_ADDRESS_SEARCH_SOURCE_AND_DESTINATION", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5947d557f72420fae92ff1926979b001a82528d5d7bf691ead6d878bc517321f9", null ]
     ] ],
     [ "layer3_switch_vlan_mode_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1c9d922fd96fab6fec1e248190d13587", [
       [ "LAYER3_SWITCH_VLAN_MODE_NO_VLAN", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga1c9d922fd96fab6fec1e248190d13587ab8866d52e48fc9d412c4a27e4cd52e42", null ],
@@ -400,5 +410,6 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "R_LAYER3_SWITCH_GetTable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga7202ab557137d6fe7c540e3cbb45f59b", null ],
     [ "R_LAYER3_SWITCH_ConfigureTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4", null ],
     [ "R_LAYER3_SWITCH_EnableTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f", null ],
-    [ "R_LAYER3_SWITCH_PsfpClearErrorStatus", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08", null ]
+    [ "R_LAYER3_SWITCH_PsfpClearErrorStatus", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08", null ],
+    [ "R_LAYER3_SWITCH_LinkStatusCheck", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8ef3dd7f9f504b0caa0147d69d08ff2a", null ]
 ];

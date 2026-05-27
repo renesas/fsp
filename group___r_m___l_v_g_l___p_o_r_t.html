@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -450,7 +450,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>Enable support for widget names. </td></tr>
+</td><td>Enabled </td><td>Enable support for widget names. </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Input Devices  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -785,6 +785,8 @@ Graphics Layer 2</li>
 </td><td>Graphics Layer 1 </td><td>Specify which graphics screen to inherit the buffer and display dimensions from. </td></tr>
 <tr class="tree_none">
 <td>Callback Function</td><td>Must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called when Display events occur. </td></tr>
+<tr class="tree_none">
+<td>Dynamic renderer control variable</td><td>Variable name must be a valid C symbol</td><td>gp_dave2d_enable </td><td>Runtime GPU/SW renderer switch </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-lvgl-port-hw-config"></a>
@@ -845,13 +847,15 @@ Getting Started</h2>
 <p>The LVGL packed with FSP also includes the <code>src/libs</code> directory that is in the LVGL project. Only <code>bin_decoder</code> is a mandatory library used by LVGL. Other libraries are either first-party or third-party libraries available for use within LVGL.</p>
 <dl class="section note"><dt>Note</dt><dd>The included libraries may not be applicable to an RA embedded context. The included libraries may not compile or function without further modification. Libraries like ThorVG require a C++ based FSP project. These libraries are included for convenience but are not validated or officially supported as part of the FSP LVGL integration. Not all libraries have been included.</dd></dl>
 <h2>Multi-thread Support</h2>
-<p>LVGL is not a thread safe library. Please refer to <a href="https://docs.lvgl.io/master/porting/os.html#tasks-and-threads">Tasks and threads</a> for information on how to use LVGL in a multi-thread environment.</p>
+<p>LVGL is not a thread safe library. Please refer to <a href="https://docs.lvgl.io/9.5/integration/overview.html#operating-systems-and-threads">Operating Systems and Threads</a> for information on how to use LVGL in a multi-thread environment.</p>
 <dl class="section note"><dt>Note</dt><dd>This includes both bare metal and FreeRTOS projects. RTOS support is optionally configured depending on whether FreeRTOS is used in the project.</dd></dl>
-<h2><a class="anchor" id="rm-lvgl-port-limitations"></a>
+<h2>Runtime control of the DRW Engine</h2>
+<p>This module allows GPU acceleration to be enabled or disabled at runtime. When the DRW Engine is available, it is enabled by default. To use this feature, the <b>gp_dave2d_enable</b> variable is predefined in the LVGL Port stack under <b>Module LVGL Port (rm_lvgl_port)|Dynamic renderer control variable</b>. You can rename the variable to suit your project and update its value from your application code:</p>
+<div class="fragment"><div class="line"><span class="comment">/* Replace 0 with the desired value.</span></div><div class="line"><span class="comment"> * 1 = GPU renderer (default), 0 = SW renderer.</span></div><div class="line"><span class="comment"> * Ensure gp_dave2d_enable matches the variable name</span></div><div class="line"><span class="comment"> * &quot;Dynamic renderer control variable&quot; defined in the MDF. */</span></div><div class="line">lv_subject_set_int(gp_dave2d_enable, 0);</div></div><!-- fragment --><h2><a class="anchor" id="rm-lvgl-port-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using LVGL with FSP:</p>
 <ul>
-<li>Compilers may produce different results at this time (v9.3.0). AC6 is known to produce different software rendering output when blending certain image formats with a 32-bit color depth. LLVM is known to create artifacts with LVGL image decoding and blending.</li>
+<li>Compilers may produce different results at this time (v9.5.0). AC6 is known to produce different software rendering output when blending certain image formats with a 32-bit color depth. LLVM is known to create artifacts with LVGL image decoding and blending.</li>
 <li>The DRW upstream driver does not support all LVGL rendering features. Some unsupported features are horizontal gradients, dashed lines, and blitting of certain image formats. In some cases, the LVGL software renderer will act as a fallback renderer, such as when an unsupported image format is used. <hr/>
 </li>
 </ul>
@@ -1034,7 +1038,7 @@ Error code if RM_LVGL_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

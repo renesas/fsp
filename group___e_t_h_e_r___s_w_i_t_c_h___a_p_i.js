@@ -1,10 +1,14 @@
 var group___e_t_h_e_r___s_w_i_t_c_h___a_p_i =
 [
+    [ "ether_switch_link_status_bitmaps_t", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__link__status__bitmaps__t", [
+      [ "link_status", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ab9a404e53eff4d4f2f3a77eef4e93fac", null ]
+    ] ],
     [ "ether_switch_callback_args_t", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t", [
       [ "channel", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a322c25279275ca421a0b34a97128048e", null ],
       [ "ports", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a30ef4edfb0a6ee1d0cfec234dbf87ef3", null ],
       [ "queue_index", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a2f998ad882519096d87da28359eea096", null ],
       [ "event", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a4fe5367c86c4967b3ab5b240536cfb8b", null ],
+      [ "link_status", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#aeed5e33910864e35d1edf63f9de80b50", null ],
       [ "p_context", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ae4a0ea43a4f72c183451f372c6c2569c", null ]
     ] ],
     [ "ether_switch_cfg_t", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__cfg__t", [
@@ -30,6 +34,7 @@ var group___e_t_h_e_r___s_w_i_t_c_h___a_p_i =
       [ "ETHER_SWITCH_EVENT_TX_COMPLETE", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7", null ],
       [ "ETHER_SWITCH_EVENT_RX_QUEUE_FULL", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f", null ],
       [ "ETHER_SWITCH_EVENT_RX_MESSAGE_LOST", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e", null ],
-      [ "ETHER_SWITCH_EVENT_TAS_ERROR", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524ac49554d86f33aab93cc7d939089fca1f", null ]
+      [ "ETHER_SWITCH_EVENT_TAS_ERROR", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524ac49554d86f33aab93cc7d939089fca1f", null ],
+      [ "ETHER_SWITCH_EVENT_LINK_CHANGE", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524ab169af7dabcf0471a530ce24997bdf8d", null ]
     ] ]
 ];

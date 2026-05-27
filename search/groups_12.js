@@ -40,6 +40,7 @@ var searchData=
   ['ra8p1',['RA8P1',['../group___b_s_p___m_c_u___r_a8_p1.html',1,'']]],
   ['ra8t1',['RA8T1',['../group___b_s_p___m_c_u___r_a8_t1.html',1,'']]],
   ['ra8t2',['RA8T2',['../group___b_s_p___m_c_u___r_a8_t2.html',1,'']]],
+  ['ramp_20_28renesas_20advanced_20motor_20control_20platform_29',['RAMP (Renesas Advanced Motor Control Platform)',['../group___r_e_n_e_s_a_s___a_d_v_a_n_c_e_d___m_o_t_o_r___m_o_d_u_l_e_s.html',1,'']]],
   ['rtos',['RTOS',['../group___r_e_n_e_s_a_s___r_t_o_s___m_o_d_u_l_e_s.html',1,'']]],
   ['reality_20ai_20data_20collector_20_28rm_5frai_5fdata_5fcollector_29',['Reality AI Data Collector (rm_rai_data_collector)',['../group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html',1,'']]],
   ['reality_20ai_20data_20shipper_20_28rm_5frai_5fdata_5fshipper_29',['Reality AI Data Shipper (rm_rai_data_shipper)',['../group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html',1,'']]],

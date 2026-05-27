@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -254,7 +254,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga46cf185922bbca921cb92b4c18f62525"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time a periodic timer expires. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Before starting the next scan, first get the data with <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. If a different control block scan should be run, check the scan is complete before executing. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6">ctsu_api_t::scanStart</a>.  <a href="#ga46cf185922bbca921cb92b4c18f62525">More...</a><br /></td></tr>
 <tr class="separator:ga46cf185922bbca921cb92b4c18f62525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_data)</td></tr>
-<tr class="memdesc:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>.  <a href="#ga1cff42feeaa3d73216b73c313fb9a5fe">More...</a><br /></td></tr>
+<tr class="memdesc:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. This function reads all previously corrected measured values into the specified buffer(p_data). CTSU1: The value passed through sensor CCO correction and moving average. CTSU2 JMM: The value passed through sensor CCO correction and moving average. CTSU2 VMM: Sensor passed through sensor CCO correction, frequency correction and moving average. The required buffer size varies depending on the measurement mode. Prepare the number of TS for the self-capacitance measurement and current measurement modes, and twice the number of matrixes for the mutual-capacitance measurement mode. In the case of CTSU2 JMM, data of 3 frequencies is stored, so prepare 3 times more. In diagnosis mode, if data collection has not been completed, the function returns FSP_ERR_CTSU_DIAG_NOT_YET. If data collection is completed, it will return FSP_SUCCESS, so please call <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Please call the function when the return value of R_CTSU_DataGet is FS...">R_CTSU_Diagnosis()</a> to check the diagnosis result. In addition, if an error occurs in ADC measurement during the output‑voltage diagnosis, the function returns FSP_ERR_ABORTED. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>.  <a href="#ga1cff42feeaa3d73216b73c313fb9a5fe">More...</a><br /></td></tr>
 <tr class="separator:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9eee44681ca5401e3b1c8e36db873681"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga9eee44681ca5401e3b1c8e36db873681">R_CTSU_AutoJudgementDataGet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint64_t *p_button_status)</td></tr>
 <tr class="memdesc:ga9eee44681ca5401e3b1c8e36db873681"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the result of automatic judgement button. Call after the scan is completed. The result is 64-bit bitmaps and is stored in order of TS number for specified ctsu control. After the initial judgement, the baseline initialization bit is set and the automatic judgement threshold is set. This function is called only for automatic judgement. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a39b1857983379004b97041a9462c07f0">ctsu_api_t::autoJudgementDataGet</a>.  <a href="#ga9eee44681ca5401e3b1c8e36db873681">More...</a><br /></td></tr>
@@ -277,7 +277,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gac51fca87e02d589bcdeb894b99f7a08e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function inserts the value of the second argument as the measurement result value. Call this function after calling the <a class="el" href="group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e" title="This function inserts the value of the second argument as the measurement result value. Call this function after calling the R_CTSU_DataInsert() function. Implements ctsu_api_t::dataInsert. ">R_CTSU_DataInsert()</a> function. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f">ctsu_api_t::dataInsert</a>.  <a href="#gac51fca87e02d589bcdeb894b99f7a08e">More...</a><br /></td></tr>
 <tr class="separator:gac51fca87e02d589bcdeb894b99f7a08e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="memdesc:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diagnosis the CTSU peripheral. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">ctsu_api_t::diagnosis</a>.  <a href="#ga45103e8db4a16dfabf3a516ab2da9f26">More...</a><br /></td></tr>
+<tr class="memdesc:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diagnosis the CTSU peripheral. Please call the function when the return value of R_CTSU_DataGet is FSP_SUCCESS. If an abnormality is detected in any of the diagnosis items, the corresponding diagnosis error is returned. If all diagnosis is complete normally, FSP_SUCCESS is returned. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">ctsu_api_t::diagnosis</a>.  <a href="#ga45103e8db4a16dfabf3a516ab2da9f26">More...</a><br /></td></tr>
 <tr class="separator:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -288,19 +288,23 @@ Overview</h1>
 <h2><a class="anchor" id="r-ctsu-features"></a>
 Features</h2>
 <p><a class="anchor" id="um_ctsu_mutual"></a><a class="anchor" id="um_ctsu_multi_method"></a><a class="anchor" id="um_ctsu_mutual_jmm"></a><a class="anchor" id="um_ctsu_multi_method_jmm"></a></p><ul>
-<li>Supports multiple scan modes<ul>
-<li>Self-capacitance multi scan mode (CTSU2 support active shield)</li>
-<li>Mutual-capacitance full scan mode</li>
-<li>Mutual-capacitance parallel scan mode (CTSU2)</li>
-<li>Current Measurement mode (CTSU2)</li>
-<li>Diagnosis scan mode</li>
+<li>Supports multiple Measurement Modes<ul>
+<li>Self-capacitance Measurement Mode<ul>
+<li>Support Shield Function (CTSU2)</li>
+<li>Support MEC Function (CTSU2SLa)</li>
 </ul>
 </li>
-<li>Scans may be started by software or an external trigger</li>
+<li>Mutual-capacitance Measurement Mode</li>
+<li>Current Measurement Mode (CTSU2)</li>
+<li>Mutual-capacitance parallel Measurement Mode (CTSU2 only)</li>
+<li>Automatic Judgment Mode (CTSU2SLa)</li>
+<li>Diagnosis Mode</li>
+</ul>
+</li>
+<li>Measurement can be started by software or an external trigger</li>
 <li>Returns measured capacitance data on scan completion</li>
 <li>Support DTC transfer of scanned data</li>
 <li>Supports TrustZone</li>
-<li>Corrects accuracy for temperature drift (CTSU2)</li>
 </ul>
 <h2><a class="anchor" id="r-ctsu-supported-devices"></a>
 Supported Devices</h2>
@@ -365,74 +369,395 @@ This module can be added to the Stacks tab via New Stack &gt; CapTouch &gt; CTSU
 </p>
 <h2><a class="anchor" id="r-ctsu-interrupt-configuration"></a>
 Interrupt Configuration</h2>
-<p>The first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> function call sets CTSU peripheral interrupts. The user should provide a callback function to be invoked at the end of the CTSU scan sequence. The callback argument will contain information about the scan status.</p>
+<p>The first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> function call sets the CTSU peripheral interrupts. The user should provide a callback function to be invoked at the end of CTSU scan sequence. The callback argument will contain information about the scan status.</p>
 <h2><a class="anchor" id="r-ctsu-clock-configuration"></a>
 Clock Configuration</h2>
 <p>The CTSU peripheral module uses PCLKB as its clock source. You can set the PCLKB frequency using the <b>Clocks</b> tab of the RA Configuration editor or by using the CGC Interface at run-time.</p>
-<dl class="section note"><dt>Note</dt><dd>The CTSU Drive pulse will be calculated and set by the tooling depending on the selected transfer rate.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>CTSU Drive pulse will be calculated and set by the tooling depending on the selected transfer rate.</dd></dl>
 <h2><a class="anchor" id="r-ctsu-pin-configuration"></a>
 Pin Configuration</h2>
-<p>The TSn pins are sensor pins for the CTSU.</p>
+<p>The TSn pins are sensor pins for CTSU.</p>
 <p>The TSCAP pin is used for an internal low-pass filter and must be connected to an external decoupling capacitor.</p>
 <h1><a class="anchor" id="r-ctsu-usage_notes"></a>
 Usage Notes</h1>
-<p>The CTSU module is a CTSU driver for the Touch module. The CTSU module assumes the access from the Touch middleware layer, and it is also accessible from an user application.<br />
- The CTSU peripheral installed on RA family has three versions: CTSU, CTSU2, and CTSU2SLa. Each MCU devices are equipped with the following version of CTSU peripherals. <br />
-</p><ul>
-<li>CTSU2SLa : RA4L1, RA0L1</li>
-<li>CTSU2 : RA2E1, RA2L1</li>
-<li>CTSU : RA2A1, RA4M1, RA4M2, RA4M3, RA4W1, RA6M1, RA6M2, RA6M3, RA6M4, RA6M5,</li>
+<p>CTSU module is a CTSU driver for Touch module. CTSU module assumes the access from Touch middleware layer, and it is also accessible from an user application.<br />
+ The CTSU peripheral installed on RA family has three versions: CTSU, CTSU2, and CTSU2SLa. Each MCU device is equipped with the following version of the CTSU peripherals.<br />
+ </p><pre>
+CTSU2SLa : RA4L1, RA0L1
+CTSU2    : RA2E1, RA2L1
+CTSU     : RA2A1, RA4M1, RA4M2, RA4M3, RA4W1, RA6M1, RA6M2, RA6M3, RA6M4, RA6M5
+</pre><p>CTSU, CTSU2 and CTSU2SLa are functionally different, so these are described in this application note as below.<br />
+ </p><pre>
+Common description for CTSU, CTSU2 and CTSULSa -&gt; CTSU
+Description only for CTSU                      -&gt; CTSU1
+Common description for CTSU2 only and CTSU2SLa -&gt; CTSU2
+Description only for CTSU2                     -&gt; CTSU2 only
+Description only for CTSU2SLa                  -&gt; CTSU2SLa
+Without mention, it means the common description for CTSU, CTSU2 and CTSU2SLa.
+</pre><p>To understand this document, it is recommended to refer to <a href="https://www.renesas.com/en/document/apn/capacitive-sensor-microcontrollers-ctsu-capacitive-touch-introduction-guide?r=25432831">Capacitive Sensor Microcontrollers CTSU Capacitive Touch Introduction Guide</a> and <a href="https://www.renesas.com/en/document/apn/capacitive-touch-sensor-microcontrollers-overview-capacitive-touch-software-0?srsltid=AfmBOoptB-IXccrTwEKGGHalvO_LMAx1_CNLsksCF7KrokqI1GeVx9p-">Capacitive Touch Software Overview</a> beforehand.</p>
+<p>When developing an application using the module, it is recommended to use QE for Capacitive Touch.</p>
+<h2>What is CTSU module</h2>
+<p>CTSU module is a driver for controlling the CTSU peripheral.</p>
+<p>By using configuration settings, CTSU module performs measurements corresponding to the electrodes connected to TS terminals and obtains the capacitance measurement values. Main functions are as follows:</p><ul>
+<li>It controls the CTSU peripheral, applies several correction processes to the measurement values obtained from CTSU, and calculates the final corrected measurement values. In addition, the CTSU2 peripheral can measure current instead of capacitance.<br />
+</li>
+<li>It obtains the button touch judgment result from CTSU2SLa peripheral.<br />
+</li>
+<li>It diagnoses the internal circuits to confirm that the CTSU peripheral is operating correctly.</li>
 </ul>
-<p>CTSU, CTSU2 and CTSU2SLa are functionally different, so CTSU, CTSU2 and CTSU2SLa are described in this application note as below.<br />
- Common description for CTSU and CTSU2 -&gt; CTSU<br />
- Description only for CTSU -&gt; CTSU1<br />
- Description only for CTSU2 and CTSU2SLa -&gt; CTSU2<br />
- Description only for CTSU2SLa -&gt; CTSU2SLa<br />
- Without mention, it means the common description for CTSU, CTSU2 and CTSU2SLa.</p>
+<h2>Position of CTSU module</h2>
+<p>The software configuration of a touch system is shown below.</p>
+<p>Normally, CTSU module controls the CTSU peripheral and returns corrected measurement values. Therefore, to obtain button ON/OFF status, slider/wheel touch positions or pad touch coordinates in an application, CTSU module should be used in combination with TOUCH module.</p>
+<p>In that case, TOUCH module calls CTSU module and converts the corrected measurement values obtained from CTSU module into button ON/OFF status, slider/wheel touch positions and pad touch coordinates. For details of the specific operation, refer to the usage note for TOUCH module.</p>
+<p>If you want to perform your own touch judgment based on the corrected measurement values obtained from CTSU module, refer to the subsequent chapters.</p>
+<p>Furthermore, by combining the hardware judgment implemented in CTSU2SLa peripheral (automatic judgment mode) with CTSU module, you can obtain touch ON/OFF results using CTSU module.</p>
+<p>CTSU module can also be used to diagnose the internal circuits of the CTSU peripheral and obtain the diagnosis results.</p>
+<div class="image">
+<img src="r_ctsu_Relationship_between_CTSU_module_and_user_application.png" alt="r_ctsu_Relationship_between_CTSU_module_and_user_application.png"/>
+<div class="caption">
+Relationship between CTSU module and user application</div></div>
+<h2>How to use CTSU module</h2>
+<p>Figure Overview of software system shows an overview of the software system that illustrates how to use CTSU module.</p>
+<p>CTSU module defines measurement modes using a combination of API call groups and the associated structure information. The API call groups used in self-capacitance / mutual-capacitance / current measurement modes are treated as the basic operation model. For the operation models of mutual-capacitance parallel measurement, automatic judgment and diagnosis modes, refer to Measurement Mode.</p>
+<p>In the basic operation model, you first call <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a> to initialize the CTSU peripheral and to read the configuration settings and create the configuration information in the control structure. After that, by periodically calling <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> (measurement start processing) and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> (measurement result acquisition processing), you can perform periodic measurement processing.</p>
+<p>During measurement, the following interrupts occur: INTCTSUWR (register setting request interrupt), INTCTSURD (measurement result readout request interrupt), and INTCTSUFN (measurement completion interrupt). These interrupts are generated by the CTSU peripheral and processed by the module. After processing of INTCTSUFN completes, the module notifies the application of measurement completion via the callback function. After receiving the notification, perform the measurement result acquisition processing.</p>
+<p>Note that INTCTSUWR and INTCTSURD processing can also use the DTC. For details on using the DTC, refer to Data Transfer.</p>
+<div class="image">
+<img src="r_ctsu_Overview_of_software_system.png" alt="r_ctsu_Overview_of_software_system.png"/>
+<div class="caption">
+Overview of software system</div></div>
+<p> In this module, data management is structured around two key data structures: the configuration structure and the control structure.</p>
+<p>The configuration structure is used to set the measurement targets and measurement conditions. The target of a capacitance measurement is referred to as an element. In self-capacitance measurement mode, TS terminal serves as the measurement target, while in mutual-capacitance measurement mode, the targets are the matrix of transmitter TS terminals and receiver TS terminals. The measurement conditions include various parameters required for executing measurements using the CTSU peripheral, such as measurement mode, measurement time, measurement range, and trigger settings.</p>
+<p>The measurement information defined in the configuration structure is copied into the control structure during the execution of <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a>. At the same time, buffers for storing measurement results are allocated, and internal flags and state information for managing measurement states are initialized. After initialization, only the control structure is referenced during the measurement process, enabling unified management of measurement settings, measurement states, and measurement results.</p>
+<p>By preparing multiple sets of these structures, it becomes possible to run different measurement modes independently and in parallel, or to operate multiple measurement processes independently and in parallel even within the same measurement mode, provided the measurement targets and measurement conditions differ.</p>
+<p>To simplify the configuration of these measurement settings, Renesas provides a development support tool called QE for Capacitive Touch. When creating applications that use this driver, it is recommended to use the touch interface configuration generated by QE for Capacitive Touch.</p>
+<h2>Measurement Mode</h2>
+<p>The term measurement mode collectively refers to the measurement processing determined by the measurement target, the measurement method, and the associated conditions. The available measurement modes differ depending on the functions of the CTSU peripheral.</p>
+<p>The CTSU peripheral supports self-capacitance measurement mode, mutual-capacitance measurement mode, and diagnosis mode.<br />
+ In addition to these, CTSU2 peripheral supports current measurement mode, the "CTSU2 only" peripheral supports mutual-capacitance parallel measurement mode, and CTSU2SLa peripheral supports automatic judgment mode.</p>
+<p>Details of each measurement mode are described below.<br />
+ </p><h3>Self-capacitance Measurement Mode</h3>
+<p>The self-capacitance measurement mode is used to measure the capacitance of each terminal (TS).</p>
+<p>The CTSU peripheral measures the terminals in ascending order according to TS numbers, then stores the data. For example, even if you want to use TS5, TS8, TS2, TS3 and TS6 in your application in that order, they will still be measured and stored in the order of TS2, TS3, TS5, TS6, and TS8. Therefore, you will need to reference buffer indexes [2], [4], [0], [1], and [3].</p>
+<p>[CTSU1]</p>
+<p>In default settings, the measurement period for each TS is wait-time plus approximately 526us.<br />
+ </p><div class="image">
+<img src="r_ctsu_Self-capacitance_Measurement_Period.png" alt="r_ctsu_Self-capacitance_Measurement_Period.png"/>
+<div class="caption">
+Self-capacitance Measurement Period (CTSU1)</div></div>
+<p> [CTSU2]</p>
+<p>In default settings, the measurement period for each TS is approximately 576us.<br />
+ </p><div class="image">
+<img src="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png" alt="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png"/>
+<div class="caption">
+Self-capacitance Measurement Period (CTSU2)</div></div>
+<h3>Mutual-capacitance Measurement Mode</h3>
+<p>The mutual-capacitance measurement mode is used to measure the capacitance generated between the receive TS (Rx) and transmit TS (Tx), and therefore requires at least two terminals.</p>
+<p>CTSU2 peripheral measures all specified combinations of Rx and Tx. For example, when Rx is TS10 and TS3, and Tx is TS2, TS7 and TS4, the combinations are measured in the following order and the data is stored.<br />
+ TS3-TS2, TS3-TS4, TS3-TS7, TS10-TS2, TS10-TS4, TS10-TS7<br />
+ To measure the mutual-capacitance measurement generated between electrodes, CTSU2 peripheral performs the measurement process on the same electrode twice.<br />
+</p>
+<p>The mutual-capacitance measurement is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary corrected measurement values, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs both primary and secondary corrected measurement result.<br />
+</p>
+<p>[CTSU1]<br />
+ In default settings, the measurement period for each TS is twice of wait-time plus approximately 526us.</p>
+<p>[CTSU2]<br />
+ In default settings, the measurement period for each TS is approximately 1152us.<br />
+ </p><div class="image">
+<img src="r_ctsu_Mutual_capacitance_Measurement_Period.png" alt="r_ctsu_Mutual_capacitance_Measurement_Period.png"/>
+<div class="caption">
+Mutual-capacitance Measurement Period (CTSU2)</div></div>
+<h3>Current Measurement Mode (CTSU2)</h3>
+<p>The current measurement mode is used to measure the minute current input to TS terminal.<br />
+ The order of measurement and data storage is the same as that of the self-capacitance measurement mode.</p>
+<p>As this does not involve the switched capacitor operation, the measurement is only performed once. The measurement period for one TS under default settings is approximately 256us. The current measurement mode requires a longer stable wait time than the other modes, so the SST is set to 63.<br />
+ </p><div class="image">
+<img src="r_ctsu_Current_Measurement_Period.png" alt="r_ctsu_Current_Measurement_Period.png"/>
+<div class="caption">
+Current Measurement Period</div></div>
+<h3>Mutual-capacitance parallel Measurement Mode (CTSU2 only)</h3>
+<p>This mode provides fast measurement time by parallel scanning the RX lines with a CFC circuit. Operation is otherwise identical to normal CTSU mutual scanning.<br />
+</p><ul>
+<li>Scan Order<ul>
+<li>The hardware scans all RX pins simultaneously for each TX pin.</li>
+<li>For example, if sensors TS10, TS11, and TS03 are specified as RX sensors, and sensors TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
+ TS02-(TS03, TS10, TS11), TS04-(TS03, TS10, TS11), TS07-(TS03, TS10, TS11)</li>
+</ul>
+</li>
+<li>Element<ul>
+<li>An element refers to the index of a sensor-pair within the scan order. Using the previous example, TS07-TS10 is element 7.</li>
+</ul>
+</li>
+<li>Scan Time<ul>
+<li>Because the RX lines are scanned in parallel, CFC mutual-capacitance parallel measurement is the same amount of times faster than a basic mutual matrix scan as the number of RX lines. In other words, on a matrix with N receive lines, CFC mutual-capacitance parallel measurement is N times faster than basic mutual scanning. Set CTSU_MODE_MUTUAL_CFC_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>.<br />
+ Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. In addition, set the number of CTSU_CFG_NUM_CFC and CTSU_CFG_NUM_CFC_TX. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</li>
+</ul>
+</li>
+</ul>
+<h3>Automatic Judgment Mode (CTSU2SLa)</h3>
+<p>In automatic judgment mode, CTSU2SLa peripheral is controlled to obtain touch judgment results. Since the touch judgment processing is performed by CTSU2SLa peripheral, touch judgment can be executed without using CPU processing. The DTC module is mandatory because DTC transfer are necessary to process the interrupts that occur during measurement. For details on the DTC, refer to Cooperation with other modules.</p>
+<p>The operation flow of automatic judgment mode is shown below. First, initial offset tuning is performed using <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a>. For details on initial offset tuning, refer to Initial Offset Adjustment. After initial offset tuning completes, automatic judgment measurement processing is performed using <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga9eee44681ca5401e3b1c8e36db873681" title="This function gets the result of automatic judgement button. Call after the scan is completed...">R_CTSU_AutoJudgementDataGet()</a>. Note that the processing for the first measurement is different from that for the second and subsequent measurements:</p>
+<p>First measurement:</p>
+<p>The baseline for touch judgment is set. The first corrected measurement value is used as the baseline, and the touch judgment result is OFF.</p>
+<p>Second and subsequent measurements:</p>
+<p>Measurements are performed according to the measurement settings in the control structure, and touch judgment results are obtained.<br />
+ By combining automatic judgment mode with measurement started by external triggers, you can create applications that perform touch judgment with low-power consumption. For more details and notes in that case, refer to Notes for low-power touch judgment. If you need more details on automatic judgment, refer to Functions and settings.<br />
+ </p><div class="image">
+<img src="r_ctsu_Basic_operation_model_of_automatic_judgment_mode.png" alt="r_ctsu_Basic_operation_model_of_automatic_judgment_mode.png"/>
+<div class="caption">
+Basic operation model of automatic judgment mode</div></div>
+<ul>
+<li>(1) Notes for low-power touch judgment<br />
+</li>
+</ul>
+<p>In low-power touch applications that combine CPU Snooze mode or Software Standby mode with automatic judgment mode, it is possible to keep the CPU in a low-power state while performing touch judgment and wake up the CPU only when a touch judgment result is ON.<br />
+ However, CPU processing is required until the baseline is set. Therefore, switch to the low-power operation mode after executing the first <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga9eee44681ca5401e3b1c8e36db873681" title="This function gets the result of automatic judgement button. Call after the scan is completed...">R_CTSU_AutoJudgementDataGet()</a>. For concrete operation examples, refer to "Smart Wakeup Solution" application note.</p>
+<ul>
+<li>(2) Functions and settings<br />
+</li>
+</ul>
+<p>When using the automatic judgment mode, in addition to the standard measurement settings, it is necessary to modify certain macro definitions and configure the configuration structure for automatic judgment mode. These settings differ depending on the automatic judgment method, JMM or VMM.</p>
+<p>First, to enable the automatic judgment feature, set CTSU_CFG_AUTO_JUDGE_ENABLE = 1. At the same time, enable the automatic CCO correction function by setting CTSU_CFG_AUTO_CORRECTION_ENABLE = 1. For VMM, also enable the automatic frequency correction function by setting CTSU_CFG_AUTO_MULTI_CLOCK_CORRECTION_ENABLE = 1.</p>
+<p>Next, an example of configuration structure settings required in addition to the standard measurement settings is shown below for JMM. When using VMM, set jc = 0 and majirimd = 1.<br />
+ </p><pre>
+.tlot     = 2, // Non-touch judgment continuous count : 3 times
+.thot     = 2, // Touch judgment continuous count : 3 times
+.jc       = 1, // Judgment by two or more frequency
+.ajmmat   = 2, // Moving average : 2^2 times
+.ajbmat   = 7, // Baseline average count : 2^(7+1) times
+.majirimd = 0, // JMM
+.mtucfen  = 1, // Enable mutual-capacitance calculation
+.ajfen    = 1, // Enable automatic judgment
+</pre><p>The following (a) ~ (e) describe the automatic judgment and its setting. In the case of JMM, (a) ~ (e) settings are set for each multi-clock measurement.</p>
+<ul>
+<li>(a) Measurement mode<br />
+ Select self-capacitance or mutual-capacitance measurements with "mtucfen" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t">ctsu_auto_button_cfg_t</a>. Set the self-capacitance measurement to 0. Set the mutual-capacitance measurement to 1.</li>
+<li>(b) Baseline<br />
+ Set the baseline from the corrected measurement result in the non-touch state. After completing the initial offset adjustment with <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a>, the baseline is initially set (set BLINI bit) when <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> is called for the first time. After that, when <a class="el" href="group___c_t_s_u.html#ga9eee44681ca5401e3b1c8e36db873681" title="This function gets the result of automatic judgement button. Call after the scan is completed...">R_CTSU_AutoJudgementDataGet()</a> is called, the baseline initialization is canceled (clear BLINI bit) and the baseline update process is started.<br />
+<br />
+ The baseline is updated every set number of measurements to follow changes in the surrounding environment. If "non-touch" state continues for the set number of measurements, the baseline is updated to the average value. When judgment result is "touch", the number of counts is cleared.<br />
+<br />
+ Set the number of measurements (baseline update interval) with "ajbmat" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Common to all buttons in the touch interface configuration. Adjusts the ability to follow changes in the surrounding environment.<br />
+<br />
+</li>
+<li>(c) Touch threshold<br />
+ Judgment is made using a threshold with an arbitrary offset from the baseline.<br />
+ The threshold is set by adding hysteresis. Chattering is prevented by giving hysteresis to the transition from "touch" to "non-touch". Increasing the hysteresis value is more effective in preventing chattering, but be aware that it will be more difficult to transition from "touch" to "non-touch".<br />
+<br />
+ Set the threshold and hysteresis for each button with threshold and hysteresis of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t">ctsu_auto_button_cfg_t</a>. This module calculates the upper threshold and the lower threshold from these and sets them in CTSUAJTHR register.<br />
+<br />
+ The figure below shows the self-capacitance judgment. Since the electrode capacitance of the self-capacitance button increases when touched, it is judged "touch" when the upper threshold is exceeded.<br />
+ <div class="image">
+<img src="r_ctsu_Self_capacitance_judgement.png" alt="r_ctsu_Self_capacitance_judgement.png"/>
+<div class="caption">
+Self-capacitance judgment</div></div>
+<br />
+ The figure below shows the mutual-capacitance judgment. Since the mutual capacitance button reduces the capacitance between electrodes when touched, it is judged as "touch" when the lower threshold is exceeded.<br />
+ <div class="image">
+<img src="r_ctsu_Mutual_capacitance_judgement.png" alt="r_ctsu_Mutual_capacitance_judgement.png"/>
+<div class="caption">
+Mutual-capacitance judgment</div></div>
+</li>
+<li>(d) The number of consecutive "non-touch" and "touch" detections<br />
+ This is a filter function to judge "touch" or "non-touch" when "touch" or "non-touch" state continues for a certain number of times.<br />
+ Set the number of times with "tlot" and "thot" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Common to all buttons in the touch interface configuration. Increasing the number of consecutive times will be more effective against chattering, but be aware that the reaction speed will decrease.</li>
+<li>(e) Moving average<br />
+ With the automatic judgment function, Set the number of moving averages with "ajmmat" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Common to all buttons in the touch interface configuration.<br />
+ The figure below shows the button judgment operation described above.<br />
+ <div class="image">
+<img src="r_ctsu_Button_Touch_Determination.png" alt="r_ctsu_Button_Touch_Determination.png"/>
+<div class="caption">
+Button judgment</div></div>
+</li>
+</ul>
+<h3>Diagnosis Mode</h3>
+<p>The CTSU peripheral has a function to diagnose its internal circuits. Diagnosis mode provides APIs that diagnose whether the internal circuits are operating correctly.<br />
+ In this mode, CTSU internal circuits are diagnosed and, if an abnormality occurs, the result can be obtained as an error.<br />
+ The diagnosis contents differ between CTSU1 and CTSU2, and therefore the operation model (API call sequence) also differs.<br />
+ To enable diagnosis mode, set CTSU_CFG_DIAG_SUPPORT_ENABLE = 1.</p>
+<p>[CTSU1]</p>
+<ul>
+<li>(a) Diagnosis items<br />
+ The diagnosis items of CTSU1 are shown below.</li>
+</ul>
+<table class="doxtable">
+<tr>
+<th>Order</th><th>Diagnosis items  </th></tr>
+<tr>
+<td>1</td><td>Over Voltage Detection Diagnosis </td></tr>
+<tr>
+<td>2</td><td>CCO High Diagnosis </td></tr>
+<tr>
+<td>3</td><td>CCO Low Diagnosis </td></tr>
+<tr>
+<td>4</td><td>SSCG Oscillator Diagnosis </td></tr>
+<tr>
+<td>5</td><td>Current Offset Diagnosis </td></tr>
+</table>
+<ul>
+<li>(b) Use case<br />
+ For CTSU1, measurement and measurement‑data processing are performed for a diagnosis instance using the basic model. If the return value of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> indicates normal completion, the diagnosis API is called to perform diagnosis processing, as shown below.<br />
+ If you want to use other measurement modes after diagnosis mode, start touch measurements after a wait time of about 1 ms following diagnosis mode measurement.<br />
+ <div class="image">
+<img src="r_ctsu_Example_flow_when_using_diagnosis_mode_ctsu1.png" alt="r_ctsu_Example_flow_when_using_diagnosis_mode_ctsu1.png"/>
+<div class="caption">
+Example flow when using diagnosis mode (CTSU1)</div></div>
+</li>
+<li>(c) Configuration settings<br />
+ In the configuration structure for this mode, set the member md to CTSU_MODE_DIAGNOSIS_SCAN.<br />
+ Also connect a capacitor to any TS terminal (27 pF recommended) and assign TS terminal number you connected to the macro definition CTSU_CFG_DIAG_DAC_TS.</li>
+</ul>
+<p>[CTSU2]</p>
+<ul>
+<li>(a) Diagnosis items<br />
+ The diagnosis items of CTSU2 are shown below.</li>
+</ul>
+<table class="doxtable">
+<tr>
+<th>Order</th><th>Diagnosis items</th><th>Onetime / Repeat (※1)  </th></tr>
+<tr>
+<td>1</td><td>Output Voltage Diagnosis</td><td>Repeat </td></tr>
+<tr>
+<td>2</td><td>Over Voltage Detection Diagnosis</td><td>One-time </td></tr>
+<tr>
+<td>3</td><td>Over Current Detection Diagnosis</td><td>One-time </td></tr>
+<tr>
+<td>4</td><td>Load Resistance Diagnosis</td><td>Repeat </td></tr>
+<tr>
+<td>5</td><td>Current Offset Diagnosis</td><td>One-time </td></tr>
+<tr>
+<td>6</td><td>SENSCLK Frequency Diagnosis</td><td>Repeat </td></tr>
+<tr>
+<td>7</td><td>SUCLK Frequency Diagnosis</td><td>Repeat </td></tr>
+<tr>
+<td>8</td><td>SUCLK Clock Recovery Diagnosis</td><td>Repeat </td></tr>
+<tr>
+<td>9</td><td>CFC Oscillator Gain Diagnosis (※2)</td><td>Repeat </td></tr>
+</table>
+<p>※1 "One-time" assumes diagnosis is performed once after reset. "Repeat" assumes periodic measurements.<br />
+ ※2 This diagnosis can only be used during Mutual-capacitance parallel Measurement Mode (CTSU2 only).</p>
+<ul>
+<li>(b) Use case<br />
+ In CTSU2 diagnosis mode, the diagnosis is typically executed once at system startup or reset, before starting any other measurement modes. Even while other measurement modes are in use, you can periodically diagnose internal circuits by using this mode.<br />
+ <div class="image">
+<img src="r_ctsu_Example_flow_when_using_diagnosis_mode_ctsu2.png" alt="r_ctsu_Example_flow_when_using_diagnosis_mode_ctsu2.png"/>
+<div class="caption">
+Example flow when using diagnosis mode (CTSU2)</div></div>
+</li>
+<li>(c) Configuration Settings<br />
+ The required settings for the members of the diagnosis mode configuration structure are shown below.<br />
+ These settings are automatically generated when using QE for Capacitive Touch. If not using QE for Capacitive Touch, refer to (d) Notes on configuration.</li>
+</ul>
+<p>|Member Name|Setting| |--------&mdash;|----&mdash;| |ctsu_element_cfg_t| |so|0x00| |snum|0x07| |sdpa|Measurement setting for overcurrent detection| |ctsu_cfg_t| |md|CTSU_MODE_DIAGNOSIS_SCAN| |ctsuchacN (N=0~4)|Measurement terminal for overcurrent detection|</p>
+<ul>
+<li>(d) Note on configuration<br />
+ In diagnosis mode, to verify overcurrent-detection operation, one TS terminal is selected from TS terminals used for normal measurement, and that TS terminal is set to ctsuchacN in the configuration structure.<br />
+ After this setting, the sensor‑drive pulse frequency is adjusted according to the procedure below so that a current level that enables overcurrent detection is generated inside CTSU2 peripheral connected to TS terminal.<br />
+<ul>
+<li>1. Calculate the current flowing in TS terminal<br />
+ A measurement is performed for the selected TS terminal with an arbitrary sensor-drive pulse frequency <em>f</em> and TSCAP voltage <em>V</em>, and the parasitic capacitance <em>C</em> of the terminal is obtained.<br />
+ The current <em>I</em> flowing inside CTSU2 peripheral is calculated using the following formula:</li>
+</ul>
+</li>
+</ul>
+<p>$$ I = fCV $$</p>
+<ul>
+<li>2. Set SDPA for diagnosis<br />
+ The sensor‑drive pulse is configured to meet the condition in which overcurrent can be detected.<br />
+ Let <em>SDPA</em><sub>0</sub> be SDPA value used during parasitic‑capacitance measurement and <em>I</em><sub>0</sub> be the current calculated by 1.<br />
+ Using these values, the diagnosis SDPA (<em>SDPA</em><sub>1</sub>) is determined as follows:</li>
+</ul>
+<p>$$ SDPA_1 = ((SDPA_0 + 1)*I_0 / 100) - 1 $$</p>
+<p>Make sure that the sensor‑drive pulse frequency set by <em>SDPA</em><sub>1</sub> provides enough time to charge and discharge the target TS terminal.</p>
 <h2>Functions</h2>
-<p>The CTSU module supports the following functions.</p>
-<h3>Touch judgement Type</h3>
-<p>CTSU2 has two judgement type, which differ in processing and output data.<br />
+<p>CTSU module supports the following functions.</p>
+<h3>Touch Judgment Type</h3>
+<p>CTSU2 has two judgment type, which differ in processing and output data.<br />
  It is common to get three raw value for each element and calculate CCO correction, and then performs different processing.<br />
 </p>
-<p><br />
-</p><ol type="1">
+<ol type="1">
 <li>Value Majority Mode(VMM)<br />
  Calculate three frequency correction value from three CCO correction values. Calculate the sum of the two closest values of the three frequency correction value. Outputs the moving average of this added value.<br />
 </li>
-<li>judgement Majority Mode (JMM)<br />
+<li>Judgment Majority Mode (JMM)<br />
  This mode is supported from FSP V5.6.0 or later.<br />
  Outputs the moving average of three CCO correction values.<br />
- <br />
 </li>
 </ol>
 <div class="image">
 <img src="r_ctsu_JMM_vs_VMM.png" alt="r_ctsu_JMM_vs_VMM.png"/>
 <div class="caption">
 Data flow Comparison of JMM and VMM </div></div>
-<p><br />
-</p>
 <h3>Measurements and Obtaining Data</h3>
-<p>Measurements can be started by a software trigger or by an external event triggered by the Event Link Controller (ELC).<br />
- As the measurement process is carried out by the CTSU2 peripheral, it does not use up main processor processing time.<br />
- The CTSU module processes INTCTSUWR and INTCTSURD if generated during a measurement. The data transfer controller (DTC) can also be used for these processes.<br />
- When the measurement complete interrupt (INTCTSUFN) process is complete, the application is notified in a callback function. Make sure you obtain the measurement results before the next measurement is started as internal processes are also executed when a measurement is completed.<br />
- Start the measurement with API function <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>.<br />
- Obtain the measurement results with API function <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. <br />
- The number of arrays in the second argument of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> is different between VMM and JMM.<br />
+<p>Measurements can be started by a software trigger or by an external event triggered by Event Link Controller (ELC).<br />
+ As the measurement process is carried out by CTSU2 peripheral, it does not use up main processor processing time.</p>
+<p>CTSU module processes INTCTSUWR and INTCTSURD if generated during a measurement. Data Transfer Controller (DTC) can also be used for these processes.<br />
+ When the measurement complete interrupt (INTCTSUFN) process is complete, the application is notified in a callback function. Make sure you obtain the measurement results before the next measurement is started as internal processes are also executed when a measurement is completed.</p>
+<p>Start the measurement with API function <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>.<br />
+ Obtain the measurement results with API function <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.</p>
+<p>The number of arrays in the second argument of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> is different between VMM and JMM.<br />
  VMM returns one measurement result for each element.<br />
- JMM returns three measurement results for each element.<br />
-</p>
-<h3>Sensor CCO Correction function</h3>
-<p>The CTSU2 peripheral has a built-in correction circuit to handle the potential microvariations related to the manufacturing process of the sensor CCO MCU.<br />
- The module temporarily transitions to the correction process during initialization after power is turned on. In the correction process, the correction circuit is used to generate a correction coefficient (factor) to ensure accurate sensor measurement values.<br />
- When temperature correction is enabled, an external resistor connected to a TS terminal is used to periodically update the correction coefficient. By using an external resistor that is not dependent on temperature, you can even correct the temperature drift of the sensor CCO.</p>
+ JMM returns three measurement results for each element.</p>
+<h3>Random Pulse Frequency Measurement (CTSU1)</h3>
+<p>The drive pulse used for the measurement is a pulse with phase shifting and frequency spreading applied to the configured base clock.<br />
+ The base-cloclk setting generally uses the value tuned with QE for Capacitive Touch.<br />
+ This module is fixed at initialization and sets the following.<br />
+ CTSUSOFF = 0, CTSUSSMOD = 0, CTSUSSCNT = 3<br />
+ The drive frequency is calculated as below.</p>
+<p>It is determined by PCLK frequency input to CTSU, CTSU Count Source Select bit(CTSUCLK), and CTSU Sensor Drive pulse Division Control bit(CTSUSDPA). For example, If it is set PCLK =32MHz, CTSUCLK = PLCK/2, and CTSUSDPA = 1/16, then drive frequency is 0.5MHz. CTSUSDPA can change for each TS port.<br />
+ </p><div class="image">
+<img src="r_ctsu_Base_clock_settings.png" alt="r_ctsu_Base_clock_settings.png"/>
+<div class="caption">
+Base clock settings</div></div>
+<h3>Multi-clock Measurements (CTSU2)</h3>
+<p>CTSU2 peripheral can measure in one of four drive frequencies to avoid synchronous noise.</p>
+<p>By default, this module measures at three different frequencies and makes a majority judgment on the three measurement results obtained.<br />
+ </p><div class="image">
+<img src="r_ctsu_Multi-clock_Mesurements.png" alt="r_ctsu_Multi-clock_Mesurements.png"/>
+<div class="caption">
+Multi-clock Measurements</div></div>
+<p> There are two types of majority judgment modes for the three measurement results: JMM (Judgment Majority Mode) and VMM (Value Majority Mode). JMM only supports self-capacitance buttons and mutual-capacitance buttons.</p>
+<p>The figure below shows the flowchart of JMM and VMM with Touch module.<br />
+ </p><div class="image">
+<img src="r_ctsu_Flowchart_of_JMM_and_VMM.png" alt="r_ctsu_Flowchart_of_JMM_and_VMM.png"/>
+<div class="caption">
+Flowchart of JMM and VMM</div></div>
+<p> JMM performs CCO correction on the three measurement values, then makes a touch judgment for each of them, and determines the final touch result by majority vote of the three judgments.</p>
+<p>VMM performs CCO correction on the three measurement values, applies frequency correction to convert them to the measurement value at the first frequency, and then selects the two values that are close to each other. These two values are added together, and the result is treated as a measurement value with double the measurement time. Touch judgment is made based on this corrected measurement value.</p>
+<p><b>Example VMM Calculations</b><br />
+ From the frequency-corrected measurement values 1, 2, and 3, the difference values 1, 2, and 3 for each pair are calculated, and the smaller pair is selected by comparing the absolute values of the difference values. To prevent variation in the corrected measurement values, a combination of value 1 and value 2 is given a weight to be selected. When comparing value 3, multiply the difference value 2 by 2 and multiply the difference value 3 by 1.5.<br />
+ </p><table class="doxtable">
+<tr>
+<th>Corrected Measurement Value 1</th><th>Corrected Measurement Value 2</th><th>Corrected Measurement Value 3</th><th>Difference value 1</th><th>Difference value 2</th><th>Difference value 3</th><th>Result</th><th>Added Value  </th></tr>
+<tr>
+<td>7734</td><td>7734</td><td>7663</td><td>0</td><td>71</td><td>71</td><td>Value 1+2</td><td>15468 </td></tr>
+<tr>
+<td>7689</td><td>7739</td><td>7666</td><td>50</td><td>23</td><td>73</td><td>Value 1+3</td><td>15355 </td></tr>
+<tr>
+<td>7734</td><td>7679</td><td>7664</td><td>55</td><td>70</td><td>15</td><td>Value 2+3</td><td>15343 </td></tr>
+<tr>
+<td>7721</td><td>7719</td><td>7694</td><td>2</td><td>27</td><td>25</td><td>Value 1+2</td><td>15440 </td></tr>
+<tr>
+<td>7716</td><td>7747</td><td>7693</td><td>31</td><td>23</td><td>54</td><td>Value 1+2</td><td>15463 </td></tr>
+</table>
+<p>You can set JMM or VMM for each touch interface configuration. If the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> member "majority_mode" is set to 1, it works in JMM, and if it is set to 0, it works in VMM.</p>
+<p><a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> can get the data after conducting the moving average. To retrieve the data for each of the previous processes <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a> use. These data can also be used to determine the data with its own noise filter in Touch module. See <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> and <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a> for more information.</p>
+<p>Drive pulse frequency is determined based on the config settings. The module sets registers according to the config settings, and sets the three drive frequencies.</p>
+<p>Drive pulse frequency is calculated in the following equation:<br />
+ $$ f_{DrivePulse} = F_{PCLKB} / (2^{CLK}*2*(STCLK + 1)) * (SUMULTI_n + 1) / (2*(SDPA + 1)), n = 0, 1, 2 $$ The figure below shows the settings for generating a 2MHz drive pulse frequency when PCLKB frequency is 32 MHz. SDPA can be set for each touch interface configuration.<br />
+ </p><div class="image">
+<img src="r_ctsu_Drive_Pulse_Frequency_Settings.png" alt="r_ctsu_Drive_Pulse_Frequency_Settings.png"/>
+<div class="caption">
+Drive Pulse Frequency Settings</div></div>
+ <h3>Sensor CCO Correction function</h3>
+<p>The CTSU peripheral has a built-in correction circuit to handle the potential microvariations related to the manufacturing process of the sensor CCO MCU.</p>
+<p>This module uses the correction circuit during initialization after power-on to generate a correction coefficient to ensure accurate sensor measurement values. This correction coefficient is used to correct the measurement value.</p>
 <h3>Initial Offset Adjustment</h3>
-<p>The CTSU2 peripheral was designed with a built-in offset current circuit in consideration of the amount of change in current due to touch. The offset current circuit cancels enough of the parasitic capacitance for it to fit within the sensor CCO dynamic range.<br />
- This module automatically adjusts the offset current setting. As the adjustment uses the normal measurement process, the combination of <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> or the combination of <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a> must be repeated several times after startup. Because the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> member “so” is the starting point for adjustments, you can set the appropriate value for “so” in order to reduce the number of times the two functions must be run to complete the adjustment. Normally, the value used for “so” is a value adjusted by QE for Capacitive Touch.<br />
- <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a> was added in FSP 3.8.0. This API can also be used for initial offset adjustment, and offset adjustment can be performed again at any time. See example code of <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a> for details.<br />
-</p>
-<table class="doxtable">
+<p>The CTSU peripheral was designed with a built-in offset current circuit in consideration of the amount of change in current due to touch. The offset current circuit cancels enough of the parasitic capacitance for it to fit within the sensor CCO dynamic range.</p>
+<p>This module adjusts the offset current setting so that the corrected measurement value reaches the target value. As the adjustment uses the normal measurement process, <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> must be repeated several times after startup. Because the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> member "so" is the starting point for adjustments, you can set the appropriate value for "so" in order to reduce the number of times the two functions must be run to complete the adjustment. Normally, the value used for "so" is a value adjusted by QE for Capacitive Touch.</p>
+<p>For CTSU2, this feature can be turned off in the config.</p>
+<p><b>Default target value (CTSU)</b><br />
+ </p><table class="doxtable">
 <tr>
 <th>Mode</th><th>CTSU1 target value</th><th>CTSU2 target value  </th></tr>
 <tr>
@@ -447,8 +772,10 @@ Data flow Comparison of JMM and VMM </div></div>
  CTSU2: 100% is the measured value 30720 when the measurement time is 256us(base time).<br />
  When the measurement time is changed, the target value is adjusted by the ratio with the base time.<br />
 </p>
-<p>Example of target value in combination of CTSUSNUM and CTSUSDPA.<br />
- CTSU1 (CTSU clock = 32MHz, Self-capacitance mode)</p>
+<p><b>Example of target value in combination of CTSUSNUM and CTSUSDPA</b><br />
+</p><ul>
+<li>CTSU1 (CTSU clock = 32MHz, Self-capacitance Measurement Mode)</li>
+</ul>
 <table class="doxtable">
 <tr>
 <th>Target value</th><th>CTSUSNUM</th><th>CTSUSDPA</th><th>Measurement time  </th></tr>
@@ -464,11 +791,13 @@ Data flow Comparison of JMM and VMM </div></div>
 <td>7680</td><td>0x3</td><td>0x3</td><td>263usec </td></tr>
 </table>
 <p>The measurement time changes depending on the combination of CTSUSNUM and CTSUSDPA.<br />
- When changing CTSUPRRATIO and CTSUPRMODE from the recommended values, follow the Hardware Manual for the measurement time.</p>
-<p>CTSU2 (Self-capacitance mode)</p>
+ Recommended CTSUPRRATIO and CTSUPRMODE are used. Changing this value is deprecated. For detail, refer to the hardware manual of each capacitive touch sensor.</p>
+<ul>
+<li>CTSU2 (Self-capacitance Measurement Mode)</li>
+</ul>
 <table class="doxtable">
 <tr>
-<th>Target value</th><th>Target value (multi frequency)</th><th>CTSUSNUM</th><th>Measurement time  </th></tr>
+<th>Target value</th><th>Target value (multi-clock)</th><th>CTSUSNUM</th><th>Measurement time  </th></tr>
 <tr>
 <td>5760</td><td>11520 (128us + 128us)</td><td>0x7</td><td>128usec </td></tr>
 <tr>
@@ -476,272 +805,208 @@ Data flow Comparison of JMM and VMM </div></div>
 <tr>
 <td>2880</td><td>5460 (64us + 64us)</td><td>0x3</td><td>64usec </td></tr>
 </table>
-<p>The measurement time changes depending on CTSUSNUM. If STCLK cannot be set to 0.5MHz, it will not support the table above. Regarding STCLK, refer to the hardware manual.<br />
-</p>
-<h3>Random Pulse Frequency Measurement (CTSU1)</h3>
-<p>The CTSU1 peripheral measures at one drive frequency.<br />
- The drive frequency determines the amperage to the electrode and generally uses the value tuned with QE for Capacitive Touch.<br />
- The drive frequency is calculated as below.<br />
- It is determined by PCLK frequency input to CTSU, CTSU Count Source Select bit(CTSUCLK), and CTSU Sensor Drive pulse Division Control bit(CTSUSDPA). For example, If it is set PCLK =32MHz, CTSUCLK = PLCK/2, and CTSUSDPA = 1/16, then drive frequency is 0.5MHz. CTSUSDPA can change for each TS port.</p>
-<div class="image">
-<img src="r_ctsu_Drive_Frequency_Settings.png" alt="r_ctsu_Drive_Frequency_Settings.png"/>
-<div class="caption">
-Drive Frequency Settings</div></div>
-<p> The actual drive pulse is phase-shifted and frequency-spread with respect to the clock based on the drive frequency as a measure against external environmental noise. This module is fixed at initialization and sets the following.<br />
- CTSUSOFF = 0,CTSUSSMOD = 0,CTSUSSCNT = 3</p>
-<h3>Multi-frequency Measurements (CTSU2)</h3>
-<p>The CTSU2 peripheral can measure in one of four drive frequencies to avoid synchronous noise.<br />
- With the default settings, the module takes measurements at three different frequencies. This data are called raw data. And calculate CCO correction. This data are called CCO correction data.<br />
- In VMM, After standardizing the results obtained at the three frequencies in accordance with the first frequency reference value, the measured value is determined based on majority in a process referred to as “normalization.” <br />
- The three values standardized to the first frequency reference value are called frequency correction data.<br />
- You can get the three correction data with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.<br />
- In VMM, three raw data, CCO correction data, and frequency correction data can be obtained with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.<br />
- In JMM, three raw data and three CCO correction data can be obtained with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.</p>
-<div class="image">
-<img src="r_ctsu_Multi-Frequency_Mesurements.png" alt="r_ctsu_Multi-Frequency_Mesurements.png"/>
-<div class="caption">
-Multi-frequency Measurements</div></div>
-<p> Drive frequency is determined based on the config settings. The module sets registers according to the config settings, and sets the three drive frequencies.<br />
- Drive frequency is calculated in the following equation:<br />
- (PCLKB frequency / CLK / STCLK) x SUMULTIn / 2 / SDPA : n = 0, 1, 2<br />
- The figure below shows the settings for generating a 2MHz drive frequency when the PCLKB frequency is 32 MHz. SDPA can be set for each touch interface configuration.</p>
-<div class="image">
-<img src="r_ctsu_Drive_Frequency_Settings_ctsu2.png" alt="r_ctsu_Drive_Frequency_Settings_ctsu2.png"/>
-<div class="caption">
-Drive Frequency Settings</div></div>
- <h3>Shield Function(CTSU2)</h3>
-<p>The CTSU2 peripheral has a built-in function that outputs a shield signal in phase with the drive pulse from the shield terminal and the non-measurement terminal in order to shield against external influences while suppressing any increase in parasitic capacitance. This function can only be used during self-capacitance measurements.<br />
- This module allows the user to set a shield for each touch interface configuration. <br />
- For example, for the electrode configuration shown in , the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> should be set as follows. Other members have been omitted for the example. <br />
- .txvsel = CTSU_TXVSEL_INTERNAL_POWER,<br />
- .txvsel2 = CTSU_TXVSEL_MODE,<br />
- .md = CTSU_MODE_SELF_MULTI_SCAN,<br />
- .posel = CTSU_POSEL_SAME_PULSE,<br />
- .ctsuchac0 = 0x0F,<br />
- .ctsuchtrc0 = 0x08,</p>
-<div class="image">
+<p>The measurement time changes depending on CTSUSNUM. If STCLK cannot be set to 0.5MHz, it will not support the table above. Regarding STCLK, refer to the hardware manual.</p>
+<h3>Moving Average</h3>
+<p>This function calculates the moving average of the measured results.<br />
+ Set the number of times the moving average should be calculated in the config settings.</p>
+<h3>Callback function</h3>
+<p>When an abnormal condition is detected during measurement, the CTSU peripheral sets the corresponding status register.<br />
+ In the measurement-completion interrupt handler, the module reads CTSUSOVF from the status register and CTSUICOMP from the error status register for CTSU1, and reads ICOMP1, ICOMP0, and SENSOVF from the status register for CTSU2. After the registers are read, the status registers are cleared. The details of the abnormal condition can be checked by referring to the member "event" of the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> structure passed to the callback function.</p>
+<h3>Shield Function (CTSU2)</h3>
+<p>CTSU2 peripheral has a built-in function that outputs a shield signal in phase with the drive pulse from the shield terminal and the non-measurement terminal in order to shield against external influences while suppressing any increase in parasitic capacitance. This function can only be used during Self-capacitance Measurement.</p>
+<p>This module allows the user to set a shield for each touch interface configuration.</p>
+<p>For example, for the electrode configuration shown below, the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> should be set as follows. Other members have been omitted for the example.<br />
+ </p><pre>
+.txvsel     = CTSU_TXVSEL_INTERNAL_POWER,
+.txvsel2    = CTSU_TXVSEL_MODE,
+.md         = CTSU_MODE_SELF_MULTI_SCAN,
+.posel      = CTSU_POSEL_SAME_PULSE,
+.ctsuchac0  = 0x0F,
+.ctsuchtrc0 = 0x08,
+</pre> <div class="image">
 <img src="r_ctsu_Shield_Electrode_Structure.png" alt="r_ctsu_Shield_Electrode_Structure.png"/>
 <div class="caption">
 Example of Shield Electrode Structure</div></div>
- <h3>Measurement Error Message</h3>
-<p>When the CTSU2 peripheral detects an abnormal measurement, it sets the status register bit to 1.<br />
- In the measurement complete interrupt process, the module reads ICOMP1, ICOMP0, and SENSOVF of the status register and notifies the results in the callback function. The status register is reset after the contents are read. For more details on abnormal measurements, refer to “member event” in the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> callback function argument.</p>
-<h3>Moving Average</h3>
-<p>This function calculates the moving average of the measured results. <br />
- Set the number of times the moving average should be calculated in the config settings.</p>
-<h3>Diagnosis Function</h3>
-<p>The CTSU peripheral has a built-in function that diagnoses its own inner circuit. This diagnosis function provides the API for diagnosing the inner circuit.<br />
- The diagnostic requirements are different for CTSU1 and CTSU2 providing 5 types of diagnosis for CTSU1 and 9 types for CTSU2.<br />
- The diagnosis function is executed by calling the API function. This is executed independently from the other measurements and does not affect them. <br />
- To enable the diagnosis function, set CTSU_CFG_DIAG_SUPPORT_ENABLE to 1.<br />
- For CTSU1, a 27pF condenser should be connected externally.<br />
- For CTSU2, Diagnosis function uses the ADC module.<br />
- If an error occurs in the ADC module used for Diagnosis mode, return FSP_ERR_ABORTED as the return value of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.<br />
- If an ADC error is returned, exit the function so as not to measure or close the ADC.<br />
- See ADC (r_adc) for ADC module errors. <br />
- Please pay particular attention to the following three points.<br />
-</p><ol type="1">
-<li>Be sure to measure the ADC module when using the Diagnosis mode function of the CTSU module. Therefore, in order for the user to use it with Dignosis, please close the user's ADC. After closing, please use the Diagnosis mode function of the CTSU module.</li>
-<li>When creating an application with RTOS, please be careful about the scheduling of the CTSU module's Diagnosis mode function task and the user's ADC task.</li>
-<li>If FSP_ERR_ABORTED occurs, please call the user's ADC again when using the user's ADC.</li>
-</ol>
 <h3>MEC Function (CTSU2SLa)</h3>
-<p>The CTSU2SLa peripheral has MEC (Multiple Electrode Connection) function that connects multiple electrodes and measures them as a single electrode. This feature is only available in self capacitance mode.<br />
- This is an example when using three electrodes. In normal times, normal measurement is performed, and 3 channels are measured to get each measured value. In power saving, MEC measurement is performed, and one channel is measured by combining three channels to acquire one measured value.<br />
- The figure below shows a compare of time of normal measurement and MEC measurement. Since multi channels are measured at the same time, the measurement time is shortened.<br />
-</p>
-<div class="image">
+<p>CTSU2SLa peripheral has MEC (Multiple Electrode Connection) function that connects multiple electrodes and measures them as a single electrode. This feature is only available in Self-capacitance Measurement Mode.</p>
+<p>This is an example when using three electrodes. In normal times, normal measurement is performed, and 3 channels are measured to get each corrected measured value. In power saving, MEC measurement is performed, and one channel is measured by combining three channels to acquire one corrected measured value.</p>
+<p>The figure below shows a compare of time of normal measurement and MEC measurement. Since multi channels are measured at the same time, the measurement time is shortened.<br />
+ </p><div class="image">
 <img src="r_ctsu_Compare_Normal_measure_vs_MEC_measure.png" alt="r_ctsu_Compare_Normal_measure_vs_MEC_measure.png"/>
 <div class="caption">
 Comparison of time between normal measurement and MEC measurement</div></div>
-<p> To enable the code for the MEC feature, set CTSU_CFG_MULTIPLE_ELECTRODE_CONNECTION_ENABLE to 1.<br />
- When using MEC, create a touch interface configuration different from the normal touch interface configuration for the same TS. <br />
- The following settings are required for the touch interface configuration for MEC measurement.<br />
- To enable MEC for touch interface configurations by setting tsod in <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to 1.<br />
- Set mec_ts of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to one of the TS numbers to be measured.<br />
- If you want to use the shield function at the same time, set the TS number of the shield terminal in mec_shield_ts of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>.<br />
- In this case, only one TS can be used as a shield terminal. Set num_rx of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to 1. <br />
- For example, in the case of the electrode configuration shown below, set the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> as shown below. Other members are omitted here. <br />
- .tsod = 1,<br />
- .mec_ts = 0,<br />
- .mec_shield_ts = 3,<br />
- .num_rx = 1,<br />
-</p>
-<div class="image">
+<p> To enable the code for MEC feature, set CTSU_CFG_MULTIPLE_ELECTRODE_CONNECTION_ENABLE to 1.</p>
+<p>When using MEC, create a touch interface configuration different from the normal touch interface configuration for the same TS. The following settings are required for the touch interface configuration for MEC measurement.</p>
+<p>To enable MEC for touch interface configurations by setting tsod in <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to 1.</p>
+<p>Set mec_ts of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to one of TS numbers to be measured.</p>
+<p>If you want to use the shield function at the same time, set TS number of the shield terminal in mec_shield_ts of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. In this case, only one TS can be used as a shield terminal.</p>
+<p>Set num_rx of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to 1.</p>
+<p>For example, in the case of the electrode configuration shown below, set the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> as shown below. Other members are omitted here.<br />
+ </p><pre>
+.tsod          = 1,
+.mec_ts        = 0,
+.mec_shield_ts = 3,
+.num_rx        = 1,
+</pre> <div class="image">
 <img src="r_ctsu_MEC_Shield_electrode.png" alt="r_ctsu_MEC_Shield_electrode.png"/>
 <div class="caption">
 Example of MEC and shield electrode configuration</div></div>
- <h3>Automatic CCO Correction (CTSU2SLa)</h3>
-<p>CTSU2SL peripheral has an automatic correction that correct the sensor CCO by hardware. Refer to Sensor CCO Correction function for more information on sensor CCO correction.<br />
- CTSU2SL peripheral processes the correction calculation. CCO correction data can be calculated without using the correction calculation processing of the software.<br />
- The processing time of the main processor is not consumed.<br />
-</p>
-<p>Set CTSU_CFG_AUTO_CORRECTION_ENABLE to 1 to enable this feature.</p>
+<h3>Automatic CCO Correction (CTSU2SLa)</h3>
+<p>The automatic CCO correction function is a feature that performs sensor CCO correction calculations inside CTSU2SLa peripheral. For details on sensor CCO correction, refer to Sensor CCO Correction function.</p>
+<p>Because CTSU2SLa peripheral processes the sensor CCO correction calculation internally, the corrected data can be obtained without using software‑based correction processing, and no processing time is consumed on the main processor.</p>
+<p>To enable the automatic CCO correction function, set CTSU_CFG_AUTO_CORRECTION_ENABLE to 1.</p>
 <h3>Automatic Frequency Correction (CTSU2SLa)</h3>
-<p>CTSU2SLa peripheral has an automatic frequency correction that correct the calculation by hardware.<br />
- CTSU2SLa peripheral processes the correction calculation. Frequency correction data can be calculated without using the correction calculation processing of the software. <br />
- The processing time of the main processor is not consumed.<br />
-</p>
-<p>Set CTSU_CFG_AUTO_MULTI_CLOCK_CORRECTION_ENABLE to 1 to enable this feature.</p>
-<h3>Automatic Judgement (CTSU2SLa)</h3>
-<p>CTSU2SLa peripheral has an automatic judgement that judges the touch of a button by hardware.<br />
- CTSU2SLa peripheral processes the touch judgement of the button. The processing time of the main processor is not consumed.<br />
- Measurements and Judgements can be initiated either by software triggers or external events triggered by the Event Link Controller (ELC). <br />
- Please use the API function <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>.<br />
- This module processes INTCTSUWR and INTCTSURD generated during measurement. Since DTC is used for these processes, DTC is required.<br />
-</p>
-<p>A callback function notifies the application when the processing of INTCTSUFN is completed. Get the judgement result before the next measurement. <br />
- Please use the API function R_CTSU_AutoJudgeDataGet().<br />
- Select either JMM or VMM as the majority voting method. Below is an example of the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> member settings for JMM. For VMM, set “jc” to 0 and “majirimd” to 1.<br />
- .tlot = 2, // Non-touch judgement continuous count : 3 times<br />
- .thot = 2, // Touch judgement continuous count : 3 times<br />
- .jc = 1, // Judgement by two frequency<br />
- .ajmmat = 2, // Moving average : 22times<br />
- .ajbmat = 7, // Baseline average count : 27+1times<br />
- .majirimd = 0, // JMM<br />
- .mtucfen = 1, // Mutual-capacitance<br />
- .ajfen = 1, // Enable automatic judgement<br />
-</p>
-<p>Set “CTSU_CFG_AUTO_JUDGE_ENABLE = 1” to enable the automatic judgement. In this case, set “CTSU_CFG_AUTO_CORRECTION_ENABLE = 1” to enable the automatic CCO correction function as well. <br />
- For VMM, set “CTSU_CFG_AUTO_MULTI_CLOCK_CORRECTION_ENABLE = 1” to enable the automatic frequency correction function as well.<br />
-</p>
-<p>The following (a) to (e) describe the automatic judgement and its setting. In the case of JMM, (a) ~ (e) settings are set for each multi-frequency measurement.</p><ul>
-<li>(a) Measurement mode <br />
- Select self-capacitance or mutual-capacitance with “mtucfen” of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t">ctsu_auto_button_cfg_t</a>. Set the self-capacitance to 0. Set the mutual-capacitance to 1.<br />
+<p>The automatic frequency‑correction function is a feature that performs multi-clock correction inside CTSU2SLa peripheral.</p>
+<p>Because CTSU2SLa peripheral processes the multi-clock correction calculation internally, the corrected data can be obtained without using software‑based correction processing, and no processing time is consumed on the main processor.</p>
+<p>To enable the automatic frequency correction function, set CTSU_CFG_AUTO_MULTI_CLOCK_CORRECTION_ENABLE to 1.</p>
+<p>When using the automatic frequency‑correction function, also enable the automatic CCO correction function.</p>
+<h2>Cooperation with other modules</h2>
+<p>Some functions of CTSU module require cooperation with other modules.</p>
+<table class="doxtable">
+<tr>
+<th>Module</th><th>Application</th><th>Integration Method  </th></tr>
+<tr>
+<td>Timers (r_agt, r_tau, ect.)</td><td>Start measurement via external trigger</td><td>Add FSP module for the timer used (such as AGT). Configure it in the application as appropriate. </td></tr>
+<tr>
+<td>ELC (r_elc)</td><td>Start measurement via external trigger</td><td>Add ELC module. Configure it in the application according to the timer used. </td></tr>
+<tr>
+<td>LPM (r_lpm)</td><td>Low power touch operation</td><td>Add LPM module. </td></tr>
+<tr>
+<td>Transfer (r_dtc)</td><td>Data transfer for INTCTSUWR and INTCTSURD during measurement</td><td>Add DTC module. CTSU module already uses DTC APIs internally. </td></tr>
+<tr>
+<td>ADC (r_adc/r_adc_d)</td><td>Diagnose Output voltage in CTSU2 diagnosis function</td><td>Add ADC module. CTSU module already uses ADC APIs internally. </td></tr>
+</table>
+<h3>Trigger for Measurement Start</h3>
+<p>Measurement can be started by either a software trigger or an external trigger. Select according to your system requirements.</p>
+<p>Software trigger</p>
+<p>Measurement starts when <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> sets the measurement‑start bit to 1. Since configuration for the touch interface is performed before setting this bit, there is a small delay between the API call and the actual start of measurement. However, this delay is very small compared with the measurement time, so the software trigger, which is simpler to configure, is generally recommended.</p>
+<p>External trigger</p>
+<p>After <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> sets the measurement‑start trigger‑selection bit and the measurement‑start bit to 1, CTSU enters a trigger‑wait state. Measurement starts upon receiving an event. Generally, timers are used to measure periodically. Use this method when the small delay of the software trigger cannot be tolerated or when low‑power operation is required. When using multiple measurement modes with external triggers, configure the next measurement mode by calling <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> after measurement of one mode completes.</p>
+<p>When using an external trigger, configure the settings in the Stacks tab as follows:</p><ul>
+<li>Add Timer module: Add the desired timer module via New Stack &gt; Timers &gt; <a href="e.g., Timer, Low-Power (r_agt)">Timer Name</a>.<br />
 </li>
-<li>(b) Baseline<br />
- Set the baseline from the measurement result in the non-touch state. After completing the initial offset adjustment with R_CTSU_OffsetTuning (), the baseline is initially set (set BLINI bit) when R_CTSU_ScanStart () is called for the first time. <br />
- After that, when R_CTSU_AutoJudgementDataGet () is called, the baseline initialization is canceled (clear BLINI bit) and the baseline update process is started.<br />
- The baseline is updated every set number of measurements to follow changes in the surrounding environment.<br />
- If “non-touch” state continues for the set number of measurements, the baseline is updated to the average value. When judgement result is “touch”, the number of counts is cleared.<br />
- Set the number of measurements (baseline update interval) with “ajbmat” of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Common to all buttons in the touch interface configuration. <br />
- Adjusts the ability to follow changes in the surrounding environment.<br />
+<li>Add ELC module: Add the Event Link Controller (r_elc) module via New Stack &gt; System.<br />
 </li>
-<li>(c) Threshold<br />
- judgement is made using a threshold with an arbitrary offset from the baseline. The threshold is set by adding hysteresis.<br />
- Chattering is prevented by giving hysteresis to the transition from “touch” to “non-touch”. Increasing the hysteresis value is more effective in preventing chattering, but be aware that it will be more difficult to transition from “touch” to “non-touch”.<br />
- Set the threshold and hysteresis for each button with threshold and hysteresis of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t">ctsu_auto_button_cfg_t</a>.<br />
- This module calculates the upper threshold and the lower threshold from these and sets them in the CTSUAJTHR register.<br />
- The figure below shows the self-capacitance judgement. Since the electrode capacitance of the self-capacitance button increases when touched, it is judged “touch” when the upper threshold is exceeded.<br />
+<li>Configure Scan Start Trigger: Select CTSU (r_ctsu) module, Set Property &gt; Scan Start Trigger to the desired external trigger (e.g., AGT0 INT (AGT interrupt)).</li>
+</ul>
+<h3>Low-power modes</h3>
+<p>LPM module reduces power consumption by managing transitions between operating control modes and controlling low‑power states. By combining the LPM module with the automatic judgment mode of CTSU2LSa, low‑power touch operation can be achieved.</p>
+<p>When using the LPM module with CTSU, configure the settings in the Stacks tab as follows:</p><ul>
+<li>Add LPM module: Add the Low Power Modes (r_lpm) module via New Stack &gt; Power.</li>
+</ul>
+<h3>Data Transfer</h3>
+<p>In CTSU module, DTC can be used instead of CPU to handle INTCTSUWR and INTCTSURD processing during measurement. In automatic judgment mode, DTC module must be used. In other measurement modes, DTC is optional.</p>
+<p>When using DTC module with CTSU, configure the settings in the Stacks tab as follows:</p><ul>
+<li>Enable DTC Support: Select CTSU (r_ctsu) module, Set Property &gt; Support for using DTC to Enabled.<br />
+</li>
+<li>Add DTC Drivers: At the bottom of CTSU (r_ctsu) module, add the following drivers:<ul>
+<li>Select Add DTC Driver for Transmission (Recommended but optional) &gt; New &gt; Transfer (r_dtc).<br />
+</li>
+<li>Select Add DTC Driver for Reception (Recommended but optional) &gt; New &gt; Transfer (r_dtc).<br />
 </li>
 </ul>
-<div class="image">
-<img src="r_ctsu_self_capacitance_judgement.png" alt="r_ctsu_self_capacitance_judgement.png"/>
-<div class="caption">
-Self-capacitance judgement</div></div>
-<p> The figure below shows the mutual-capacitance judgement. Since the mutual capacitance button reduces the capacitance between electrodes when touched, it is judged as "touch" when the lower threshold is exceeded.</p>
-<div class="image">
-<img src="r_ctsu_mutual_capacitance_judgement.png" alt="r_ctsu_mutual_capacitance_judgement.png"/>
-<div class="caption">
-Mutual-capacitance judgement</div></div>
+</li>
+<li>Additional Configuration for CTSU2LSa (automatic judgment mode), configure DTC modules as follows:<br />
 <ul>
-<li>(d) The number of consecutive “non-touch” and “touch” detections<br />
- This is a filter function to judge "touch" or "non-touch" when "touch" or "non-touch" state continues for a certain number of times.<br />
- Set the number of times with “tlot” and “thot” of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Common to all buttons in the touch interface configuration.<br />
- Increasing the number of consecutive times will be more effective against chattering, but be aware that the reaction speed will decrease.<br />
+<li>For g_transfer1 Transfer (r_dtc) CTSU READ: Set Property &gt; Number of Transfer to 5.<br />
 </li>
-<li>(e) Moving average<br />
- With the automatic judgement function, Set the number of moving averages with “ajmmat” of ctsu_cfg_t.Common to all buttons in the touch interface configuration.<br />
- The figure below shows the button judgement operation described above.</li>
+<li>For g_transfer0 Transfer (r_dtc) CTSU WRITE: Set Property &gt; Number of Transfer based on the judgment method: 6 for JMM or 8 for VMM.</li>
 </ul>
-<div class="image">
-<img src="r_ctsu_Button_Touch_Determination.png" alt="r_ctsu_Button_Touch_Determination.png"/>
-<div class="caption">
-Button judgement</div></div>
- <h2>Measurement Mode</h2>
-<p>This module supports all three modes offered by the CTSU2 peripheral: self-capacitance, mutual-capacitance, and current measurement modes. The temperature correction mode is also offered as a mode for updating the correction coefficient.</p>
-<h3>Self-capacitance Mode</h3>
-<p>The self-capacitance mode is used to measure the capacitance of each terminal (TS).<br />
- The CTSU2 peripheral measures the terminals in ascending order according to the TS numbers, then stores the data. For example, even if you want to use TS5, TS8, TS2, TS3 and TS6 in your application in that order, they will still be measured and stored in the order of TS2, TS3, TS5, TS6, and TS8. Therefore, you will need to reference buffer indexes [2], [4], [0], [1], and [3].<br />
- VMM returns one measurement result for each element.<br />
- JMM returns three measurement results for each element.<br />
-</p>
-<p>[CTSU1]<br />
- In default settings, the measurement period for each TS is wait-time plus approximately 526us.</p>
-<div class="image">
-<img src="r_ctsu_Self_capacitance_Measurement_Period.png" alt="r_ctsu_Self_capacitance_Measurement_Period.png"/>
-<div class="caption">
-Self-capacitance Measurement Period (CTSU1)</div></div>
-<p> [CTSU2]<br />
- In default settings, the measurement period for each TS is approximately 576us.<br />
-</p>
-<div class="image">
-<img src="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png" alt="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png"/>
-<div class="caption">
-Self-capacitance Measurement Period (CTSU2)</div></div>
- <h3>Mutual-Capacitance Mode</h3>
-<p>The mutual-capacitance mode is used to measure the capacitance generated between the receive TS (Rx) and transmit TS (Tx), and therefore requires at least two terminals.<br />
- The CTSU2 peripheral measures all specified combinations of Rx and Tx. For example, when Rx is TS1 and TS3, and Tx is TS2, TS7 and TS4, the combinations are measured in the following order and the data is stored.<br />
- TS3-TS2, TS3-TS4, TS3-TS7, TS10-TS2, TS10-TS4, TS10-TS7<br />
- To measure the mutual-capacitance generated between electrodes, the CTSU2 peripheral performs the measurement process on the same electrode twice. <br />
- The mutual-capacitance is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary measurements, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs both primary and secondary measured result.<br />
- VMM returns two measurement results(one primary and one secondary) for each element.<br />
- JMM returns six measurement results(three primary and three secondary) for each element.<br />
- [CTSU1]<br />
- In default settings, the measurement period for each TS is twice of wait-time plus approximately 526us.<br />
- [CTSU2]<br />
- In default settings, the measurement period for each TS is approximately 1152us.<br />
-</p>
-<div class="image">
-<img src="r_ctsu_Mutual_capacitance_Measurement_Period.png" alt="r_ctsu_Mutual_capacitance_Measurement_Period.png"/>
-<div class="caption">
-Mutual-capacitance Measurement Period</div></div>
- <h3>Mutual-capacitance parallel scan mode(CTSU2)</h3>
-<p>This mode provides fast measurement time by parallel scanning the RX lines with a CFC circuit. Operation is otherwise identical to normal CTSU mutual scanning.<br />
+</li>
+</ul>
+<h3>Diagnosis</h3>
+<p>In CTSU2 diagnosis mode, ADC measurements are required for certain steps. Therefore, add ADC module to the Stacks tab and configure the settings as follows:</p>
+<p>For RA0L1 (using the r_adc_d module):<br />
 </p><ul>
-<li>Scan Order<ul>
-<li>The hardware scans all RX pins simultaneously for each TX pin.</li>
-<li>For example, if sensors TS10, TS11, and TS03 are specified as RX sensors, and sensors TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
- TS02-(TS03, TS10, TS11), TS04-(TS03, TS10, TS11), TS07-(TS03, TS10, TS11)</li>
+<li>TSCAP Voltage Measurement<ul>
+<li>Add the module via New Stack &gt; Analog &gt; ADC (r_adc_d).<br />
+</li>
+<li>In Property &gt; Common &gt; Interrupt Support, set it to Disabled.<br />
+</li>
+<li>In Property &gt; General &gt; Name, set it to g_adc_ctsu.<br />
+</li>
+<li>In Property &gt; Input &gt; A/D Input channel, set it to CTSU TSCAP voltage.<br />
+</li>
+<li>In Property &gt; Interrupts &gt; Start trigger source, set it to Software.<br />
+</li>
+<li>Optional (Lower Voltage Mode):<br />
+<ul>
+<li>If using Lower Voltage Mode: Set General &gt; Operation voltage to Lower voltage 1 and General &gt; Conversion Clock (fAD) to PCLK/2.<br />
+</li>
+<li>Otherwise: Keep the default settings.<br />
+</li>
 </ul>
 </li>
-<li>Element<ul>
-<li>An element refers to the index of a sensor-pair within the scan order. Using the previous example, TS07-TS10 is element 7.</li>
 </ul>
 </li>
-<li>Scan Time<ul>
-<li>Because the RX lines are scanned in parallel, CFC mutual-capacitance scan is the same amount of times faster than a basic mutual matrix scan as the number of RX lines. In other words, on a matrix with N receive lines, CFC mutual scanning is N times faster than basic mutual scanning. Set CTSU_MODE_MUTUAL_CFC_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>.<br />
- Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. In addition, set the number of CTSU_CFG_NUM_CFC and CTSU_CFG_NUM_CFC_TX.<br />
- For details, refer to the configuration and sample application output by QE for Capacitive Touch.</li>
+<li>Internal Reference Voltage Measurement<ul>
+<li>Add the module via New Stack &gt; Analog &gt; ADC (r_adc_d).<br />
+</li>
+<li>In Property &gt; Common &gt; Internal Reference Voltage Support, set it to Enabled.<br />
+</li>
+<li>In Property &gt; General &gt; Name, set it to g_adc_ctsu_ivref.<br />
+</li>
+<li>In Property &gt; General &gt; Operation trigger, set it to No-wait.<br />
+</li>
+<li>In Property &gt; General &gt; Operation voltage, set it to Normal 2.<br />
+</li>
+<li>In Property &gt; Input &gt; A/D Input channel, set it to Internal reference voltage.<br />
+</li>
+<li>In Property &gt; Interrupts &gt; Start trigger source, set it to Software.<br />
+</li>
+<li>Optional (Lower Voltage Mode):<br />
+<ul>
+<li>If using Lower Voltage Mode: Set General &gt; Operation voltage to Lower voltage 2 and General &gt; Conversion Clock (fAD) to PCLK/2.<br />
+</li>
+<li>Otherwise: Keep the default settings.</li>
 </ul>
 </li>
 </ul>
-<h3>Current Measurement Mode(CTSU2)</h3>
-<p>The current measurement mode is used to measure the minute current input to the TS terminal. The order of measurement and data storage is the same as that of the self-capacitance mode. As this does not involve the switched capacitor operation, the measurement is only performed once. The measurement period for one TS under default settings is approximately 256us. The current measurement mode requires a longer stable wait time than the other modes, so the SST is set to 63.</p>
-<div class="image">
-<img src="r_ctsu_Current_Measurement_Period.png" alt="r_ctsu_Current_Measurement_Period.png"/>
-<div class="caption">
-Current Measurement Period</div></div>
- <h3>Temperature Correction Mode(CTSU2)</h3>
-<p>The temperature correction mode is used to periodically update the correction coefficient using an external resistor connected to a TS terminal. This involves three processes as described below. Also refer to the timing chart in Figure of Temperature Correction Measurement Timing Chart.<br />
-</p><ol type="1">
-<li>Measure the correction circuit. One set comprises twelve measurements. <br />
 </li>
-<li>Measure the current when TSCAP voltage is applied to the external resistor to create a correction coefficient based on an external resistor that does not depend on temperature. Execute the next measurement after the previous measurement set is completed (as described in step 1).</li>
-<li>Flow offset current to the external resistor and measure the voltage with the ADC. This will adjust the RTRIM register and handle the temperature drift of the internal reference resistor. In the config settings, set the number of times step 2 should be executed before carrying out this measurement.</li>
-</ol>
-<div class="image">
-<img src="r_ctsu_Temperature_Correction_Measurement_Period.png" alt="r_ctsu_Temperature_Correction_Measurement_Period.png"/>
-<div class="caption">
-Temperature Correction Measurement Timing Chart</div></div>
-<p> Temperature correction uses the ADC module.<br />
- If an error occurs in the ADC module used for temperature correction, return FSP_ERR_ABORTED as the return value of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.<br />
- If an ADC error is returned, exit the function so as not to measure or close the ADC.<br />
- See ADC (r_adc) for ADC module errors. <br />
- Please pay articular attention to the following three points.<br />
-</p><ol type="1">
-<li>When using the temperature correction of the CTSU module, be sure to measure the ADC module. Therefore, please close the user's ADC for use in temperature correction. After closing, please use temperature correction of CTSU module.</li>
-<li>When creating an RTOS, please be careful about the scheduling of the CTSU module's temperature correction task and the user's ADC task when creating an application.</li>
-<li>If FSP_ERR_ABORTED occurs, please call the user's ADC again when using the user's ADC.</li>
-</ol>
-<h3>Diagnosis Mode</h3>
-<p>The diagnosis mode is a mode in which various internal measurement values are scanned by using this diagnosis function <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Implements ctsu_api_t::diagnosis. ">R_CTSU_Diagnosis()</a>.</p>
+</ul>
+<p>For other devices (using the r_adc module):<br />
+</p><ul>
+<li>TSCAP Voltage Measurement<ul>
+<li>Add the module via New Stack &gt; Analog &gt; ADC (r_adc).<br />
+</li>
+<li>In Property &gt; General &gt; Name, set it to g_adc_ctsu.<br />
+</li>
+<li>In Property &gt; Input &gt; Channel Scan Mask, check Channel 16.<br />
+</li>
+<li>In Property &gt; Input &gt; Addition/Averaging Mask, check Channel 16.<br />
+</li>
+<li>In Property &gt; Input &gt; Add/Average Count, select Average four samples.<br />
+</li>
+</ul>
+</li>
+<li>Internal Reference Voltage Measurement<ul>
+<li>Add the module via New Stack &gt; Analog &gt; ADC (r_adc).<br />
+</li>
+<li>In Property &gt; General &gt; Name, set it to g_adc_ctsu_ivref.<br />
+</li>
+<li>In Property &gt; Input &gt; Channel Scan Mask, check Internal Reference Voltage.<br />
+</li>
+<li>In Property &gt; Input &gt; Addition/Averaging Mask, check Internal Reference Voltage.<br />
+</li>
+<li>In Property &gt; Input &gt; Add/Average Count, select Average four samples.<br />
+</li>
+</ul>
+</li>
+</ul>
+<p>If you also use ADC in the application outside diagnosis mode, release ADC resources by closing ADC module at the following timings:<br />
+</p><ul>
+<li>Before calling <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> for diagnosis mode for the first time after reset.<br />
+</li>
+<li>Before calling <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> for diagnosis mode for the first time after executing <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Please call the function when the return value of R_CTSU_DataGet is FS...">R_CTSU_Diagnosis()</a>.</li>
+</ul>
+<p>ADC module can be closed by calling <a class="el" href="group___a_d_c.html#ga499187b3067534e42a57239ead111797">R_ADC_Close()</a>.</p>
+<p>If you do not close ADC module, <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Please call the function when the return value of R_CTSU_DataGet is FS...">R_CTSU_Diagnosis()</a> returns FSP_ERR_ABORTED. In that case, close ADC and ensure that ADC measurement by CTSU module can be performed in the next diagnosis mode execution.</p>
 <h2>Measurement Timing</h2>
-<p>Measurements are initiated by a software trigger or an external event which is triggered by the Event Link Controller (ELC).<br />
- The most common method is using a timer to carry out periodic measurements. Make sure to set the timer interval to allow the measurement and internal value update processes to complete before the next measurement period. The measurement period differs according to touch interface configuration and measurement mode.<br />
- The execution timing of software triggers and external triggers differ slightly. <br />
- Since a software trigger sets the start flag after setting the touch interface configuration with <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>, there is a slight delay after the timer event occurrence. However, as the delay is much smaller than the measurement period, a software trigger is recommended for most instances as it is easy to set. <br />
- An external trigger is recommended for applications in which this slight delay is not acceptable or that require low-power consumption operations. When using an external trigger with multiple touch interface configurations, use <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> to set another touch interface configuration after one measurement is completed.</p>
+<p>Measurements are initiated by a software trigger or an external event which is triggered by Event Link Controller (ELC).</p>
+<p>The most common method is using a timer to carry out periodic measurements. Make sure to set the timer interval to allow the measurement and internal value update processes to complete before the next measurement period. The measurement period differs according to touch interface configuration and measurement mode.</p>
+<p>The execution timing of software triggers and external triggers differ slightly.</p>
+<p>Since a software trigger sets the start flag after setting the touch interface configuration with <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>, there is a slight delay after the timer event occurrence. However, as the delay is much smaller than the measurement period, a software trigger is recommended for most instances as it is easy to set.</p>
+<p>An external trigger is recommended for applications in which this slight delay is not acceptable or that require low-power consumption operations. When using an external trigger with multiple touch interface configurations, use <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> to set another touch interface configuration after one measurement is completed.</p>
 <h2>TrustZone Support</h2>
 <p>In r_ctsu and rm_touch module, Non-Secure Callable Guard Functions are only generated from QE for Capacitive Touch. QE can be used for tuning in secure or flat project, but not in non-secure project. If you want to use in non-secure project, copy the output file from secure or flat project. Refer to QE Help for more information.</p>
 <h2>Data flow</h2>
@@ -779,14 +1044,10 @@ Temperature Correction Measurement Timing Chart</div></div>
 <p>Please check example.<br />
  <a href="#Users-filter">User's filter additional Example</a></p>
 <h2>Limitations</h2>
-<p>Developers should be aware of the following limitations when using CTSU with FSP : <br />
-</p><ul>
-<li>CTSU doesn't support Diagnosis for CTSU2SLa.</li>
-</ul>
 <h1><a class="anchor" id="r-ctsu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the CTSU in an application.</p>
+<p>This is a basic example of minimal use of CTSU in an application.</p>
 <div class="fragment"><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_callback (<a class="code" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___c_t_s_u___a_p_i.html#ggaf6b0abb6cb3e6996d8435268d5e7c9cfa110041f0d6a2dcfeac8b0d2ba3d2318b">CTSU_EVENT_SCAN_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_t_s_u___a_p_i.html#a40ee54221ab1d85ee5d2ce7a5cdd289a">event</a>)</div><div class="line">    {</div><div class="line">        g_scan_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Multi-configuration Example</h2>
 <p>This is a optional example of using both Self-capacitance and Mutual-capacitance configurations in the same project.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_optional_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS + (CTSU_CFG_NUM_MUTUAL_ELEMENTS * 2)];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_mutual, &amp;g_ctsu_cfg_mutual);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_mutual);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_mutual, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Offset Adjustment Example</h2>
@@ -795,7 +1056,7 @@ Examples</h1>
  Offset adjustment is performed again when the parasitic capacitance changes significantly due to changes in the surrounding environment and the count value becomes an abnormal value.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_offsettuning_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initial offset tuning */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e">R_CTSU_OffsetTuning</a>(&amp;g_ctsu_ctrl);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Re-offset tuning is performed when the parasitic capacitance changes significantly due   */</span></div><div class="line">            <span class="comment">/* to changes in the surrounding environment and the count value becomes an abnormal value. */</span></div><div class="line">            <span class="comment">/*                                                                                          */</span></div><div class="line">            <span class="comment">/* if (abnormal value detection conditions)                                                 */</span></div><div class="line">            <span class="comment">/* {                                                                                        */</span></div><div class="line">            <span class="comment">/* Re-offset tuning */</span></div><div class="line">            <span class="keywordflow">do</span></div><div class="line">            {</div><div class="line">                <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">                <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">                {</div><div class="line">                    <span class="comment">/* Wait for scan end callback */</span></div><div class="line">                }</div><div class="line"></div><div class="line">                g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">                err = <a class="code" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e">R_CTSU_OffsetTuning</a>(&amp;g_ctsu_ctrl);</div><div class="line">            } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line">            <span class="comment">/* }                                                                                        */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Diagnosis function Example</h2>
 <p>This is a Diagnosis function example of using the configuration in the basic example.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_diag_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line">    uint16_t  dummy;</div><div class="line"></div><div class="line">    <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;g_ctsu_cfg_diagnosis);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;dummy);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> <a class="anchor" id="Users-filter"></a></p>
+<p>CTSU1 Diagnosis function example: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_diag_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line">    uint16_t  dummy;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;g_ctsu_cfg_diagnosis);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;dummy);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> CTSU2 Diagnosis function example: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu2_diag_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line">    uint16_t  dummy;</div><div class="line">    uint8_t   initial_diag_flag = 0;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;g_ctsu_cfg_diagnosis);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/*Initial Diagnosis loop */</span></div><div class="line">    <span class="keywordflow">while</span> (0 == initial_diag_flag)</div><div class="line">    {</div><div class="line">        <span class="comment">/* For Diagnosis configuration */</span></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;dummy);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                initial_diag_flag = 1;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_diagnosis, &amp;dummy);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> <a class="anchor" id="Users-filter"></a></p>
 <h2>User's filter additional Example</h2>
 <p>This is a user's filter additiional example of using the configuration in the basic example.<br />
  To perform user's filter calculation, change the num_moving_average of the element in the target <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to 1. <br />
@@ -1098,11 +1359,11 @@ ctsu_data_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a9f26ec90784dcf867d1fc63f5a0de0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="memItemLeft" align="right" valign="top"><a id="afcb8ffd54dae5cba1a29a00352ccc5ae"></a>
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#afcb8ffd54dae5cba1a29a00352ccc5ae">p_mutual_pri_corr</a></td></tr>
-<tr class="memdesc:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual primary correction data. g_ctsu_self_corr[] is set by Open API. <br /></td></tr>
+<tr class="memdesc:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual primary correction data. g_ctsu_mutual_pri_corr[] is set by Open API. <br /></td></tr>
 <tr class="separator:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe2dec9c9c789594d001129914f9eec4"><td class="memItemLeft" align="right" valign="top"><a id="abe2dec9c9c789594d001129914f9eec4"></a>
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#abe2dec9c9c789594d001129914f9eec4">p_mutual_snd_corr</a></td></tr>
-<tr class="memdesc:abe2dec9c9c789594d001129914f9eec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual secondary correction data. g_ctsu_self_corr[] is set by Open API. <br /></td></tr>
+<tr class="memdesc:abe2dec9c9c789594d001129914f9eec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual secondary correction data. g_ctsu_mutual_snd_corr[] is set by Open API. <br /></td></tr>
 <tr class="separator:abe2dec9c9c789594d001129914f9eec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fd39f557d83829d35bc9da9be9ecf0c"><td class="memItemLeft" align="right" valign="top"><a id="a4fd39f557d83829d35bc9da9be9ecf0c"></a>
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a4fd39f557d83829d35bc9da9be9ecf0c">p_mutual_pri_mfc</a></td></tr>
@@ -1110,7 +1371,7 @@ uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <tr class="separator:a4fd39f557d83829d35bc9da9be9ecf0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a967f79f83a71d79c6484e1e14013d314"><td class="memItemLeft" align="right" valign="top"><a id="a967f79f83a71d79c6484e1e14013d314"></a>
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a967f79f83a71d79c6484e1e14013d314">p_mutual_snd_mfc</a></td></tr>
-<tr class="memdesc:a967f79f83a71d79c6484e1e14013d314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual primary multi frequency correction data. g_ctsu_pri_mutual_mfc[] is set by Open API. <br /></td></tr>
+<tr class="memdesc:a967f79f83a71d79c6484e1e14013d314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual secondary multi frequency correction data. g_ctsu_snd_mutual_mfc[] is set by Open API. <br /></td></tr>
 <tr class="separator:a967f79f83a71d79c6484e1e14013d314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6aad65a11ef585b3bcab18a55c4ba510"><td class="memItemLeft" align="right" valign="top"><a id="a6aad65a11ef585b3bcab18a55c4ba510"></a>
 ctsu_data_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a6aad65a11ef585b3bcab18a55c4ba510">p_mutual_pri_data</a></td></tr>
@@ -1130,7 +1391,7 @@ ctsu_data_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a765f9f63a90651b81ef4e040174d6524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bdcf0132ae02d8766945124ec684d51"><td class="memItemLeft" align="right" valign="top"><a id="a6bdcf0132ae02d8766945124ec684d51"></a>
 <a class="el" href="group___c_t_s_u___a_p_i.html#ga45fc452df9c8843a08fd3d6028869589">ctsu_txvsel2_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a6bdcf0132ae02d8766945124ec684d51">txvsel2</a></td></tr>
-<tr class="memdesc:a6bdcf0132ae02d8766945124ec684d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Transmission Power Supply Select 2 (CTSU2 Only) <br /></td></tr>
+<tr class="memdesc:a6bdcf0132ae02d8766945124ec684d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Transmission Power Supply Select 2 (CTSU2) <br /></td></tr>
 <tr class="separator:a6bdcf0132ae02d8766945124ec684d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bf87f8171b60105a0b83bf96cca8e88"><td class="memItemLeft" align="right" valign="top"><a id="a8bf87f8171b60105a0b83bf96cca8e88"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a8bf87f8171b60105a0b83bf96cca8e88">ctsuchac0</a></td></tr>
@@ -1390,7 +1651,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 </dl>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>In the first Open, measurement for correction works, and it takes several tens of milliseconds.</li>
-<li>When the touch interface configuration is diagnosis mode, execute the <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a> of the other touch interface configuration first. </li>
+<li>When the touch interface configuration is in diagnosis mode, execute the <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a> of the other touch interface configuration first. </li>
 </ul>
 </dd></dl>
 
@@ -1452,7 +1713,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 
-<p>This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>. </p>
+<p>This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. This function reads all previously corrected measured values into the specified buffer(p_data). CTSU1: The value passed through sensor CCO correction and moving average. CTSU2 JMM: The value passed through sensor CCO correction and moving average. CTSU2 VMM: Sensor passed through sensor CCO correction, frequency correction and moving average. The required buffer size varies depending on the measurement mode. Prepare the number of TS for the self-capacitance measurement and current measurement modes, and twice the number of matrixes for the mutual-capacitance measurement mode. In the case of CTSU2 JMM, data of 3 frequencies is stored, so prepare 3 times more. In diagnosis mode, if data collection has not been completed, the function returns FSP_ERR_CTSU_DIAG_NOT_YET. If data collection is completed, it will return FSP_SUCCESS, so please call <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Please call the function when the return value of R_CTSU_DataGet is FS...">R_CTSU_Diagnosis()</a> to check the diagnosis result. In addition, if an error occurs in ADC measurement during the output‑voltage diagnosis, the function returns FSP_ERR_ABORTED. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>. </p>
 <p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
@@ -1462,10 +1723,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
     <tr><td class="paramname">FSP_ERR_CTSU_INCOMPLETE_TUNING</td><td>Incomplete initial offset tuning. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_DIAG_NOT_YET</td><td>Diagnosis of data collected no yet. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>The mode of automatic judgement on is invalid. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Operate error of Diagnosis ADC data collection ,since ADC use other </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Operate error of Diagnosis ADC data collection, since ADC use other </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>In diagnosis mode, calling <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> executes internal diagnostic processing, and a dummy value is returned in p_data. </dd></dl>
 
 </div>
 </div>
@@ -1506,6 +1768,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function is only supported by CTSU2SLa. </dd></dl>
 
 </div>
 </div>
@@ -1564,6 +1827,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>When using this API together with the diagnosis mode, please note the following: Do not call this API between executing <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and calling <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. </dd></dl>
 
 </div>
 </div>
@@ -1642,6 +1906,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>When using this API together with the diagnosis mode, please note the following: Do not call this API between executing <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and calling <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. </dd></dl>
 
 </div>
 </div>
@@ -1680,8 +1945,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <p>This function gets the sensor specific data values as scanned by the CTSU. Call this function after calling the <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> function. </p>
 <p>By setting the third argument to CTSU_SPECIFIC_RAW_DATA, RAW data can be output from the second argument.</p>
 <p>By setting the third argument to CTSU_SPECIFIC_CCO_CORRECTION_DATA, the cco corrected data can be output from the second argument.</p>
-<p>By setting the third argument to CTSU_SPECIFIC_CORRECTION_DATA, the frequency corrected data can be output from the second argument.</p>
-<p>By setting the third argument to CTSU_SPECIFIC_SELECTED_FREQ, Get bitmap of the frequency values used in majority decision from the second argument.(CTSU2 Only) The bitmap is shown as follows.</p>
+<p>By setting the third argument to CTSU_SPECIFIC_CORRECTION_DATA, the frequency corrected data can be output from the second argument. (CTSU2 VMM)</p>
+<p>By setting the third argument to CTSU_SPECIFIC_SELECTED_FREQ, Get bitmap of the frequency values used in majority decision from the second argument. (CTSU2 VMM) The bitmap is shown as follows.</p>
 <table class="doxtable">
 <tr>
 <th>2bit </th><th>1bit </th><th>0bit  </th></tr>
@@ -1696,10 +1961,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_INCOMPLETE_TUNING</td><td>Incomplete initial offset tuning. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>CTSU_SPECIFIC_SELECTED_FREQ is not enabled in CTSU1.(CTSU2 Only) </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Specify unsupported types. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>When the specific_data_type is set to something other than CTSU_SPECIFIC_RAW_DATA, execute this API after calling <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. </dd></dl>
 
 </div>
 </div>
@@ -1759,7 +2025,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 
-<p>Diagnosis the CTSU peripheral. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">ctsu_api_t::diagnosis</a>. </p>
+<p>Diagnosis the CTSU peripheral. Please call the function when the return value of R_CTSU_DataGet is FSP_SUCCESS. If an abnormality is detected in any of the diagnosis items, the corresponding diagnosis error is returned. If all diagnosis is complete normally, FSP_SUCCESS is returned. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">ctsu_api_t::diagnosis</a>. </p>
 <p>Example: </p><div class="fragment"><div class="line">            err = <a class="code" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
@@ -1792,7 +2058,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

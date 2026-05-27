@@ -8,6 +8,7 @@ var NAVTREEINDEX0 =
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-cm85-cache-features":[1,2,2],
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-other-information":[1,2,8],
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-other-information-cache-ecc-with-fsp":[1,2,8,0],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-other-information-cache-errata":[1,2,8,1],
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-overview":[1,2,1],
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-ra8-cache-background-information":[1,2,3],
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-references":[1,2,9],
@@ -16,8 +17,9 @@ var NAVTREEINDEX0 =
 "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html":[1,5],
 "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-affected-project-types":[1,5,2],
 "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-changes":[1,5,0],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-known-issues":[1,5,3],
 "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-overview":[1,5,1],
-"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-workarounds-for-affected-project-types":[1,5,3],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-workarounds-for-affected-project-types":[1,5,4],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html":[1,1],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html#FREERTOS_MIGRATION-code-changes":[1,1,2],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html#FREERTOS_MIGRATION-migration-steps":[1,1,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-examples":[1,3,2],
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-info":[1,3,3],
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_devices":[1,3,1,0],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_functions":[1,3,1,1],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-limitations":[1,3,1],
-"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-overview":[1,3,0]
+"_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_functions":[1,3,1,1]
 };

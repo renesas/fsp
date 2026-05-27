@@ -54,6 +54,7 @@ var group___c_t_s_u___a_p_i =
       [ "p_transfer_tx", "group___c_t_s_u___a_p_i.html#ac42f999742f1228975263f7b6b1b6d7e", null ],
       [ "p_transfer_rx", "group___c_t_s_u___a_p_i.html#afeb071da4ade7c5148db18ae14e6316c", null ],
       [ "p_adc_instance", "group___c_t_s_u___a_p_i.html#af6d0c0887ba3fa676c7bf4d61eb5a3ea", null ],
+      [ "p_adc_ivref_instance", "group___c_t_s_u___a_p_i.html#ac91b494da348e3a5739031cf60fbc4ab", null ],
       [ "write_irq", "group___c_t_s_u___a_p_i.html#a26b582b9ee181bcb054a96700416a686", null ],
       [ "read_irq", "group___c_t_s_u___a_p_i.html#a4f81a30050a0161004f2c82b94de3e48", null ],
       [ "end_irq", "group___c_t_s_u___a_p_i.html#adfdb692d8d85db036f69dd700d5c65c1", null ],

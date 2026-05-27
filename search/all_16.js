@@ -380,6 +380,10 @@ var searchData=
   ['usb_20hmsc_20interface',['USB HMSC Interface',['../group___u_s_b___h_m_s_c___a_p_i.html',1,'']]],
   ['usb_5fhmsc_5fapi_5ft',['usb_hmsc_api_t',['../group___u_s_b___h_m_s_c___a_p_i.html#structusb__hmsc__api__t',1,'']]],
   ['usb_5fhost_5fto_5fdev',['USB_HOST_TO_DEV',['../group___u_s_b___a_p_i.html#ga7cc218af84ae5dd13fea098aab58fa60',1,'r_usb_basic_api.h']]],
+  ['usb_20huvc_20_28r_5fusb_5fhuvc_29',['USB HUVC (r_usb_huvc)',['../group___u_s_b___h_u_v_c.html',1,'']]],
+  ['usb_20huvc_20interface',['USB HUVC Interface',['../group___u_s_b___h_u_v_c___a_p_i.html',1,'']]],
+  ['usb_5fhuvc_5fapi_5ft',['usb_huvc_api_t',['../group___u_s_b___h_u_v_c___a_p_i.html#structusb__huvc__api__t',1,'']]],
+  ['usb_5fhuvc_5fdevice_5finfo_5ft',['usb_huvc_device_info_t',['../group___u_s_b___h_u_v_c___a_p_i.html#structusb__huvc__device__info__t',1,'']]],
   ['usb_20host_20vendor_20class_20_28r_5fusb_5fhvnd_29',['USB Host Vendor class (r_usb_hvnd)',['../group___u_s_b___h_v_n_d.html',1,'']]],
   ['usb_5fid_5fblength',['USB_ID_BLENGTH',['../group___u_s_b___a_p_i.html#ga7b243e853abb079b397630a524c73556',1,'r_usb_basic_api.h']]],
   ['usb_5fifcls_5fapl',['USB_IFCLS_APL',['../group___u_s_b___a_p_i.html#ga6ba6a51b8ad3647fd8b05b9926496c63',1,'r_usb_basic_api.h']]],
@@ -571,5 +575,6 @@ var searchData=
   ['uuid_5f16',['uuid_16',['../group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ac3e6675ae61eb324d687365e0e6b8bb7',1,'st_ble_gattc_serv_16_evt_t::uuid_16()'],['../group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a49e8f9c1c3cbf4a1c8abdc12eba2a1c7',1,'st_ble_gattc_char_16_evt_t::uuid_16()'],['../group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a7de37993f90c8b121836040559ffbd8b',1,'st_ble_gattc_char_desc_16_evt_t::uuid_16()']]],
   ['uuid_5foffset',['uuid_offset',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a0617b8cb55c7e0d73f44d5e9587e2c3a',1,'st_ble_gatts_db_attr_cfg_t']]],
   ['uuid_5ftype_5fcnt',['uuid_type_cnt',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#afdad1ccc7195981a530f7a1625f30a51',1,'st_ble_gatts_db_cfg_t']]],
-  ['uv_5faddress',['uv_address',['../group___v_i_n.html#a7aa586847316c2f2bc45a75f43adb930',1,'vin_conversion_data_t']]]
+  ['uv_5faddress',['uv_address',['../group___v_i_n.html#a7aa586847316c2f2bc45a75f43adb930',1,'vin_conversion_data_t']]],
+  ['uvc_5fversion',['uvc_version',['../group___u_s_b___h_u_v_c___a_p_i.html#a047ade8caa749dc007e5be41976fed50',1,'usb_huvc_device_info_t']]]
 ];

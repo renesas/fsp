@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -555,11 +555,17 @@ Limited D-Cache Support</h1>
 <p>For MCUs with Cortex-M85 cores with D-Cache, limited support is available for enabling the D-Cache and automatically configuring predefined non-cacheable regions via the MPU during BSP initialization. For these MCUs, D-Cache is disabled by default because certain existing drivers do not support data coherency with D-Cache enabled. Enabling the D-Cache requires that data coherency be considered in any circumstance where a core interacts with other bus members.</p>
 <h2><a class="anchor" id="non-cacheable-buffer-placement-example"></a>
 Non-Cacheable Buffer Placement Example</h2>
+<p>When D-Cache is enabled, the predefined non-cacheable regions configured by the MPU can be used to contain data that should not be cached, ensuring coherency for that data.</p>
 <dl class="section warning"><dt>Warning</dt><dd><b>The predefined non-cacheable sections are only understood as non-cacheable within their respective security state when TrustZone is used. This is due to the MPU configuration done by FSP and how Armv8-M chooses the MPU which matches the current security state for determining the memory attributes of a data access. Cache incoherency will occur if references to these sections are passed between security states. For example, passing a reference from the Non-secure application non-cacheable section to the Secure application will result in the Secure application treating the location as cacheable.</b></dd>
 <dd>
 <b>The predefined non-cacheable sections are only understood as non-cacheable within their respective core. In dual-core devices, each core has a separate MPU which may configure its own regions and attributes, so these sections cannot be used for coherent interprocessor communications in the case that D-Cache is enabled. Use the <a class="el" href="group___i_p_c.html#r-ipc-overview">IPC</a> peripheral instead.</b></dd></dl>
-<p>The predefined non-cacheable regions configured by the MPU when D-Cache is enabled can be used to contain data that should not be cached, ensuring data coherency for that data. To use the predefined non-cacheable regions, place the data into the corresponding non-cacheable section defined by the linker script for the chosen toolchain. The predefined non-cacheable regions are not initialized by the BSP.</p>
-<p>Below are two examples of placing buffers in non-cacheable regions: </p><pre class="fragment">uint8_t uncached_uninitialized_buffer_sram[1024] BSP_PLACE_IN_SECTION(".ram_noinit_nocache");
+<p>As an alternative to direct placement of variables into the predefined sections which are defined below, a custom input section can be specified inside of e2 Studio for a project using the "Linker Sections" tab under the project configuration.</p>
+<p>This allows for the establishment of say, a special name which may be appended to variables which causes them to be placed into the specified output section.</p>
+<dl class="section warning"><dt>Warning</dt><dd><b>The IAR toolchain does not currently support linker script pattern matching for variables which are marked <code>static</code>. This could result in variables which are placed unexpectedly.</b></dd>
+<dd>
+<b>A pending issue with GCC linker mapping will result in any "_nocache" section being incorrectly placed if the companion "_noinit_nocache" section for the given location (e.g. ".ram_") is empty. If the zero-initialized "_nocache" section will be populated, it is recommended to use a dummy variable to populate the companion "_noinit_nocache" section if it would otherwise be empty.</b></dd></dl>
+<p>To use the predefined non-cacheable regions with direct placement, place the data into the corresponding non-cacheable section defined by the linker script for the chosen toolchain.</p>
+<p>Below are two examples of placing buffers into predefined uninitialized and zero-initialized non-cacheable regions: </p><pre class="fragment">uint8_t uncached_uninitialized_buffer_sram[1024] BSP_PLACE_IN_SECTION(".ram_noinit_nocache");
 
 uint8_t uncached_zero_initialized_buffer_sram[1024] BSP_PLACE_IN_SECTION(".ram_nocache");
 </pre><dl class="section note"><dt>Note</dt><dd>Prior to FSP 6.0.0, the <code>.ram_nocache</code> and <code>.sdram_nocache</code> sections were treated as uninitialized sections. In v6.0.0 and up they default to zero initialization during startup. Use the new section names containing <code>_noinit_</code> for placement into an uninitialized non-cacheable section.</dd></dl>
@@ -3025,7 +3031,7 @@ Delay timing may be significantly affected by compiler optimization levels. High
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

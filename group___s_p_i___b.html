@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -568,6 +568,14 @@ Transmit Only mode is not supported when Transmit from RXI is enabled.</dd></dl>
 <p>In master mode, if the Receive Buffer Full Interrupts are not handled fast enough, instead of generating a RX Overflow error, the last clock cycle will be stretched until the receive buffer is read.</p>
 <h2>Parity Mode</h2>
 <p>When parity mode is configured, the LSB of each data frame is used as a parity bit. When odd parity is selected, the LSB is set such that there are an odd number of ones in the data frame. When even parity is selected, the LSB is set such that there are an even number of ones in the data frame.</p>
+<h2>Data coherency when using CPU cache</h2>
+<dl class="section note"><dt>Note</dt><dd>This section applies only when SPI_B utilizes the DTC (Data Transfer Controller) or DMAC (Direct Memory Access Controller) with D-Cache enabled.</dd></dl>
+<p>When D-Cache is enabled on RA8 series devices (ARM Cortex-M85), source and destination buffers must either be allocated to a non-cacheable region or managed via explicit cache maintenance operations (clean/invalidate) to ensure data coherency (This involves cleaning the cache before starting the transmission and invalidating it once the transmission is completed).</p>
+<p>To assign a buffer to a non-cacheable region, append the **_fsp_nocache** suffix to the variable name (E.g: g_dst_buff_fsp_nocache[10]).</p>
+<dl class="section warning"><dt>Warning</dt><dd>Source and destination buffers must remain uninitialized. Any initialization will prevent the linker script from correctly allocating these variables to the designated non-cacheable section.</dd>
+<dd>
+When appending **_fsp_nocache** to a variable, the variable must not be declare as static or const and the variable need to be a global variable.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In TrustZone-enabled projects, both the module driver and the buffers must reside within the same security state (Secure or Non-secure) to utilize the non-cacheable region. If a cross-security state access is required, manual cache cleaning/invalidation must be performed before and after each transmission.</dd></dl>
 <h2><a class="anchor" id="r-spi-b-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the SPI:</p>
@@ -1378,7 +1386,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

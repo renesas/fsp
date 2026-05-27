@@ -43,6 +43,8 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "lwIP Iperf", "group___l_w_i_p___i_p_e_r_f.html", null ],
     [ "lwIP MQTT", "group___l_w_i_p___m_q_t_t.html", null ],
     [ "lwIP NETBIOSNS", "group___l_w_i_p___n_e_t_b_i_o_s_n_s.html", null ],
+    [ "lwIP PPP", "group___l_w_i_p___p_p_p.html", null ],
     [ "lwIP SMTP", "group___l_w_i_p___s_m_t_p.html", null ],
+    [ "lwIP SNMP Agent", "group___l_w_i_p___s_n_m_p___a_g_e_n_t.html", null ],
     [ "lwIP SNTP", "group___l_w_i_p___s_n_t_p.html", null ]
 ];

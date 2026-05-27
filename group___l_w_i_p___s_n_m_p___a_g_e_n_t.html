@@ -1,0 +1,435 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: lwIP SNMP Agent</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.5.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_w_i_p___s_n_m_p___a_g_e_n_t.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">lwIP SNMP Agent<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This module provides the lwIP SNMP Agent integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip_snmp_agent-overview"></a>
+Overview</h1>
+<p>The LwIP SNMP Agent provides a lightweight implementation of the Simple Network Management Protocol (SNMP) for embedded systems. The documentation for the library can be found at the following link: <a href="https://www.nongnu.org/lwip/2_1_x/group__snmp.html">lwIPSNMP</a>.</p>
+<h2><a class="anchor" id="rm-lwip_snmp_agent-features"></a>
+Features</h2>
+<p>The LwIP SNMP Agent supports the following protocol versions:</p><ul>
+<li>SNMPv1</li>
+<li>SNMPv2c</li>
+<li>SNMPv3 (experimental; not fully validated in the current release)</li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_snmp_agent-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for source</h2>
+The following build time configurations are defined in lwip/lwip/apps/snmp_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Community string  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SNMP read-access community</td><td>Name must be a valid C symbol.</td><td>public </td><td>Specifies the SNMP community string used for read-only operations (e.g., GET requests). Common default is 'public'. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SNMP write-access community</td><td>Name must be a valid C symbol.</td><td>private </td><td>Specifies the SNMP community string used for write-access operations (e.g., SET requests). Common default is 'private'. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SNMP trap community</td><td>Name must be a valid C symbol.</td><td>public </td><td>Specifies the SNMP community string used for sending traps. Common default is 'public'. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max community string length</td><td>Must be a positive integer value</td><td>LWIP_MAX(LWIP_MAX(sizeof(SNMP_COMMUNITY), sizeof(SNMP_COMMUNITY_WRITE)), sizeof(SNMP_COMMUNITY_TRAP)) </td><td>The maximum length of community string. If community names shall be adjusted at runtime via snmp_set_community() calls, enter here the possible maximum length (+1 for terminating null character). </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Debugging  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SNMP debug</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LWIP_DBG_ON</li>
+<li>
+LWIP_DBG_OFF</li>
+</ul>
+</td><td>LWIP_DBG_OFF </td><td>Enable debugging for SNMP messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SNMP MIB debug</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LWIP_DBG_ON</li>
+<li>
+LWIP_DBG_OFF</li>
+</ul>
+</td><td>LWIP_DBG_OFF </td><td>Enable debugging for SNMP MIBs. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> MIB2  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">MIB2 Implementation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Indicates if the MIB2 implementation of LWIP SNMP stack is used. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">System Description</td><td>Name must be a valid C symbol.</td><td>lwIP </td><td>Value return for sysDesc field of MIB2. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">System Name</td><td>Name must be a valid C symbol.</td><td>FQDN-unk </td><td>Value return for sysName field of MIB2. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">System Contact</td><td>Name must be a valid C symbol.</td><td></td><td>Value return for sysContact field of MIB2. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">System Location</td><td>Name must be a valid C symbol.</td><td></td><td>Value return for sysLocation field of MIB2. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> SNMPv3  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SNMPv3 Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable SNMPv3 support. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use mbed TLS for SNMPv3</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable mbed TLS usage for SNMPv3. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Crypto Library for SNMPv3</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Crypto Library usage for SNMPv3. </td></tr>
+<tr class="tree_none">
+<td>Enable SNMP over Netconn API</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable SNMP Netconn interface support. </td></tr>
+<tr class="tree_none">
+<td>Enable SNMP over Raw API</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable or disable SNMP Raw API support (UDP raw socket). </td></tr>
+<tr class="tree_none">
+<td>SNMP thread stack size (bytes)</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>DEFAULT_THREAD_STACKSIZE </td><td>Specifies the stack size (in bytes) used by the SNMP thread. </td></tr>
+<tr class="tree_none">
+<td>SNMP thread priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>DEFAULT_THREAD_PRIO </td><td>The priority assigned to SNMP thread. </td></tr>
+<tr class="tree_none">
+<td>SNMP Trap Destinations</td><td>At least one trap destination is required.</td><td>1 </td><td>Maximum number of SNMP trap destinations that can be configured. </td></tr>
+<tr class="tree_none">
+<td>Enable SNMP Safe Requests</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Only allow SNMP write actions that are 'safe' (e.g. disabling netifs is not a safe action when SNMP_SAFE_REQUESTS = 1). </td></tr>
+<tr class="tree_none">
+<td>Max Octet String Length</td><td>Must be a positive integer value</td><td>127 </td><td>The maximum length of strings used. </td></tr>
+<tr class="tree_none">
+<td>Max Object ID Length</td><td>Object ID Length must fit into an u8_t.</td><td>50 </td><td>The maximum number of Sub ID's inside an object identifier. </td></tr>
+<tr class="tree_none">
+<td>Min Value Size</td><td>Must be a positive integer value</td><td>2 * sizeof(u32_t*) </td><td>Minimum size of SNMP value. </td></tr>
+<tr class="tree_none">
+<td>Max Value Size</td><td>Must be a positive integer value</td><td>LWIP_MAX(LWIP_MAX((SNMP_MAX_OCTET_STRING_LEN), sizeof(u32_t)*(SNMP_MAX_OBJ_ID_LEN)), SNMP_MIN_VALUE_SIZE) </td><td>Maximum size of SNMP value. </td></tr>
+<tr class="tree_none">
+<td>Enterprise OID</td><td>Value must be a valid numeric OID.</td><td>63257 </td><td>Specifies the Enterprise Object Identifier (OID) registered with IANA. Default 63257 corresponds to Renesas. Change this to your company's IANA enterprise ID if available. </td></tr>
+<tr class="tree_none">
+<td>GetBulk Max Repetitions</td><td>Must be a positive integer value</td><td>0 </td><td>This value is used to limit the repetitions processed in GetBulk requests (value == 0 means no limitation). </td></tr>
+<tr class="tree_none">
+<td>Configure Supported SNMP Versions at Runtime</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable runtime configuration of supported SNMP versions. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="rm-lwip_snmp_agent-usage_notes"></a>
+Usage Notes</h1>
+<ul>
+<li><b>Memory Configuration:</b> Large MIBs or processing multiple SNMP requests simultaneously may require increasing the stack size and memory pool configurations in <code>lwipopts.h</code>, as well as the thread stack size if using an RTOS.</li>
+<li><b>Ports:</b> By default, the SNMP agent listens for incoming requests on UDP port 161, while TRAP/INFORM messages are sent to the manager on UDP port 162.</li>
+<li><b>SNMPv3:</b> When SNMPv3 is used, several functions from <a href="https://github.com/lwip-tcpip/lwip/blob/master/src/include/lwip/apps/snmpv3.h">snmpv3.h</a> must be implemented by the user. This is mainly for user management and persistence handling.</li>
+</ul>
+<h2>How to Create and Compile Custom MIBs for lwIP SNMP Agent</h2>
+<p>The lwIP SNMP Agent supports extending the standard MIB-2 tree with your own Custom MIBs (Management Information Base). This guide explains how to write a custom MIB file and generate the corresponding C code using the <code>LwipMibCompiler</code> tool.</p>
+<h3>1. Create Your Custom MIB File</h3>
+<p>Before generating the C code, you need a valid MIB file that defines your custom objects (OIDs, scalars, tables, etc.) that the SNMP Agent will expose.</p>
+<ul>
+<li><b>How to Create:</b> You can write this file from scratch using any standard text editor (like VS Code, Notepad++) or use specialized MIB authoring tools. Ensure your syntax strictly follows the <b>SMIv2</b> standard.</li>
+<li><b>References &amp; Templates:</b> If you are new to writing MIBs, it is highly recommended to study the standard MIB files provided by the lwIP project. You can find excellent reference files (such as <code>SNMPv2-MIB</code>, <code>IF-MIB</code>, <code>LLDP-MIB</code>, etc.) in the <code>Mibs</code> directory of the compiler tool: <a href="https://github.com/lwip-tcpip/lwip/tree/master/contrib/apps/LwipMibCompiler/Mibs">LwipMibCompiler/Mibs</a></li>
+</ul>
+<h3>2. Set up the LwipMibCompiler Tool</h3>
+<p>The lwIP project provides a C# based tool called <code>LwipMibCompiler</code> to automatically generate C code (<code>.c</code> and <code>.h</code> files) from your MIB files.</p>
+<ul>
+<li><b>Download the Tool:</b> You can find the source code for the compiler in the official lwIP repository: <a href="https://github.com/lwip-tcpip/lwip/tree/master/contrib/apps/LwipMibCompiler">LwipMibCompiler</a></li>
+<li><b>Build the Tool:</b><ul>
+<li>Open the solution file (<code>LwipMibCompiler.sln</code>).</li>
+<li>Build the project.</li>
+<li>The executable <b>LwipMibCompiler.exe</b> will be generated in the <em>LwipMibCompiler/bin/Debug/</em> folder.</li>
+</ul>
+</li>
+</ul>
+<h3>3. Generate C Code from the MIB File</h3>
+<p>Once you have <b>LwipMibCompiler.exe</b> and your custom <b>MIB</b> file ready, you can generate the C code via the command line.</p>
+<p>For advanced usage with command line, you can refer to the example scripts provided in the repository <a href="https://github.com/lwip-tcpip/lwip/blob/master/contrib/apps/LwipMibCompiler/example/compile_udp_mib.cmd">compile_udp_mib.cmd</a> or <a href="https://github.com/lwip-tcpip/lwip/blob/master/contrib/apps/LwipMibCompiler/example/compile_udp_mib.sh">compile_udp_mib.sh</a>.</p>
+<h3>4. Integrate the Generated Code into Your Project</h3>
+<p>After generating the code, you need to link it to the lwIP SNMP Agent in your application.</p><ul>
+<li><b>Add Files to Project:</b> Add the generated *.c* and *.h* files to your IDE/build system.</li>
+<li><b>Implement the Callbacks:</b> The generated *.c* file will contain "skeleton" functions (e.g., <code>customSensor_get_value</code>, <code>customSensor_set_value</code>). You must implement the actual logic inside these functions to read from or write to your hardware/variables.</li>
+<li><b>Register the MIB:</b> Finally, include the generated header and add your custom MIB to the lwIP SNMP Agent initialization sequence: <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;lwip/apps/snmp.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;snmpv2-renesas.h&quot;</span> <span class="comment">// Your generated header</span></div><div class="line"></div><div class="line"><span class="comment">/* Array of MIBs to load into the agent */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span>snmp_mib * my_snmp_mibs[] =</div><div class="line">{</div><div class="line">    &amp;mib2,      <span class="comment">/* Standard MIB-2 */</span></div><div class="line">    &amp;renesas    <span class="comment">/* Your Custom MIB (Name matches the MODULE-IDENTITY) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> my_snmp_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Load the MIBs array */</span></div><div class="line">    snmp_set_mibs(my_snmp_mibs, LWIP_ARRAYSIZE(my_snmp_mibs));</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize SNMP Agent */</span></div><div class="line">    snmp_init();</div><div class="line">}</div></div><!-- fragment --></li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_snmp_agent-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the lwIP SNMP Agent APIs in an application.</p>
+<dl class="section note"><dt>Note</dt><dd>This example provides a basic implementation of an LwIP SNMPv2c agent based on the default MIB-II. For further details regarding custom MIB development and the LwIP SNMPv3 agent, refer to: <a href="https://github.com/lwip-tcpip/lwip/tree/master/contrib/examples/snmp">LwipSNMP_Example</a></dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/snmp.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/snmp_mib2.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSDESC        &quot;LwIP SNMP Agent Test Device&quot;</span></div><div class="line"><span class="preprocessor">#define LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSNAME        &quot;RA-BOARD_TEST&quot;</span></div><div class="line"><span class="preprocessor">#define LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSCONTACT     &quot;Renesas_Test_Contact&quot;</span></div><div class="line"><span class="preprocessor">#define LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSLOCATION    &quot;Renesas-LAB-TEST&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if SNMP_LWIP_MIB2</span></div><div class="line"></div><div class="line"><span class="comment">/* Define variables for SNMP sysLocation to make it accessible read/write */</span></div><div class="line"><span class="keyword">static</span> u8_t  sys_location[]   = LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSLOCATION;</div><div class="line"><span class="keyword">static</span> u16_t sys_location_len = <span class="keyword">sizeof</span>(LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSLOCATION) - 1;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span>snmp_mib * mibs[] =</div><div class="line">{</div><div class="line">    &amp;mib2</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span>        lwip_snmp_example();</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_snmp_agent_start(<span class="keywordtype">void</span>);</div><div class="line"></div><div class="line"><span class="comment">/* LwIP SNMP example */</span></div><div class="line"><span class="keywordtype">void</span> lwip_snmp_example () {</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line"><span class="preprocessor">#if SNMP_USE_NETCONN</span></div><div class="line">    tcpip_init(NULL, NULL);</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    lwip_init();</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line"><span class="preprocessor">#if SNMP_USE_NETCONN</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, tcpip_input);</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line">    <span class="comment">/* Start SNMP agent */</span></div><div class="line">    lwip_snmp_agent_start();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_snmp_agent_start (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#if SNMP_LWIP_MIB2</span></div><div class="line"><span class="preprocessor"> #if SNMP_USE_NETCONN</span></div><div class="line">    snmp_threadsync_init(&amp;snmp_mib2_lwip_locks, snmp_mib2_lwip_synchronizer);</div><div class="line"><span class="preprocessor"> #endif                                </span><span class="comment">/* SNMP_USE_NETCONN */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure MIB2 parameters */</span></div><div class="line">    snmp_mib2_set_sysdescr((<span class="keyword">const</span> u8_t *) LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSDESC, NULL);</div><div class="line">    snmp_mib2_set_sysname((u8_t *) LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSNAME, NULL, 0);</div><div class="line">    snmp_mib2_set_syscontact((u8_t *) LWIP_SNMP_AGENT_EXAMPLE_MIB2_SYSCONTACT, NULL, 0);</div><div class="line">    snmp_mib2_set_syslocation(sys_location, &amp;sys_location_len, <span class="keyword">sizeof</span>(sys_location));</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* SNMP_LWIP_MIB2 */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">    <span class="comment">/* Load the MIBs array into the SNMP Agent */</span></div><div class="line">    snmp_set_mibs(mibs, LWIP_ARRAYSIZE(mibs));</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize SNMP (call only once) */</span></div><div class="line">    snmp_init();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -143,7 +143,7 @@ var searchData=
   ['etha_5ferror_5fipl_5fport_5f1',['etha_error_ipl_port_1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a22e478c02b9e0ba43a4750a6257c63f5',1,'layer3_switch_extended_cfg_t']]],
   ['etha_5ferror_5firq_5fport_5f0',['etha_error_irq_port_0',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a4d7adf3c5d4676c2b444d19eeddf0168',1,'layer3_switch_extended_cfg_t']]],
   ['etha_5ferror_5firq_5fport_5f1',['etha_error_irq_port_1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#aa76ccc390c654ed65fb78e3db5ccb43e',1,'layer3_switch_extended_cfg_t']]],
-  ['ether',['ether',['../group___p_t_p___a_p_i.html#ac2f1d148e01e662b9fe8b3e27bd5f0bb',1,'ptp_synfp_cfg_t']]],
+  ['ether',['ether',['../group___p_t_p___a_p_i.html#a926c5b230b29fc53b00b4d3fe1f10b31',1,'ptp_synfp_cfg_t']]],
   ['ether_5fbuffer_5fsize',['ether_buffer_size',['../group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256',1,'ether_cfg_t']]],
   ['ethernet_5fphy_5finterface',['ethernet_phy_interface',['../group___p_t_p___a_p_i.html#a08a1a771170cfe1396f3275a3f9be994',1,'ptp_synfp_cfg_t']]],
   ['etoh',['etoh',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#affea8dbc2bf312f939b04a070ba9a16d',1,'rm_zmod4xxx_iaq_1st_data_t::etoh()'],['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92ce32ead1c82ad9b1c355827fe027a9',1,'rm_zmod4xxx_iaq_2nd_data_t::etoh()'],['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5bcd90e4eb1d705a71453a5c35229719',1,'rm_zmod4xxx_pbaq_data_t::etoh()']]],

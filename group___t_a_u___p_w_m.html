@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -292,6 +292,10 @@ Features</h2>
 <li>APIs are provided to get the current period, source clock frequency, and count direction.<a class="anchor" id="um_timer_count_direction"></a></li>
 <li>APIs are provided to get the current timer status and counter value.<a class="anchor" id="um_timer_status"></a></li>
 <li>Build-time availability of multi-slave mode for PWM outputs</li>
+<li>Additional build-time features:<ul>
+<li>Optional (build time) support for enabling/disabling interrupts.</li>
+</ul>
+</li>
 </ul>
 <h2><a class="anchor" id="r-tau-pwm-supported-devices"></a>
 Supported Devices</h2>
@@ -319,6 +323,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Interrupt Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable support for interrupts. If master and slave interrupts are not used, disable this setting to exclude the ROM used by ISR functions. </td></tr>
 <tr class="tree_none">
 <td>One-shot Pulse Output Mode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -859,7 +871,7 @@ Configuration for each slave channel, at least 1 slave channel is required. </td
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL, or one of the following is invalid: the count of source divider/period/duty cycle/slave channels, or the trigger source. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>ISR of master channel must be enabled </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td><a class="el" href="group___t_i_m_e_r___a_p_i.html#a7d2f434f07723a53b504751e9e5ac540">timer_cfg_t::p_callback</a> is not NULL, but ISR is not enabled. ISR must be enabled to use callback. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid configuration option provided for selected timer mode </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>The master/slave channel selected is not available on this device, slave channel number must be greater than master channel number. </td></tr>
   </table>
@@ -1230,6 +1242,7 @@ Configuration for each slave channel, at least 1 slave channel is required. </td
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_callback was NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1269,7 +1282,7 @@ Configuration for each slave channel, at least 1 slave channel is required. </td
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

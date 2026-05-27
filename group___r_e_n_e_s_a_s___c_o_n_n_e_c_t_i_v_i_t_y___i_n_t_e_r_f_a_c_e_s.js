@@ -15,6 +15,7 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___i_n_t_e_r_f_a_c_e_s =
     [ "USB HCDC Interface", "group___u_s_b___h_c_d_c___a_p_i.html", "group___u_s_b___h_c_d_c___a_p_i" ],
     [ "USB HHID Interface", "group___u_s_b___h_h_i_d___a_p_i.html", "group___u_s_b___h_h_i_d___a_p_i" ],
     [ "USB HMSC Interface", "group___u_s_b___h_m_s_c___a_p_i.html", "group___u_s_b___h_m_s_c___a_p_i" ],
+    [ "USB HUVC Interface", "group___u_s_b___h_u_v_c___a_p_i.html", "group___u_s_b___h_u_v_c___a_p_i" ],
     [ "USB Interface", "group___u_s_b___a_p_i.html", "group___u_s_b___a_p_i" ],
     [ "USB PAUD Interface", "group___u_s_b___p_a_u_d___a_p_i.html", "group___u_s_b___p_a_u_d___a_p_i" ],
     [ "USB PCDC Interface", "group___u_s_b___p_c_d_c___a_p_i.html", "group___u_s_b___p_c_d_c___a_p_i" ],

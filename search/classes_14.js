@@ -31,6 +31,8 @@ var searchData=
   ['usb_5fhhid_5fapi_5ft',['usb_hhid_api_t',['../group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__api__t',1,'']]],
   ['usb_5fhhid_5finstance_5ft',['usb_hhid_instance_t',['../group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__instance__t',1,'']]],
   ['usb_5fhmsc_5fapi_5ft',['usb_hmsc_api_t',['../group___u_s_b___h_m_s_c___a_p_i.html#structusb__hmsc__api__t',1,'']]],
+  ['usb_5fhuvc_5fapi_5ft',['usb_huvc_api_t',['../group___u_s_b___h_u_v_c___a_p_i.html#structusb__huvc__api__t',1,'']]],
+  ['usb_5fhuvc_5fdevice_5finfo_5ft',['usb_huvc_device_info_t',['../group___u_s_b___h_u_v_c___a_p_i.html#structusb__huvc__device__info__t',1,'']]],
   ['usb_5finstance_5ft',['usb_instance_t',['../group___u_s_b___a_p_i.html#structusb__instance__t',1,'']]],
   ['usb_5fpaud_5faudio_5fcontrol_5fgroup_5ft',['usb_paud_audio_control_group_t',['../group___u_s_b___p_a_u_d___a_p_i.html#structusb__paud__audio__control__group__t',1,'']]],
   ['usb_5fpaud_5faudio_5fcontrol_5ft',['usb_paud_audio_control_t',['../group___u_s_b___p_a_u_d___a_p_i.html#structusb__paud__audio__control__t',1,'']]],

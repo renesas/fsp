@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.4.0</span>
+   &#160;<span id="projectnumber">Release v6.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -765,6 +765,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structi3c__clock__stalling__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structi3c__bitrate__settings__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#structi3c__bitrate__settings__t">i3c_bitrate_settings_t</a></td></tr>
 <tr class="separator:structi3c__bitrate__settings__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unioni3c__bitrate__settings__t_8____unnamed____"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#unioni3c__bitrate__settings__t_8____unnamed____">i3c_bitrate_settings_t.__unnamed__</a></td></tr>
+<tr class="separator:unioni3c__bitrate__settings__t_8____unnamed____"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structi3c__ibi__control__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#structi3c__ibi__control__t">i3c_ibi_control_t</a></td></tr>
 <tr class="separator:structi3c__ibi__control__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structi3c__slave__command__response__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#structi3c__slave__command__response__info__t">i3c_slave_command_response_info_t</a></td></tr>
@@ -852,9 +854,21 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Clock stalling settings. </p>
+<div class="textblock"><p>Clock stalling settings. DEPRECATED, use scstlctl_b instead. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aff490c93f6fc8f2d99b20f3412eb6492"></a>uint32_t</td>
+<td class="fieldname">
+clock_stalling_time: 16</td>
+<td class="fielddoc">
+The amount of time to stall the clock in I3C source clock ticks. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad3e123d62a1d8e923f7ba035b8a137e1"></a>uint32_t</td>
+<td class="fieldname">
+__pad0__: 12</td>
+<td class="fielddoc">
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a90d888a3f9282b6f804158f677748d5d"></a>uint32_t</td>
 <td class="fieldname">
@@ -879,12 +893,6 @@ Enable Clock Stalling during the parity bit period in write transfers. </td></tr
 ack_phase_enable: 1</td>
 <td class="fielddoc">
 Enable Clock Stalling during the ACK/NACK phase. </td></tr>
-<tr><td class="fieldtype">
-<a id="a3ecd785c56605cbb305942aafbe4e84e"></a>uint16_t</td>
-<td class="fieldname">
-clock_stalling_time</td>
-<td class="fielddoc">
-The amount of time to stall the clock in I3C source clock ticks. </td></tr>
 </table>
 
 </div>
@@ -916,12 +924,84 @@ extbr</td>
 <td class="fielddoc">
 The extended bitrate settings. </td></tr>
 <tr><td class="fieldtype">
-<a id="a98a55a8fa433bfd37efac64274f116ac"></a><a class="el" href="group___i3_c.html#structi3c__clock__stalling__t">i3c_clock_stalling_t</a></td>
+<a id="aa07e463439992f8ed622699ea99b04b1"></a>union <a class="el" href="group___i3_c.html#unioni3c__bitrate__settings__t_8____unnamed____">i3c_bitrate_settings_t</a></td>
 <td class="fieldname">
-clock_stalling</td>
+__unnamed__</td>
 <td class="fielddoc">
 <p>Clock Stalling settings (See Master Clock Stalling in the MIPI I3C Specification v1.0). </p>
 </td></tr>
+</table>
+
+</div>
+</div>
+<a name="unioni3c__bitrate__settings__t_8____unnamed____" id="unioni3c__bitrate__settings__t_8____unnamed____"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#unioni3c__bitrate__settings__t_8____unnamed____">&#9670;&nbsp;</a></span>i3c_bitrate_settings_t.__unnamed__</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union i3c_bitrate_settings_t.__unnamed__</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Clock Stalling settings (See Master Clock Stalling in the MIPI I3C Specification v1.0). </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a1b897e125f20d2e789046965ebc6a694"></a>uint32_t</td>
+<td class="fieldname">
+scstlctl</td>
+<td class="fielddoc">
+SCL Stalling Control. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab8b9a8f7f746c73a08b47755db78c2b8"></a></td>
+<td class="fieldname">
+__PACKED_STRUCT</td>
+<td class="fielddoc">
+The amount of time to stall the clock in I3C source clock ticks. </td></tr>
+<tr><td class="fieldtype">
+<a id="a74a47a7eac047138ff811ede153943e6"></a>uint32_t</td>
+<td class="fieldname">
+__pad0__: 12</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a68a829ba721db26d872d05e0d9b77db5"></a>uint32_t</td>
+<td class="fieldname">
+assigned_address_phase_enable: 1</td>
+<td class="fielddoc">
+Enable Clock Stalling during the address phase of the ENTDAA command. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae5cc71575ce57a4876cc2f9190f159e1"></a>uint32_t</td>
+<td class="fieldname">
+transition_phase_enable: 1</td>
+<td class="fielddoc">
+Enable Clock Stalling during the transition bit in read transfers. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad83bd006efaed0c05245ced4e6aa7311"></a>uint32_t</td>
+<td class="fieldname">
+parity_phase_enable: 1</td>
+<td class="fielddoc">
+Enable Clock Stalling during the parity bit period in write transfers. </td></tr>
+<tr><td class="fieldtype">
+<a id="a06b72b8db529f75692fc64497fcb9d16"></a>uint32_t</td>
+<td class="fieldname">
+ack_phase_enable: 1</td>
+<td class="fielddoc">
+Enable Clock Stalling during the ACK/NACK phase. </td></tr>
+<tr><td class="fieldtype">
+<a id="a63b73a96cd8a997612219bd1ba5c5372"></a></td>
+<td class="fieldname">
+scstlctl_b</td>
+<td class="fielddoc">
+SCL Stalling Control bitfield. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5b5fc75bdae5969ad071e681956a9437"></a><a class="el" href="group___i3_c.html#structi3c__clock__stalling__t">i3c_clock_stalling_t</a></td>
+<td class="fieldname">
+clock_stalling</td>
+<td class="fielddoc">
+DEPRECATED, use scstlctl_b instead. </td></tr>
 </table>
 
 </div>
@@ -2014,7 +2094,7 @@ Error and Event Interrupt Priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.4.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.5.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
