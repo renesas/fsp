@@ -1202,7 +1202,8 @@ void uarta_txi_isr (void)
         }
  #endif
     }
-    else if (0U != (p_ctrl->p_reg->ASIMAn0 & R_UARTA0_ASIMAn0_ISSMA_Msk))
+    else if (0U != (p_ctrl->p_reg->ASIMAn0 & R_UARTA0_ASIMAn0_ISSMA_Msk) &&
+            1U == (p_ctrl->p_reg->ASISAn_b.TXSFA))
     {
         p_ctrl->p_reg->ASIMAn0_b.ISSMA = 0U;
     }
