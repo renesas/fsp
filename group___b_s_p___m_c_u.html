@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -447,6 +447,7 @@ SDRAM Initialization</h3>
 <p>Before entering Software Standby or Deep Software Standby, the user must call <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga58298a848222b3b49fda6c26e57e5adb" title="Changes SDRAM from Auto-refresh to Self-refresh. ">R_BSP_SdramSelfRefreshEnable()</a> to change from Auto-Refresh to Self-Refresh in order to preserve data during the low power state. No SDRAM access is allowed after this function is called. The user must not place FSP code or data or their wakeup interrupt handling functions into SDRAM to ensure there are no issues around transitions into and out of Software Standby since SDRAM access will be disabled then and trigger a fault if access is requested.</p>
 <p>When resuming from Software Standby, the user must call <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga3181a42141ec41a24e8ff0d392840b21" title="Changes SDRAM from Self-refresh to Auto-refresh. ">R_BSP_SdramSelfRefreshDisable()</a> to change from Self-Refresh to Auto-Refresh and restore SDRAM access.</p>
 <p>When resuming operation after Deep Software Standby or another situation where there is already data present in the SDRAM modules that must be preserved, the user must call R_BSP_SdramInit(false) before pin initialization and then call <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga3181a42141ec41a24e8ff0d392840b21" title="Changes SDRAM from Self-refresh to Auto-refresh. ">R_BSP_SdramSelfRefreshDisable()</a> after pins have been configured in order to resume operations with the SDRAM.</p>
+<dl class="section warning"><dt>Warning</dt><dd>When using SDRAM for TrustZone Secure Project, the user must change the <code>Bus Security Attribution Register C</code> (In BSP Tab -&gt; RA8xx Family -&gt; Security -&gt; Bus Accessibility) to <code>Secure State</code> to avoid TrustZone access error. Similarly, for TrustZone Non-secure Project, this parameter must be set to <code>Both Secure and Non-Secure State</code>.</dd></dl>
 <h3><a class="anchor" id="ospi_b_initialization"></a>
 OSPI_B Initialization</h3>
 <p>The BSP provides support for usage of external or SiP OSPI memories on MCUs with OSPI_B support. OSPI_B intialization is enabled in the BSP tab of the RA configuration editor, but an OSPI_B stack component must also be added. It requires the "Early BSP Initialization" option to be enabled. The default location for initialization is during the <code>BSP_WARM_START_POST_CLOCK</code> event of <code>R_BSP_WarmStart</code> callback. When enabled, the function specified in the macro <code>BSP_CFG_OSPI_B_STARTUP_FN</code> will be executed by the BSP and any internal memory regions sourced from OSPI_B memory will be initialized. The BSP will not initialize any memory sections in the OSPI memory; the user is responsible for initializing any code or data stored in the OSPI memory.</p>
@@ -3031,7 +3032,7 @@ Delay timing may be significantly affected by compiler optimization levels. High
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -167,7 +167,7 @@ var searchData=
   ['etha_5ferror_5fipl_5fport_5f1',['etha_error_ipl_port_1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a22e478c02b9e0ba43a4750a6257c63f5',1,'layer3_switch_extended_cfg_t']]],
   ['etha_5ferror_5firq_5fport_5f0',['etha_error_irq_port_0',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a4d7adf3c5d4676c2b444d19eeddf0168',1,'layer3_switch_extended_cfg_t']]],
   ['etha_5ferror_5firq_5fport_5f1',['etha_error_irq_port_1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#aa76ccc390c654ed65fb78e3db5ccb43e',1,'layer3_switch_extended_cfg_t']]],
-  ['ether',['ether',['../group___p_t_p___a_p_i.html#a926c5b230b29fc53b00b4d3fe1f10b31',1,'ptp_synfp_cfg_t::ether()'],['../group___e_t_h_e_r.html',1,'(Global Namespace)']]],
+  ['ether',['ether',['../group___p_t_p___a_p_i.html#a9231176faf103b91e410154ff6b232c6',1,'ptp_synfp_cfg_t::ether()'],['../group___e_t_h_e_r.html',1,'(Global Namespace)']]],
   ['ethernet_20interface',['Ethernet Interface',['../group___e_t_h_e_r___a_p_i.html',1,'']]],
   ['ether_5fapi_5ft',['ether_api_t',['../group___e_t_h_e_r___a_p_i.html#structether__api__t',1,'']]],
   ['ether_5fbuffer_5fsize',['ether_buffer_size',['../group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256',1,'ether_cfg_t']]],

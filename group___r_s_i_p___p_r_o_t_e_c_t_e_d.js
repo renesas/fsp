@@ -217,6 +217,5 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
     [ "R_RSIP_HMAC_SignFinish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga5aa0d78a4d2f6b29da5fa7f96ce09e3a", null ],
     [ "R_RSIP_HMAC_VerifyFinish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga19c282224fe07a16cebefab86f14ac6e", null ],
     [ "R_RSIP_HMAC_Suspend", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafaed3bf40a39f370ec3ad676de4891f5", null ],
-    [ "R_RSIP_HMAC_Resume", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafb97c276b5b7c30829f4f0e9c889334c", null ],
-    [ "R_RSIP_FSBL_OEM_BL_Digest_Generate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae1b16661cd2630678f3a8701c6dc0602", null ]
+    [ "R_RSIP_HMAC_Resume", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafb97c276b5b7c30829f4f0e9c889334c", null ]
 ];

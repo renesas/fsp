@@ -32,6 +32,7 @@ var searchData=
   ['lin_5fchecksum_5ftype_5ft',['lin_checksum_type_t',['../group___l_i_n___a_p_i.html#ga420925530265c35f3b2219649d7aad5b',1,'r_lin_api.h']]],
   ['lin_5fevent_5ft',['lin_event_t',['../group___l_i_n___a_p_i.html#ga7348cb44dbe95ba7bcd29c82cfbf8a72',1,'r_lin_api.h']]],
   ['lin_5fmode_5ft',['lin_mode_t',['../group___l_i_n___a_p_i.html#ga82f45fff4983671b387f6e0b3ec9e12f',1,'r_lin_api.h']]],
+  ['lpm_5fdeep_5fsleep_5fwake_5fsource_5ft',['lpm_deep_sleep_wake_source_t',['../group___l_p_m___a_p_i.html#ga39456e5eee26b567432ae4409b5cc7f5',1,'r_lpm_api.h']]],
   ['lpm_5fdeep_5fstandby_5fcancel_5fedge_5ft',['lpm_deep_standby_cancel_edge_t',['../group___l_p_m___a_p_i.html#gaecb8b2da6c5e7bf0b3532799418b9f70',1,'r_lpm_api.h']]],
   ['lpm_5fdeep_5fstandby_5fcancel_5fsource_5ft',['lpm_deep_standby_cancel_source_t',['../group___l_p_m___a_p_i.html#gab83f1826bb070e32d292d48f139d0438',1,'r_lpm_api.h']]],
   ['lpm_5fdeep_5fstandby_5fsoft_5fstart_5fmode_5ft',['lpm_deep_standby_soft_start_mode_t',['../group___l_p_m___a_p_i.html#ga93f9782cf16e9c723f5cb0bfc2d71126',1,'r_lpm_api.h']]],

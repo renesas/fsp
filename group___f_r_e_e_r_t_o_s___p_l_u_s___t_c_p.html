@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -496,21 +496,21 @@ Enable </li>
 </ul>
 </td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
 <tr class="tree_none">
-<td>The socket semaphore to unblock the MQTT task (TX_DRIVER)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Enable TX DRIVER for zero copy</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable </li>
 </ul>
-</td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
+</td><td>Disable </td><td>The driver that is responsible for freeing the network buffer and network buffer descriptor </td></tr>
 <tr class="tree_none">
-<td>The socket semaphore to unblock the MQTT task (RX_DRIVER)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Enable RX DRIVER for zero copy</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable </li>
 </ul>
-</td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
+</td><td>Disable </td><td>When a packet is received, no data is copied. Instead, the buffer is sent directly to the IP-task </td></tr>
 <tr class="tree_none">
 <td>Possible optimisation for expert users</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -527,9 +527,9 @@ Enable </li>
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_freertos_plus_tcp0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
-<td>RX Handler Task Stack Size</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE </td><td>Stack size of RX handler task. </td></tr>
+<td>Ethernet Deferred Interrupt Handler Task Stack Size</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE </td><td>Stack size of Ether handler task. </td></tr>
 <tr class="tree_none">
-<td>RX Handler Task Priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMAX_PRIORITIES - 1 </td><td>Priority of RX handler task. A higher priority ensures timely processing of network traffic or callbacks. </td></tr>
+<td>Ethernet Deferred Interrupt Task Priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMAX_PRIORITIES - 1 </td><td>Priority of Ether handler task. A higher priority ensures timely processing of network traffic or callbacks. </td></tr>
 <tr class="tree_none">
 <td>Check Link Status Task Stack Size</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE </td><td>Stack size of Check link status task. </td></tr>
 <tr class="tree_none">
@@ -564,16 +564,19 @@ The weak implementations provided of <code>xApplicationGetRandomNumber</code> an
 To connect to a server using an IP address the macro ipconfigINCLUDE_FULL_INET_ADDR must be set to 1.</dd></dl>
 <h2><a class="anchor" id="rm-freertos-plus-tcp-limitations"></a>
 Limitations</h2>
+<p>It is necessary to select an appropriate buffer allocation stack.</p>
 <ul>
-<li>Zero-copy is not currently supported by the NetworkInterface.</li>
+<li>Zero copy: Buffer Allocation 1</li>
+<li>Non-zero copy: Buffer Allocation 2</li>
 </ul>
+<p>r_usb_hcdc_ecm module is not supported zero copy.</p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

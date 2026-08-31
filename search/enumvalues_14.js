@@ -107,6 +107,7 @@ var searchData=
   ['usb_5fclass_5fphid2',['USB_CLASS_PHID2',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2abe1e6620054470da8b98fd0e261642c2',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fpmsc',['USB_CLASS_PMSC',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a97a34755fa2c5bfcf5862fe25156e11c',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fpprn',['USB_CLASS_PPRN',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a2056fb5548abac1e44fd4f9d356d974b',1,'r_usb_basic_api.h']]],
+  ['usb_5fclass_5fpuvc',['USB_CLASS_PUVC',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a09bce4717d8eb7a1719c62a0f2aa8d51',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fpvnd',['USB_CLASS_PVND',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2af29ff035832b2ed9568dd3e674052265',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5frequest',['USB_CLASS_REQUEST',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2ac5ba0e58af39bb09ef467e27446a2d58',1,'r_usb_basic_api.h']]],
   ['usb_5fcompliancetest_5fattach',['USB_COMPLIANCETEST_ATTACH',['../group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302abf6fb86e88281a4c9d441b6c923b3111',1,'r_usb_basic_api.h']]],

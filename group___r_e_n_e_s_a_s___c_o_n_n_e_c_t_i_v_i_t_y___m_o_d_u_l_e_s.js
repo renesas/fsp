@@ -46,6 +46,7 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "USB PHID (r_usb_phid)", "group___u_s_b___p_h_i_d.html", null ],
     [ "USB PMSC (r_usb_pmsc)", "group___u_s_b___p_m_s_c.html", null ],
     [ "USB PPRN (r_usb_pprn)", "group___u_s_b___p_p_r_n.html", null ],
+    [ "USB PUVC (r_usb_puvc)", "group___u_s_b___p_u_v_c.html", null ],
     [ "USB Peripheral Vendor class (r_usb_pvnd)", "group___u_s_b___p_v_n_d.html", null ],
     [ "USB-TYPEC (r_usb_typec)", "group___u_s_b___t_y_p_e_c.html", "group___u_s_b___t_y_p_e_c" ],
     [ "USB_PCDC Communication Device (rm_comms_usb_pcdc)", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c" ]

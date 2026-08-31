@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -283,6 +283,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga954afb771b813cdb81e0511f604da765"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9c49529c46118be3f3cda150e13f1a0f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga9c49529c46118be3f3cda150e13f1a0f">lpm_standby_wake_source_t</a> </td></tr>
 <tr class="separator:ga9c49529c46118be3f3cda150e13f1a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39456e5eee26b567432ae4409b5cc7f5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga39456e5eee26b567432ae4409b5cc7f5">lpm_deep_sleep_wake_source_t</a> </td></tr>
+<tr class="separator:ga39456e5eee26b567432ae4409b5cc7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93645998bccd96ec1dc8b97d84eea1a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3">lpm_io_port_t</a> </td></tr>
 <tr class="separator:ga93645998bccd96ec1dc8b97d84eea1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7dddfc8756ccb1fb6e9e430ecbcd4f18"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga7dddfc8756ccb1fb6e9e430ecbcd4f18">lpm_power_supply_t</a> </td></tr>
@@ -483,7 +485,7 @@ ldo_standby_cfg</td>
 <td class="fieldname">
 p_extend</td>
 <td class="fielddoc">
-<p>Placeholder for extension. </p>
+<p>Deep Sleep wake-up interrupt enable masks Placeholder for extension. </p>
 </td></tr>
 </table>
 
@@ -1930,6 +1932,87 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga39456e5eee26b567432ae4409b5cc7f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39456e5eee26b567432ae4409b5cc7f5">&#9670;&nbsp;</a></span>lpm_deep_sleep_wake_source_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_p_m___a_p_i.html#ga39456e5eee26b567432ae4409b5cc7f5">lpm_deep_sleep_wake_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Interrupt enable bit mask for wake from deep sleep sources </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a861a439d6bc8cf8f779a5bb321a52d21"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ0&#160;</td><td class="fielddoc"><p>IRQ0 / IRQ32 / IRQ64. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a7570460cb9f3e0f7d7b9b45e402843ad"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ1&#160;</td><td class="fielddoc"><p>IRQ1 / IRQ33 / IRQ65. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5aa48977f0a674b7ad7696950d56d9c2d3"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ2&#160;</td><td class="fielddoc"><p>IRQ2 / IRQ34 / IRQ66. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5aac2205ef523bae648d0124be0db44446"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ3&#160;</td><td class="fielddoc"><p>IRQ3 / IRQ35 / IRQ67. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a47016f14e1dc5edf03726400fbf91746"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ4&#160;</td><td class="fielddoc"><p>IRQ4 / IRQ36 / IRQ68. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a72d2e9dfc63e52a3baa921cdaecf1fed"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ5&#160;</td><td class="fielddoc"><p>IRQ5 / IRQ37 / IRQ69. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5ad7ab3d977a104d5d33592112abcc682e"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ6&#160;</td><td class="fielddoc"><p>IRQ6 / IRQ38 / IRQ70. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5ab9f68fddd871117d12fe51ab4637cc3e"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ7&#160;</td><td class="fielddoc"><p>IRQ7 / IRQ39 / IRQ71. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5adef684ab4196386f5f05e8558af16b45"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ8&#160;</td><td class="fielddoc"><p>IRQ8 / IRQ40 / IRQ72. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a95ccc7921d106c99a49edcde2090a9c8"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ9&#160;</td><td class="fielddoc"><p>IRQ9 / IRQ41 / IRQ73. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a031421f96da1c412eea2a284b4cdf878"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ10&#160;</td><td class="fielddoc"><p>IRQ10 / IRQ42 / IRQ74. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a8ec0c205ce22a618e0bc973dd120a1f5"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ11&#160;</td><td class="fielddoc"><p>IRQ11 / IRQ43 / IRQ75. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a7da8313ddae07ad0e35c43a37485dc0c"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ12&#160;</td><td class="fielddoc"><p>IRQ12 / IRQ44 / IRQ76. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a400b038d4054536962d89d8962d6ea85"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ13&#160;</td><td class="fielddoc"><p>IRQ13 / IRQ45 / IRQ77. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a47dbbbd774ae8dfddb1c186150e0cc68"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ14&#160;</td><td class="fielddoc"><p>IRQ14 / IRQ46 / IRQ78. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a9c2a6d5f1800e271a5d32f4ffd53b58a"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ15&#160;</td><td class="fielddoc"><p>IRQ15 / IRQ47 / IRQ79. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a3d116efe0f66190444e565cd02ce3f7a"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ16&#160;</td><td class="fielddoc"><p>IRQ16 / IRQ48 / IRQ80. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5ac3709a44f11f4be8235d2880a44571ec"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ17&#160;</td><td class="fielddoc"><p>IRQ17 / IRQ49 / IRQ81. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5ab74c79f506972de8153bdfb86f08c4d3"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ18&#160;</td><td class="fielddoc"><p>IRQ18 / IRQ50 / IRQ82. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a63f74824d8b35c5d2a8b0b9801aa1330"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ19&#160;</td><td class="fielddoc"><p>IRQ19 / IRQ51 / IRQ83. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5aceb0610c398762b6ed619ec748afb686"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ20&#160;</td><td class="fielddoc"><p>IRQ20 / IRQ52 / IRQ84. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5acaa8a5776feba12a2867b5f820faa672"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ21&#160;</td><td class="fielddoc"><p>IRQ21 / IRQ53 / IRQ85. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a618e98f2fe7a84d0629b448cdf1ced3a"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ22&#160;</td><td class="fielddoc"><p>IRQ22 / IRQ54 / IRQ86. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a368051a68435d2c4d8c2c888e63f8e2c"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ23&#160;</td><td class="fielddoc"><p>IRQ23 / IRQ55 / IRQ87. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5af016e917c6492392cd1648ae0c6b2fea"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ24&#160;</td><td class="fielddoc"><p>IRQ24 / IRQ56 / IRQ88. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a4b57d9f2d116355f3cc50cda59a8e286"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ25&#160;</td><td class="fielddoc"><p>IRQ25 / IRQ57 / IRQ89. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a14c00d872bf92585183488cc4592cb0a"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ26&#160;</td><td class="fielddoc"><p>IRQ26 / IRQ58 / IRQ90. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a3248e239a3d3c37ccfb92259517b6f29"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ27&#160;</td><td class="fielddoc"><p>IRQ27 / IRQ50 / IRQ91. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5ad188b8a6dc4a30cf4ab0446fc57c5d86"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ28&#160;</td><td class="fielddoc"><p>IRQ28 / IRQ60 / IRQ92. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a7a5d8f9b1793f1b31d39f0073d560b60"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ29&#160;</td><td class="fielddoc"><p>IRQ29 / IRQ61 / IRQ93. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a0b42a3579707cb5069f705ad54cb7347"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ30&#160;</td><td class="fielddoc"><p>IRQ30 / IRQ62 / IRQ94. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga39456e5eee26b567432ae4409b5cc7f5a9fba65c9a65503fbb929173f646ff0db"></a>LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ31&#160;</td><td class="fielddoc"><p>IRQ31 / IRQ63 / IRQ95. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ga93645998bccd96ec1dc8b97d84eea1a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga93645998bccd96ec1dc8b97d84eea1a3">&#9670;&nbsp;</a></span>lpm_io_port_t</h2>
 
@@ -2384,7 +2467,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

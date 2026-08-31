@@ -11,7 +11,12 @@ var group___o_s_p_i___b =
       [ "sdr_drive_timing", "group___o_s_p_i___b.html#aa1a699aabe5a094bc91914d64f0012d9", null ],
       [ "sdr_sampling_edge", "group___o_s_p_i___b.html#a84fcde7cfd0c05ba7110f54ee97275ee", null ],
       [ "sdr_sampling_delay", "group___o_s_p_i___b.html#a8d579ef2c6da8af85efa5a15048c873a", null ],
-      [ "ddr_sampling_extension", "group___o_s_p_i___b.html#ada634ce7da29913306be35a68c72cea7", null ]
+      [ "ddr_sampling_extension", "group___o_s_p_i___b.html#ada634ce7da29913306be35a68c72cea7", null ],
+      [ "reset_pattern_repeat_count", "group___o_s_p_i___b.html#a202d86a3b8a88104ade816188c7fb3ee", null ],
+      [ "reset_pattern_width_cycle", "group___o_s_p_i___b.html#a8bfa906791482c8776e43295d9725af5", null ],
+      [ "reset_pattern_sio_setup_time_cycle", "group___o_s_p_i___b.html#a238bf249163bcab28eeb710af360770e", null ],
+      [ "reset_pin_hold_time", "group___o_s_p_i___b.html#a09d320eb7b6bbd38fb17723c22c27d58", null ],
+      [ "reset_recovery_time", "group___o_s_p_i___b.html#ab70c5c6f160ccf1a5711b540e74c45b4", null ]
     ] ],
     [ "ospi_b_xspi_command_set_t", "group___o_s_p_i___b.html#structospi__b__xspi__command__set__t", [
       [ "protocol", "group___o_s_p_i___b.html#a71f30710dcb8f6a40f5254d408f38216", null ],
@@ -59,6 +64,36 @@ var group___o_s_p_i___b =
     [ "ospi_b_device_number_t", "group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f", [
       [ "OSPI_B_DEVICE_NUMBER_0", "group___o_s_p_i___b.html#gga76971feb991ff5a55ffdc3e1c6834c1fa92f8ffbf2e66985d3809b4e4b538be6b", null ],
       [ "OSPI_B_DEVICE_NUMBER_1", "group___o_s_p_i___b.html#gga76971feb991ff5a55ffdc3e1c6834c1fa0f6cd25fb2ea2323c39f116ea0f60643", null ]
+    ] ],
+    [ "ospi_b_reset_method_t", "group___o_s_p_i___b.html#gacb707339660eef1570e2f01112a7d4f9", [
+      [ "OSPI_B_RESET_METHOD_IN_BAND", "group___o_s_p_i___b.html#ggacb707339660eef1570e2f01112a7d4f9a98b14f76e2b7547d3e3bd8c1fe88335f", null ],
+      [ "OSPI_B_RESET_METHOD_PIN", "group___o_s_p_i___b.html#ggacb707339660eef1570e2f01112a7d4f9a31b6c0b283d0c0dbae8e7cc3c9309490", null ]
+    ] ],
+    [ "ospi_b_in_band_reset_repeat_count_t", "group___o_s_p_i___b.html#ga6324b4b159ee6b1c7f4e94106fbc3104", [
+      [ "OSPI_B_IN_BAND_RESET_REPEAT_4", "group___o_s_p_i___b.html#gga6324b4b159ee6b1c7f4e94106fbc3104a97ec7fb1d9de710980682fa0280254aa", null ],
+      [ "OSPI_B_IN_BAND_RESET_REPEAT_5", "group___o_s_p_i___b.html#gga6324b4b159ee6b1c7f4e94106fbc3104a3b57452404fc66db98e76cd7704592b4", null ],
+      [ "OSPI_B_IN_BAND_RESET_REPEAT_6", "group___o_s_p_i___b.html#gga6324b4b159ee6b1c7f4e94106fbc3104a928d21f4e52567e38f52a4eea0490a72", null ],
+      [ "OSPI_B_IN_BAND_RESET_REPEAT_7", "group___o_s_p_i___b.html#gga6324b4b159ee6b1c7f4e94106fbc3104a28d317cc359d84f54d469bb18ba7adda", null ]
+    ] ],
+    [ "ospi_b_in_band_reset_width_t", "group___o_s_p_i___b.html#gad7fbf50aa3cf3899c1f8a9c0263d3281", [
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_2_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281ae9dde9b3dc3120b708632e310ace30fb", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_4_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281ab06e4b9379528ffb0fa5bbdf0b604c2e", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_8_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281a02a1dc94237d6f0b28adbecdae5a5c07", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_16_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281ad44abdb22f36f763f3f795f8a9d1df19", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_32_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281a2abf875f1b6f2545a20436c394136f39", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_64_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281ac0192554a45c810a1aae24429b952d54", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_128_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281a9caba2a5764172a73ebd9b798fe8c70a", null ],
+      [ "OSPI_B_IN_BAND_RESET_WIDTH_256_CYCLES", "group___o_s_p_i___b.html#ggad7fbf50aa3cf3899c1f8a9c0263d3281a0f3f1f4e1b848612b32bfa297cddbfbf", null ]
+    ] ],
+    [ "ospi_b_in_band_reset_sio_setup_t", "group___o_s_p_i___b.html#ga29756f40ebc980aa90f33d13b070fade", [
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_1_CYCLE", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadeae79f85c1915e99e9fc55a88542e78eac", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_2_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadea7a3779daac9f8684b0a79efbba261a51", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_3_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadea41c88bc8548cea7428417838f3d8f7ca", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_4_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadeaca7d1322b4e0a14bce96e56df86fea8b", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_5_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadea2d7cb98b512c8bf3b2bd103443d131f0", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_6_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadeaa6d8f422aebef4b98e006b1ed10669dc", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_7_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadea7f9aca7c338ec7cbcf4ed084753310d7", null ],
+      [ "OSPI_B_IN_BAND_RESET_SIO_SETUP_8_CYCLES", "group___o_s_p_i___b.html#gga29756f40ebc980aa90f33d13b070fadeaf7d706cb534a486498a3431de49e5483", null ]
     ] ],
     [ "ospi_b_command_bytes_t", "group___o_s_p_i___b.html#ga4bf54e3468d5d4de83db9e021bdbb2d3", [
       [ "OSPI_B_COMMAND_BYTES_1", "group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a6aa3fcd6c65bf42cb3ee95b050fe12dd", null ],
@@ -204,5 +239,6 @@ var group___o_s_p_i___b =
     [ "R_OSPI_B_AutoCalibrate", "group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6", null ],
     [ "R_OSPI_B_RowLoad", "group___o_s_p_i___b.html#gaf8ca05a2a44468130ef9e97aee6e9f66", null ],
     [ "R_OSPI_B_RowStore", "group___o_s_p_i___b.html#gafd7b272b5cd5d961d742d681bdc651bc", null ],
+    [ "R_OSPI_B_TargetReset", "group___o_s_p_i___b.html#ga5678d81c6417bc04047302a15ca70d6d", null ],
     [ "R_OSPI_B_DOTF_Configure", "group___o_s_p_i___b.html#ga215959cccab9f53a2516920ed0182dfc", null ]
 ];

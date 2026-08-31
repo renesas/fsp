@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -275,6 +275,7 @@ Features</h2>
 </li>
 <li>Supports reducing power consumption when in deep software standby mode through internal power supply control and by resetting the states of I/O ports.</li>
 <li>Supports disabling and enabling the MCU's other hardware peripherals</li>
+<li>Supports configuring dedicated Deep Sleep wake-up sources via the DSLPWUPIRQEN registers on RA8x2 MCUs.</li>
 </ul>
 <h2><a class="anchor" id="r-lpm-supported-devices"></a>
 Supported Devices</h2>
@@ -355,6 +356,14 @@ This module can be added to the Stacks tab via New Stack &gt; Power &gt; Low Pow
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Wake Sources 2</td><td>MCU Specific Options</td><td></td><td>Enable wake from deep sleep and standby from these Sources. </td></tr>
 <tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Deep Sleep Wake-up IRQ Sources (Not available on every MCU)  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">IRQ 0-31</td><td>MCU Specific Options</td><td></td><td>Enable NVIC interrupts (IRQ0~IRQ31) to wake CPU from Deep Sleep mode. Maps to DSLPWUPIRQEN0 register. Only applicable to Deep Sleep mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">IRQ 32-63</td><td>MCU Specific Options</td><td></td><td>Enable NVIC interrupts (IRQ32~IRQ63) to wake CPU from Deep Sleep mode. Maps to DSLPWUPIRQEN1 register. Only applicable to Deep Sleep mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">IRQ 64-95</td><td>MCU Specific Options</td><td></td><td>Enable NVIC interrupts (IRQ64~IRQ95) to wake CPU from Deep Sleep mode. Maps to DSLPWUPIRQEN2 register. Only applicable to Deep Sleep mode. </td></tr>
+<tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> RAM Retention Control (Not available on every MCU)  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">RAM retention in Standby mode</td><td>MCU Specific Options</td><td></td><td>Select the memory regions that are retained in standby mode. </td></tr>
@@ -396,7 +405,8 @@ Usage Notes</h1>
 <h2>Sleep Mode</h2>
 <p>At power on, by default sleep is set as the low-power mode. Sleep mode is the most convenient low-power mode available, as it does not require any special configuration (other than configuring and enabling a suitable interrupt or event to wake the MCU from sleep) to return to normal program-execution mode. The states of the SRAM, the processor registers, and the hardware peripherals are all maintained in sleep mode, and the time needed to enter and wake from sleep is minimal. Any interrupt causes the MCU device to wake from sleep mode, including the SysTick interrupt used by the RTOS scheduler.</p>
 <h2>Deep Sleep Mode</h2>
-<p>Deep sleep mode is similar to sleep mode with the exception that DTC and DMAC are stopped, access to TCM memory is not available, and only a subset of interrupts are available for waking the CPU.</p>
+<p>Deep sleep mode is similar to sleep mode with the exception that DTC and DMAC are stopped, access to TCM memory is not available, and only a subset of interrupts are available for waking the CPU. On RA8x2 MCUs, Deep Sleep wake-up sources are controlled by dedicated registers (DSLPWUPIRQEN0/1/2) that are separate from the Software Standby wake-up registers.</p>
+<p>On other MCUs that support Deep Sleep, the wake-up source is configured in the same way as in Software Standby mode.</p>
 <h2>Software Standby Mode</h2>
 <p>In software-standby mode, the CPU, as well as most of the on-chip peripheral functions and all of the internal oscillators, are stopped. The contents of the CPU internal registers and SRAM data, the states of on-chip peripheral functions, and I/O Ports are all retained. Software-standby mode allows significant reduction in power consumption, because most of the oscillators are stopped in this mode. Like sleep mode, standby mode requires an interrupt or event be configured and enabled to wake up.</p>
 <h2>Snooze Mode</h2>
@@ -658,7 +668,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

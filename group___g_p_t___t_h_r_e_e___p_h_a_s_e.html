@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -273,8 +273,15 @@ Features</h2>
 <li>Synchronize configuration of three GPT channels</li>
 <li>Synchronously start, stop and reset all three GPT channels</li>
 <li>Set duty cycle on all three channels with one function</li>
+<li>Configure complementary PWM Modes 1-4</li>
+<li>Apply dead time on complementary GTIOCnA/GTIOCnB output pairs</li>
+<li>Single- or double-buffer duty updates for complementary PWM buffer chains</li>
 </ul>
-<p><a class="anchor" id="um_gpt_three_phase_synchronous_start"></a><a class="anchor" id="um_gpt_three_phase_synchronous_stop"></a><a class="anchor" id="um_gpt_three_phase_synchronous_clear"></a><a class="anchor" id="um_three_phase_duty_cycle_set"></a> </p>
+<h2><a class="anchor" id="r-gpt-three_phase-complementary-pwm"></a>
+Complementary PWM</h2>
+<p>On MCUs that support GPT complementary PWM, the three-phase driver can open channels in complementary Modes 1-4 and program the GTCCR buffer chain used by hardware (single buffer: GTCCRD → GTCCRC → GTCCRA; double buffer Modes 3-4: GTCCRD → GTCCRC → GTCCRA and GTCCRF → GTCCRE → GTCCRA).</p>
+<p>Dead time must be greater than 0 and less than the PWM period at open. When calling <a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a> in complementary modes, each duty must satisfy <code>dead_time &lt; duty &lt; (period - dead_time)</code> so neither the active nor complementary pulse collapses after dead-time insertion.</p>
+<p><a class="anchor" id="um_gpt_three_phase_synchronous_start"></a><a class="anchor" id="um_gpt_three_phase_synchronous_stop"></a><a class="anchor" id="um_gpt_three_phase_synchronous_clear"></a><a class="anchor" id="um_three_phase_duty_cycle_set"></a><a class="anchor" id="um_three_phase_pwm_output"></a> </p>
 <h2><a class="anchor" id="r-gpt-three-phase-supported-devices"></a>
 Supported Devices</h2>
 <p><table class="doxtable">
@@ -482,6 +489,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Dead time is 0 or exceeds the valid duty range in Complementary PWM modes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -603,7 +611,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Duty cycle updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>One or more duty cycle count values was outside the range 0..(period - 1). </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>One or more duty cycle count values was outside the range 0..(period - 1), less than or equal to dead time, or greater than or equal to period minus dead time. </td></tr>
   </table>
   </dd>
 </dl>
@@ -692,7 +700,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,6 +284,9 @@ Functions</h2></td></tr>
 <tr class="separator:ga4fd61c68e2c1b1328e469a1c81a74d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ef3dd7f9f504b0caa0147d69d08ff2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8ef3dd7f9f504b0caa0147d69d08ff2a">R_LAYER3_SWITCH_LinkStatusCheck</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__target__port__bitmaps__t">layer3_switch_target_port_bitmaps_t</a> *p_port_bitmaps, <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__link__status__bitmaps__t">ether_switch_link_status_bitmaps_t</a> *p_link_status_bitmaps)</td></tr>
 <tr class="separator:ga8ef3dd7f9f504b0caa0147d69d08ff2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92c27418676e2f61a60350f116a280e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga92c27418676e2f61a60350f116a280e2">R_LAYER3_SWITCH_GetTxTimestamp</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint32_t descriptor_index, uint32_t tx_timestamp_seq_num, layer3_switch_timestamp_t *p_timestamp)</td></tr>
+<tr class="memdesc:ga92c27418676e2f61a60350f116a280e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get transmit timestamp from ts reception descriptor which has same timestamp id.  <a href="#ga92c27418676e2f61a60350f116a280e2">More...</a><br /></td></tr>
+<tr class="separator:ga92c27418676e2f61a60350f116a280e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The LAYER3 SWITCH module (r_layer3_switch) provides an API for standard Ethernet communications applications that use the ESWM peripheral. It implements the <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html">Ethernet Switch Interface</a>. </p>
@@ -596,6 +599,8 @@ Port 1</li>
 <td>Context</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a>.  </td></tr>
 <tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs </td></tr>
+<tr class="tree_none">
+<td>Ts Description Length</td><td>Value must be an integer bigger than 1</td><td>8 </td><td>Timestamp queue Length. </td></tr>
 <tr class="tree_none">
 <td>Number of Layer 3 routing entries</td><td>Value must be an integer between 1 and 256</td><td>10 </td><td>Maximum number of Layer 3 routing entries. </td></tr>
 </table>
@@ -2103,6 +2108,12 @@ ETHA error interrupt priority for port 1. </td></tr>
 gptp_timer_numbers[BSP_FEATURE_ESWM_GPTP_TIMER_NUM]</td>
 <td class="fielddoc">
 List of timer numbers for transmission/reception timestamp. </td></tr>
+<tr><td class="fieldtype">
+<a id="a017c4ed069dec0f700f794b0ac31c85f"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> *</td>
+<td class="fieldname">
+p_ts_descriptor_arrays[BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM]</td>
+<td class="fielddoc">
+List of TS descriptor queue settings. </td></tr>
 </table>
 
 </div>
@@ -3754,13 +3765,65 @@ List of target ports bitmap. </td></tr>
 
 </div>
 </div>
+<a id="ga92c27418676e2f61a60350f116a280e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga92c27418676e2f61a60350f116a280e2">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_GetTxTimestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_GetTxTimestamp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>descriptor_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>tx_timestamp_seq_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">layer3_switch_timestamp_t *&#160;</td>
+          <td class="paramname"><em>p_timestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get transmit timestamp from ts reception descriptor which has same timestamp id. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_FOUND</td><td>The requested timestamp could not be found </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Descriptor index number is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

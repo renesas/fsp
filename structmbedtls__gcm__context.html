@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,7 +237,8 @@ $(document).ready(function(){initNavTree('structmbedtls__gcm__context.html','');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">mbedtls_gcm_context Struct Reference</div>  </div>
 </div><!--header-->
@@ -268,6 +269,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6704286365332b95d210edc497e4903b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a455c10f1ed6f243ab7945ac0ee8f9f1b"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmbedtls__gcm__context.html#a455c10f1ed6f243ab7945ac0ee8f9f1b">MBEDTLS_PRIVATE</a> (acceleration)</td></tr>
 <tr class="separator:a455c10f1ed6f243ab7945ac0ee8f9f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a90b6f8d4306bf68166038d40f973e9e5"><td class="memItemLeft" align="right" valign="top">sce_mbedtls_gcm_operation_state_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmbedtls__gcm__context.html#a90b6f8d4306bf68166038d40f973e9e5">sce_stage</a></td></tr>
+<tr class="separator:a90b6f8d4306bf68166038d40f973e9e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b542cc78db5ac52033c5a7daad951ef"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmbedtls__gcm__context.html#a1b542cc78db5ac52033c5a7daad951ef">sce_buf_len</a></td></tr>
+<tr class="separator:a1b542cc78db5ac52033c5a7daad951ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The GCM context structure. </p>
@@ -443,6 +451,37 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="a90b6f8d4306bf68166038d40f973e9e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90b6f8d4306bf68166038d40f973e9e5">&#9670;&nbsp;</a></span>sce_stage</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sce_mbedtls_gcm_operation_state_t mbedtls_gcm_context::sce_stage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>HW multi-part session state. </p>
+
+</div>
+</div>
+<a id="a1b542cc78db5ac52033c5a7daad951ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b542cc78db5ac52033c5a7daad951ef">&#9670;&nbsp;</a></span>sce_buf_len</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char mbedtls_gcm_context::sce_buf_len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>HW multi-part: bytes staged in buf[] (0..15). </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>gcm_alt.h</li>
 </ul>
@@ -453,7 +492,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structmbedtls__gcm__context.html">mbedtls_gcm_context</a></li>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

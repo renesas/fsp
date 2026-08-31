@@ -148,7 +148,7 @@ var searchData=
   ['ipls_5frising_5fevent_5fauto_5fclear',['ipls_rising_event_auto_clear',['../group___p_t_p___a_p_i.html#a9770944cbb664f9f3cc981fb81b37ef6',1,'ptp_pulse_timer_cfg_t']]],
   ['ipls_5frising_5firq',['ipls_rising_irq',['../group___p_t_p___a_p_i.html#a383fc5e11165b3450ec796105cc77084',1,'ptp_pulse_timer_common_cfg_t']]],
   ['ipls_5frising_5firq_5fauto_5fclear',['ipls_rising_irq_auto_clear',['../group___p_t_p___a_p_i.html#adc8889e40b5e96e3d491f8d8b8d8bf11',1,'ptp_pulse_timer_common_cfg_t']]],
-  ['ipv4',['ipv4',['../group___p_t_p___a_p_i.html#a4fbe4fd08e0fa99324dd04efb694fe01',1,'ptp_synfp_cfg_t']]],
+  ['ipv4',['ipv4',['../group___p_t_p___a_p_i.html#ac87689824d2de70b88b4cd6e442779e5',1,'ptp_synfp_cfg_t']]],
   ['ipv6_5faddress0',['ipv6_address0',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#a1588b5cfbacfa9ea1ef15ee5de9f9b9e',1,'layer3_switch_l3_stream_filter_cfg_t']]],
   ['ipv6_5faddress1',['ipv6_address1',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#afb5b645c71110b913e3090c29ec74d6a',1,'layer3_switch_l3_stream_filter_cfg_t']]],
   ['ipv_5fqueue_5fdepth_5flist',['ipv_queue_depth_list',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#aa30b618784f5587b312ee65a0a87bf2e',1,'layer3_switch_extended_cfg_t']]],

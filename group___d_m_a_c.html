@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -529,6 +529,14 @@ Supported</li>
 </ul>
 <h2>Offset Address Mode</h2>
 <p>When the source or destination mode is configured to offset mode, a configurable offset is added to the source or destination pointer after each transfer. The offset is a signed 24 bit number.</p>
+<h2>Data coherency when using CPU cache</h2>
+<dl class="section note"><dt>Note</dt><dd>This section applies only when using DMAC with D-Cache enabled.</dd></dl>
+<p>When D-Cache is enabled on RA8 series devices (ARM Cortex-M85), source and destination buffers must either be allocated to a non-cacheable region or managed via explicit cache maintenance operations (clean/invalidate) to ensure data coherency (This involves cleaning the cache before starting the transmission and invalidating it once the transmission is completed).</p>
+<p>To assign a buffer to a non-cacheable region, append the **_fsp_nocache** suffix to the variable name (E.g: g_dst_buff_fsp_nocache[10]).</p>
+<dl class="section warning"><dt>Warning</dt><dd>Source and destination buffers must remain uninitialized. Any initialization will prevent the linker script from correctly allocating these variables to the designated non-cacheable section.</dd>
+<dd>
+When appending **_fsp_nocache** to a variable, the variable must not be declare as static or const and the variable need to be a global variable.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In TrustZone-enabled projects, both the module driver and the buffers must reside within the same security state (Secure or Non-secure) to utilize the non-cacheable region. If a cross-security state access is required, manual cache cleaning/invalidation must be performed before and after each transmission.</dd></dl>
 <h1><a class="anchor" id="r-dmac-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -1165,7 +1173,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

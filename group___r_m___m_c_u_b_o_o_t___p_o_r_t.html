@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -436,50 +436,7 @@ Getting Started: Converting an Application Project to an MCUboot Image</h2>
 </ol>
 <h3><a class="anchor" id="r-mcuboot-solution-section-naming-dummy3"></a>
 FSP 6.0.0 and newer</h3>
-<p>An FSP Solution project must be created in order to set up the bootloader slots; the slot size and header information was previously in the MCUboot module. Below is a description of the region naming rules and how to manually create the Solution for a single and multi-image use case. There are also templates that can be used as a starting point instead.</p>
-<h4><a class="anchor" id="r-mcuboot-solution-section-naming"></a>
-Bootloader region encoding in FSP 6.0.0</h4>
-<p>The header and image regions have to be named in the manner described below in the Solution project:</p>
-<ul>
-<li><code>FLASH_&lt;core&gt;_(B|S| )</code> - Indicates bootloader area or primary area. These are created by default and cannot be renamed.</li>
-<li>Examples:<ul>
-<li><code>FLASH_CM85_B</code>: CM85 Bootloader area.</li>
-<li><code>FLASH_CM85_S</code>: CM85 Primary area.</li>
-<li><code>FLASH_CM23</code> : CM23 Primary area.</li>
-</ul>
-</li>
-<li><code>__BL</code>: Indicates this is a bootloader symbol.</li>
-<li><code>_</code>: delimiter between fields.</li>
-<li><code>([0-9])|S</code>: Image definitions field.<ul>
-<li><code>S</code> indicates the Scratch area.</li>
-<li><code>0-9</code> correspond to traditional image IDs (only using 0/1 in legacy).</li>
-</ul>
-</li>
-<li><code>_</code>: delimiter between fields.</li>
-<li><code>(P|S)</code>: Indicates Primary or Secondary area.<ul>
-<li><code>S</code> Secondary areas must have both Header (<code>H</code>) and Image (<code>I</code>) component.</li>
-<li><code>P</code> Primary areas must not have an <code>I</code> component (as the Image component is defined by the solution application region).</li>
-<li>Secondary header must be the same size as Primary header.</li>
-<li>Secondary images must be the same size as the area allocated for the project (Primary Image).</li>
-<li>Headers must immediately precede the Image/application space.</li>
-</ul>
-</li>
-<li><code>_</code>: delimiter between fields</li>
-<li><code>(H|I)</code>: Indicates bootloader Header or Image component (not used with Scratch).<ul>
-<li><code>H</code> indicates the MCUboot Header for Primary or Secondary (<code>P</code>/<code>S</code>) areas (use 0x200 for compatibility).</li>
-<li><code>I</code> indicates the MCUboot Secondary (<code>S</code>) Image allocation space (not used with Primary images).</li>
-</ul>
-</li>
-<li>Bootloader flash area size must be an integer multiple of the largest erase size on the mcu.</li>
-<li>Primary or Secondary area size (including header and trailer) must be an integer multiple of the largest erase size on the mcu.</li>
-<li>Examples:<ul>
-<li><code>__BL_0_P_H</code>: Image 0 Primary Header.</li>
-<li><code>__BL_0_S_H</code>: Image 0 Secondary Header.</li>
-<li><code>__BL_1_S_I</code>: Image 1 Secondary Image.</li>
-<li><code>__BL_S</code> : Scratch area.</li>
-</ul>
-</li>
-</ul>
+<p>An FSP Solution project must be created in order to set up the bootloader slots; the slot size and header information was previously in the MCUboot module. Below are templates that can be used as a starting point. Additionally, there is a description of the region naming rules and how to manually create the Solution for a single and multi-image use case.</p>
 <h4><a class="anchor" id="r-mcuboot-solution-template-steps"></a>
 Using Bootloader Solution Templates</h4>
 <p>MCUBoot templates can be used to generate a pre-configured Solution and required projects. The templates are available in the New C/C++ Project wizard in MCUBoot.</p>
@@ -518,14 +475,62 @@ Using Bootloader Solution Templates</h4>
 <tr>
 <td><b>RA8 series — Cortex-M85</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
 <tr>
-<td>RA8E1 / RA8E2 </td><td>RSIP-E51A_TRNG </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<td>RA8E1 / RA8E2 </td><td>RSIP-E51A_TRNG </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">✅ </td></tr>
 <tr>
-<td>RA8D1 / RA8M1 / RA8T1 </td><td>RSIP-E51A </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<td>RA8D1 / RA8M1 / RA8T1 </td><td>RSIP-E51A </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">✅ </td></tr>
 <tr>
 <td><b>RA8 series — dual core (M85 + M33)</b> </td><td></td><td></td><td></td><td align="center"></td><td align="center"></td></tr>
 <tr>
-<td>RA8D2 / RA8M2 / RA8P1 / RA8T2 </td><td>RSIP-E50D </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">❌ </td></tr>
+<td>RA8D2 / RA8M2 / RA8P1 / RA8T2 </td><td>RSIP-E50D </td><td>Overwrite </td><td>mbedTLS </td><td align="center">✅ </td><td align="center">✅ </td></tr>
 </table>
+<h4><a class="anchor" id="r-mcuboot-solution-section-naming"></a>
+Bootloader region encoding in FSP 6.0.0</h4>
+<p>The header and image regions have to be named in the manner described below in the Solution project:</p>
+<ul>
+<li><code>FLASH_&lt;trustzone_region&gt;_&lt;core&gt;_(B|C|S|N)</code> - Indicates bootloader area or primary area. These are created by default and cannot be renamed.</li>
+<li>Examples:<ul>
+<li><code>FLASH_CM85_B</code> : CM85 Bootloader area.</li>
+<li><code>FLASH_CM85_S</code> : CM85 Secure Primary area.</li>
+<li><code>FLASH_CM23</code> : CM23 Primary area.</li>
+<li><code>FLASH_CPU0_C</code> : CM85 Core of RA8x2 Non-Secure Callable area.</li>
+<li><code>FLASH_NS_CPU1_N</code> : CM23 Core of RA8x2 Non-Secure Primary area.</li>
+</ul>
+</li>
+<li><code>__BL</code>: Indicates this is a bootloader symbol.</li>
+<li><code>_</code>: delimiter between fields.</li>
+<li><code>([0-9])|S</code>: Image definitions field.<ul>
+<li><code>S</code> indicates the Scratch area.</li>
+<li><code>0-9</code> correspond to traditional image IDs (only using 0/1 in legacy).</li>
+</ul>
+</li>
+<li><code>_</code>: delimiter between fields.</li>
+<li><code>(P|S)</code>: Indicates Primary or Secondary area.<ul>
+<li><code>S</code> Secondary areas must have Header (<code>H</code>), Image (<code>I</code>), Trailer (<code>T</code>) components.</li>
+<li><code>P</code> Primary areas must not have an <code>I</code> component (as the Image component is defined by the solution application region).</li>
+<li>Secondary header must be the same size as Primary header.</li>
+<li>Secondary images must be the same size as the area allocated for the project (Primary Image).</li>
+<li>Headers must immediately precede the Image/application space.</li>
+<li>Trailers must immediately follow the image region (or Non-Secure Callable region if present).</li>
+</ul>
+</li>
+<li><code>_</code>: delimiter between fields</li>
+<li><code>(H|I|T)</code>: Indicates bootloader Header or Image component (not used with Scratch).<ul>
+<li><code>H</code> indicates the MCUboot Header for Primary or Secondary (<code>P</code>/<code>S</code>) areas (use 0x200 for compatibility).</li>
+<li><code>I</code> indicates the MCUboot Secondary (<code>S</code>) Image allocation space (not used with Primary images).</li>
+<li><code>T</code> indicates the MCUboot Trailer for both Primary and Secondary images.</li>
+</ul>
+</li>
+<li>Bootloader flash area size must be an integer multiple of the largest erase size on the mcu.</li>
+<li>Primary or Secondary area size (including header and trailer) must be an integer multiple of the largest erase size on the mcu.</li>
+<li>Examples:<ul>
+<li><code>__BL_0_P_H</code>: Image 0 Primary Header.</li>
+<li><code>__BL_0_S_H</code>: Image 0 Secondary Header.</li>
+<li><code>__BL_1_S_I</code>: Image 1 Secondary Image.</li>
+<li><code>__BL_1_S_T</code>: Image 1 Secondary Trailer.</li>
+<li><code>__BL_S</code> : Scratch area.</li>
+</ul>
+</li>
+</ul>
 <h4><a class="anchor" id="r-mcuboot-solution-single-images-steps"></a>
 Single-Image Bootloader Setup</h4>
 <ul>
@@ -548,20 +553,16 @@ Multi-Image Bootloader Setup</h4>
 </ul>
 </li>
 <li>Create an "FSP Solution Project (Advanced)" and select the final project in the chain (typically the first application project). <code>&lt;raSmartBundles\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/bootloader_project}/Debug/bootloader_project.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image0}/Debug/app_image0.sbd\&lt;/bundle\&gt;</code> <code>&lt;/raSmartBundles\&gt;</code></li>
-<li>Create the Header and Image regions according to the encoding described in the previous section. Example for Image 0, 1, 2, 3: __BL_0_P_H 0x10000 0x200 __BL_0_P_I 0x10200 0xFE00 __BL_0_S_H 0x20000 0x200 __BL_0_S_I 0x20200 0xFE00 __BL_1_P_H 0x30000 0x200 __BL_1_P_I 0x30200 0xFE00 __BL_1_S_H 0x40000 0x200 __BL_1_S_I 0x40200 0xFE00 __BL_2_P_H 0x50000 0x200 __BL_2_P_I 0x50200 0xFE00 __BL_2_S_H 0x60000 0x200 __BL_2_S_I 0x60200 0xFE00 __BL_3_P_H 0x70000 0x200 __BL_3_P_I 0x70200 0xFE00 __BL_3_S_H 0x80000 0x200 __BL_3_S_I 0x80200 0xFE00</li>
+<li>Create the Header and Image regions according to the encoding described in the previous section. Example for Image 0, 1, 2, 3: __BL_0_P_H 0x10000 0x200 FLASH_CPU0_S 0x10200 0xFD00 __BL_0_P_T 0x1FF00 0x100 __BL_0_S_H 0x20000 0x200 __BL_0_S_I 0x20200 0xFD00 __BL_0_S_T 0x2FF00 0x100 __BL_1_P_H 0x30000 0x200 FLASH_CPU1_S 0x30200 0xFD00 __BL_1_P_T 0x3FF00 0x100 __BL_1_S_H 0x40000 0x200 __BL_1_S_I 0x40200 0xFD00 __BL_1_S_T 0x4FF00 0x100 __BL_2_P_H 0x50000 0x200 __BL_2_P_I 0x50200 0xFD00 __BL_2_P_T 0x5FF00 0x100 __BL_2_S_H 0x60000 0x200 __BL_2_S_I 0x60200 0xFD00 __BL_2_S_T 0x6FF00 0x100 __BL_3_P_H 0x70000 0x200 __BL_3_P_I 0x70200 0xFD00 __BL_3_P_T 0x7FF00 0x100 __BL_3_S_H 0x80000 0x200 __BL_3_S_I 0x80200 0xFD00 __BL_3_S_T 0x8FF00 0x100</li>
 <li>Manually edit solution.xml to add the required primary image paths (Image 1, 2, 3). Then refresh the solution project. <code>&lt;raSmartBundles\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/bootloader_project}/Debug/bootloader_project.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image0}/Debug/app_image0.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image1}/Debug/app_image1.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image2}/Debug/app_image2.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image3}/Debug/app_image3.sbd\&lt;/bundle\&gt;</code> <code>&lt;/raSmartBundles\&gt;</code></li>
 <li>Build the Solution project.</li>
 <li>Repeat the following steps for each application image (Image 0, Image 1, ..., Image n):<ul>
-<li>Create an alternate memory regions file with <code>FLASH_START</code> and <code>FLASH_LENGTH</code> values to match the corresponding <code>__BL_&lt;n&gt;_P_I</code> partition.<ul>
+<li>Create an alternate memory regions file with <code>FLASH_START</code> and <code>FLASH_LENGTH</code> values to match the corresponding <code>__BL_&lt;n&gt;_P_I</code> partition.</li>
 <li>Create the alternate memory regions file (For example: <code>memory_regions_ext.lld</code> for LLVM) in the application project directory by making a copy of the generated memory regions file in the Debug folder.</li>
 <li>In that file, set <code>FLASH_START</code> to the start address of <code>__BL_&lt;n&gt;_P_I</code> and <code>FLASH_LENGTH</code> to the partition size. For example: FLASH_START = 0x10200; FLASH_LENGTH = 0xFE00;</li>
 <li>Save the file.</li>
-</ul>
-</li>
-<li>Add the alternate memory regions files to the linker script.<ul>
+<li>Add the alternate memory regions files to the linker script.</li>
 <li>Edit the fsp.lld file to include the new memory regions file instead of the default.</li>
-</ul>
-</li>
 <li>Build the project.</li>
 </ul>
 </li>
@@ -636,9 +637,20 @@ Software flow differences between booting with and without reset</div></div>
 <div class="fragment"><div class="line"><span class="comment">/* Status Register (SREG) payload size */</span></div><div class="line"><span class="preprocessor"># define SREG_SIZE                             0x03</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_COMMAND_WRITE_STATUS_REGISTER   0x01</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR1                     0x40</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR2                     0x00</span></div><div class="line"></div><div class="line"><span class="comment">/* Status register payload */</span></div><div class="line">uint8_t   data_sreg[SREG_SIZE]                 = {QSPI_COMMAND_WRITE_STATUS_REGISTER, QSPI_DEFAULT_SR1, QSPI_DEFAULT_SR2};</div><div class="line"></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"><span class="comment">/* Configure for Extended SPI Read/Write Mode */</span></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;(g_qspi0_cfg.write_enable_command), 1, <span class="keyword">false</span>);</div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, data_sreg, SREG_SIZE, <span class="keyword">false</span>);</div></div><!-- fragment --><p>For a more detailed example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
 <h1>OSPI_B</h1>
 <p>OSPI_B support for secondary image storage can be enabled in the configurator for RA8: The bootloader expects the OSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has initialized the OSPI_B by calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> prior to invoking boot_go();.</p>
-<p>The OSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
-<dl class="section note"><dt>Note</dt><dd>: The user can specify the OSPI erase block size for the area that will be erased/written to by MCUBoot. Do not use OSPI regions that span multiple block erase sizes or block erase sizes larger than the code flash erase size of 32K. <h2>MCUboot Memory Map</h2>
-</dd></dl>
+<p>The OSPI erase block size may be larger than the internal flash erase size. Since MCUBoot requires source and destination slots to have identical layouts, multiple internal flash blocks are combined into a virtual sector to match the OSPI block size. </p><dl class="section note"><dt>Note</dt><dd>The user must specify the OSPI block erase size for the area that will be erased/written to by MCUboot ("Update area block erase size"). Both image slots must be sized as a multiple of this block erase size, and the OSPI update area must not span regions with different block erase sizes. When using Swap Mode, the swap scratch area must be the same size as the OSPI erase block size. Given that this could be very large, either place the scratch area into OSPI or use Overwrite Mode. </dd>
+<dd>
+After the secondary image has been loaded to the specified address, the target device must be reset (e.g., by pressing the Restart button in e² studio while debugging) before MCUboot can detect and process the new image. </dd>
+<dd>
+The <b>Update Area Block Erase Size</b> should be configured to match one of the sector erase sizes supported by the external flash device. An unsupported erase size may cause erase failures during firmware update operations.</dd></dl>
+<p>Below is a list of some external flash devices supported by RA series. </p><table class="doxtable">
+<tr>
+<th>External Flash </th><th>Board Name </th><th>Supported Sector Size  </th></tr>
+<tr>
+<td>S28HL512TFPBHI010 </td><td>EK-RA8M1, EK-RA8D1 </td><td>4KB, 256KB </td></tr>
+<tr>
+<td>IS25LX512M-JHLE </td><td>VK-RA8M1, EK-RA8D2, EK-RA8T2 </td><td>4KB, 32KB, 128KB, 64KB </td></tr>
+</table>
+<h2>MCUboot Memory Map</h2>
 <p>For single image projects with no external memory support, the default memory map looks like:</p>
 <div class="image">
 <object type="image/svg+xml" data="rm_mcuboot_port_map.svg">rm_mcuboot_port_map.svg</object>
@@ -708,7 +720,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

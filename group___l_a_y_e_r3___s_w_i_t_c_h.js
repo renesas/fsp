@@ -182,7 +182,8 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "etha_error_irq_port_1", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa76ccc390c654ed65fb78e3db5ccb43e", null ],
       [ "etha_error_ipl_port_0", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa5bd626c191f80e4e2e2546c34e6037a", null ],
       [ "etha_error_ipl_port_1", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a22e478c02b9e0ba43a4750a6257c63f5", null ],
-      [ "gptp_timer_numbers", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab15c221ba393d2f504045d1baab7b7ad", null ]
+      [ "gptp_timer_numbers", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab15c221ba393d2f504045d1baab7b7ad", null ],
+      [ "p_ts_descriptor_arrays", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a017c4ed069dec0f700f794b0ac31c85f", null ]
     ] ],
     [ "layer3_switch_instance_ctrl_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__instance__ctrl__t", [
       [ "open", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af81e9ca24eba70ee70c0b58e33cfaa2e", null ],
@@ -411,5 +412,6 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "R_LAYER3_SWITCH_ConfigureTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4", null ],
     [ "R_LAYER3_SWITCH_EnableTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f", null ],
     [ "R_LAYER3_SWITCH_PsfpClearErrorStatus", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08", null ],
-    [ "R_LAYER3_SWITCH_LinkStatusCheck", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8ef3dd7f9f504b0caa0147d69d08ff2a", null ]
+    [ "R_LAYER3_SWITCH_LinkStatusCheck", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8ef3dd7f9f504b0caa0147d69d08ff2a", null ],
+    [ "R_LAYER3_SWITCH_GetTxTimestamp", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga92c27418676e2f61a60350f116a280e2", null ]
 ];

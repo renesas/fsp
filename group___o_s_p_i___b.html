@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.5.1</span>
+   &#160;<span id="projectnumber">Release v6.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -278,6 +278,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaf8ca05a2a44468130ef9e97aee6e9f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd7b272b5cd5d961d742d681bdc651bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gafd7b272b5cd5d961d742d681bdc651bc">R_OSPI_B_RowStore</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint32_t row_index)</td></tr>
 <tr class="separator:gafd7b272b5cd5d961d742d681bdc651bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5678d81c6417bc04047302a15ca70d6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga5678d81c6417bc04047302a15ca70d6d">R_OSPI_B_TargetReset</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> const *const p_ctrl, <a class="el" href="group___o_s_p_i___b.html#gacb707339660eef1570e2f01112a7d4f9">ospi_b_reset_method_t</a> method)</td></tr>
+<tr class="separator:ga5678d81c6417bc04047302a15ca70d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga215959cccab9f53a2516920ed0182dfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga215959cccab9f53a2516920ed0182dfc">R_OSPI_B_DOTF_Configure</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___o_s_p_i___b.html#structospi__b__dotf__cfg__t">ospi_b_dotf_cfg_t</a> *const p_dotf_cfg)</td></tr>
 <tr class="separator:ga215959cccab9f53a2516920ed0182dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -299,6 +301,7 @@ Features</h2>
 <li>3 byte addressing<a class="anchor" id="um_ospi_3byte_address"></a></li>
 <li>4 byte addressing<a class="anchor" id="um_ospi_4byte_address"></a></li>
 <li>Auto-calibration<a class="anchor" id="um_ospi_autocalibration"></a></li>
+<li>Resets the target xSPI device from a hung state and recovers it from Deep Power Down mode (DPD).<a class="anchor" id="um_ospi_target_reset"></a></li>
 <li>Decryption-on-the-fly</li>
 <li>Support for standard SPI frames, xSPI Protocol 1.0, xSPI Protocol 2.0, and xSPI Protocol 2.0 Extended frames.</li>
 </ul>
@@ -348,6 +351,24 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable the use of XiP enter and exit codes. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Target Reset Support  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">In-band reset</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable or disable in-band reset support. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reset pin</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable or disable reset pin support. </td></tr>
 <tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -741,6 +762,60 @@ No extension</li>
 </ul>
 </td><td>module.driver.ospi_b.pull_down_timing.clocks_5 </td><td>Signal pull-down timing (CS negating extension) setting in OCTACLK units. </td></tr>
 <tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing Settings &gt; In-Band Reset Pattern  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Repeat Count</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+4 times</li>
+<li>
+5 times</li>
+<li>
+6 times</li>
+<li>
+7 times</li>
+</ul>
+</td><td>4 times </td><td>Number of times the reset pattern is repeated. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Width</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+2 cycles</li>
+<li>
+4 cycles</li>
+<li>
+8 cycles</li>
+<li>
+16 cycles</li>
+<li>
+32 cycles</li>
+<li>
+64 cycles</li>
+<li>
+128 cycles</li>
+<li>
+256 cycles</li>
+</ul>
+</td><td>16 cycles </td><td>Number of cycles between toggling of the CS/SIO pins. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SIO Setup Time</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 cycle</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+<li>
+5 cycles</li>
+<li>
+6 cycles</li>
+<li>
+7 cycles</li>
+<li>
+8 cycles</li>
+</ul>
+</td><td>1 cycle </td><td>The setup time, in clock cycles, required for the SIO signals to reach a valid state after CS is asserted. </td></tr>
+<tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing Settings &gt; SDR  </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Drive Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -800,6 +875,10 @@ None</li>
 7 cycles</li>
 </ul>
 </td><td>None </td><td>Number of cycles to delay before sampling the data signal. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reset Pin Hold Time</td><td>Must be an integer between 1 and 4294967295, inclusive.</td><td>1 </td><td>Hold time in microseconds that RESET pin must remain asserted. Range: 1 to 4294967295. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reset Recovery Time</td><td>Must be an integer between 1 and 4294967295, inclusive.</td><td>1 </td><td>Reset recovery time in milliseconds. This is the waiting time required after a reset. Range: 1 to 4294967295. The value of the reset recovery time depends on the external target device and its specific operation </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">DS Latching Delay</td><td>Refer to the RA Configuration tool for available options.</td><td>Auto-calibrate </td><td>Number of delay cells for the data strobe signal. This value must be set to zero if auto-calibration is used. </td></tr>
 <tr class="tree_lvl_1">
@@ -884,11 +963,25 @@ Chip Select Latencies</h2>
 XiP Support</h2>
 <p>OSPI_B supports eXecute in Place (XiP) modes of operation. This can be used for read-only memory-mapped accesses to reduce overall read latency by skipping the command sequence in the xSPI transaction. Separate XiP enter and exit codes may be specified for either attached target device. Upon calling <a class="el" href="group___o_s_p_i___b.html#ga15282e9d7ef4d8c5471be859da55dd4a">R_OSPI_B_XipEnter()</a>, the associated memory region for the target device is switched to read-only mode and the enter code sent to the device. Calling <a class="el" href="group___o_s_p_i___b.html#ga96bc15adf392eccfa44eed3fb91fa7ef">R_OSPI_B_XipExit()</a> will transmit the exit code and transition the memory region back to read-write access.</p>
 <p>Only one flash device should be used after entering XiP mode. Once entered, XiP codes will be transmitted to all attached devices.</p>
+<h2><a class="anchor" id="r-ospi-b-target-reset"></a>
+Target Reset</h2>
+<p>This feature allows resetting the target xSPI device from a hung state and recovering it from Deep Power Down (DPD) - a sleep state in which the device neither drives the bus nor accepts read/write commands. The reset method are:</p>
+<ul>
+<li><code>OSPI_B_RESET_METHOD_IN_BAND</code>: drives the in-band reset pattern using the OM_CSn and OM_SIO0 signals.</li>
+<li><code>OSPI_B_RESET_METHOD_PIN</code>: resets the device by asserting the OM_RESET pin.</li>
+</ul>
 <h2><a class="anchor" id="r-ospi-b-octaflash-commands-octaflash"></a>
 xSPI Commands</h2>
 <p>Command sets and erase commands may be specified individually for each supported protocol mode. By default, the configurator only supports an alternative command set for "High-Speed Mode" (usually DOPI 8D-8D-8D) mode. The command sets cannot be updated during run-time, but the appropriate command set will be selected when changing protocol modes. If a command set is not found, an <code>FSP_ERR_INVALID_MODE</code> error code will be returned.</p>
 <p>If custom DOPI erase commands are not specified, ensure the erase commands are the appropriate 2-byte DOPI commands. The lower byte will be used for 1-byte command protocols.</p>
 <p>If a custom command set table is provided, the primary erase command table must also be provided for backwards compatibility with some modules. The primary table contains the erase sizes being used during normal application runtime.</p>
+<h2><a class="anchor" id="r-ospi-b-address-msb-mask"></a>
+Address MSB Mask for Memory-Mapped Access</h2>
+<p>Each command set (Initial Mode and High-speed Mode) defines an <b>Address MSB Mask</b> property, which masks bits in the most-significant byte of the address during memory-mapped operations. This mask is used to align the target device addressing with the MCU external memory region associated with the selected OSPI unit and chip select.</p>
+<p>For most supported memories (IS25, S28H, MX25L), this value can be modified by the user if required by the selected unit or chip-select configuration, as the mask is determined by the MCU memory map rather than the target device size. This allows the same memory profile to be used across different MCU memory maps and OSPI configurations.</p>
+<dl class="section note"><dt>Note</dt><dd>For memories where the Address MSB Mask value is fixed (for example, SiP-based configurations), this property is not user configurable because the memory mapping is determined by the fixed hardware layout of the device.</dd>
+<dd>
+Incorrectly configured Address MSB Mask values may result in memory accesses targeting an unexpected address region or reduce the accessible address space of the target device. Refer to the Hardware User Manual for the memory region size associated with the selected OSPI unit and chip-select combination when selecting an appropriate mask value.</dd></dl>
 <h2><a class="anchor" id="r-ospi-dotf-configuration"></a>
 DOTF Support</h2>
 <p>Decryption-On-The-Fly is configurable for OSPI Flash and is disabled from the build by default.</p>
@@ -924,6 +1017,7 @@ OSPI_B</h2>
 <li>Memories which use row-column addressing must be managed by the end-user application to ensure the appropriate memory row is loaded and stored.</li>
 <li>When using SiP Flash with encrypted data, the encryption key and IV must be <code>const</code> qualified if BSP startup initialization is used. The SiP flash is initialized before the C-runtime has been initialized and before any RAM variables have been loaded from their respective non-volatile memories.</li>
 <li>When using SiP Flash, secure partitions must be 32K aligned or programming and access may fail.</li>
+<li><code><a class="el" href="group___o_s_p_i___b.html#ga5678d81c6417bc04047302a15ca70d6d">R_OSPI_B_TargetReset()</a></code> supports only xSPI target devices that can be reset by the OM_RESET pin or by the in-band reset pattern using the OM_CSn and OM_SIO0 signals. If the xSPI device does not support the selected reset method, <code><a class="el" href="group___o_s_p_i___b.html#ga5678d81c6417bc04047302a15ca70d6d">R_OSPI_B_TargetReset()</a></code> still drives the reset sequence on the bus, however, the device is not actually reset, and no error is reported.</li>
 </ul>
 <h1><a class="anchor" id="r-ospi-b-examples"></a>
 Examples</h1>
@@ -968,6 +1062,14 @@ Macros</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga76971feb991ff5a55ffdc3e1c6834c1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f">ospi_b_device_number_t</a> </td></tr>
 <tr class="separator:ga76971feb991ff5a55ffdc3e1c6834c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb707339660eef1570e2f01112a7d4f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gacb707339660eef1570e2f01112a7d4f9">ospi_b_reset_method_t</a> </td></tr>
+<tr class="separator:gacb707339660eef1570e2f01112a7d4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6324b4b159ee6b1c7f4e94106fbc3104"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga6324b4b159ee6b1c7f4e94106fbc3104">ospi_b_in_band_reset_repeat_count_t</a> </td></tr>
+<tr class="separator:ga6324b4b159ee6b1c7f4e94106fbc3104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7fbf50aa3cf3899c1f8a9c0263d3281"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gad7fbf50aa3cf3899c1f8a9c0263d3281">ospi_b_in_band_reset_width_t</a> </td></tr>
+<tr class="separator:gad7fbf50aa3cf3899c1f8a9c0263d3281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29756f40ebc980aa90f33d13b070fade"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga29756f40ebc980aa90f33d13b070fade">ospi_b_in_band_reset_sio_setup_t</a> </td></tr>
+<tr class="separator:ga29756f40ebc980aa90f33d13b070fade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4bf54e3468d5d4de83db9e021bdbb2d3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga4bf54e3468d5d4de83db9e021bdbb2d3">ospi_b_command_bytes_t</a> </td></tr>
 <tr class="separator:ga4bf54e3468d5d4de83db9e021bdbb2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga570e0018e1e0dd225038e20f4a56d041"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga570e0018e1e0dd225038e20f4a56d041">ospi_b_command_interval_clocks_t</a> </td></tr>
@@ -1088,6 +1190,36 @@ Number of cycles to delay before sampling the data signal. </td></tr>
 ddr_sampling_extension</td>
 <td class="fielddoc">
 Number of cycles to extending the data sampling window in DDR mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a202d86a3b8a88104ade816188c7fb3ee"></a><a class="el" href="group___o_s_p_i___b.html#ga6324b4b159ee6b1c7f4e94106fbc3104">ospi_b_in_band_reset_repeat_count_t</a></td>
+<td class="fieldname">
+reset_pattern_repeat_count</td>
+<td class="fielddoc">
+Reset Pattern repeat-count setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8bfa906791482c8776e43295d9725af5"></a><a class="el" href="group___o_s_p_i___b.html#gad7fbf50aa3cf3899c1f8a9c0263d3281">ospi_b_in_band_reset_width_t</a></td>
+<td class="fieldname">
+reset_pattern_width_cycle</td>
+<td class="fielddoc">
+Reset Pattern Width cycle setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a238bf249163bcab28eeb710af360770e"></a><a class="el" href="group___o_s_p_i___b.html#ga29756f40ebc980aa90f33d13b070fade">ospi_b_in_band_reset_sio_setup_t</a></td>
+<td class="fieldname">
+reset_pattern_sio_setup_time_cycle</td>
+<td class="fielddoc">
+Reset Pattern SIO Setup Time cycle setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a09d320eb7b6bbd38fb17723c22c27d58"></a>uint32_t</td>
+<td class="fieldname">
+reset_pin_hold_time</td>
+<td class="fielddoc">
+Hold-time setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab70c5c6f160ccf1a5711b540e74c45b4"></a>uint32_t</td>
+<td class="fieldname">
+reset_recovery_time</td>
+<td class="fielddoc">
+Reset recovery time setting. </td></tr>
 </table>
 
 </div>
@@ -1404,6 +1536,118 @@ Address for the OSPI peripheral associated with this channel. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga76971feb991ff5a55ffdc3e1c6834c1fa92f8ffbf2e66985d3809b4e4b538be6b"></a>OSPI_B_DEVICE_NUMBER_0&#160;</td><td class="fielddoc"><p>Device connected to Chip-Select 0. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga76971feb991ff5a55ffdc3e1c6834c1fa0f6cd25fb2ea2323c39f116ea0f60643"></a>OSPI_B_DEVICE_NUMBER_1&#160;</td><td class="fielddoc"><p>Device connected to Chip-Select 1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gacb707339660eef1570e2f01112a7d4f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacb707339660eef1570e2f01112a7d4f9">&#9670;&nbsp;</a></span>ospi_b_reset_method_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#gacb707339660eef1570e2f01112a7d4f9">ospi_b_reset_method_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI target reset method. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacb707339660eef1570e2f01112a7d4f9a98b14f76e2b7547d3e3bd8c1fe88335f"></a>OSPI_B_RESET_METHOD_IN_BAND&#160;</td><td class="fielddoc"><p>Reset using In-band reset pattern (OM_CSn and OM_SIO0 signals). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacb707339660eef1570e2f01112a7d4f9a31b6c0b283d0c0dbae8e7cc3c9309490"></a>OSPI_B_RESET_METHOD_PIN&#160;</td><td class="fielddoc"><p>Reset using the OM_RESET pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga6324b4b159ee6b1c7f4e94106fbc3104"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6324b4b159ee6b1c7f4e94106fbc3104">&#9670;&nbsp;</a></span>ospi_b_in_band_reset_repeat_count_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga6324b4b159ee6b1c7f4e94106fbc3104">ospi_b_in_band_reset_repeat_count_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Repeat-count setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6324b4b159ee6b1c7f4e94106fbc3104a97ec7fb1d9de710980682fa0280254aa"></a>OSPI_B_IN_BAND_RESET_REPEAT_4&#160;</td><td class="fielddoc"><p>Specifies that the reset pattern is repeated 4 times. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6324b4b159ee6b1c7f4e94106fbc3104a3b57452404fc66db98e76cd7704592b4"></a>OSPI_B_IN_BAND_RESET_REPEAT_5&#160;</td><td class="fielddoc"><p>Specifies that the reset pattern is repeated 5 times. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6324b4b159ee6b1c7f4e94106fbc3104a928d21f4e52567e38f52a4eea0490a72"></a>OSPI_B_IN_BAND_RESET_REPEAT_6&#160;</td><td class="fielddoc"><p>Specifies that the reset pattern is repeated 6 times. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6324b4b159ee6b1c7f4e94106fbc3104a28d317cc359d84f54d469bb18ba7adda"></a>OSPI_B_IN_BAND_RESET_REPEAT_7&#160;</td><td class="fielddoc"><p>Specifies that the reset pattern is repeated 7 times. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad7fbf50aa3cf3899c1f8a9c0263d3281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad7fbf50aa3cf3899c1f8a9c0263d3281">&#9670;&nbsp;</a></span>ospi_b_in_band_reset_width_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#gad7fbf50aa3cf3899c1f8a9c0263d3281">ospi_b_in_band_reset_width_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CS pulse-width setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281ae9dde9b3dc3120b708632e310ace30fb"></a>OSPI_B_IN_BAND_RESET_WIDTH_2_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 2 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281ab06e4b9379528ffb0fa5bbdf0b604c2e"></a>OSPI_B_IN_BAND_RESET_WIDTH_4_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 4 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281a02a1dc94237d6f0b28adbecdae5a5c07"></a>OSPI_B_IN_BAND_RESET_WIDTH_8_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 8 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281ad44abdb22f36f763f3f795f8a9d1df19"></a>OSPI_B_IN_BAND_RESET_WIDTH_16_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 16 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281a2abf875f1b6f2545a20436c394136f39"></a>OSPI_B_IN_BAND_RESET_WIDTH_32_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 32 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281ac0192554a45c810a1aae24429b952d54"></a>OSPI_B_IN_BAND_RESET_WIDTH_64_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 64 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281a9caba2a5764172a73ebd9b798fe8c70a"></a>OSPI_B_IN_BAND_RESET_WIDTH_128_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 128 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7fbf50aa3cf3899c1f8a9c0263d3281a0f3f1f4e1b848612b32bfa297cddbfbf"></a>OSPI_B_IN_BAND_RESET_WIDTH_256_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern width. It toggles the CS signal with a configured duration of 256 SCLK cycles. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga29756f40ebc980aa90f33d13b070fade"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga29756f40ebc980aa90f33d13b070fade">&#9670;&nbsp;</a></span>ospi_b_in_band_reset_sio_setup_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga29756f40ebc980aa90f33d13b070fade">ospi_b_in_band_reset_sio_setup_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SIO0 setup-time setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadeae79f85c1915e99e9fc55a88542e78eac"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_1_CYCLE&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 1 SCLK cycle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadea7a3779daac9f8684b0a79efbba261a51"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_2_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 2 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadea41c88bc8548cea7428417838f3d8f7ca"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_3_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 3 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadeaca7d1322b4e0a14bce96e56df86fea8b"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_4_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 4 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadea2d7cb98b512c8bf3b2bd103443d131f0"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_5_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 5 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadeaa6d8f422aebef4b98e006b1ed10669dc"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_6_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 6 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadea7f9aca7c338ec7cbcf4ed084753310d7"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_7_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 7 SCLK cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29756f40ebc980aa90f33d13b070fadeaf7d706cb534a486498a3431de49e5483"></a>OSPI_B_IN_BAND_RESET_SIO_SETUP_8_CYCLES&#160;</td><td class="fielddoc"><p>Reset pattern data output setup time is fixed at 8 SCLK cycles. </p>
 </td></tr>
 </table>
 
@@ -2470,6 +2714,63 @@ Address for the OSPI peripheral associated with this channel. </td></tr>
 
 </div>
 </div>
+<a id="ga5678d81c6417bc04047302a15ca70d6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5678d81c6417bc04047302a15ca70d6d">&#9670;&nbsp;</a></span>R_OSPI_B_TargetReset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_TargetReset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___o_s_p_i___b.html#gacb707339660eef1570e2f01112a7d4f9">ospi_b_reset_method_t</a>&#160;</td>
+          <td class="paramname"><em>method</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reset target flash device to exit hang state, recovering it from Deep Power Down (DPD), using the selected reset method.</p>
+<p>While target flash device hangs or is in DPD, it ignores every command and can be neither written nor read, so a target reset is required to make it usable again.</p>
+<p>Reset methods (see <a class="el" href="group___o_s_p_i___b.html#gacb707339660eef1570e2f01112a7d4f9">ospi_b_reset_method_t</a>):</p><ul>
+<li>OSPI_B_RESET_METHOD_PIN: hardware reset by toggling the OM_RESET pin. The target flash device restarts and returns to its default protocol.</li>
+<li>OSPI_B_RESET_METHOD_IN_BAND: in-band reset driven as a CS + SIO0 pattern. The target flash device restarts and returns to its default protocol.</li>
+</ul>
+<p>Protocol state of both sides after this call returns:</p><ul>
+<li>PIN and IN_BAND: the target flash device is reset to its default protocol. The OSPI_B master is left unchanged.</li>
+</ul>
+<p>This API only acts on the target flash device, it never changes the protocol of the OSPI_B master.</p>
+<p>Read and write to the flash succeed only when the OSPI_B master and the target flash device are in the same protocol mode (both SPI 1S-1S-1S or both OPI 8D-8D-8D). When the two sides end up in different modes, any read or write attempted before they are realigned returns invalid data or triggers a bus fault.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">method</td><td>Reset method.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Target reset sequence completed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid reset method. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Reset sequence could not be completed due to hardware state or status checks. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Target reset support is disabled by configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga215959cccab9f53a2516920ed0182dfc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga215959cccab9f53a2516920ed0182dfc">&#9670;&nbsp;</a></span>R_OSPI_B_DOTF_Configure()</h2>
 
@@ -2522,7 +2823,7 @@ Address for the OSPI peripheral associated with this channel. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.5.1 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.6.0 User's Manual Copyright © (2026) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
