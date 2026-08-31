@@ -188,7 +188,11 @@ typedef long SLONG;
  #endif
 
  #ifndef UX_HOST_CLASS_STORAGE_MAX_MEDIA
-  #define UX_HOST_CLASS_STORAGE_MAX_MEDIA        3
+  #if (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE) && (USB_CFG_MULTIPORT == USB_CFG_ENABLE)
+   #define UX_HOST_CLASS_STORAGE_MAX_MEDIA       6
+  #else
+   #define UX_HOST_CLASS_STORAGE_MAX_MEDIA       3
+  #endif
  #endif
 
  #ifndef UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH

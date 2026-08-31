@@ -75,7 +75,7 @@ typedef struct st_smci_baud_setting_t
     {
         uint8_t smr_smci_clock_bits;
 
-        struct st_smr_smci_clock_bits_b
+        struct
         {
             uint8_t cks   : 2;         ///< Clock divisor Select
             uint8_t bcp01 : 2;         ///< Base Clock Pulse

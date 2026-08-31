@@ -9,5 +9,9 @@
 void HW_SCE_Sha256HmacUpdateSub (const uint32_t InData_PaddedMsg[], const uint32_t MAX_CNT)
 {
     HW_SCE_p_func000(InData_PaddedMsg, MAX_CNT);
-    HW_SCE_p_func101(0x4a0f48ecU, 0x757e9554U, 0x8f254402U, 0x32fa9161U);
+    static const uint32_t Param_p76u_func101_001[] =
+    {
+        0x4a0f48ecU, 0x757e9554U, 0x8f254402U, 0x32fa9161U,
+    };
+    HW_SCE_p_func101(Param_p76u_func101_001);
 }

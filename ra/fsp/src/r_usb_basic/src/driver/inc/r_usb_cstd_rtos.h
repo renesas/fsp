@@ -98,9 +98,11 @@ typedef enum e_usb_rtos_err
     UsbRtos_Err_Init_Mpl,                  // Failure of Memory Pool Creation
     UsbRtos_Err_Init_Tsk,                  // Failure of Task Creation
     UsbRtos_Err_Init_Sem,                  // Failure of Semaphore Creation
+    UsbRtos_Err_Init_Mtx,                  // Failure of Mutex Creation
     UsbRtos_Err_Delete_Mbx,                // Failure of Mailbox Delete
     UsbRtos_Err_Delete_Mpl,                // Failure of Memory Pool Delete
     UsbRtos_Err_Delete_Tsk,                // Failure of Task Delete
+    UsbRtos_Err_Delete_Mtx,                // Failure of Mutex Delete
   #if defined(USB_CFG_OTG_USE)
     UsbRtos_Err_Init_OTG_Detach_Tmr,       // Failure of OTG Detach Timer Creation
     UsbRtos_Err_Delete_OTG_Detach_Tmr,     // Failure of OTG Detach Timer Delete

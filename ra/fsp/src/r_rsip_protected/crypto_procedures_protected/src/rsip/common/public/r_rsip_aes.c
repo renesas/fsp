@@ -660,13 +660,13 @@ fsp_err_t R_RSIP_AES_AEAD_Update (rsip_ctrl_t * const   p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Finalizes an AES AEAD encryption.
+ * Finalizes an AES AEAD encryption, generating the authentication tag.
  *
  * Implements @ref rsip_api_t::aesAeadFinish.
  *
  * @par Output length
  * @parblock
- * Output length to p_output (p_output_length) is the remaining calculated text length.
+ * p_output_length indicates the length of the text data output to p_output. This is the fractional data (not a multiple of 16 bytes) left unprocessed by the previous R_RSIP_AES_AEAD_Update() call.
  *
  * Output length to p_tag as below.
  * - [GCM] 16 bytes.
@@ -738,7 +738,7 @@ fsp_err_t R_RSIP_AES_AEAD_Finish (rsip_ctrl_t * const p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Finalizes an AES AEAD decryption.
+ * Finalizes an AES AEAD decryption, verifying the correctness of the authentication tag.
  *
  * If there is 16-byte fractional data indicated by the total data length of the value of p_cipher that was input by
  * R_RSIP_AES_GCM_DecryptUpdate(), this API will output the result of decrypting that fractional data to p_cipher.
@@ -752,7 +752,7 @@ fsp_err_t R_RSIP_AES_AEAD_Finish (rsip_ctrl_t * const p_ctrl,
  * - [CCM] Input value as tag_length in R_RSIP_AES_AEAD_LengthsSet().
  *
  * @par Output length
- * Output length to p_output (p_output_length) is the remaining calculated text length.
+ * p_output_length indicates the length of the text data output to p_output. This is the fractional data (not a multiple of 16 bytes) left unprocessed by the previous R_RSIP_AES_AEAD_Update() call.
  *
  * @par State transition
  * @parblock

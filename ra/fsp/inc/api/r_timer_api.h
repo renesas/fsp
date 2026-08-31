@@ -117,19 +117,25 @@ typedef enum e_timer_state
 /** Timer operational modes */
 typedef enum e_timer_mode
 {
-    TIMER_MODE_PERIODIC,                          ///< Timer restarts after period elapses.
-    TIMER_MODE_ONE_SHOT,                          ///< Timer stops after period elapses.
-    TIMER_MODE_PWM,                               ///< Timer generates saw-wave PWM output.
-    TIMER_MODE_ONE_SHOT_PULSE,                    ///< Saw-wave one-shot pulse mode (fixed buffer operation).
-    TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM  = 4U, ///< Timer generates symmetric triangle-wave PWM output.
-    TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM = 5U, ///< Timer generates asymmetric triangle-wave PWM output.
+    TIMER_MODE_PERIODIC                               = 0U,         ///< Timer restarts after period elapses.
+    TIMER_MODE_ONE_SHOT                               = 1U,         ///< Timer stops after period elapses.
+    TIMER_MODE_PWM                                    = 2U,         ///< Timer generates saw-wave PWM output.
+    TIMER_MODE_ONE_SHOT_PULSE                         = 3U,         ///< Saw-wave one-shot pulse mode (fixed buffer operation).
+    TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM            = 4U,         ///< Timer generates symmetric triangle-wave PWM output.
+    TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM           = 5U,         ///< Timer generates asymmetric triangle-wave PWM output.
 
     /**
      * Timer generates Asymmetric Triangle-wave PWM output. In PWM mode 3, the duty cycle does
      * not need to be updated at each tough/crest interrupt. Instead, the trough and crest duty cycle values can be
      * set once and only need to be updated when the application needs to change the duty cycle.
      */
-    TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 = 6U
+    TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3     = 6U,         ///< Timer generates asymmetric triangle-wave PWM output (Mode 3).
+
+    /** Complementary PWM Modes  */
+    TIMER_MODE_COMPLEMENTARY_PWM_MODE1                = 12U,        ///< Complementary PWM mode 1 (transfer at crest).
+    TIMER_MODE_COMPLEMENTARY_PWM_MODE2                = 13U,        ///< Complementary PWM mode 2 (transfer at trough).
+    TIMER_MODE_COMPLEMENTARY_PWM_MODE3                = 14U,        ///< Complementary PWM mode 3 (transfer at crest/trough).
+    TIMER_MODE_COMPLEMENTARY_PWM_MODE4                = 15U         ///< Complementary PWM mode 4 (immediate transfer).
 } timer_mode_t;
 
 #endif

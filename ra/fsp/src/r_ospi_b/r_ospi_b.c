@@ -153,6 +153,13 @@ extern rsip_instance_t const * const gp_rsip_instance;
 
 #define OSPI_B_SOFTWARE_DELAY                            (50U)
 
+/* LPCTL1.PATREQ[1:0] value (01b) that requests the in-band Reset Pattern. */
+#define OSPI_B_PRV_TARGET_RESET_IN_BAND_PATREQ           (0x01U)
+
+/* OM_RESET pin (LIOCTL.RSTCS0) assert and release levels. */
+#define OSPI_B_PRV_TARGET_RESET_PIN_ASSERTED             (0U)
+#define OSPI_B_PRV_TARGET_RESET_PIN_RELEASED             (1U)
+
 #define OSPI_B_PRV_DOTF_REG00_RESET_VALUE                (0x22000000)
 #define OSPI_B_PRV_CONVAREAST_RESET_VALUE                (0x0)
 #define OSPI_B_PRV_CONVAREAD_RESET_VALUE                 (0x0)
@@ -188,6 +195,28 @@ static void      r_ospi_b_direct_transfer(ospi_b_instance_ctrl_t            * p_
                                           spi_flash_direct_transfer_t * const p_transfer,
                                           spi_flash_direct_transfer_dir_t     direction);
 static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get(ospi_b_instance_ctrl_t * p_instance_ctrl);
+
+#if (OSPI_B_CFG_TARGET_RESET_PIN_SUPPORT_ENABLE || OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE)
+static fsp_err_t r_ospi_b_target_reset(ospi_b_instance_ctrl_t * p_instance_ctrl, ospi_b_reset_method_t method);
+
+#endif
+
+#if OSPI_B_CFG_TARGET_RESET_PIN_SUPPORT_ENABLE
+static fsp_err_t r_ospi_b_target_reset_pin(ospi_b_instance_ctrl_t * p_instance_ctrl);
+
+#endif
+
+#if OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE
+static fsp_err_t         r_ospi_b_target_reset_in_band(ospi_b_instance_ctrl_t * p_instance_ctrl);
+__STATIC_INLINE uint32_t r_ospi_b_target_reset_bmctl0_mask_get(ospi_b_instance_ctrl_t * p_instance_ctrl);
+static void              r_ospi_b_target_reset_dummy_read(ospi_b_instance_ctrl_t * p_instance_ctrl);
+static fsp_err_t         r_ospi_b_target_reset_memory_mapping_disable(ospi_b_instance_ctrl_t * p_instance_ctrl,
+                                                                      R_XSPI0_Type           * p_reg,
+                                                                      uint32_t                 bmctl0_mask);
+__STATIC_INLINE fsp_err_t r_ospi_b_target_reset_pattern_issue(R_XSPI0_Type * p_reg, uint32_t lpctl1);
+__STATIC_INLINE fsp_err_t r_ospi_b_target_reset_memory_mapping_enable(R_XSPI0_Type * p_reg, uint32_t bmctl0_mask);
+
+#endif
 
 #if OSPI_B_CFG_AUTOCALIBRATION_SUPPORT_ENABLE
 static fsp_err_t r_ospi_b_automatic_calibration_seq(ospi_b_instance_ctrl_t * p_instance_ctrl);
@@ -326,16 +355,22 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
     p_reg->LIOCFGCS[p_cfg_extend->channel] = liocfg;
 
     /* Set xSPI drive/sampling timing. */
+    uint32_t wrapcfg = p_reg->WRAPCFG;
+
     if (OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel)
     {
-        p_reg->WRAPCFG = ((uint32_t) p_cfg_extend->data_latch_delay_clocks << R_XSPI0_WRAPCFG_DSSFTCS0_Pos) &
-                         R_XSPI0_WRAPCFG_DSSFTCS0_Msk;
+        wrapcfg &= ~R_XSPI0_WRAPCFG_DSSFTCS0_Msk;
+        wrapcfg |= ((uint32_t) p_cfg_extend->data_latch_delay_clocks << R_XSPI0_WRAPCFG_DSSFTCS0_Pos) &
+                   R_XSPI0_WRAPCFG_DSSFTCS0_Msk;
     }
     else
     {
-        p_reg->WRAPCFG = ((uint32_t) p_cfg_extend->data_latch_delay_clocks << R_XSPI0_WRAPCFG_DSSFTCS1_Pos) &
-                         R_XSPI0_WRAPCFG_DSSFTCS1_Msk;
+        wrapcfg &= ~R_XSPI0_WRAPCFG_DSSFTCS1_Msk;
+        wrapcfg |= ((uint32_t) p_cfg_extend->data_latch_delay_clocks << R_XSPI0_WRAPCFG_DSSFTCS1_Pos) &
+                   R_XSPI0_WRAPCFG_DSSFTCS1_Msk;
     }
+
+    p_reg->WRAPCFG = wrapcfg;
 
     /* Set minimum cycles between xSPI frames. */
     liocfg |= ((uint32_t) p_cfg_extend->p_timing_settings->command_to_command_interval << R_XSPI0_LIOCFGCS_CSMIN_Pos) &
@@ -965,6 +1000,65 @@ fsp_err_t R_OSPI_B_RowStore (spi_flash_ctrl_t * const p_ctrl, uint32_t row_index
 }
 
 /*******************************************************************************************************************//**
+ * Reset target flash device to exit hang state, recovering it from Deep Power Down (DPD), using the selected reset method.
+ *
+ * While target flash device hangs or is in DPD, it ignores every command and can be neither written nor read, so a
+ * target reset is required to make it usable again.
+ *
+ * Reset methods (see @ref ospi_b_reset_method_t):
+ * - OSPI_B_RESET_METHOD_PIN: hardware reset by toggling the OM_RESET pin. The target flash device restarts and
+ *   returns to its default protocol.
+ * - OSPI_B_RESET_METHOD_IN_BAND: in-band reset driven as a CS + SIO0 pattern. The target flash device restarts
+ *   and returns to its default protocol.
+ *
+ * Protocol state of both sides after this call returns:
+ * - PIN and IN_BAND: the target flash device is reset to its default protocol. The OSPI_B
+ *   master is left unchanged.
+ *
+ * This API only acts on the target flash device, it never changes the protocol of the OSPI_B master.
+ *
+ * Read and write to the flash succeed only when the OSPI_B master and the target flash device are in the same
+ * protocol mode (both SPI 1S-1S-1S or both OPI 8D-8D-8D). When the two sides end up in different modes, any
+ * read or write attempted before they are realigned returns invalid data or triggers a bus fault.
+ *
+ * @param[in] p_ctrl   Pointer to a driver handle.
+ * @param[in] method   Reset method.
+ *
+ * @retval FSP_SUCCESS              Target reset sequence completed.
+ * @retval FSP_ERR_ASSERTION        A required pointer is NULL.
+ * @retval FSP_ERR_NOT_OPEN         Driver has not been opened.
+ * @retval FSP_ERR_INVALID_ARGUMENT Invalid reset method.
+ * @retval FSP_ERR_ABORTED          Reset sequence could not be completed due to hardware state or status checks.
+ * @retval FSP_ERR_UNSUPPORTED      Target reset support is disabled by configuration.
+ **********************************************************************************************************************/
+fsp_err_t R_OSPI_B_TargetReset (spi_flash_ctrl_t const * const p_ctrl, ospi_b_reset_method_t method)
+{
+#if (!OSPI_B_CFG_TARGET_RESET_PIN_SUPPORT_ENABLE && !OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE)
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(method);
+
+    return FSP_ERR_UNSUPPORTED;
+#else
+    ospi_b_instance_ctrl_t * p_instance_ctrl = (ospi_b_instance_ctrl_t *) p_ctrl;
+    fsp_err_t                err             = FSP_SUCCESS;
+
+ #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
+    ospi_b_extended_cfg_t * p_cfg_extend = NULL;
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_ctrl);
+    FSP_ASSERT(NULL != p_cfg_extend);
+    FSP_ASSERT(NULL != p_cfg_extend->p_timing_settings);
+ #endif
+
+    err = r_ospi_b_target_reset(p_instance_ctrl, method);
+
+    return err;
+#endif
+}
+
+/*******************************************************************************************************************//**
  * Configure DOTF
  *
  * @param[in]   p_ctrl                          Pointer to OSPI specific control structure
@@ -1354,6 +1448,286 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
     /* Clear interrupt flags. */
     p_reg->INTC = p_reg->INTS;
 }
+
+#if (OSPI_B_CFG_TARGET_RESET_PIN_SUPPORT_ENABLE || OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE)
+
+/*******************************************************************************************************************//**
+ * Executes target reset sequence based on the selected method.
+ *
+ * @param[in] p_instance_ctrl Pointer to the instance control block.
+ * @param[in] method          Reset method.
+ *
+ * @retval FSP_SUCCESS              Reset sequence completed.
+ * @retval FSP_ERR_INVALID_ARGUMENT Method value is not one of the supported enum entries.
+ * @retval FSP_ERR_UNSUPPORTED      Selected method is disabled by configuration.
+ **********************************************************************************************************************/
+static fsp_err_t r_ospi_b_target_reset (ospi_b_instance_ctrl_t * p_instance_ctrl, ospi_b_reset_method_t method)
+{
+    fsp_err_t err = FSP_ERR_UNSUPPORTED;
+
+    switch (method)
+    {
+        case OSPI_B_RESET_METHOD_IN_BAND:
+        {
+ #if OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE
+            err = r_ospi_b_target_reset_in_band(p_instance_ctrl);
+ #endif
+            break;
+        }
+
+        case OSPI_B_RESET_METHOD_PIN:
+        {
+ #if OSPI_B_CFG_TARGET_RESET_PIN_SUPPORT_ENABLE
+            err = r_ospi_b_target_reset_pin(p_instance_ctrl);
+ #endif
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_INVALID_ARGUMENT;
+            break;
+        }
+    }
+
+    return err;
+}
+
+#endif
+
+#if OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * Performs a dummy read from the active memory-mapped region as required by the Memory-mapping Stop flowchart in the
+ * RA HW manual.
+ *
+ * @param[in] p_instance_ctrl Pointer to the instance control block.
+ **********************************************************************************************************************/
+static void r_ospi_b_target_reset_dummy_read (ospi_b_instance_ctrl_t * p_instance_ctrl)
+{
+    uint32_t          read_base_address = 0UL;
+    volatile uint32_t dummy_read_value  = 0UL;
+
+    /* Select the memory-mapped base address from the OSPI unit and CS channel of this instance. */
+    if (0U == p_instance_ctrl->ospi_b_unit)
+    {
+        read_base_address = (OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel) ?
+                            BSP_OSPI0_CS0_START_ADDRESS : BSP_OSPI0_CS1_START_ADDRESS;
+    }
+    else if (1U == p_instance_ctrl->ospi_b_unit)
+    {
+        read_base_address = (OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel) ?
+                            BSP_OSPI1_CS0_START_ADDRESS : BSP_OSPI1_CS1_START_ADDRESS;
+    }
+    else
+    {
+        /* Unit is not valid. */
+    }
+
+    /* Perform one memory-mapped read only when a valid OSPI base address is available. */
+    if (0U != read_base_address)
+    {
+        if (!OSPI_B_PRV_PROTOCOL_USES_DS_SIGNAL(p_instance_ctrl->spi_protocol))
+        {
+            dummy_read_value = *((volatile uint32_t *) read_base_address);
+        }
+        else
+        {
+            /* Skip the dummy read for protocol modes that require the Data-Strobe signal. */
+        }
+    }
+
+    FSP_PARAMETER_NOT_USED(dummy_read_value);
+}
+
+/*******************************************************************************************************************//**
+ * Gets the BMCTL0 access-enable mask for the selected chip-select channel.
+ *
+ * @param[in] p_instance_ctrl Pointer to the instance control block.
+ *
+ * @return BMCTL0 access-enable mask for the selected chip-select channel.
+ **********************************************************************************************************************/
+__STATIC_INLINE uint32_t r_ospi_b_target_reset_bmctl0_mask_get (ospi_b_instance_ctrl_t * p_instance_ctrl)
+{
+    uint32_t bmctl0_mask;
+
+    /* Choose the CS0 or CS1 access-enable bit pair according to the instance channel. */
+    if (OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel)
+    {
+        bmctl0_mask = R_XSPI0_BMCTL0_CH0CS0ACC_Msk | R_XSPI0_BMCTL0_CH1CS0ACC_Msk;
+    }
+    else
+    {
+        bmctl0_mask = R_XSPI0_BMCTL0_CH0CS1ACC_Msk | R_XSPI0_BMCTL0_CH1CS1ACC_Msk;
+    }
+
+    return bmctl0_mask;
+}
+
+/*******************************************************************************************************************//**
+ * Stops memory-mapped access and waits until the reset-related hardware state becomes idle.
+ *
+ * @param[in] p_instance_ctrl Pointer to the instance control block.
+ * @param[in] p_reg           XSPI register base.
+ * @param[in] bmctl0_mask     BMCTL0 access-enable bits for the selected channel.
+ *
+ * @retval FSP_SUCCESS    Mapping stop sequence completed.
+ * @retval FSP_ERR_ABORTED BMCTL0 did not reflect the requested disabled state.
+ **********************************************************************************************************************/
+static fsp_err_t r_ospi_b_target_reset_memory_mapping_disable (ospi_b_instance_ctrl_t * p_instance_ctrl,
+                                                               R_XSPI0_Type           * p_reg,
+                                                               uint32_t                 bmctl0_mask)
+{
+    uint32_t bmctl0 = 0U;
+
+    /* Issue the dummy read. */
+    r_ospi_b_target_reset_dummy_read(p_instance_ctrl);
+
+    /* Disable memory-mapped access for the selected channel. */
+    bmctl0        = p_reg->BMCTL0 & ~bmctl0_mask;
+    p_reg->BMCTL0 = bmctl0;
+
+    /* Confirm memory-mapped access is disabled for the selected channel. */
+    FSP_ERROR_RETURN((p_reg->BMCTL0 & bmctl0_mask) == 0U, FSP_ERR_ABORTED);
+
+    /* Wait until no memory-mapped access remains pending in either MEMACCCH or WRBUFNECH. */
+    FSP_HARDWARE_REGISTER_WAIT((p_reg->COMSTT & OSPI_B_PRV_COMSTT_PENDING_ACTION_MASK), 0U);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Issues a link-pattern request and waits for PATCMP completion.
+ *
+ * @param[in] p_reg   XSPI register base.
+ * @param[in] lpctl1  Prepared LPCTL1 value including PATREQ.
+ *
+ * @retval FSP_SUCCESS     Pattern request completed.
+ * @retval FSP_ERR_ABORTED PATCMP flag did not clear as expected.
+ **********************************************************************************************************************/
+__STATIC_INLINE fsp_err_t r_ospi_b_target_reset_pattern_issue (R_XSPI0_Type * p_reg, uint32_t lpctl1)
+{
+    /* Clear any stale PATCMP completion flag before starting a new pattern request. */
+    p_reg->INTC = R_XSPI0_INTC_PATCMPC_Msk;
+
+    /* Write the prepared LPCTL1 value to launch the pattern sequence. */
+    p_reg->LPCTL1 = lpctl1;
+
+    /* Wait until pattern generation completes (PATCMP flag becomes set in INTS). */
+    FSP_HARDWARE_REGISTER_WAIT((p_reg->INTS & R_XSPI0_INTS_PATCMP_Msk), R_XSPI0_INTS_PATCMP_Msk);
+
+    /* Clear the pattern-complete interrupt flag by writing 1 to PATCMP in INTC. */
+    p_reg->INTC = R_XSPI0_INTS_PATCMP_Msk;
+
+    /* Confirm the pattern-complete interrupt flag was actually cleared. */
+    FSP_ERROR_RETURN((p_reg->INTS & R_XSPI0_INTS_PATCMP_Msk) == 0U, FSP_ERR_ABORTED);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Re-enables memory-mapped access for the selected channel.
+ *
+ * @param[in] p_reg        XSPI register base.
+ * @param[in] bmctl0_mask  BMCTL0 access-enable bits for the selected channel.
+ *
+ * @retval FSP_SUCCESS    Mapping resume sequence completed.
+ * @retval FSP_ERR_ABORTED BMCTL0 did not reflect the requested enabled state.
+ **********************************************************************************************************************/
+__STATIC_INLINE fsp_err_t r_ospi_b_target_reset_memory_mapping_enable (R_XSPI0_Type * p_reg, uint32_t bmctl0_mask)
+{
+    uint32_t bmctl0 = 0U;
+
+    /* Re-enable memory-mapped access for the selected channel by setting its BMCTL0 access-enable bits. */
+    bmctl0        = p_reg->BMCTL0 | bmctl0_mask;
+    p_reg->BMCTL0 = bmctl0;
+
+    /* Confirm memory-mapped access is re-enabled for the selected channel. */
+    FSP_ERROR_RETURN((p_reg->BMCTL0 & bmctl0_mask) == bmctl0_mask, FSP_ERR_ABORTED);
+
+    return FSP_SUCCESS;
+}
+
+#endif
+
+#if OSPI_B_CFG_TARGET_RESET_PIN_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * Resets target using the OM_RESET pin.
+ *
+ * @param[in] p_instance_ctrl Pointer to the instance control block.
+ *
+ * @retval FSP_SUCCESS Reset sequence completed.
+ **********************************************************************************************************************/
+static fsp_err_t r_ospi_b_target_reset_pin (ospi_b_instance_ctrl_t * p_instance_ctrl)
+{
+    R_XSPI0_Type * const          p_reg        = p_instance_ctrl->p_reg;
+    ospi_b_extended_cfg_t * const p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
+    uint32_t reset_hold_time_us                = p_cfg_extend->p_timing_settings->reset_pin_hold_time;
+    uint32_t reset_recovery_time_ms            = p_cfg_extend->p_timing_settings->reset_recovery_time;
+
+    p_reg->LIOCTL_b.RSTCS0 = OSPI_B_PRV_TARGET_RESET_PIN_ASSERTED;
+
+    R_BSP_SoftwareDelay(reset_hold_time_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+    p_reg->LIOCTL_b.RSTCS0 = OSPI_B_PRV_TARGET_RESET_PIN_RELEASED;
+
+    R_BSP_SoftwareDelay(reset_recovery_time_ms, BSP_DELAY_UNITS_MILLISECONDS);
+
+    return FSP_SUCCESS;
+}
+
+#endif
+
+#if OSPI_B_CFG_TARGET_RESET_IN_BAND_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * Resets target using in-band reset pattern with CS and SIO0.
+ *
+ * @param[in] p_instance_ctrl Pointer to the instance control block.
+ *
+ * @retval FSP_SUCCESS              Reset pattern completed.
+ * @retval FSP_ERR_INVALID_ARGUMENT In-band reset settings are invalid.
+ **********************************************************************************************************************/
+static fsp_err_t r_ospi_b_target_reset_in_band (ospi_b_instance_ctrl_t * p_instance_ctrl)
+{
+    uint32_t                        lpctl1           = 0U;
+    fsp_err_t                       err              = FSP_SUCCESS;
+    R_XSPI0_Type * const            p_reg            = p_instance_ctrl->p_reg;
+    ospi_b_extended_cfg_t * const   p_cfg_extend     = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
+    uint32_t                        bmctl0_mask      = r_ospi_b_target_reset_bmctl0_mask_get(p_instance_ctrl);
+    ospi_b_timing_setting_t const * p_timing_setting =
+        OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl)->p_timing_settings;
+    uint32_t reset_recovery_time_ms = p_cfg_extend->p_timing_settings->reset_recovery_time;
+
+    err = r_ospi_b_target_reset_memory_mapping_disable(p_instance_ctrl, p_reg, bmctl0_mask);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    lpctl1 |= (((uint32_t) p_timing_setting->reset_pattern_width_cycle << R_XSPI0_LPCTL1_RSTWID_Pos) &
+               R_XSPI0_LPCTL1_RSTWID_Msk);
+
+    lpctl1 |= (((uint32_t) p_timing_setting->reset_pattern_sio_setup_time_cycle << R_XSPI0_LPCTL1_RSTSU_Pos) &
+               R_XSPI0_LPCTL1_RSTSU_Msk);
+
+    lpctl1 |= (((uint32_t) p_timing_setting->reset_pattern_repeat_count << R_XSPI0_LPCTL1_RSTREP_Pos) &
+               R_XSPI0_LPCTL1_RSTREP_Msk);
+
+    lpctl1 |= (((uint32_t) p_instance_ctrl->channel << R_XSPI0_LPCTL1_CSSEL_Pos) & R_XSPI0_LPCTL1_CSSEL_Msk);
+
+    lpctl1 |= ((OSPI_B_PRV_TARGET_RESET_IN_BAND_PATREQ << R_XSPI0_LPCTL1_PATREQ_Pos) & R_XSPI0_LPCTL1_PATREQ_Msk);
+
+    err = r_ospi_b_target_reset_pattern_issue(p_reg, lpctl1);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    R_BSP_SoftwareDelay(reset_recovery_time_ms, BSP_DELAY_UNITS_MILLISECONDS);
+
+    err = r_ospi_b_target_reset_memory_mapping_enable(p_reg, bmctl0_mask);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+}
+
+#endif
 
 #if OSPI_B_CFG_XIP_SUPPORT_ENABLE
 

@@ -45,6 +45,11 @@ uint16_t usb_cstd_get_buf_size (usb_utr_t * ptr, uint16_t pipe)
 {
     uint16_t size;
     uint16_t buffer;
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Variable to store the current pipe for restoration before function exit. */
+    uint16_t pre_pipe_value;
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
     if (USB_PIPE0 == pipe)
     {
@@ -66,6 +71,12 @@ uint16_t usb_cstd_get_buf_size (usb_utr_t * ptr, uint16_t pipe)
     }
     else
     {
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+        /* Store the current pipe from PIPESEL reg. */
+        pre_pipe_value = hw_usb_read_pipesel(ptr);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
         /* Pipe select */
         hw_usb_write_pipesel(ptr, pipe);
 
@@ -90,6 +101,11 @@ uint16_t usb_cstd_get_buf_size (usb_utr_t * ptr, uint16_t pipe)
 #if defined(USB_HIGH_SPEED_MODULE)
     }
 #endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+        /* After getting buffer size, or max packet size value, restore PIPESEL reg. */
+        hw_usb_write_pipesel(ptr, pre_pipe_value);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
     }
 
     return size;
@@ -143,7 +159,6 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
   #endif /* #if (BSP_CFG_RTOS == 1) */
         }
  #endif                                /* (BSP_CFG_RTOS != 0) */
-
         g_p_usb_hstd_pipe[ptr->ip][pipe] = (usb_utr_t *) USB_NULL;
         useport = usb_hstd_pipe2fport(ptr, pipe);
         ip_no   = ptr->ip;
@@ -163,9 +178,6 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
     /* PID=NAK & clear STALL */
     usb_cstd_clr_stall(ptr, pipe);
 
-    /* PIPE Configuration */
-    hw_usb_write_pipesel(ptr, pipe);
-
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
     /* Update use pipe no info */
@@ -184,6 +196,15 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
         g_usb_pipe_table[ip_no][pipe].pipe_cfg |= USB_BFREON;
     }
 
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* lock Mutex */
+    tx_mutex_get(&g_usbx_pipesel_mutex[ip_no], TX_WAIT_FOREVER);
+#endif
+
+    /* Select PIPE */
+    hw_usb_write_pipesel(ptr, pipe);
+
     hw_usb_write_pipecfg(ptr, g_usb_pipe_table[ip_no][pipe].pipe_cfg);
 
 #if defined(USB_HIGH_SPEED_MODULE)
@@ -195,8 +216,15 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
     hw_usb_write_pipemaxp(ptr, g_usb_pipe_table[ip_no][pipe].pipe_maxp);
     hw_usb_write_pipeperi(ptr, g_usb_pipe_table[ip_no][pipe].pipe_peri);
 
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /*Unlock Mutex*/
+    tx_mutex_put(&g_usbx_pipesel_mutex[ip_no]);
+#else
+
     /* FIFO buffer DATA-PID initialized */
     hw_usb_write_pipesel(ptr, USB_PIPE0);
+#endif
 
     /* SQCLR */
     hw_usb_set_sqclr(ptr, pipe);
@@ -231,6 +259,12 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
  ******************************************************************************/
 void usb_cstd_clr_pipe_cnfg (usb_utr_t * ptr, uint16_t pipe_no)
 {
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Variable to store the current pipe for restoration before function exit. */
+    uint16_t pre_pipe_value;
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -281,6 +315,11 @@ void usb_cstd_clr_pipe_cnfg (usb_utr_t * ptr, uint16_t pipe_no)
 
     /* PIPE Configuration */
     usb_cstd_chg_curpipe(ptr, (uint16_t) USB_PIPE0, (uint16_t) USB_CUSE, USB_FALSE);
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Store the current pipe from PIPESEL reg. */
+    pre_pipe_value = hw_usb_read_pipesel(ptr);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
     hw_usb_write_pipesel(ptr, pipe_no);
     hw_usb_write_pipecfg(ptr, 0);
 
@@ -291,6 +330,13 @@ void usb_cstd_clr_pipe_cnfg (usb_utr_t * ptr, uint16_t pipe_no)
     hw_usb_write_pipeperi(ptr, 0);
     hw_usb_write_pipesel(ptr, 0);
 
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+    if (pre_pipe_value != pipe_no)
+    {
+        /* Restore PIPESEL reg. */
+        hw_usb_write_pipesel(ptr, pre_pipe_value);
+    }
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
     /* FIFO buffer DATA-PID initialized */
     /* SQCLR */
     hw_usb_set_sqclr(ptr, pipe_no);
@@ -421,12 +467,15 @@ void usb_cstd_chg_curpipe (usb_utr_t * ptr, uint16_t pipe, uint16_t fifosel, uin
         /* CFIFO use */
         case USB_CUSE:
         {
-            /* ISEL=1, CURPIPE=0 */
-            hw_usb_rmw_fifosel(ptr, USB_CUSE, ((USB_RCNT | isel) | pipe), ((USB_RCNT | USB_ISEL) | USB_CURPIPE));
-
-            /* WAIT_LOOP */
+            /* Write CURPIPE value and ISEL value into the CFIFOSEL reg */
+            /* After writing to these bits, read them to check that the written value agrees */
+            /* with the read value before proceeding to the next process. */
             do
             {
+                /* Write CURPIPE value and ISEL value into the CFIFOSEL reg */
+                hw_usb_rmw_fifosel(ptr, USB_CUSE, ((USB_RCNT | isel) | pipe), ((USB_RCNT | USB_ISEL) | USB_CURPIPE));
+
+                /* Read CFIFOSEL reg value */
                 buffer = hw_usb_read_fifosel(ptr, USB_CUSE);
             } while ((buffer & (uint16_t) (USB_ISEL | USB_CURPIPE)) != (uint16_t) (isel | pipe));
 

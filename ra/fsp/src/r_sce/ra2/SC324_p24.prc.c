@@ -7,7 +7,6 @@
 //////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-256 Encryption/Decryption with CTR Mode >            //
 // Procedure number: 24                                             //
-// File name      : SC324_p24.prc                                   //
 // State Diagram  : main(FSM1)                                      //
 // Start State    : main03                                          //
 // End State      : main03                                          //

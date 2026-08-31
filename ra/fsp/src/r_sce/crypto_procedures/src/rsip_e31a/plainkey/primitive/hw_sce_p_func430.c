@@ -5,14 +5,13 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 void HW_SCE_p_func430 (const uint32_t ARG1[], uint32_t ARG2)
 {
     uint32_t iLoop = 0U;
 
-    WR1_PROG(REG_14H, 0x00020061U);
-    WR1_PROG(REG_D4H, 0x00008000U);
-    WR1_PROG(REG_D0H, 0x0e128456U);
+    HW_SCE_p_func_sub016(0x00020061U, 0x00008000U, 0x0e128456U);
 
     for (iLoop = 0U; iLoop < ARG2; )
     {

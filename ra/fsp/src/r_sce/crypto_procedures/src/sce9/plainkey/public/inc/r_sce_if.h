@@ -161,10 +161,6 @@
 #define HW_SCE_RSA1024_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (101U)
 #define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (137U)
 #define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (197U)
-//#define HW_SCE_RSA3072_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
-//#define HW_SCE_RSA3072_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
-//#define HW_SCE_RSA4096_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
-//#define HW_SCE_RSA4096_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
 #define HW_SCE_RSA_RSAES_PKCS_MIN_KEY_N_BYTE_SIZE               (11U)
 #define HW_SCE_RSA_1024_DATA_BYTE_SIZE                          (128U)
 #define HW_SCE_RSA_2048_DATA_BYTE_SIZE                          (256U)
@@ -181,19 +177,8 @@
 #define HW_SCE_RSA_HASH_SHA256                                  (0x03)  /* SHA-256 */
 
 /* For ECC operation. */
-//#define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                     (32U)
 #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
 #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE    (4U)
-//#define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE   (4U)
-//#define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE   (12U)
-//#define HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE                     (64U)
-//#define HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE                (96U)
-//#define HW_SCE_ECC_PRIVATE_KEY_BYTE_SIZE                    (32U)
-//#define HW_SCE_ECC_P384_PRIVATE_KEY_BYTE_SIZE               (48U)
-//#define HW_SCE_ECDSA_DATA_BYTE_SIZE                         (64U)
-//#define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                    (96U)
-//#define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE            (16U)
-//#define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE          (7U)
 #define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                     (112U)
 #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO_WORD_SIZE     (1U)
 #define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO_WORD_SIZE    (17U)
@@ -829,19 +814,19 @@ typedef void (*SCE_GEN_MAC_CB_FUNC_T) (SCE_FW_CB_REQ_TYPE req_type, uint32_t iLo
 /**********************************************************************************************************************
  Exported global functions
  *********************************************************************************************************************/
+
+/* -------- Initialization and Control -------- */
 fsp_err_t HW_SCE_Open(lifecycle_t lifecycle, sce_tls_ca_certification_public_key_index_t *key_index_1,
         sce_update_key_ring_t *key_index_2);
 fsp_err_t HW_SCE_Close(void);
 void HW_SCE_SoftwareReset(void);
 fsp_err_t HW_SCE_SelfCheck2(void);
 fsp_err_t HW_SCE_SelfCheck3(void);
-
-// added for RA6M4 start
 fsp_err_t HW_SCE_FwIntegrityCheck(void);
 fsp_err_t HW_SCE_UpdateOemKeyIndex(lifecycle_t lifecycle, sce_oem_cmd_t key_type, uint8_t *iv, uint8_t *encrypted_oem_key, uint32_t *key_index);
+uint32_t HW_SCE_GetVersion(void);
 
-// added for RA6M4 end
-
+/* -------- Key Index Generation (Installed Key) -------- */
 fsp_err_t HW_SCE_GenerateAes128KeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv, uint8_t *encrypted_key,
         sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes192KeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv, uint8_t *encrypted_key,
@@ -870,18 +855,18 @@ fsp_err_t HW_SCE_GenerateTlsRsaPublicKeyIndex(uint8_t *encrypted_provisioning_ke
         uint8_t *encrypted_key, sce_tls_ca_certification_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP192PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
         uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateEccP224PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
-        uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateEccP256PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
-        uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateEccP384PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
-        uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP192PrivateKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
         uint8_t *encrypted_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateEccP224PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
+        uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP224PrivateKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
         uint8_t *encrypted_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateEccP256PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
+        uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP256PrivateKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
         uint8_t *encrypted_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateEccP384PublicKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
+        uint8_t *encrypted_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP384PrivateKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
         uint8_t *encrypted_key, sce_ecc_private_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateSha1HmacKeyIndex(uint8_t *encrypted_provisioning_key, uint8_t *iv,
@@ -890,16 +875,18 @@ fsp_err_t HW_SCE_GenerateSha256HmacKeyIndex(uint8_t *encrypted_provisioning_key,
         uint8_t *encrypted_key, sce_hmac_sha_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateTlsP256EccKeyIndex(sce_tls_p256_ecc_key_index_t *tls_p256_ecc_key_index,
         uint8_t *ephemeral_ecdh_public_key);
+
+/* -------- Random Key Generation -------- */
 fsp_err_t HW_SCE_GenerateAes128RandomKeyIndex(sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes192RandomKeyIndex(sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes256RandomKeyIndex(sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes128XtsRandomKeyIndex(sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes256XtsRandomKeyIndex(sce_aes_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateTdesRandomKeyIndex(sce_tdes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateRsa1024RandomKeyIndex(sce_rsa1024_key_pair_index_t *key_pair_index);
 fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndex(sce_rsa2048_key_pair_index_t *key_pair_index);
 fsp_err_t HW_SCE_GenerateRsa3072RandomKeyIndex(sce_rsa3072_key_pair_index_t *key_pair_index);
 fsp_err_t HW_SCE_GenerateRsa4096RandomKeyIndex(sce_rsa4096_key_pair_index_t *key_pair_index);
-fsp_err_t HW_SCE_GenerateTdesRandomKeyIndex(sce_tdes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP192RandomKeyIndex(uint32_t *indata_curvetype, sce_ecc_key_pair_index_t *key_pair_index);
 fsp_err_t HW_SCE_GenerateEccP224RandomKeyIndex(uint32_t *indata_curvetype, sce_ecc_key_pair_index_t *key_pair_index);
 fsp_err_t HW_SCE_GenerateEccP256RandomKeyIndex(uint32_t *indata_curvetype, sce_ecc_key_pair_index_t *key_pair_index);
@@ -907,8 +894,8 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndex(uint32_t *indata_curvetype, sce_e
 fsp_err_t HW_SCE_GenerateRandomNumber(uint32_t *random);
 fsp_err_t HW_SCE_GenerateUpdateKeyRingKeyIndex(lifecycle_t lifecycle, uint8_t *encrypted_provisioning_key, uint8_t *iv,
         uint8_t *encrypted_key, sce_update_key_ring_t *key_index);
-uint32_t HW_SCE_GetVersion(void);
 
+/* -------- Plain / Wrapped Key Generation -------- */
 fsp_err_t HW_SCE_GenerateAes128PlainKeyIndex(uint8_t *plain_key, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes192PlainKeyIndex(uint8_t *plain_key, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateAes256PlainKeyIndex(uint8_t *plain_key, sce_aes_key_index_t *key_index);
@@ -921,21 +908,20 @@ fsp_err_t HW_SCE_GenerateRsa3072PrivatePlainKeyIndex(uint8_t *plain_key, sce_rsa
 fsp_err_t HW_SCE_GenerateRsa4096PublicPlainKeyIndex(uint8_t *plain_key, sce_rsa4096_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateRsa4096PrivatePlainKeyIndex(uint8_t *plain_key, sce_rsa4096_private_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP224PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateEccP256PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateEccP384PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP224PrivatePlainKeyIndex(uint8_t *plain_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateEccP256PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP256PrivatePlainKeyIndex(uint8_t *plain_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateEccP384PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP384PrivatePlainKeyIndex(uint8_t *plain_key, sce_ecc_private_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateSha256HmacPlainKeyIndex(uint8_t *plain_key, sce_hmac_sha_key_index_t *key_index);
-
 fsp_err_t HW_SCE_GenerateEccP256r1PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_GenerateEccP384r1PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP256r1PrivatePlainKeyIndex(uint8_t *plain_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateEccP384r1PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccP384r1PrivatePlainKeyIndex(uint8_t *plain_key, sce_ecc_private_key_index_t *key_index);
-
 fsp_err_t HW_SCE_GenerateEccSecp256k1PublicPlainKeyIndex(uint8_t *plain_key, sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_GenerateEccSecp256k1PrivatePlainKeyIndex(uint8_t *plain_key, sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_GenerateSha256HmacPlainKeyIndex(uint8_t *plain_key, sce_hmac_sha_key_index_t *key_index);
 
+/* -------- Key Index Update -------- */
 fsp_err_t HW_SCE_UpdateAes128KeyIndex(lifecycle_t lifecycle, uint8_t *iv, uint8_t *encrypted_key, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateAes192KeyIndex(lifecycle_t lifecycle, uint8_t *iv, uint8_t *encrypted_key, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateAes256KeyIndex(lifecycle_t lifecycle, uint8_t *iv, uint8_t *encrypted_key, sce_aes_key_index_t *key_index);
@@ -962,18 +948,18 @@ fsp_err_t HW_SCE_UpdateTlsRsaPublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
         sce_tls_ca_certification_public_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateEccP192PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
         sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_UpdateEccP224PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
-        sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_UpdateEccP256PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
-        sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_UpdateEccP384PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
-        sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateEccP192PrivateKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
         sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_UpdateEccP224PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
+        sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateEccP224PrivateKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
         sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_UpdateEccP256PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
+        sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateEccP256PrivateKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
         sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_UpdateEccP384PublicKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
+        sce_ecc_public_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateEccP384PrivateKeyIndex(uint8_t *iv, uint8_t *encrypted_key,
         sce_ecc_private_key_index_t *key_index);
 fsp_err_t HW_SCE_Ecc256ScalarMultiplication(uint32_t *InData_CurveType, uint32_t *InData_Cmd,
@@ -983,6 +969,7 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplication(uint32_t *InData_CurveType,
 fsp_err_t HW_SCE_UpdateSha1HmacKeyIndex(uint8_t *iv, uint8_t *encrypted_key, sce_hmac_sha_key_index_t *key_index);
 fsp_err_t HW_SCE_UpdateSha256HmacKeyIndex(uint8_t *iv, uint8_t *encrypted_key, sce_hmac_sha_key_index_t *key_index);
 
+/* -------- Firmware Update -------- */
 fsp_err_t HW_SCE_StartUpdateFirmware(void);
 fsp_err_t HW_SCE_GenerateFirmwareMAC(uint32_t *InData_KeyIndex, uint32_t *InData_SessionKey,
         uint32_t *InData_UpProgram, uint32_t *InData_IV, uint32_t *OutData_Program, uint32_t MAX_CNT,
@@ -990,110 +977,116 @@ fsp_err_t HW_SCE_GenerateFirmwareMAC(uint32_t *InData_KeyIndex, uint32_t *InData
         sce_firmware_generate_mac_resume_handle_t *sce_firmware_generate_mac_resume_handle);
 fsp_err_t HW_SCE_VerifyFirmwareMAC(uint32_t *InData_Program, uint32_t MAX_CNT, uint32_t *InData_MAC);
 
+/* -------- AES -------- */
 fsp_err_t HW_SCE_Aes128EcbEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes128EcbEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes128EcbEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
-fsp_err_t HW_SCE_Aes128EcbDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
-fsp_err_t HW_SCE_Aes128EcbDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t cipher_length);
-fsp_err_t HW_SCE_Aes128EcbDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-fsp_err_t HW_SCE_Aes128CbcEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
-fsp_err_t HW_SCE_Aes128CbcEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t plain_length);
-fsp_err_t HW_SCE_Aes128CbcEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
-fsp_err_t HW_SCE_Aes128CbcDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
-fsp_err_t HW_SCE_Aes128CbcDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t cipher_length);
-fsp_err_t HW_SCE_Aes128CbcDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-
 fsp_err_t HW_SCE_Aes192EcbEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes192EcbEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes192EcbEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
-fsp_err_t HW_SCE_Aes192EcbDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
-fsp_err_t HW_SCE_Aes192EcbDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t cipher_length);
-fsp_err_t HW_SCE_Aes192EcbDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-fsp_err_t HW_SCE_Aes192CbcEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
-fsp_err_t HW_SCE_Aes192CbcEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t plain_length);
-fsp_err_t HW_SCE_Aes192CbcEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
-fsp_err_t HW_SCE_Aes192CbcDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
-fsp_err_t HW_SCE_Aes192CbcDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t cipher_length);
-fsp_err_t HW_SCE_Aes192CbcDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-
 fsp_err_t HW_SCE_Aes256EcbEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes256EcbEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes256EcbEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
+fsp_err_t HW_SCE_Aes128EcbDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
+fsp_err_t HW_SCE_Aes128EcbDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t cipher_length);
+fsp_err_t HW_SCE_Aes128EcbDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
+fsp_err_t HW_SCE_Aes192EcbDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
+fsp_err_t HW_SCE_Aes192EcbDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t cipher_length);
+fsp_err_t HW_SCE_Aes192EcbDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
 fsp_err_t HW_SCE_Aes256EcbDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes256EcbDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t cipher_length);
 fsp_err_t HW_SCE_Aes256EcbDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
+fsp_err_t HW_SCE_Aes128CbcEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
+fsp_err_t HW_SCE_Aes128CbcEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
+        uint32_t plain_length);
+fsp_err_t HW_SCE_Aes128CbcEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
+fsp_err_t HW_SCE_Aes192CbcEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
+fsp_err_t HW_SCE_Aes192CbcEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
+        uint32_t plain_length);
+fsp_err_t HW_SCE_Aes192CbcEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
 fsp_err_t HW_SCE_Aes256CbcEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
 fsp_err_t HW_SCE_Aes256CbcEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes256CbcEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
+fsp_err_t HW_SCE_Aes128CbcDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
+fsp_err_t HW_SCE_Aes128CbcDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t cipher_length);
+fsp_err_t HW_SCE_Aes128CbcDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
+fsp_err_t HW_SCE_Aes192CbcDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
+fsp_err_t HW_SCE_Aes192CbcDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t cipher_length);
+fsp_err_t HW_SCE_Aes192CbcDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
 fsp_err_t HW_SCE_Aes256CbcDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
 fsp_err_t HW_SCE_Aes256CbcDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t cipher_length);
 fsp_err_t HW_SCE_Aes256CbcDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-
 fsp_err_t HW_SCE_Aes128CtrEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
 fsp_err_t HW_SCE_Aes128CtrEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes128CtrEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
-fsp_err_t HW_SCE_Aes128CtrDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
-fsp_err_t HW_SCE_Aes128CtrDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t cipher_length);
-fsp_err_t HW_SCE_Aes128CtrDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-
 fsp_err_t HW_SCE_Aes192CtrEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
 fsp_err_t HW_SCE_Aes192CtrEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes192CtrEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
-fsp_err_t HW_SCE_Aes192CtrDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
-fsp_err_t HW_SCE_Aes192CtrDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t cipher_length);
-fsp_err_t HW_SCE_Aes192CtrDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-
 fsp_err_t HW_SCE_Aes256CtrEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
 fsp_err_t HW_SCE_Aes256CtrEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes256CtrEncryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length);
+fsp_err_t HW_SCE_Aes128CtrDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
+fsp_err_t HW_SCE_Aes128CtrDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t cipher_length);
+fsp_err_t HW_SCE_Aes128CtrDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
+fsp_err_t HW_SCE_Aes192CtrDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
+fsp_err_t HW_SCE_Aes192CtrDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t cipher_length);
+fsp_err_t HW_SCE_Aes192CtrDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
 fsp_err_t HW_SCE_Aes256CtrDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *icounter);
 fsp_err_t HW_SCE_Aes256CtrDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t cipher_length);
 fsp_err_t HW_SCE_Aes256CtrDecryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
-
 fsp_err_t HW_SCE_Aes128XtsEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
 fsp_err_t HW_SCE_Aes128XtsEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t text_bitlen);
 fsp_err_t HW_SCE_Aes128XtsEncryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t text_bitlen);
-fsp_err_t HW_SCE_Aes128XtsDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
-fsp_err_t HW_SCE_Aes128XtsDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
-        uint32_t text_bitlen);
-fsp_err_t HW_SCE_Aes128XtsDecryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t text_bitlen);
 fsp_err_t HW_SCE_Aes256XtsEncryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
 fsp_err_t HW_SCE_Aes256XtsEncryptUpdate(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t text_bitlen);
 fsp_err_t HW_SCE_Aes256XtsEncryptFinal(sce_aes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t text_bitlen);
+fsp_err_t HW_SCE_Aes128XtsDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
+fsp_err_t HW_SCE_Aes128XtsDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t text_bitlen);
+fsp_err_t HW_SCE_Aes128XtsDecryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
+        uint32_t text_bitlen);
 fsp_err_t HW_SCE_Aes256XtsDecryptInit(sce_aes_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec);
 fsp_err_t HW_SCE_Aes256XtsDecryptUpdate(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t text_bitlen);
 fsp_err_t HW_SCE_Aes256XtsDecryptFinal(sce_aes_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t text_bitlen);
-
 fsp_err_t HW_SCE_Aes128GcmEncryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
         uint32_t ivec_len);
 fsp_err_t HW_SCE_Aes128GcmEncryptUpdate(sce_gcm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_data_len, uint8_t *aad, uint32_t aad_len);
 fsp_err_t HW_SCE_Aes128GcmEncryptFinal(sce_gcm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_data_len,
+        uint8_t *atag);
+fsp_err_t HW_SCE_Aes192GcmEncryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
+        uint32_t ivec_len);
+fsp_err_t HW_SCE_Aes192GcmEncryptUpdate(sce_gcm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
+        uint32_t plain_data_len, uint8_t *aad, uint32_t aad_len);
+fsp_err_t HW_SCE_Aes192GcmEncryptFinal(sce_gcm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_data_len,
+        uint8_t *atag);
+fsp_err_t HW_SCE_Aes256GcmEncryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
+        uint32_t ivec_len);
+fsp_err_t HW_SCE_Aes256GcmEncryptUpdate(sce_gcm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
+        uint32_t plain_data_len, uint8_t *aad, uint32_t aad_len);
+fsp_err_t HW_SCE_Aes256GcmEncryptFinal(sce_gcm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_data_len,
         uint8_t *atag);
 fsp_err_t HW_SCE_Aes128GcmDecryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
         uint32_t ivec_len);
@@ -1101,38 +1094,35 @@ fsp_err_t HW_SCE_Aes128GcmDecryptUpdate(sce_gcm_handle_t *handle, uint8_t *ciphe
         uint32_t cipher_data_len, uint8_t *aad, uint32_t aad_len);
 fsp_err_t HW_SCE_Aes128GcmDecryptFinal(sce_gcm_handle_t *handle, uint8_t *plain, uint32_t *plain_data_len,
         uint8_t *atag, uint32_t atag_len);
-
-fsp_err_t HW_SCE_Aes192GcmEncryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
-        uint32_t ivec_len);
-fsp_err_t HW_SCE_Aes192GcmEncryptUpdate(sce_gcm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t plain_data_len, uint8_t *aad, uint32_t aad_len);
-fsp_err_t HW_SCE_Aes192GcmEncryptFinal(sce_gcm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_data_len,
-        uint8_t *atag);
 fsp_err_t HW_SCE_Aes192GcmDecryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
         uint32_t ivec_len);
 fsp_err_t HW_SCE_Aes192GcmDecryptUpdate(sce_gcm_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t cipher_data_len, uint8_t *aad, uint32_t aad_len);
 fsp_err_t HW_SCE_Aes192GcmDecryptFinal(sce_gcm_handle_t *handle, uint8_t *plain, uint32_t *plain_data_len,
         uint8_t *atag, uint32_t atag_len);
-
-fsp_err_t HW_SCE_Aes256GcmEncryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
-        uint32_t ivec_len);
-fsp_err_t HW_SCE_Aes256GcmEncryptUpdate(sce_gcm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t plain_data_len, uint8_t *aad, uint32_t aad_len);
-fsp_err_t HW_SCE_Aes256GcmEncryptFinal(sce_gcm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_data_len,
-        uint8_t *atag);
 fsp_err_t HW_SCE_Aes256GcmDecryptInit(sce_gcm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *ivec,
         uint32_t ivec_len);
 fsp_err_t HW_SCE_Aes256GcmDecryptUpdate(sce_gcm_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t cipher_data_len, uint8_t *aad, uint32_t aad_len);
 fsp_err_t HW_SCE_Aes256GcmDecryptFinal(sce_gcm_handle_t *handle, uint8_t *plain, uint32_t *plain_data_len,
         uint8_t *atag, uint32_t atag_len);
-
 fsp_err_t HW_SCE_Aes128CcmEncryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
         uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
 fsp_err_t HW_SCE_Aes128CcmEncryptUpdate(sce_ccm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
 fsp_err_t HW_SCE_Aes128CcmEncryptFinal(sce_ccm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length,
+        uint8_t *mac, uint32_t mac_length);
+fsp_err_t HW_SCE_Aes192CcmEncryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
+        uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
+fsp_err_t HW_SCE_Aes192CcmEncryptUpdate(sce_ccm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
+        uint32_t plain_length);
+fsp_err_t HW_SCE_Aes192CcmEncryptFinal(sce_ccm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length,
+        uint8_t *mac, uint32_t mac_length);
+fsp_err_t HW_SCE_Aes256CcmEncryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
+        uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
+fsp_err_t HW_SCE_Aes256CcmEncryptUpdate(sce_ccm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
+        uint32_t plain_length);
+fsp_err_t HW_SCE_Aes256CcmEncryptFinal(sce_ccm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length,
         uint8_t *mac, uint32_t mac_length);
 fsp_err_t HW_SCE_Aes128CcmDecryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
         uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
@@ -1140,25 +1130,11 @@ fsp_err_t HW_SCE_Aes128CcmDecryptUpdate(sce_ccm_handle_t *handle, uint8_t *ciphe
         uint32_t cipher_length);
 fsp_err_t HW_SCE_Aes128CcmDecryptFinal(sce_ccm_handle_t *handle, uint8_t *plain, uint32_t *plain_length,
         uint8_t *mac, uint32_t mac_length);
-
-fsp_err_t HW_SCE_Aes192CcmEncryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
-        uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
-fsp_err_t HW_SCE_Aes192CcmEncryptUpdate(sce_ccm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t plain_length);
-fsp_err_t HW_SCE_Aes192CcmEncryptFinal(sce_ccm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length,
-        uint8_t *mac, uint32_t mac_length);
 fsp_err_t HW_SCE_Aes192CcmDecryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
         uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
 fsp_err_t HW_SCE_Aes192CcmDecryptUpdate(sce_ccm_handle_t *handle, uint8_t *cipher, uint8_t *plain,
         uint32_t cipher_length);
 fsp_err_t HW_SCE_Aes192CcmDecryptFinal(sce_ccm_handle_t *handle, uint8_t *plain, uint32_t *plain_length,
-        uint8_t *mac, uint32_t mac_length);
-
-fsp_err_t HW_SCE_Aes256CcmEncryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
-        uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
-fsp_err_t HW_SCE_Aes256CcmEncryptUpdate(sce_ccm_handle_t *handle, uint8_t *plain, uint8_t *cipher,
-        uint32_t plain_length);
-fsp_err_t HW_SCE_Aes256CcmEncryptFinal(sce_ccm_handle_t *handle, uint8_t *cipher, uint32_t *cipher_length,
         uint8_t *mac, uint32_t mac_length);
 fsp_err_t HW_SCE_Aes256CcmDecryptInit(sce_ccm_handle_t *handle, sce_aes_key_index_t *key_index, uint8_t *nonce,
         uint32_t nonce_len, uint8_t *adata, uint8_t a_len, uint32_t payload_len, uint32_t mac_len);
@@ -1166,20 +1142,28 @@ fsp_err_t HW_SCE_Aes256CcmDecryptUpdate(sce_ccm_handle_t *handle, uint8_t *ciphe
         uint32_t cipher_length);
 fsp_err_t HW_SCE_Aes256CcmDecryptFinal(sce_ccm_handle_t *handle, uint8_t *plain, uint32_t *plain_length,
         uint8_t *mac, uint32_t mac_length);
-
 fsp_err_t HW_SCE_Aes128CmacGenerateInit(sce_cmac_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes128CmacGenerateUpdate(sce_cmac_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Aes128CmacGenerateFinal(sce_cmac_handle_t *handle, uint8_t *mac);
-fsp_err_t HW_SCE_Aes128CmacVerifyInit(sce_cmac_handle_t *handle, sce_aes_key_index_t *key_index);
-fsp_err_t HW_SCE_Aes128CmacVerifyUpdate(sce_cmac_handle_t *handle, uint8_t *message, uint32_t message_length);
-fsp_err_t HW_SCE_Aes128CmacVerifyFinal(sce_cmac_handle_t *handle, uint8_t *mac, uint32_t mac_length);
 fsp_err_t HW_SCE_Aes256CmacGenerateInit(sce_cmac_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes256CmacGenerateUpdate(sce_cmac_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Aes256CmacGenerateFinal(sce_cmac_handle_t *handle, uint8_t *mac);
+fsp_err_t HW_SCE_Aes128CmacVerifyInit(sce_cmac_handle_t *handle, sce_aes_key_index_t *key_index);
+fsp_err_t HW_SCE_Aes128CmacVerifyUpdate(sce_cmac_handle_t *handle, uint8_t *message, uint32_t message_length);
+fsp_err_t HW_SCE_Aes128CmacVerifyFinal(sce_cmac_handle_t *handle, uint8_t *mac, uint32_t mac_length);
 fsp_err_t HW_SCE_Aes256CmacVerifyInit(sce_cmac_handle_t *handle, sce_aes_key_index_t *key_index);
 fsp_err_t HW_SCE_Aes256CmacVerifyUpdate(sce_cmac_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Aes256CmacVerifyFinal(sce_cmac_handle_t *handle, uint8_t *mac, uint32_t mac_length);
+fsp_err_t HW_SCE_Aes128KeyWrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
+        sce_aes_key_index_t *target_key_index, uint32_t *wrapped_key);
+fsp_err_t HW_SCE_Aes256KeyWrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
+        sce_aes_key_index_t *target_key_index, uint32_t *wrapped_key);
+fsp_err_t HW_SCE_Aes128KeyUnwrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
+        uint32_t *wrapped_key, sce_aes_key_index_t *target_key_index);
+fsp_err_t HW_SCE_Aes256KeyUnwrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
+        uint32_t *wrapped_key, sce_aes_key_index_t *target_key_index);
 
+/* -------- TDES -------- */
 fsp_err_t HW_SCE_TdesEcbEncryptInit(sce_tdes_handle_t *handle, sce_tdes_key_index_t *key_index);
 fsp_err_t HW_SCE_TdesEcbEncryptUpdate(sce_tdes_handle_t *handle, uint8_t *plain, uint8_t *cipher,
         uint32_t plain_length);
@@ -1197,10 +1181,10 @@ fsp_err_t HW_SCE_TdesCbcDecryptUpdate(sce_tdes_handle_t *handle, uint8_t *cipher
         uint32_t cipher_length);
 fsp_err_t HW_SCE_TdesCbcDecryptFinal(sce_tdes_handle_t *handle, uint8_t *plain, uint32_t *plain_length);
 
+/* -------- Hash (MD5 / SHA) -------- */
 fsp_err_t HW_SCE_Md5Init(sce_sha_md5_handle_t *handle);
 fsp_err_t HW_SCE_Md5Update(sce_sha_md5_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Md5Final(sce_sha_md5_handle_t *handle, uint8_t *digest, uint32_t *digest_length);
-
 fsp_err_t HW_SCE_Sha1Init(sce_sha_md5_handle_t *handle);
 fsp_err_t HW_SCE_Sha1Update(sce_sha_md5_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Sha1Final(sce_sha_md5_handle_t *handle, uint8_t *digest, uint32_t *digest_length);
@@ -1208,6 +1192,7 @@ fsp_err_t HW_SCE_Sha256Init(sce_sha_md5_handle_t *handle);
 fsp_err_t HW_SCE_Sha256Update(sce_sha_md5_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Sha256Final(sce_sha_md5_handle_t *handle, uint8_t *digest, uint32_t *digest_length);
 
+/* -------- HMAC -------- */
 fsp_err_t HW_SCE_Sha1HmacGenerateInit(sce_hmac_sha_handle_t *handle, sce_hmac_sha_key_index_t *key_index);
 fsp_err_t HW_SCE_Sha1HmacGenerateUpdate(sce_hmac_sha_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Sha1HmacGenerateFinal(sce_hmac_sha_handle_t *handle, uint8_t *mac);
@@ -1222,6 +1207,7 @@ fsp_err_t HW_SCE_Sha256HmacVerifyInit(sce_hmac_sha_handle_t *handle, sce_hmac_sh
 fsp_err_t HW_SCE_Sha256HmacVerifyUpdate(sce_hmac_sha_handle_t *handle, uint8_t *message, uint32_t message_length);
 fsp_err_t HW_SCE_Sha256HmacVerifyFinal(sce_hmac_sha_handle_t *handle, uint8_t *mac, uint32_t mac_length);
 
+/* -------- RSA -------- */
 fsp_err_t HW_SCE_RsassaPkcs1024SignatureGenerate(sce_rsa_byte_data_t *message_hash,
         sce_rsa_byte_data_t *signature, sce_rsa1024_private_key_index_t *key_index, uint8_t hash_type);
 fsp_err_t HW_SCE_RsassaPkcs1024SignatureVerification(sce_rsa_byte_data_t *signature,
@@ -1238,7 +1224,6 @@ fsp_err_t HW_SCE_RsassaPkcs4096SignatureGenerate(sce_rsa_byte_data_t *message_ha
         sce_rsa_byte_data_t *signature, sce_rsa4096_private_key_index_t *key_index, uint8_t hash_type);
 fsp_err_t HW_SCE_RsassaPkcs4096SignatureVerification(sce_rsa_byte_data_t *signature,
         sce_rsa_byte_data_t *message_hash, sce_rsa4096_public_key_index_t *key_index, uint8_t hash_type);
-
 fsp_err_t HW_SCE_RsaesPkcs1024Encrypt(sce_rsa_byte_data_t *plain, sce_rsa_byte_data_t *cipher,
         sce_rsa1024_public_key_index_t *key_index);
 fsp_err_t HW_SCE_RsaesPkcs1024Decrypt(sce_rsa_byte_data_t *cipher, sce_rsa_byte_data_t *plain,
@@ -1255,7 +1240,40 @@ fsp_err_t HW_SCE_RsaesPkcs4096Encrypt(sce_rsa_byte_data_t *plain, sce_rsa_byte_d
         sce_rsa4096_public_key_index_t *key_index);
 fsp_err_t HW_SCE_RsaesPkcs4096Decrypt(sce_rsa_byte_data_t *cipher, sce_rsa_byte_data_t *plain,
         sce_rsa4096_private_key_index_t *key_index);
+fsp_err_t HW_SCE_RSA_IF_HASH(uint8_t *p_mes, uint8_t *p_hash, uint32_t mes_len, uint8_t hash_type);
 
+/* -------- ECDSA -------- */
+fsp_err_t HW_SCE_EcdsaP192SignatureGenerate(sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
+        sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP224SignatureGenerate(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
+        sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP256SignatureGenerate(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
+        sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP384SignatureGenerate(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
+        sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP192SignatureVerification(sce_ecdsa_byte_data_t *signature,
+        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP224SignatureVerification(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *signature,
+        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP256SignatureVerification(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *signature,
+        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdsaP384SignatureVerification(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *signature,
+        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
+
+/* -------- ECDH -------- */
+fsp_err_t HW_SCE_EcdhInit(sce_ecdh_handle_t *handle, uint32_t key_type, uint32_t use_key_id);
+fsp_err_t HW_SCE_EcdhReadPublicKey(sce_ecdh_handle_t *handle, sce_ecc_public_key_index_t *public_key_index,
+        uint8_t *public_key_data, sce_ecdsa_byte_data_t *signature, sce_ecc_public_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdhMakePublicKey(sce_ecdh_handle_t *handle, sce_ecc_public_key_index_t *public_key_index,
+        sce_ecc_private_key_index_t *private_key_index, uint8_t *public_key, sce_ecdsa_byte_data_t *signature,
+        sce_ecc_private_key_index_t *key_index);
+fsp_err_t HW_SCE_EcdhCalculateSharedSecretIndex(sce_ecdh_handle_t *handle,
+        sce_ecc_public_key_index_t *public_key_index, sce_ecc_private_key_index_t *private_key_index,
+        sce_ecdh_key_index_t *shared_secret_index);
+fsp_err_t HW_SCE_EcdhKeyDerivation(sce_ecdh_handle_t *handle, sce_ecdh_key_index_t *shared_secret_index,
+        uint32_t algorithm_id, uint8_t *other_info, uint32_t other_info_length, sce_aes_key_index_t *key_index);
+
+/* -------- TLS -------- */
 fsp_err_t HW_SCE_TlsRootCertificateVerification(uint32_t public_key_type, uint8_t *certificate,
         uint32_t certificate_length, uint32_t public_key_n_start_position, uint32_t public_key_n_end_position,
         uint32_t public_key_e_start_position, uint32_t public_key_e_end_position, uint8_t *signature,
@@ -1281,45 +1299,5 @@ fsp_err_t HW_SCE_TlsGeneratePreMasterSecretWithEccP256Key(uint32_t *encrypted_pu
 fsp_err_t HW_SCE_TlsServersEphemeralEcdhPublicKeyRetrieves(uint32_t public_key_type, uint8_t *client_random,
         uint8_t *server_random, uint8_t *server_ephemeral_ecdh_public_key, uint8_t *server_key_exchange_signature,
         uint32_t *encrypted_public_key, uint32_t *encrypted_ephemeral_ecdh_public_key);
-
-fsp_err_t HW_SCE_EcdsaP192SignatureGenerate(sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
-        sce_ecc_private_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP224SignatureGenerate(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
-        sce_ecc_private_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP256SignatureGenerate(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
-        sce_ecc_private_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP384SignatureGenerate(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *message_hash, sce_ecdsa_byte_data_t *signature,
-        sce_ecc_private_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP192SignatureVerification(sce_ecdsa_byte_data_t *signature,
-        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP224SignatureVerification(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *signature,
-        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP256SignatureVerification(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *signature,
-        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdsaP384SignatureVerification(uint32_t *indata_curvetype, sce_ecdsa_byte_data_t *signature,
-        sce_ecdsa_byte_data_t *message_hash, sce_ecc_public_key_index_t *key_index);
-
-fsp_err_t HW_SCE_RSA_IF_HASH(uint8_t *p_mes, uint8_t *p_hash, uint32_t mes_len, uint8_t hash_type);
-
-fsp_err_t HW_SCE_EcdhInit(sce_ecdh_handle_t *handle, uint32_t key_type, uint32_t use_key_id);
-fsp_err_t HW_SCE_EcdhReadPublicKey(sce_ecdh_handle_t *handle, sce_ecc_public_key_index_t *public_key_index,
-        uint8_t *public_key_data, sce_ecdsa_byte_data_t *signature, sce_ecc_public_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdhMakePublicKey(sce_ecdh_handle_t *handle, sce_ecc_public_key_index_t *public_key_index,
-        sce_ecc_private_key_index_t *private_key_index, uint8_t *public_key, sce_ecdsa_byte_data_t *signature,
-        sce_ecc_private_key_index_t *key_index);
-fsp_err_t HW_SCE_EcdhCalculateSharedSecretIndex(sce_ecdh_handle_t *handle,
-        sce_ecc_public_key_index_t *public_key_index, sce_ecc_private_key_index_t *private_key_index,
-        sce_ecdh_key_index_t *shared_secret_index);
-fsp_err_t HW_SCE_EcdhKeyDerivation(sce_ecdh_handle_t *handle, sce_ecdh_key_index_t *shared_secret_index,
-        uint32_t algorithm_id, uint8_t *other_info, uint32_t other_info_length, sce_aes_key_index_t *key_index);
-
-fsp_err_t HW_SCE_Aes128KeyWrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
-        sce_aes_key_index_t *target_key_index, uint32_t *wrapped_key);
-fsp_err_t HW_SCE_Aes256KeyWrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
-        sce_aes_key_index_t *target_key_index, uint32_t *wrapped_key);
-fsp_err_t HW_SCE_Aes128KeyUnwrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
-        uint32_t *wrapped_key, sce_aes_key_index_t *target_key_index);
-fsp_err_t HW_SCE_Aes256KeyUnwrap(sce_aes_key_index_t *wrap_key_index, uint32_t target_key_type,
-        uint32_t *wrapped_key, sce_aes_key_index_t *target_key_index);
 
 #endif /* R_SCE_IF_HEADER_FILE */

@@ -91,6 +91,9 @@
 #define LAYER3_SWITCH_FRER_SYSTEM_CLOCK_BITMASK                   (0x3FFUL)
 #define LAYER3_SWITCH_SEQ_REG_MAX_NUM                             (32)
 
+/* Timestamp sequence number mask. */
+#define LAYER3_SWITCH_TS_SEQUENCE_NUMBER_MASK                     (0xFF)
+
 /***********************************************************************************************************************
  * Typedef definitions
  ***********************************************************************************************************************/
@@ -1539,6 +1542,59 @@ fsp_err_t R_LAYER3_SWITCH_LinkStatusCheck (ether_switch_ctrl_t * const          
 
     return err;
 }                                      /* End of function rmac_link_status_check() */
+
+/********************************************************************************************************************//**
+ * @brief Get transmit timestamp from ts reception descriptor which has same timestamp id.
+ *
+ * @retval  FSP_SUCCESS                                 Channel successfully closed.
+ * @retval  FSP_ERR_ASSERTION                           Pointer to control block is NULL.
+ * @retval  FSP_ERR_NOT_OPEN                            Control block is not open.
+ * @retval  FSP_ERR_NOT_FOUND                           The requested timestamp could not be found
+ * @retval  FSP_ERR_INVALID_ARGUMENT                    Descriptor index number is invalid.
+ ***********************************************************************************************************************/
+fsp_err_t R_LAYER3_SWITCH_GetTxTimestamp (ether_switch_ctrl_t * const p_ctrl,
+                                          uint32_t                    descriptor_index,
+                                          uint32_t                    tx_timestamp_seq_num,
+                                          layer3_switch_timestamp_t * p_timestamp)
+{
+    layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_ctrl;
+    fsp_err_t err = FSP_ERR_NOT_FOUND;
+
+#if LAYER3_SWITCH_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_timestamp);
+    FSP_ERROR_RETURN(LAYER3_SWITCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(descriptor_index < BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM, FSP_ERR_INVALID_ARGUMENT);
+#endif
+
+    layer3_switch_extended_cfg_t * p_extend = (layer3_switch_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+    layer3_switch_ts_reception_process_descriptor_t * p_ts_descriptor_arrays =
+        p_extend->p_ts_descriptor_arrays[descriptor_index]->p_ts_descriptor_array;
+
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    for (uint32_t i = 0; i < (p_extend->p_ts_descriptor_arrays[descriptor_index]->array_length); i++)
+    {
+        if ((LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND != p_ts_descriptor_arrays[i].ts_reception_descriptor_result.dt) &&
+            ((tx_timestamp_seq_num & LAYER3_SWITCH_TS_SEQUENCE_NUMBER_MASK) ==
+             p_ts_descriptor_arrays[i].ts_reception_descriptor_result.tsun))
+        {
+            p_timestamp->sec_lower = p_ts_descriptor_arrays[i].ts_reception_descriptor_result.tss;
+            p_timestamp->ns        = p_ts_descriptor_arrays[i].ts_reception_descriptor_result.tsns;
+
+            p_ts_descriptor_arrays[i].ts_reception_descriptor_result.dt = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND;
+
+            err = FSP_SUCCESS;
+            break;
+        }
+    }
+
+    FSP_CRITICAL_SECTION_EXIT;
+
+    return err;
+}                                      /* End of function R_LAYER3_SWITCH_GetTxTimestamp() */
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup LAYER3_SWITCH)
@@ -3350,34 +3406,31 @@ static fsp_err_t r_layer3_switch_create_tx_timestamp_queue (ether_switch_ctrl_t 
 
     /* Search TS descriptor queue can use. */
     uint32_t ts_descriptor_queue_index = 0;
-    for (ts_descriptor_queue_index = 0;
-         ts_descriptor_queue_index < BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM;
-         ts_descriptor_queue_index++)
+
+    ts_descriptor_queue_index = p_extend->gptp_timer_numbers[port];
+
+    /* Successfully because it will use the descriptor queue that is currently in use. */
+    if (LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_USED ==
+        p_instance_ctrl->ts_descriptor_queue_status_list[ts_descriptor_queue_index])
     {
-        if (port == ts_descriptor_queue_index)
-        {
-            if (LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_UNUSED ==
-                p_instance_ctrl->ts_descriptor_queue_status_list[ts_descriptor_queue_index])
-            {
-                break;
-            }
-        }
+        /* Output TS Descriptor queue index and change state used. */
+        *p_ts_descriptor_queue_index = ts_descriptor_queue_index;
+
+        return FSP_SUCCESS;
     }
 
-    FSP_ERROR_RETURN(BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM > ts_descriptor_queue_index, FSP_ERR_OVERFLOW);
-
-    p_ts_descriptor = p_queue_cfg->p_ts_descriptor_array;
+    p_ts_descriptor = p_extend->p_ts_descriptor_arrays[ts_descriptor_queue_index]->p_ts_descriptor_array;
 
     /* Initialize TS descriptor in queue. */
-    for (uint8_t i = 0; i < (p_queue_cfg->array_length - 1); i++)
+    for (uint8_t i = 0; i < (p_extend->p_ts_descriptor_arrays[ts_descriptor_queue_index]->array_length - 1); i++)
     {
         p_ts_descriptor[i].ts_reception_descriptor_basic.dt  = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND;
         p_ts_descriptor[i].ts_reception_descriptor_basic.die = 1;
     }
 
-    p_ts_descriptor[(p_queue_cfg->array_length -
+    p_ts_descriptor[(p_extend->p_ts_descriptor_arrays[ts_descriptor_queue_index]->array_length -
                      1)].ts_reception_descriptor_basic.dt = LAYER3_SWITCH_DESCRIPTOR_TYPE_LINKFIX;
-    p_ts_descriptor[(p_queue_cfg->array_length -
+    p_ts_descriptor[(p_extend->p_ts_descriptor_arrays[ts_descriptor_queue_index]->array_length -
                      1)].ts_reception_descriptor_basic.ptr_l = (uintptr_t) p_ts_descriptor;
 
     /* Set GWCA to CONFIG mode. */

@@ -154,7 +154,8 @@ fsp_err_t R_USB_HAUD_ClockSourceGet (usb_ctrl_t * const    p_api_ctrl,
         {
             descriptor = g_p_usb_haud_config_table[p_ctrl->module_number];
 
-            total_descriptor_length = *(descriptor + 2);
+            total_descriptor_length  = *(descriptor + 2);
+            total_descriptor_length |= (uint32_t) (*(descriptor + 3) << 8);
 
             while (total_descriptor_length)
             {
@@ -327,7 +328,8 @@ fsp_err_t R_USB_HAUD_AlternateNumberGet (usb_ctrl_t * const    p_api_ctrl,
         {
             descriptor = g_p_usb_haud_config_table[p_ctrl->module_number];
 
-            total_descriptor_length = *(descriptor + 2);
+            total_descriptor_length  = *(descriptor + 2);
+            total_descriptor_length |= (uint32_t) (*(descriptor + 3) << 8);
 
             while (total_descriptor_length)
             {

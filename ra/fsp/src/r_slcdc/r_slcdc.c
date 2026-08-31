@@ -17,14 +17,22 @@
  **********************************************************************************************************************/
 
 /* "SLCD" in ASCII, used to determine if the module is open */
-#define SLCDC_OPEN                          (0x534C4344U)
-#define SLCDC_CLOSED                        (0x00000000U)
+#define SLCDC_OPEN                           (0x534C4344U)
+#define SLCDC_CLOSED                         (0x00000000U)
 
-#define SLCDC_PRV_LCDM1_LCDSEL_BLON         (0x18)
-#define SLCDC_PRV_LCDM1_SCOC_LCDON          (0xC0)
-#define SLCDC_PRV_LCDM1_LCDVLM_THRESHOLD    (3300)
-#define SLCDC_PRV_VLCD_CONTRAST_OFFSET      (4)
-#define SLCDC_PRV_VLCD_DEFAULT              (0x4U)
+#define SLCDC_PRV_LCDM1_LCDSEL_BLON          (0x18)
+#define SLCDC_PRV_LCDM1_SCOC_LCDON           (0xC0)
+#define SLCDC_PRV_LCDM1_LCDVLM_THRESHOLD     (3300)
+#define SLCDC_PRV_VLCD_CONTRAST_OFFSET       (4)
+#define SLCDC_PRV_VLCD_DEFAULT               (0x4U)
+
+/* Add a 5% safety margin to the wait time to ensure compliance with the User's Manual */
+#define SLCDC_PRV_WAIT_MARGIN_PERCENT        (5U)
+#define SLCDC_PRV_TIME_WITH_MARGIN(time)    ((time) + (((time) * SLCDC_PRV_WAIT_MARGIN_PERCENT) / 100U))
+
+#define SLCDC_PRV_VOLT_SETUP_TIME_MS         (10U)  /* Reference voltage setup time */
+#define SLCDC_PRV_VOLT_BOOST_WAIT_TIME_MS    (500U) /* Voltage boost wait time */
+#define SLCDC_PRV_CAP_SPLIT_WAIT_TIME_MS     (100U) /* Capacitor split wait time */
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -252,6 +260,19 @@ fsp_err_t R_SLCDC_Start (slcdc_ctrl_t * const p_ctrl)
     if (SLCDC_VOLT_EXTERNAL != p_instance_ctrl->p_cfg->drive_volt_gen)
     {
         R_SLCDC->LCDM1_b.VLCON = 1;
+
+        /* The wait time from when voltage bucking is started (VLCON = 1) until display is enabled (LCDON = 1)
+         * Refer to relevant section "Segment LCD Controller Characteristics" in User's Manual */
+        if (SLCDC_VOLT_INTERNAL == p_instance_ctrl->p_cfg->drive_volt_gen)
+        {
+            R_BSP_SoftwareDelay(SLCDC_PRV_TIME_WITH_MARGIN(SLCDC_PRV_VOLT_BOOST_WAIT_TIME_MS),
+                                BSP_DELAY_UNITS_MILLISECONDS);
+        }
+        else                           /* Wait for Capacitor Split Stabilization */
+        {
+            R_BSP_SoftwareDelay(SLCDC_PRV_TIME_WITH_MARGIN(SLCDC_PRV_CAP_SPLIT_WAIT_TIME_MS),
+                                BSP_DELAY_UNITS_MILLISECONDS);
+        }
     }
 
 #else
@@ -355,6 +376,9 @@ fsp_err_t R_SLCDC_SetContrast (slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t con
  #else
     R_SLCDC->VLCD = (uint8_t) (contrast + SLCDC_PRV_VLCD_CONTRAST_OFFSET);
  #endif
+
+    /* Wait for the reference voltage setup time */
+    R_BSP_SoftwareDelay(SLCDC_PRV_TIME_WITH_MARGIN(SLCDC_PRV_VOLT_SETUP_TIME_MS), BSP_DELAY_UNITS_MILLISECONDS);
 
     /* Enable the voltage boost circuit */
     R_SLCDC->LCDM1_b.VLCON = 1;

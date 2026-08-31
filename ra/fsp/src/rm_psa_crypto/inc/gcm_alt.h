@@ -54,6 +54,14 @@ extern "C" {
 #define MBEDTLS_GCM_HTABLE_SIZE 16
 #endif
 
+/* HW multi-part GCM session state (see the sce_gcm_* functions in gcm_alt_process.c). */
+typedef enum e_sce_mbedtls_gcm_operation_state
+{
+    SCE_MBEDTLS_GCM_OPERATION_STATE_IDLE = 0,   /*!< No HW GCM session open.            */
+    SCE_MBEDTLS_GCM_OPERATION_STATE_AAD,        /*!< Session open, absorbing AAD.       */
+    SCE_MBEDTLS_GCM_OPERATION_STATE_TEXT        /*!< Session open, processing text.     */
+} sce_mbedtls_gcm_operation_state_t;
+
 /**
  * \brief          The GCM context structure.
  */
@@ -75,6 +83,8 @@ typedef struct mbedtls_gcm_context
                                                               MBEDTLS_GCM_DECRYPT. */
     unsigned char MBEDTLS_PRIVATE(acceleration);             /*!< The acceleration to use. */
 	bool vendor_flag;
+	sce_mbedtls_gcm_operation_state_t sce_stage; /*!< HW multi-part session state.     */
+	unsigned char sce_buf_len;   /*!< HW multi-part: bytes staged in buf[] (0..15). */
 } mbedtls_gcm_context;
 
  #define RM_PSA_CRYPTO_AES_LOOKUP_INDEX(bits)    (((bits) >> 6) - 2U)
@@ -90,6 +100,24 @@ int sce_gcm_crypt_and_tag(mbedtls_gcm_context * ctx,
                           unsigned char       * output,
                           size_t                tag_len,
                           unsigned char       * tag);
+
+/* HW-accelerated multi-part AES-GCM (held-open SCE session). */
+int  sce_gcm_starts(mbedtls_gcm_context * ctx, int mode,
+                    const unsigned char * iv, size_t iv_len);
+int  sce_gcm_update_ad(mbedtls_gcm_context * ctx,
+                       const unsigned char * add, size_t add_len);
+int  sce_gcm_update(mbedtls_gcm_context * ctx,
+                    const unsigned char * input, size_t input_length,
+                    unsigned char * output, size_t output_size, size_t * output_length);
+int  sce_gcm_finish(mbedtls_gcm_context * ctx,
+                    unsigned char * output, size_t output_size, size_t * output_length,
+                    unsigned char * tag, size_t tag_len);
+/* Decrypt verify: feeds the expected_tag to the HW DecryptFinal (which verifies internally).
+ * Returns 0 on auth success, MBEDTLS_ERR_GCM_AUTH_FAILED on mismatch. */
+int  sce_gcm_verify(mbedtls_gcm_context * ctx,
+                    unsigned char * output, size_t output_size, size_t * output_length,
+                    const unsigned char * expected_tag, size_t tag_len);
+void sce_gcm_free_session(mbedtls_gcm_context * ctx);
 
  #ifdef __cplusplus
 }

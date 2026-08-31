@@ -1,11 +1,17 @@
 /**
- * \file chachapoly_alt.c
+ * This file is a copy of the chachapoly.c file from mbedCrypto
  *
- * \brief ChaCha20-Poly1305 AEAD construction based on RFC 7539.
+ *  This file contains function definitions for the ChaCha20-Poly1305 alternate implementation.
  *
+ */
+
+/*
  *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+ *  Copyright (C) 2026 Modified by Renesas Electronics Corporation and/or its affiliates
  */
+
+/* UNCRUSTIFY-OFF */
 
 #include "common.h"
 

@@ -52,6 +52,10 @@
 #define RSIP_PRV_WORD_SIZE_ECC_521_PUBLIC_KEY               (40U)
 #define RSIP_PRV_BYTE_SIZE_ECC_521_PADDING                  (14U)
 
+/* For KDF */
+#define RSIP_PRV_WORD_SIZE_KDF_SHA_512_521_ENC_MSG          (17U)
+#define RSIP_PRV_BYTE_SIZE_KDF_SHA_512_521_ENC_MSG          (66U)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -2182,6 +2186,74 @@ rsip_ret_t r_rsip_wrapper_pe7_sha512_iv_aes (const uint32_t InData_KDFInfo[],
                       NULL,
                       NULL,
                       OutData_EncIV);
+}
+
+rsip_ret_t r_rsip_wrapper_pefu (const uint32_t InData_Msg1[],
+                                const uint32_t InData_Msg1Length[],
+                                const uint32_t InData_EncMsg[],
+                                const uint32_t InData_EncMsgLength_Word[],
+                                const uint32_t InData_Msg2[],
+                                const uint32_t InData_Msg2Length_Word[])
+
+{
+    uint32_t InData_EncMsgLength_Byte = 0;
+    uint32_t InData_Msg2Length_Byte   = 0;
+
+    if (InData_EncMsgLength_Word[0] == bswap_32big(RSIP_PRV_WORD_SIZE_KDF_SHA_512_521_ENC_MSG))
+    {
+        InData_EncMsgLength_Byte = RSIP_PRV_BYTE_SIZE_KDF_SHA_512_521_ENC_MSG;
+        InData_Msg2Length_Byte   = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA384_SHA512 - InData_EncMsgLength_Byte -
+                                   r_rsip_word_to_byte_convert(bswap_32big(InData_Msg1Length[0]));
+    }
+    else
+    {
+        InData_EncMsgLength_Byte = r_rsip_word_to_byte_convert(bswap_32big(InData_EncMsgLength_Word[0]));
+        InData_Msg2Length_Byte   = r_rsip_word_to_byte_convert(bswap_32big(InData_Msg2Length_Word[0]));
+    }
+
+    uint32_t InData_EncMsgLength[1] = {bswap_32big(InData_EncMsgLength_Byte)};
+    uint32_t InData_Msg2Length[1]   = {bswap_32big(InData_Msg2Length_Byte)};
+
+    return r_rsip_pefu(InData_Msg1,
+                       InData_Msg1Length,
+                       InData_EncMsg,
+                       InData_EncMsgLength,
+                       InData_Msg2,
+                       InData_Msg2Length);
+}
+
+rsip_ret_t r_rsip_wrapper_peff (const uint32_t InData_Msg1[],
+                                const uint32_t InData_Msg1Length[],
+                                const uint32_t InData_EncMsg[],
+                                const uint32_t InData_EncMsgLength_Word[],
+                                const uint32_t InData_Msg2[],
+                                const uint32_t InData_Msg2Length_Word[],
+                                uint32_t       OutData_KDFInfo[])
+{
+    uint32_t InData_EncMsgLength_Byte = 0;
+    uint32_t InData_Msg2Length_Byte   = 0;
+
+    if (InData_EncMsgLength_Word[0] == bswap_32big(RSIP_PRV_WORD_SIZE_KDF_SHA_512_521_ENC_MSG))
+    {
+        InData_EncMsgLength_Byte = RSIP_PRV_BYTE_SIZE_KDF_SHA_512_521_ENC_MSG;
+    }
+    else
+    {
+        InData_EncMsgLength_Byte = r_rsip_word_to_byte_convert(bswap_32big(InData_EncMsgLength_Word[0]));
+    }
+
+    InData_Msg2Length_Byte = r_rsip_word_to_byte_convert(bswap_32big(InData_Msg2Length_Word[0]));
+
+    uint32_t InData_EncMsgLength[1] = {bswap_32big(InData_EncMsgLength_Byte)};
+    uint32_t InData_Msg2Length[1]   = {bswap_32big(InData_Msg2Length_Byte)};
+
+    return r_rsip_peff(InData_Msg1,
+                       InData_Msg1Length,
+                       InData_EncMsg,
+                       InData_EncMsgLength,
+                       InData_Msg2,
+                       InData_Msg2Length,
+                       OutData_KDFInfo);
 }
 
 rsip_ret_t r_rsip_wrapper_p2c_ch0 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])

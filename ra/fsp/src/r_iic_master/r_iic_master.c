@@ -878,25 +878,21 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
     /* Enable timeout function */
     p_ctrl->p_reg->ICFER_b.TMOE = 1U;
 
-    /* Enable TXI. This is treated differently to support restart functionality.
-     * In case the previous IIC master transaction enabled restart, the queued TXI will fire a this point.
-     *
-     * The TXI had been NVIC-disabled (but Peripheral enabled) before setting the
-     * RS bit by the previous restart enabled transaction.
-     * The RS bit mimics a "stop" followed by a "start" and keeps the bus busy.
-     * As a part of the previous transaction, TXI fires at the peripheral level and is queued at the CPU.
-     *
-     * If the previous transaction was not restart enabled -
-     * NVIC-enable TXI which will fire after the start condition below.
-     */
-    NVIC_EnableIRQ(p_ctrl->p_cfg->txi_irq);
-
     /* Clear error flags in case they are set unexpectedly, e.g stop condition in multil-master use case */
     p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(R_IIC0_ICSR2_STOP_Msk | R_IIC0_ICSR2_START_Msk);
 
     /* Enable SPIE to detect unexpected STOP condition. This is disabled between communication events as it can lead
      * to undesired interrupts in multi-master setups. */
     p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK | R_IIC0_ICIER_STIE_Msk | R_IIC0_ICIER_SPIE_Msk;
+
+    /* Enable TXI. This is treated differently to support restart functionality.
+     * In case the previous IIC master transaction enabled restart, the queued TXI will fire at this point.
+     *
+     * TXI will be triggered after the STIE and SPIE bits of the ICIER register have been enabled.
+     * This prevents an unexpected issue where TXI is triggered before SPIE and STIE are properly enabled,
+     * causing the ERI ISR not to be raised.
+     */
+    NVIC_EnableIRQ(p_ctrl->p_cfg->txi_irq);
 
     /* If previous transaction did not end with restart, send a start condition */
     if (!p_ctrl->restarted)

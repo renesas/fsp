@@ -106,7 +106,12 @@ void rm_motor_tuner_dftdiff_sum (motor_tuner_dftdiff_t * p_dftdiff, float angle,
     float sin;
     float cos;
 
+#if BSP_FEATURE_TFU_SUPPORTED
     sincosf(angle, &sin, &cos);
+#else
+    sin = sinf(angle);
+    cos = cosf(angle);
+#endif
 
     p_dftdiff->a_sum[0] += (signal_num * sin);
     p_dftdiff->b_sum[0] += (signal_num * cos);

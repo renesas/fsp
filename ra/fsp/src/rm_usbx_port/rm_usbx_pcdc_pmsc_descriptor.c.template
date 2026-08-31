@@ -65,9 +65,6 @@
 /* Union Functional Descriptor */
 #define     USB_PCDC_DT_SUBTYPE_UNION_FUNC                      (0x06U)
 
-/* Communications Class Subclass Codes */
-#define     USB_PCDC_CLASS_SUBCLASS_CODE_ABS_CTR_MDL            (0x02U)
-
 /* USB Class Definitions for Communications Devices Specification
  release number in binary-coded decimal. */
 #define     USB_PCDC_BCD_CDC          (0x0110U)

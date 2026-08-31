@@ -121,8 +121,8 @@ with open(input_file, "rb") as f:
                 sys.exit(1)
         elif shutil.which("arm-none-eabi-objcopy") is not None:
             conversion_tool = "arm-none-eabi-objcopy"
-        elif shutil.which("objcopy") is not None:
-            conversion_tool = "objcopy"
+        elif shutil.which("llvm-objcopy") is not None:
+            conversion_tool = "llvm-objcopy"
         elif shutil.which("fromelf") is not None:
             conversion_tool = "fromelf"
         elif shutil.which("ielftool") is not None:

@@ -7,7 +7,6 @@
 //////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-256 Encryption CBC Mode>                             //
 // Procedure number: 22                                             //
-// File name      : SC324_p22.prc                                   //
 // State Diagram  : main(FSM1)                                      //
 // Start State    : main03                                          //
 // End State      : main03                                          //

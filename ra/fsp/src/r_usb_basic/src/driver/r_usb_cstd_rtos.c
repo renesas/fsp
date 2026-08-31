@@ -44,6 +44,7 @@
  ******************************************************************************/
  #if (BSP_CFG_RTOS == 1)
 TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
+
   #if defined(USB_CFG_OTG_USE)
 TX_TIMER g_usb_otg_detach_timer;
 TX_TIMER g_usb_otg_chattering_timer;
@@ -54,6 +55,13 @@ TX_TIMER g_usb2_otg_detach_timer;
   #endif                               /* defined(USB_CFG_OTG_USE) */
 
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
+
+ #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+/* Declare mutex */
+
+TX_MUTEX g_usbx_pipesel_mutex[USB_NUM_USBIP];
+ #endif                                /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
 /******************************************************************************
  * Private global variables and functions
@@ -737,6 +745,26 @@ usb_rtos_err_t usb_rtos_configuration (usb_cfg_t const * const p_cfg)
     }
   #endif
 
+  #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Create PIPESEL mutex with priority inheritance enabled */
+    if (USB_IP0 == p_cfg->module_number)
+    {
+        ret = tx_mutex_create(&g_usbx_pipesel_mutex[USB_IP0], "usb0_pipesel_mutex", TX_INHERIT);
+    }
+    else
+    {
+        ret = tx_mutex_create(&g_usbx_pipesel_mutex[USB_IP1], "usb1_pipesel_mutex", TX_INHERIT);
+    }
+
+    if (TX_SUCCESS != ret)
+    {
+        err = UsbRtos_Err_Init_Mtx;
+
+        return err;
+    }
+  #endif                               /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
   #if !defined(USB_CFG_OTG_USE)
     if (USB_MODE_HOST == p_cfg->usb_mode)
   #endif                               /* !defined (USB_CFG_OTG_USE)*/
@@ -1282,6 +1310,26 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         return err;
     }
   #endif
+
+  #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Delete mutex for PIPESEL register */
+    if (USB_IP0 == module_number)
+    {
+        ret = tx_mutex_delete(&g_usbx_pipesel_mutex[USB_IP0]);
+    }
+    else
+    {
+        ret = tx_mutex_delete(&g_usbx_pipesel_mutex[USB_IP1]);
+    }
+
+    if (TX_SUCCESS != ret)
+    {
+        err = UsbRtos_Err_Delete_Mtx;
+
+        return err;
+    }
+  #endif                               /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
   #if !defined(USB_CFG_OTG_USE)
     if (USB_MODE_HOST == g_usb_usbmode[module_number])

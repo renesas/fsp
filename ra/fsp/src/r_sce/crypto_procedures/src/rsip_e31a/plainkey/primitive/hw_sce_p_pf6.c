@@ -5,6 +5,7 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveType[],
                                                     const uint32_t InData_Key[],
@@ -20,16 +21,12 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
     WR1_PROG(REG_70H, 0x00f60001U);
     WR1_PROG(REG_4CH, 0x00000000U);
 
-    WR1_PROG(REG_14H, 0x000000c7U);
-    WR1_PROG(REG_9CH, 0x80010000U);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub005(0x000000c7U, 0x80010000U);
     WR1_PROG(REG_2CH, InData_CurveType[0]);
     WR1_PROG(REG_24H, 0x00000000U);
 
     WR1_PROG(REG_A0H, 0x20010000U);
-    WR1_PROG(REG_14H, 0x000017c5U);
-    WR1_PROG(REG_B0H, 0x00009493U);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub017(0x000017c5U, 0x00009493U);
     WR4_ADDR(REG_2CH, &InData_Signature[0]);
     WAIT_STS(REG_14H, 31, 1);
     WR4_ADDR(REG_2CH, &InData_Signature[4]);
@@ -44,31 +41,37 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
     WAIT_STS(REG_14H, 31, 1);
     WR4_ADDR(REG_2CH, &InData_Signature[20]);
 
-    WR1_PROG(REG_14H, 0x00000bc5U);
-    WR1_PROG(REG_B0H, 0x000094a1U);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub017(0x00000bc5U, 0x000094a1U);
     WR12_ADDR(REG_2CH, &InData_MsgDgst[0]);
 
-    WR1_PROG(REG_14H, 0x000017c5U);
-    WR1_PROG(REG_B0H, 0x0000b4adU);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub017(0x000017c5U, 0x0000b4adU);
     WR24_ADDR(REG_2CH, &InData_Key[0]);
 
-    WR1_PROG(REG_14H, 0x000000a7U);
-    WR1_PROG(REG_9CH, 0x800100e0U);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub005(0x000000a7U, 0x800100e0U);
     WR1_PROG(REG_2CH, change_endian_long(0x000000f6U));
     WR1_PROG(REG_24H, 0x00000000U);
 
-    HW_SCE_p_func101(0x25896fd6U, 0x1016384bU, 0x1dda205fU, 0x3b148a41U);
+    static const uint32_t Param_pf6_func101_001[] =
+    {
+        0x25896fd6U, 0x1016384bU, 0x1dda205fU, 0x3b148a41U,
+    };
+    HW_SCE_p_func101(Param_pf6_func101_001);
     HW_SCE_p_func029(InData_DomainParam);
 
-    HW_SCE_p_func100(0x38efb84dU, 0x328a7c8cU, 0xb7f3786bU, 0x7a580874U);
+    static const uint32_t Param_pf6_func100_001[] =
+    {
+        0x38efb84dU, 0x328a7c8cU, 0xb7f3786bU, 0x7a580874U,
+    };
+    HW_SCE_p_func100(Param_pf6_func100_001);
     WR1_PROG(REG_40H, 0x00400000U);
 
     if (CHCK_STS(REG_40H, 22, 1))
     {
-        HW_SCE_p_func102(0x79c0155eU, 0xd73ce60cU, 0x2cc30001U, 0x0693c979U);
+        static const uint32_t Param_pf6_func102_001[] =
+        {
+            0x79c0155eU, 0xd73ce60cU, 0x2cc30001U, 0x0693c979U,
+        };
+        HW_SCE_p_func102(Param_pf6_func102_001);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
 
@@ -76,7 +79,11 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
     }
     else
     {
-        HW_SCE_p_func102(0xfd999542U, 0x18108e0eU, 0x80eb010eU, 0xc84c8c62U);
+        static const uint32_t Param_pf6_func102_002[] =
+        {
+            0xfd999542U, 0x18108e0eU, 0x80eb010eU, 0xc84c8c62U,
+        };
+        HW_SCE_p_func102(Param_pf6_func102_002);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
 

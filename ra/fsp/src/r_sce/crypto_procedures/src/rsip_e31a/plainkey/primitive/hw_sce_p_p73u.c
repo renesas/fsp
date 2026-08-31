@@ -25,7 +25,11 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestUpdateSub (const uint32_t InData_Msg[],
     WAIT_STS(REG_118H, 8, 0);
     WR1_PROG(REG_40H, 0x00001600U);
 
-    HW_SCE_p_func101(0xddf37327U, 0xdf618691U, 0x69aa585aU, 0xbb042445U);
+    static const uint32_t Param_p73u_func101_001[] =
+    {
+        0xddf37327U, 0xdf618691U, 0x69aa585aU, 0xbb042445U,
+    };
+    HW_SCE_p_func101(Param_p73u_func101_001);
 
     return FSP_SUCCESS;
 }

@@ -404,8 +404,6 @@ fsp_err_t R_RSIP_RandomNumberGenerate (rsip_ctrl_t * const p_ctrl, uint8_t * con
 
 /*******************************************************************************************************************//**
  * Generates a wrapped symmetric key from a random number.
- * In this API, user key input is unnecessary.
- * By encrypting data using the wrapped key is output by this API, dead copying of data can be prevented.
  *
  * Implements @ref rsip_api_t::keyGenerate.
  *
@@ -485,8 +483,7 @@ fsp_err_t R_RSIP_KeyGenerate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t * c
 }
 
 /*******************************************************************************************************************//**
- * Generates a wrapped asymmetric key pair from a random number. In this API, user key input is unnecessary.
- * By encrypting data using the wrapped key is output by this API, dead copying of data can be prevented.
+ * Generates a wrapped asymmetric key pair from a random number.
  *
  * Implements @ref rsip_api_t::keyPairGenerate.
  *
@@ -499,7 +496,7 @@ fsp_err_t R_RSIP_KeyGenerate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t * c
  *
  * Here, p_wrapped_public_key->type and p_wrapped_private_key->type must match.
  * For example, if p_wrapped_public_key->type is @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC,
- * then p_wrapped_public_key->type must be @ref RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE.
+ * then p_wrapped_private_key->type must be @ref RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE.
  * @endparblock
  *
  * @par State transition
@@ -905,20 +902,20 @@ fsp_err_t R_RSIP_RFC3394_KeyUnwrap (rsip_ctrl_t * const              p_ctrl,
  * Relative position of each elements in p_raw_public_key is shown in below:
  * - ECC (RSIP_KEY_TYPE_ECC_*) :
  *   Qx placed first and Qy placed after that.
- *   |bit length|Qx|Qy|
- *   |----------|--|--|
- *   |256       |0 |32|
- *   |384       |0 |48|
- *   |512       |0 |64|
- *   |521       |0 |66|
+ *   |bit length|Qx offset|Qy offset|
+ *   |----------|---------|---------|
+ *   |256       |0        |32       |
+ *   |384       |0        |48       |
+ *   |512       |0        |64       |
+ *   |521       |0        |66       |
  *
  * - RSA (RSIP_KEY_TYPE_RSA_*) : n placed first and e placed after that.
- *   |modulus|n|e  |
- *   |-------|-|---|
- *   |1024   |0|128|
- *   |2048   |0|256|
- *   |3072   |0|384|
- *   |4096   |0|512|
+ *   |modulus|n offset|e offset|
+ *   |-------|--------|--------|
+ *   |1024   |0       |128     |
+ *   |2048   |0       |256     |
+ *   |3072   |0       |384     |
+ *   |4096   |0       |512     |
  *
  * @par State transition
  * This API can be executed in **any state** including STATE_INITIAL, and does not cause any state transitions.

@@ -7,7 +7,6 @@
 /////////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-128 Encryption with CBC Mode>                           //
 // Procedure number: 06                                                //
-// File name      : SC324_p06.prc                                      //
 // State Diagram  : main(FSM1)                                         //
 // Start State    : main03                                             //
 // End State      : main03                                             //

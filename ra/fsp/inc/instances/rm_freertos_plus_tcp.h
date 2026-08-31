@@ -11,21 +11,32 @@
 
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
+#include "FreeRTOS_IP.h"
 #include "task.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
+
+/***********************************************************************************************************************
+ * Typedef definitions
+ **********************************************************************************************************************/
 
 typedef struct st_rm_freertos_plus_tcp_cfg
 {
     /* Ethernet driver */
     ether_instance_t * p_ether_instance;
 
-    /* Priority for RX Handler task. */
+    /* [DEPRECATED] Priority for RX Handler task. */
     UBaseType_t rx_handler_task_priority;
 
-    /* Stack size for RX Handler task. */
+    /* [DEPRECATED] Stack size for RX Handler task. */
     configSTACK_DEPTH_TYPE rx_handler_task_stacksize;
+
+    /* Priority for ethernet deferred interrupt handler task. */
+    UBaseType_t ether_deferred_interrupt_handler_task_priority;
+
+    /* Stack size for ethernet deferred interrupt handler task. */
+    configSTACK_DEPTH_TYPE ether_deferred_interrupt_handler_task_stacksize;
 
     /* Priority for check link status task. */
     UBaseType_t check_link_status_task_priority;
@@ -39,8 +50,14 @@ typedef struct st_rm_freertos_plus_tcp_cfg
 
 typedef struct st_rm_freertos_plus_tcp_ctrl
 {
-    /* Hold the handler of a task receiving packet */
-    TaskHandle_t xRxHanderTaskHandle;
+    /* RX descriptor list. */
+    NetworkBufferDescriptor_t * p_rx_pending_descriptor_list;
+
+    /* TX descriptor list. */
+    NetworkBufferDescriptor_t * p_tx_pending_descriptor_list;
+
+    /* Hold the handler of a task handling ethernet deferred interrupt. */
+    TaskHandle_t xEthernetDeferredInterruptHanderTaskHandle;
 
     /* Hold the handler of a task checking the link status. */
     TaskHandle_t xCheckLinkStatusTaskHandle;

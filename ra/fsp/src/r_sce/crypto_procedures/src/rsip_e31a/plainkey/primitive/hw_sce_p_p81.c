@@ -5,6 +5,7 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 fsp_err_t HW_SCE_SelfCheck1Sub (void)
 {
@@ -38,20 +39,30 @@ fsp_err_t HW_SCE_SelfCheck1Sub (void)
         WR1_PROG(REG_C4H, 0x00008004U);
 
         WR1_PROG(REG_14H, 0x000003a1U);
-        HW_SCE_p_func101(change_endian_long(0xfa0903b2U), change_endian_long(0x13f8a51bU),
-                         change_endian_long(0x7857b30eU), change_endian_long(0x146acec5U));
+        static const uint32_t Param_p81_func101_001[] =
+        {
+            RSIP_PRV_BSWAP_32_C(0xfa0903b2U), RSIP_PRV_BSWAP_32_C(0x13f8a51bU), RSIP_PRV_BSWAP_32_C(0x7857b30eU),
+            RSIP_PRV_BSWAP_32_C(0x146acec5U),
+        };
+        HW_SCE_p_func101(Param_p81_func101_001);
         WR1_PROG(REG_C4H, 0x00000000U);
 
-        WR1_PROG(REG_14H, 0x000003a1U);
-        WR1_PROG(REG_D0H, 0x0a0700f5U);
-        WAIT_STS(REG_14H, 31, 1);
+        HW_SCE_p_func_sub011(0x000003a1U, 0x0a0700f5U);
         WR4_PROG(REG_2CH, 0xec969662U, 0xfcfc0cb9U, 0x7d09e6c4U, 0xe0ae59bfU);
 
-        HW_SCE_p_func101(change_endian_long(0x9b550eceU), change_endian_long(0x990e35fcU),
-                         change_endian_long(0xec4b9d1bU), change_endian_long(0x6eff2683U));
+        static const uint32_t Param_p81_func101_002[] =
+        {
+            RSIP_PRV_BSWAP_32_C(0x9b550eceU), RSIP_PRV_BSWAP_32_C(0x990e35fcU), RSIP_PRV_BSWAP_32_C(0xec4b9d1bU),
+            RSIP_PRV_BSWAP_32_C(0x6eff2683U),
+        };
+        HW_SCE_p_func101(Param_p81_func101_002);
 
-        HW_SCE_p_func100(change_endian_long(0x1a7ca069U), change_endian_long(0x94dc91e3U),
-                         change_endian_long(0x0648b0a3U), change_endian_long(0x123df0e8U));
+        static const uint32_t Param_p81_func100_001[] =
+        {
+            RSIP_PRV_BSWAP_32_C(0x1a7ca069U), RSIP_PRV_BSWAP_32_C(0x94dc91e3U), RSIP_PRV_BSWAP_32_C(0x0648b0a3U),
+            RSIP_PRV_BSWAP_32_C(0x123df0e8U),
+        };
+        HW_SCE_p_func100(Param_p81_func100_001);
 
         WR1_PROG(REG_08H, 0x00020000U);
 
@@ -67,8 +78,12 @@ fsp_err_t HW_SCE_SelfCheck1Sub (void)
 
             WR1_PROG(REG_78H, 0x00000220U);
 
-            HW_SCE_p_func102(change_endian_long(0x702a3445U), change_endian_long(0x7bb18f33U),
-                             change_endian_long(0x6fe3f500U), change_endian_long(0xffa23a05U));
+            static const uint32_t Param_p81_func102_001[] =
+            {
+                RSIP_PRV_BSWAP_32_C(0x702a3445U), RSIP_PRV_BSWAP_32_C(0x7bb18f33U), RSIP_PRV_BSWAP_32_C(0x6fe3f500U),
+                RSIP_PRV_BSWAP_32_C(0xffa23a05U),
+            };
+            HW_SCE_p_func102(Param_p81_func102_001);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 

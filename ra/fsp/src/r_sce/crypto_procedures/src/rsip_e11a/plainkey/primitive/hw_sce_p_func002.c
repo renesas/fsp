@@ -5,14 +5,12 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 void HW_SCE_p_func002 (void)
 {
     WR1_PROG(REG_00H, 0x01410041U);
-    WR1_PROG(REG_14H, 0x00000fa1U);
-
-    WR1_PROG(REG_D0H, 0x0c000105U);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub008(0x00000fa1U, 0x0c000105U);
     WR4_PROG(REG_2CH,
              change_endian_long(0x5c5c5c5cU),
              change_endian_long(0x5c5c5c5cU),

@@ -8,20 +8,11 @@
 
 void HW_SCE_Aes256GcmEncryptUpdateAADSub (const uint32_t InData_DataA[], const uint32_t MAX_CNT)
 {
-    uint32_t iLoop = 0U;
+    HW_SCE_p_func430(InData_DataA, MAX_CNT);
 
-    WR1_PROG(REG_14H, 0x00020061U);
-    WR1_PROG(REG_D4H, 0x00008000U);
-    WR1_PROG(REG_D0H, 0x0e128456U);
-
-    for (iLoop = 0U; iLoop < MAX_CNT; )
+    static const uint32_t Param_p34a_func101_001[] =
     {
-        WAIT_STS(REG_14H, 31, 1);
-        WR4_ADDR(REG_2CH, &InData_DataA[iLoop]);
-        iLoop = iLoop + 4U;
-    }
-
-    HW_SCE_p_func205_r1();
-
-    HW_SCE_p_func101(0x744d192aU, 0xc2cc649eU, 0x4da8c0acU, 0x379102c4U);
+        0x744d192aU, 0xc2cc649eU, 0x4da8c0acU, 0x379102c4U,
+    };
+    HW_SCE_p_func101(Param_p34a_func101_001);
 }

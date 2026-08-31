@@ -371,7 +371,8 @@ void usb_haud_audio20_clock_source_descriptor_get (usb_utr_t * ptr,
 
         descriptor = g_p_usb_haud_config_table[ptr->ip];
 
-        total_descriptor_length = *(descriptor + 2);
+        total_descriptor_length  = *(descriptor + 2);
+        total_descriptor_length |= (uint32_t) (*(descriptor + 3) << 8);
 
         while (total_descriptor_length)
         {
@@ -432,7 +433,8 @@ void usb_haud_audio20_clock_source_descriptor_get (usb_utr_t * ptr,
 
         descriptor = g_p_usb_haud_config_table[ptr->ip];
 
-        total_descriptor_length = *(descriptor + 2);
+        total_descriptor_length  = *(descriptor + 2);
+        total_descriptor_length |= (uint32_t) (*(descriptor + 3) << 8);
 
         while (total_descriptor_length)
         {

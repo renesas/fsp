@@ -76,6 +76,7 @@
 #define BSP_PERIPHERAL_ECCMB_CHANNEL_MASK        (0x0U)
 #define BSP_PERIPHERAL_ELC_PRESENT               (0)
 #define BSP_PERIPHERAL_ELC_B_PRESENT             (0)
+#define BSP_PERIPHERAL_ESC_PRESENT               (0)
 #define BSP_PERIPHERAL_ESWM_PRESENT              (0)
 #define BSP_PERIPHERAL_ETHERC_PRESENT            (0)
 #define BSP_PERIPHERAL_ETHERC_CHANNEL_MASK       (0x0U)

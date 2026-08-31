@@ -4,190 +4,94 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/***********************************************************************************************************************
- * History : DD.MM.YYYY Version Description
- *         : 05.10.2020 1.00        First Release.
- *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Includes   <System Includes> , "Project Includes"
-***********************************************************************************************************************/
-#include "r_sce_if.h"
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
-/***********************************************************************************************************************
-Macro definitions
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Typedef definitions
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Imported global variables and functions (from other files)
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Exported global variables (to be accessed by other files)
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Private global variables and functions
-***********************************************************************************************************************/
-
-fsp_err_t HW_SCE_Aes128XtsEncryptInitSub(uint32_t *InData_KeyIndex, uint32_t *InData_IV)
+fsp_err_t HW_SCE_Aes128XtsEncryptInitSub (uint32_t InData_KeyIndex[], uint32_t InData_IV[])
 {
-    uint32_t iLoop    = 0U;
-    uint32_t iLoop1   = 0U;
-    uint32_t iLoop2   = 0U;
-    int32_t  jLoop    = 0U;
-    uint32_t kLoop    = 0U;
-    uint32_t oLoop    = 0U;
-    uint32_t oLoop1   = 0U;
-    uint32_t oLoop2   = 0U;
-    uint32_t dummy    = 0U;
-    uint32_t KEY_ADR  = 0U;
-    uint32_t OFS_ADR  = 0U;
-    uint32_t MAX_CNT2 = 0U;
-    (void)iLoop;
-    (void)iLoop1;
-    (void)iLoop2;
-    (void)jLoop;
-    (void)kLoop;
-    (void)oLoop;
-    (void)oLoop1;
-    (void)oLoop2;
-    (void)dummy;
-    (void)KEY_ADR;
-    (void)OFS_ADR;
-    (void)MAX_CNT2;
-    if (0x0U != (SCE->REG_1BCH & 0x1fU))
+    if (RD1_MASK(REG_1BCH, 0x0000001fU) != 0)
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x0000b301U;
-    SCE->REG_108H = 0x00000000U;
-    SCE->REG_104H = 0x00000068U;
-    SCE->REG_E0H = 0x800100e0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
+
+    WR1_PROG(REG_84H, 0x0000b301U);
+    WR1_PROG(REG_108H, 0x00000000U);
+
+    WR1_PROG(REG_104H, 0x00000068U);
+    WR1_PROG(REG_E0H, 0x800100e0U);
+    WAIT_STS(REG_104H, 31, 1);
+    WR1_PROG(REG_100H, InData_KeyIndex[0]);
+
+    HW_SCE_p_func_sub009(0x800103a0U, 0x000000b3U);
+
+    static const uint32_t Param_pb3i_func101_001[] =
     {
-        /* waiting */
-    }
-    SCE->REG_100H = InData_KeyIndex[0];
-    SCE->REG_104H = 0x00000058U;
-    SCE->REG_E0H = 0x800103a0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x000000b3U);
-    HW_SCE_p_func101(0xa3847694U, 0xba217b7dU, 0x761fc8f0U, 0x1fe1218cU);
+        0xa3847694U, 0xba217b7dU, 0x761fc8f0U, 0x1fe1218cU,
+    };
+    HW_SCE_p_func101(Param_pb3i_func101_001);
     HW_SCE_p_func043();
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x00000008U;
-    SCE->REG_104H = 0x00000058U;
-    SCE->REG_E0H = 0x800103a0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
+
+    WR1_PROG(REG_ECH, 0x0000b4e0U);
+    HW_SCE_p_func_sub005(0x00000008U, 0x00000058U, 0x800103a0U, 0x000000b3U);
+
+    static const uint32_t Param_pb3i_func101_002[] =
     {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x000000b3U);
-    HW_SCE_p_func101(0x1814288bU, 0x6b57786cU, 0x6f589fcbU, 0xc4affa6bU);
+        0x1814288bU, 0x6b57786cU, 0x6f589fcbU, 0xc4affa6bU,
+    };
+    HW_SCE_p_func101(Param_pb3i_func101_002);
     HW_SCE_p_func044();
-    HW_SCE_p_func100(0x5c7e3adaU, 0x2e7118f6U, 0x80e1963bU, 0xd32bc1a7U);
-    SCE->REG_104H = 0x00000762U;
-    SCE->REG_D0H = 0x40000100U;
-    SCE->REG_C4H = 0x02f087b7U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
+
+    static const uint32_t Param_pb3i_func100_001[] =
     {
-        /* waiting */
-    }
-    SCE->REG_100H = InData_KeyIndex[1];
-    SCE->REG_100H = InData_KeyIndex[2];
-    SCE->REG_100H = InData_KeyIndex[3];
-    SCE->REG_100H = InData_KeyIndex[4];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
+        0x5c7e3adaU, 0x2e7118f6U, 0x80e1963bU, 0xd32bc1a7U,
+    };
+    HW_SCE_p_func100(Param_pb3i_func100_001);
+    HW_SCE_p_func_sub018(0x00000762U, 0x40000100U, 0x02f087b7U);
+    WR4_ADDR(REG_100H, &InData_KeyIndex[1]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &InData_KeyIndex[5]);
+
+    HW_SCE_p_func_sub019(0x00080805U, 0x00001213U);
+
+    static const uint32_t Param_pb3i_func100_002[] =
     {
-        /* waiting */
-    }
-    SCE->REG_100H = InData_KeyIndex[5];
-    SCE->REG_100H = InData_KeyIndex[6];
-    SCE->REG_100H = InData_KeyIndex[7];
-    SCE->REG_100H = InData_KeyIndex[8];
-    SCE->REG_A4H = 0x00080805U;
-    SCE->REG_00H = 0x00001213U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
+        0xa2848470U, 0xe9fa7aebU, 0x5e4cac5eU, 0x78b70946U,
+    };
+    HW_SCE_p_func100(Param_pb3i_func100_002);
+    WR1_PROG(REG_A4H, 0x00090805U);
+    WR1_PROG(REG_00H, 0x00001213U);
+    HW_SCE_p_func_sub003(0x00000362U, 0x40000000U, 0x000087b5U);
+    WR4_ADDR(REG_100H, &InData_KeyIndex[9]);
+
+    HW_SCE_p_func_sub013(0x00900c45U, 0x00002213U);
+
+    static const uint32_t Param_pb3i_func100_003[] =
     {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0xa2848470U, 0xe9fa7aebU, 0x5e4cac5eU, 0x78b70946U);
-    SCE->REG_A4H = 0x00090805U;
-    SCE->REG_00H = 0x00001213U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
+        0x84e62500U, 0x9a34e5e7U, 0x7bee933cU, 0xe449a4a0U,
+    };
+    HW_SCE_p_func100(Param_pb3i_func100_003);
+    WR1_PROG(REG_1CH, 0x00400000U);
+    WR1_PROG(REG_1D0H, 0x00000000U);
+
+    if (CHCK_STS(REG_1CH, 22, 1))
     {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_104H = 0x00000362U;
-    SCE->REG_D0H = 0x40000000U;
-    SCE->REG_C4H = 0x000087b5U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = InData_KeyIndex[9];
-    SCE->REG_100H = InData_KeyIndex[10];
-    SCE->REG_100H = InData_KeyIndex[11];
-    SCE->REG_100H = InData_KeyIndex[12];
-    SCE->REG_C4H = 0x00900c45U;
-    SCE->REG_00H = 0x00002213U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0x84e62500U, 0x9a34e5e7U, 0x7bee933cU, 0xe449a4a0U);
-    SCE->REG_1CH = 0x00400000U;
-    SCE->REG_1D0H = 0x00000000U;
-    if (1U == (SCE->REG_1CH_b.B22))
-    {
-        HW_SCE_p_func102(0x94484a86U, 0x6ac09497U, 0xacca3456U, 0x2007aa2cU);
-        SCE->REG_1BCH = 0x00000040U;
-        /* WAIT_LOOP */
-        while (0U != SCE->REG_18H_b.B12)
+        static const uint32_t Param_pb3i_func102_001[] =
         {
-            /* waiting */
-        }
+            0x94484a86U, 0x6ac09497U, 0xacca3456U, 0x2007aa2cU,
+        };
+        HW_SCE_p_func102(Param_pb3i_func102_001);
+        WR1_PROG(REG_1BCH, 0x00000040U);
+        WAIT_STS(REG_18H, 12, 0);
+
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
     else
     {
-        SCE->REG_104H = 0x00000361U;
-        SCE->REG_A4H = 0x00041a05U;
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_104H_b.B31)
-        {
-            /* waiting */
-        }
-        SCE->REG_100H = InData_IV[0];
-        SCE->REG_100H = InData_IV[1];
-        SCE->REG_100H = InData_IV[2];
-        SCE->REG_100H = InData_IV[3];
+        WR1_PROG(REG_104H, 0x00000361U);
+        WR1_PROG(REG_A4H, 0x00041a05U);
+        WAIT_STS(REG_104H, 31, 1);
+        WR4_ADDR(REG_100H, &InData_IV[0]);
+
         return FSP_SUCCESS;
     }
 }
-
-/***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pb3i.prc
-***********************************************************************************************************************/

@@ -41,9 +41,6 @@
 /* Union Functional Descriptor */
 #define     USB_PCDC_DT_SUBTYPE_UNION_FUNC                      (0x06U)
 
-/* Communications Class Subclass Codes */
-#define     USB_PCDC_CLASS_SUBCLASS_CODE_ABS_CTR_MDL            (0x02U)
-
 /* USB Class Definitions for Communications Devices Specification
  release number in binary-coded decimal. */
 #define     USB_PCDC_BCD_CDC          (0x0110U)
@@ -104,7 +101,7 @@ uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_FULL_SPEED] =
     (USB_BCDNUM & (uint8_t) USB_UCHAR_MAX),                     /*  2:bcdUSB_lo */
     ((uint8_t) (USB_BCDNUM >> 8) & (uint8_t) USB_UCHAR_MAX),    /*  3:bcdUSB_hi */
     VALUE_EFH,                                               /*  4:bDeviceClass */
-    0x02,                                               /*  5:bDeviceSubClass */
+    USB_PCDC_CLASS_SUBCLASS_CODE_ABS_CTR_MDL,           /*  5:bDeviceSubClass */
     0x01,                                               /*  6:bDeviceProtocol */
     (uint8_t) USB_DCPMAXP,                              /*  7:bMAXPacketSize(for DCP) */
     (USB_VENDORID & (uint8_t) USB_UCHAR_MAX),                   /*  8:idVendor_lo */

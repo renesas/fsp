@@ -237,18 +237,19 @@ typedef enum e_usb_class_internal
     USB_CLASS_INTERNAL_PAUD,           ///< PAUD Class      6
     USB_CLASS_INTERNAL_PPRN,           ///< PPRN Class      7
     USB_CLASS_INTERNAL_DFU,            ///< DFU Class       8
-    USB_CLASS_INTERNAL_PVND,           ///< PVND Class      9
-    USB_CLASS_INTERNAL_HCDC,           ///< HCDC Class      10
-    USB_CLASS_INTERNAL_HCDCC,          ///< HCDCC Class     11
-    USB_CLASS_INTERNAL_HHID,           ///< HHID Class      12
-    USB_CLASS_INTERNAL_HVND,           ///< HVND Class      13
-    USB_CLASS_INTERNAL_HMSC,           ///< HMSC Class      14
-    USB_CLASS_INTERNAL_PMSC,           ///< PMSC Class      15
-    USB_CLASS_INTERNAL_HPRN,           ///< HPRN Class      16
-    USB_CLASS_INTERNAL_HUVC,           ///< HUVC Class      17
-    USB_CLASS_INTERNAL_HAUD,           ///< HAUD Class      18
-    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      19
-    USB_CLASS_INTERNAL_END,            ///< USB Class       20
+    USB_CLASS_INTERNAL_PUVC,           ///< PUVC Class      9
+    USB_CLASS_INTERNAL_PVND,           ///< PVND Class      10
+    USB_CLASS_INTERNAL_HCDC,           ///< HCDC Class      11
+    USB_CLASS_INTERNAL_HCDCC,          ///< HCDCC Class     12
+    USB_CLASS_INTERNAL_HHID,           ///< HHID Class      13
+    USB_CLASS_INTERNAL_HVND,           ///< HVND Class      14
+    USB_CLASS_INTERNAL_HMSC,           ///< HMSC Class      15
+    USB_CLASS_INTERNAL_PMSC,           ///< PMSC Class      16
+    USB_CLASS_INTERNAL_HPRN,           ///< HPRN Class      17
+    USB_CLASS_INTERNAL_HUVC,           ///< HUVC Class      18
+    USB_CLASS_INTERNAL_HAUD,           ///< HAUD Class      19
+    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      20
+    USB_CLASS_INTERNAL_END,            ///< USB Class       21
 } usb_class_internal_t;
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

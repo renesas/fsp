@@ -15005,7 +15005,18 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } HOCOCR_b;
     };
-    __IM uint8_t RESERVED16;
+
+    union
+    {
+        __IOM uint8_t HOCOCR2;         /*!< (@ 0x00000037) High-Speed On-Chip Oscillator Control Register
+                                        *                  2                                                          */
+
+        struct
+        {
+            __IOM uint8_t HCFRQ0 : 3;  /*!< [2..0] HOCO Frequency Setting 0                                           */
+            uint8_t              : 5;
+        } HOCOCR2_b;
+    };
 
     union
     {
@@ -15057,7 +15068,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 1;
         } OSCSF_b;
     };
-    __IM uint8_t RESERVED17;
+    __IM uint8_t RESERVED16;
 
     union
     {
@@ -15107,7 +15118,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } OSTDSR_b;
     };
-    __IM uint8_t RESERVED18;
+    __IM uint8_t RESERVED17;
 
     union
     {
@@ -15121,8 +15132,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 5;
         } OSCMONR_b;
     };
-    __IM uint32_t RESERVED19;
-    __IM uint16_t RESERVED20;
+    __IM uint32_t RESERVED18;
+    __IM uint16_t RESERVED19;
 
     union
     {
@@ -15134,7 +15145,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 7;
         } PLL2CR_b;
     };
-    __IM uint8_t RESERVED21;
+    __IM uint8_t RESERVED20;
 
     union
     {
@@ -15198,7 +15209,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LCDSCKEN  : 1; /*!< [7..7] LCD Source Clock Out Enable                                        */
         } SLCDSCKCR_b;
     };
-    __IM uint8_t RESERVED22;
+    __IM uint8_t RESERVED21;
 
     union
     {
@@ -15269,7 +15280,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IM uint8_t  CKSRDY : 1;  /*!< [7..7] SPI clock (SPICLK) Switching Ready state flag                      */
         } SPICKCR_b;
     };
-    __IM uint16_t RESERVED23;
+    __IM uint16_t RESERVED22;
 
     union
     {
@@ -15342,7 +15353,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IM uint8_t  CKSRDY : 1;  /*!< [7..7] LCD clock (LCDCLK) Switching Ready state flag                      */
         } LCDCKCR_b;
     };
-    __IM uint8_t RESERVED24;
+    __IM uint8_t RESERVED23;
 
     union
     {
@@ -15363,8 +15374,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t HOCOUTRM : 8; /*!< [7..0] HOCO User Trimming                                                 */
         } HOCOUTCR_b;
     };
-    __IM uint8_t  RESERVED25;
-    __IM uint32_t RESERVED26[2];
+    __IM uint8_t  RESERVED24;
+    __IM uint32_t RESERVED25[2];
 
     union
     {
@@ -15420,8 +15431,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 4;
         } I3CCKDIVCR_b;
     };
-    __IM uint8_t  RESERVED27;
-    __IM uint16_t RESERVED28;
+    __IM uint8_t  RESERVED26;
+    __IM uint16_t RESERVED27;
 
     union
     {
@@ -15487,8 +15498,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t I3CCKSRDY : 1; /*!< [7..7] I3C clock (I3CCLK) switching ready state flag                      */
         } I3CCKCR_b;
     };
-    __IM uint8_t  RESERVED29;
-    __IM uint16_t RESERVED30;
+    __IM uint8_t  RESERVED28;
+    __IM uint16_t RESERVED29;
 
     union
     {
@@ -15512,8 +15523,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 7;
         } HOCOSCR_b;
     };
-    __IM uint16_t RESERVED31;
-    __IM uint32_t RESERVED32;
+    __IM uint16_t RESERVED30;
+    __IM uint32_t RESERVED31;
 
     union
     {
@@ -15526,10 +15537,10 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 7;
         } MOCOSCR_b;
     };
-    __IM uint8_t  RESERVED33;
-    __IM uint16_t RESERVED34;
-    __IM uint32_t RESERVED35[5];
-    __IM uint16_t RESERVED36;
+    __IM uint8_t  RESERVED32;
+    __IM uint16_t RESERVED33;
+    __IM uint32_t RESERVED34[5];
+    __IM uint16_t RESERVED35;
 
     union
     {
@@ -15567,7 +15578,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 3;
         } OPCCR_b;
     };
-    __IM uint8_t RESERVED37;
+    __IM uint8_t RESERVED36;
 
     union
     {
@@ -15579,7 +15590,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 4;
         } MOSCWTCR_b;
     };
-    __IM uint8_t RESERVED38[2];
+    __IM uint8_t RESERVED37[2];
 
     union
     {
@@ -15592,7 +15603,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t : 5;
         } HOCOWTCR_b;
     };
-    __IM uint16_t RESERVED39[2];
+    __IM uint16_t RESERVED38[2];
 
     union
     {
@@ -15606,7 +15617,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 3;
         } SOPCCR_b;
     };
-    __IM uint8_t RESERVED40;
+    __IM uint8_t RESERVED39;
 
     union
     {
@@ -15623,7 +15634,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint32_t                : 15;
         } PLLCCR_b;
     };
-    __IM uint32_t RESERVED41[4];
+    __IM uint32_t RESERVED40[4];
 
     union
     {
@@ -15650,7 +15661,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint32_t              : 9;
         } RSTSR1_b;
     };
-    __IM uint32_t RESERVED42;
+    __IM uint32_t RESERVED41;
 
     union
     {
@@ -15678,8 +15689,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t           : 7;
         } SYRACCR_b;
     };
-    __IM uint8_t  RESERVED43;
-    __IM uint16_t RESERVED44;
+    __IM uint8_t  RESERVED42;
+    __IM uint16_t RESERVED43;
 
     union
     {
@@ -15705,7 +15716,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t SDADCCKEN  : 1; /*!< [7..7] 24-bit Sigma-Delta A/D Converter Clock Enable                      */
         } SDADCCKCR_b;
     };
-    __IM uint16_t RESERVED45;
+    __IM uint16_t RESERVED44;
 
     union
     {
@@ -15762,7 +15773,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 4;
         } ETHPCKDIVCR_b;
     };
-    __IM uint8_t RESERVED46;
+    __IM uint8_t RESERVED45;
 
     union
     {
@@ -15828,7 +15839,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t CKSRDY : 1;  /*!< [7..7] Clock Switching Ready state flag                                   */
         } ETHPCKCR_b;
     };
-    __IM uint8_t RESERVED47;
+    __IM uint8_t RESERVED46;
 
     union
     {
@@ -15913,7 +15924,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 5;
         } LVD4CR1_b;
     };
-    __IM uint8_t RESERVED48;
+    __IM uint8_t RESERVED47;
 
     union
     {
@@ -15926,9 +15937,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 5;
         } LVD5CR1_b;
     };
-    __IM uint8_t  RESERVED49;
-    __IM uint16_t RESERVED50;
-    __IM uint32_t RESERVED51;
+    __IM uint8_t  RESERVED48;
+    __IM uint16_t RESERVED49;
+    __IM uint32_t RESERVED50;
 
     union
     {
@@ -15940,9 +15951,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } CRVSYSCR_b;
     };
-    __IM uint8_t  RESERVED52;
-    __IM uint16_t RESERVED53;
-    __IM uint32_t RESERVED54[3];
+    __IM uint8_t  RESERVED51;
+    __IM uint16_t RESERVED52;
+    __IM uint32_t RESERVED53[3];
 
     union
     {
@@ -15955,9 +15966,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 6;
         } CPUDSCR_b;
     };
-    __IM uint8_t  RESERVED55;
-    __IM uint16_t RESERVED56;
-    __IM uint32_t RESERVED57[3];
+    __IM uint8_t  RESERVED54;
+    __IM uint16_t RESERVED55;
+    __IM uint32_t RESERVED56[3];
 
     union
     {
@@ -15971,8 +15982,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t PDPGSF : 1;  /*!< [7..7] Power gating status flag                                           */
         } PDCTRGD_b;
     };
-    __IM uint8_t  RESERVED58;
-    __IM uint16_t RESERVED59;
+    __IM uint8_t  RESERVED57;
+    __IM uint16_t RESERVED58;
 
     union
     {
@@ -15986,8 +15997,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t PDPGSF : 1;  /*!< [7..7] Power gating status flag                                           */
         } PDCTRNPU_b;
     };
-    __IM uint8_t  RESERVED60;
-    __IM uint16_t RESERVED61;
+    __IM uint8_t  RESERVED59;
+    __IM uint16_t RESERVED60;
 
     union
     {
@@ -16001,9 +16012,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t PDPGSF : 1;  /*!< [7..7] Power gating status flag                                           */
         } PDCTRESWM_b;
     };
-    __IM uint8_t  RESERVED62;
-    __IM uint16_t RESERVED63;
-    __IM uint32_t RESERVED64[9];
+    __IM uint8_t  RESERVED61;
+    __IM uint16_t RESERVED62;
+    __IM uint32_t RESERVED63[9];
 
     union
     {
@@ -16046,8 +16057,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t RKEEP7 : 1;  /*!< [7..7] RAM Retention bit 7                                                */
         } PDRAMSCR1_b;
     };
-    __IM uint8_t  RESERVED65;
-    __IM uint32_t RESERVED66[155];
+    __IM uint8_t  RESERVED64;
+    __IM uint32_t RESERVED65[155];
 
     union
     {
@@ -16059,7 +16070,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint16_t SABA : 16;  /*!< [15..0] Security Attribute Boundary Address                               */
         } VBRSABAR_b;
     };
-    __IM uint16_t RESERVED67;
+    __IM uint16_t RESERVED66;
 
     union
     {
@@ -16071,7 +16082,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint16_t PABAS : 16; /*!< [15..0] Privilege Attribute Boundary Address for Secure Region            */
         } VBRPABARS_b;
     };
-    __IM uint16_t RESERVED68;
+    __IM uint16_t RESERVED67;
 
     union
     {
@@ -16084,8 +16095,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
                                          *   Region                                                                    */
         } VBRPABARNS_b;
     };
-    __IM uint16_t RESERVED69;
-    __IM uint32_t RESERVED70;
+    __IM uint16_t RESERVED68;
+    __IM uint32_t RESERVED69;
 
     union
     {
@@ -16215,7 +16226,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint32_t               : 23;
         } BBFSAR_b;
     };
-    __IM uint32_t RESERVED71;
+    __IM uint32_t RESERVED70;
 
     union
     {
@@ -16257,7 +16268,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint32_t NONSEC31 : 1; /*!< [31..31] Non-secure Attribute bit 31                                      */
         } PGCSAR_b;
     };
-    __IM uint32_t RESERVED72;
+    __IM uint32_t RESERVED71;
 
     union
     {
@@ -16447,8 +16458,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
                                          *   31                                                                        */
         } DPFSAR1_b;
     };
-    __IM uint32_t RESERVED73[3];
-    __IM uint16_t RESERVED74;
+    __IM uint32_t RESERVED72[3];
+    __IM uint16_t RESERVED73;
 
     union
     {
@@ -16469,7 +16480,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __OM uint16_t PRKEY : 8;   /*!< [15..8] PRC Key Code                                                      */
         } PRCR_b;
     };
-    __IM uint16_t RESERVED75;
+    __IM uint16_t RESERVED74;
 
     union
     {
@@ -16500,7 +16511,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LOCOCR_b;
     };
-    __IM uint8_t RESERVED76;
+    __IM uint8_t RESERVED75;
 
     union
     {
@@ -16511,10 +16522,10 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LOCOUTRM : 8; /*!< [7..0] LOCO User Trimming                                                 */
         } LOCOUTCR_b;
     };
-    __IM uint8_t  RESERVED77;
-    __IM uint32_t RESERVED78[2];
-    __IM uint16_t RESERVED79;
-    __IM uint8_t  RESERVED80;
+    __IM uint8_t  RESERVED76;
+    __IM uint32_t RESERVED77[2];
+    __IM uint16_t RESERVED78;
+    __IM uint8_t  RESERVED79;
 
     union
     {
@@ -16526,8 +16537,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 6;
         } STCONR_b;
     };
-    __IM uint32_t RESERVED81;
-    __IM uint16_t RESERVED82;
+    __IM uint32_t RESERVED80;
+    __IM uint16_t RESERVED81;
 
     union
     {
@@ -16539,9 +16550,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 6;
         } FWEPROR_b;
     };
-    __IM uint8_t  RESERVED83;
-    __IM uint32_t RESERVED84;
-    __IM uint16_t RESERVED85;
+    __IM uint8_t  RESERVED82;
+    __IM uint32_t RESERVED83;
+    __IM uint16_t RESERVED84;
 
     union
     {
@@ -16564,7 +16575,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 7;
         } VBTCR1_b;
     };
-    __IM uint32_t RESERVED86[8];
+    __IM uint32_t RESERVED85[8];
 
     union
     {
@@ -16592,9 +16603,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 6;
         } VCCSEL_b;
     };
-    __IM uint16_t RESERVED87;
-    __IM uint32_t RESERVED88[15];
-    __IM uint16_t RESERVED89;
+    __IM uint16_t RESERVED86;
+    __IM uint32_t RESERVED87[15];
+    __IM uint16_t RESERVED88;
 
     union
     {
@@ -16606,8 +16617,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 6;
         } SOMRG_b;
     };
-    __IM uint8_t  RESERVED90;
-    __IM uint32_t RESERVED91[11];
+    __IM uint8_t  RESERVED89;
+    __IM uint32_t RESERVED90[11];
 
     union
     {
@@ -16646,7 +16657,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 7;
         } VBTCMPCR_b;
     };
-    __IM uint8_t RESERVED92;
+    __IM uint8_t RESERVED91;
 
     union
     {
@@ -16660,7 +16671,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                  : 6;
         } VBTLVDICR_b;
     };
-    __IM uint8_t RESERVED93;
+    __IM uint8_t RESERVED92;
 
     union
     {
@@ -16672,7 +16683,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 7;
         } VBTWCTLR_b;
     };
-    __IM uint8_t RESERVED94;
+    __IM uint8_t RESERVED93;
 
     union
     {
@@ -16721,7 +16732,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                  : 2;
         } VBTWCH2OTSR_b;
     };
-    __IM uint8_t RESERVED95;
+    __IM uint8_t RESERVED94;
 
     union
     {
@@ -16783,7 +16794,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 2;
         } VBTWFR_b;
     };
-    __IM uint32_t RESERVED96[336];
+    __IM uint32_t RESERVED95[336];
 
     union
     {
@@ -16798,9 +16809,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DPSBY    : 1; /*!< [7..7] Deep Software Standby                                              */
         } DPSBYCR_b;
     };
-    __IM uint8_t  RESERVED97;
-    __IM uint16_t RESERVED98;
-    __IM uint32_t RESERVED99;
+    __IM uint8_t  RESERVED96;
+    __IM uint16_t RESERVED97;
+    __IM uint32_t RESERVED98;
 
     union
     {
@@ -16818,8 +16829,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ7E : 1;  /*!< [7..7] IRQ-DS Pin Enable                                                  */
         } DPSIER0_b;
     };
-    __IM uint8_t  RESERVED100;
-    __IM uint16_t RESERVED101;
+    __IM uint8_t  RESERVED99;
+    __IM uint16_t RESERVED100;
 
     union
     {
@@ -16837,8 +16848,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ15E : 1; /*!< [7..7] IRQ-DS Pin Enable                                                  */
         } DPSIER1_b;
     };
-    __IM uint8_t  RESERVED102;
-    __IM uint16_t RESERVED103;
+    __IM uint8_t  RESERVED101;
+    __IM uint16_t RESERVED102;
 
     union
     {
@@ -16855,8 +16866,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 2;
         } DPSIER2_b;
     };
-    __IM uint8_t  RESERVED104;
-    __IM uint16_t RESERVED105;
+    __IM uint8_t  RESERVED103;
+    __IM uint16_t RESERVED104;
 
     union
     {
@@ -16875,8 +16886,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DVBATTADIE : 1; /*!< [7..7] VBATT Tamper Detection Deep Standby Cancel Signal Enable           */
         } DPSIER3_b;
     };
-    __IM uint8_t  RESERVED106;
-    __IM uint16_t RESERVED107;
+    __IM uint8_t  RESERVED105;
+    __IM uint16_t RESERVED106;
 
     union
     {
@@ -16894,8 +16905,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ7F : 1;  /*!< [7..7] IRQ-DS Pin Deep Standby Cancel Flag                                */
         } DPSIFR0_b;
     };
-    __IM uint8_t  RESERVED108;
-    __IM uint16_t RESERVED109;
+    __IM uint8_t  RESERVED107;
+    __IM uint16_t RESERVED108;
 
     union
     {
@@ -16913,8 +16924,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ15F : 1; /*!< [7..7] IRQ-DS Pin Deep Standby Cancel Flag                                */
         } DPSIFR1_b;
     };
-    __IM uint8_t  RESERVED110;
-    __IM uint16_t RESERVED111;
+    __IM uint8_t  RESERVED109;
+    __IM uint16_t RESERVED110;
 
     union
     {
@@ -16931,8 +16942,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 2;
         } DPSIFR2_b;
     };
-    __IM uint8_t  RESERVED112;
-    __IM uint16_t RESERVED113;
+    __IM uint8_t  RESERVED111;
+    __IM uint16_t RESERVED112;
 
     union
     {
@@ -16951,8 +16962,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DVBATTADIF : 1; /*!< [7..7] VBATT Tamper Detection Deep Standby Cancel Flag                    */
         } DPSIFR3_b;
     };
-    __IM uint8_t  RESERVED114;
-    __IM uint16_t RESERVED115;
+    __IM uint8_t  RESERVED113;
+    __IM uint16_t RESERVED114;
 
     union
     {
@@ -16970,8 +16981,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ7EG : 1; /*!< [7..7] IRQ-DS Pin Edge Select                                             */
         } DPSIEGR0_b;
     };
-    __IM uint8_t  RESERVED116;
-    __IM uint16_t RESERVED117;
+    __IM uint8_t  RESERVED115;
+    __IM uint16_t RESERVED116;
 
     union
     {
@@ -16989,8 +17000,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ15EG : 1; /*!< [7..7] IRQ-DS Pin Edge Select                                             */
         } DPSIEGR1_b;
     };
-    __IM uint8_t  RESERVED118;
-    __IM uint16_t RESERVED119;
+    __IM uint8_t  RESERVED117;
+    __IM uint16_t RESERVED118;
 
     union
     {
@@ -17006,8 +17017,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 2;
         } DPSIEGR2_b;
     };
-    __IM uint8_t  RESERVED120;
-    __IM uint16_t RESERVED121;
+    __IM uint8_t  RESERVED119;
+    __IM uint16_t RESERVED120;
 
     union
     {
@@ -17025,8 +17036,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ23EG : 1; /*!< [7..7] IRQ-DS Pin Edge Select                                             */
         } DPSIEGR3_b;
     };
-    __IM uint8_t  RESERVED122;
-    __IM uint16_t RESERVED123;
+    __IM uint8_t  RESERVED121;
+    __IM uint16_t RESERVED122;
 
     union
     {
@@ -17039,9 +17050,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DBGEN : 1;   /*!< [7..7] Debugger Enable bit                                                */
         } SYOCDCR_b;
     };
-    __IM uint8_t  RESERVED124;
-    __IM uint16_t RESERVED125;
-    __IM uint32_t RESERVED126;
+    __IM uint8_t  RESERVED123;
+    __IM uint16_t RESERVED124;
+    __IM uint32_t RESERVED125;
 
     union
     {
@@ -17059,8 +17070,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DPSRSTF : 1; /*!< [7..7] Deep Software Standby Reset Flag                                   */
         } RSTSR0_b;
     };
-    __IM uint8_t  RESERVED127;
-    __IM uint16_t RESERVED128;
+    __IM uint8_t  RESERVED126;
+    __IM uint16_t RESERVED127;
 
     union
     {
@@ -17072,8 +17083,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 7;
         } RSTSR2_b;
     };
-    __IM uint8_t  RESERVED129;
-    __IM uint16_t RESERVED130;
+    __IM uint8_t  RESERVED128;
+    __IM uint16_t RESERVED129;
 
     union
     {
@@ -17088,9 +17099,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t TEMPRF : 1;  /*!< [7..7] Temperature Monitor Reset Detect Flag                              */
         } RSTSR3_b;
     };
-    __IM uint8_t  RESERVED131;
-    __IM uint16_t RESERVED132;
-    __IM uint32_t RESERVED133;
+    __IM uint8_t  RESERVED130;
+    __IM uint16_t RESERVED131;
+    __IM uint32_t RESERVED132;
 
     union
     {
@@ -17106,9 +17117,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 1;
         } MOMCR_b;
     };
-    __IM uint8_t  RESERVED134;
-    __IM uint16_t RESERVED135;
-    __IM uint32_t RESERVED136;
+    __IM uint8_t  RESERVED133;
+    __IM uint16_t RESERVED134;
+    __IM uint32_t RESERVED135;
 
     union
     {
@@ -17122,8 +17133,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LVDE : 1;    /*!< [7..7] Voltage Detection Enable                                           */
         } LVD1CMPCR_b;
     };
-    __IM uint8_t  RESERVED137;
-    __IM uint16_t RESERVED138;
+    __IM uint8_t  RESERVED136;
+    __IM uint16_t RESERVED137;
 
     union
     {
@@ -17137,8 +17148,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LVDE : 1;    /*!< [7..7] Voltage Detection Enable                                           */
         } LVD2CMPCR_b;
     };
-    __IM uint8_t  RESERVED139;
-    __IM uint16_t RESERVED140;
+    __IM uint8_t  RESERVED138;
+    __IM uint16_t RESERVED139;
 
     union
     {
@@ -17152,8 +17163,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LVDE : 1;    /*!< [7..7] Voltage Detection Enable                                           */
         } LVD3CMPCR_b;
     };
-    __IM uint8_t  RESERVED141;
-    __IM uint16_t RESERVED142;
+    __IM uint8_t  RESERVED140;
+    __IM uint16_t RESERVED141;
 
     union
     {
@@ -17167,8 +17178,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LVDE : 1;    /*!< [7..7] Voltage Detection Enable                                           */
         } LVD4CMPCR_b;
     };
-    __IM uint8_t  RESERVED143;
-    __IM uint16_t RESERVED144;
+    __IM uint8_t  RESERVED142;
+    __IM uint16_t RESERVED143;
 
     union
     {
@@ -17182,9 +17193,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LVDE : 1;    /*!< [7..7] Voltage Detection Enable                                           */
         } LVD5CMPCR_b;
     };
-    __IM uint8_t  RESERVED145;
-    __IM uint16_t RESERVED146;
-    __IM uint32_t RESERVED147;
+    __IM uint8_t  RESERVED144;
+    __IM uint16_t RESERVED145;
+    __IM uint32_t RESERVED146;
 
     union
     {
@@ -17201,8 +17212,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t RN    : 1;   /*!< [7..7] Voltage Monitor Reset Negate Select                                */
         } LVD1CR0_b;
     };
-    __IM uint8_t  RESERVED148;
-    __IM uint16_t RESERVED149;
+    __IM uint8_t  RESERVED147;
+    __IM uint16_t RESERVED148;
 
     union
     {
@@ -17219,8 +17230,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t RN    : 1;   /*!< [7..7] Voltage Monitor Reset Negate Select                                */
         } LVD2CR0_b;
     };
-    __IM uint8_t  RESERVED150;
-    __IM uint16_t RESERVED151;
+    __IM uint8_t  RESERVED149;
+    __IM uint16_t RESERVED150;
 
     union
     {
@@ -17237,8 +17248,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t RN    : 1;   /*!< [7..7] Voltage Monitor Reset Negate Select                                */
         } LVD3CR0_b;
     };
-    __IM uint8_t  RESERVED152;
-    __IM uint16_t RESERVED153;
+    __IM uint8_t  RESERVED151;
+    __IM uint16_t RESERVED152;
 
     union
     {
@@ -17255,8 +17266,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t RN    : 1;   /*!< [7..7] Voltage Monitor Reset Negate Select                                */
         } LVD4CR0_b;
     };
-    __IM uint8_t  RESERVED154;
-    __IM uint16_t RESERVED155;
+    __IM uint8_t  RESERVED153;
+    __IM uint16_t RESERVED154;
 
     union
     {
@@ -17273,8 +17284,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t RN    : 1;   /*!< [7..7] Voltage Monitor Reset Negate Select                                */
         } LVD5CR0_b;
     };
-    __IM uint8_t  RESERVED156;
-    __IM uint16_t RESERVED157;
+    __IM uint8_t  RESERVED155;
+    __IM uint16_t RESERVED156;
 
     union
     {
@@ -17287,8 +17298,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                  : 7;
         } VBATTMNSELR_b;
     };
-    __IM uint8_t  RESERVED158;
-    __IM uint16_t RESERVED159;
+    __IM uint8_t  RESERVED157;
+    __IM uint16_t RESERVED158;
 
     union
     {
@@ -17300,9 +17311,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 7;
         } VBTBPCR1_b;
     };
-    __IM uint8_t  RESERVED160;
-    __IM uint16_t RESERVED161;
-    __IM uint32_t RESERVED162;
+    __IM uint8_t  RESERVED159;
+    __IM uint16_t RESERVED160;
+    __IM uint32_t RESERVED161;
 
     union
     {
@@ -17314,9 +17325,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 4;
         } LPSCR_b;
     };
-    __IM uint8_t  RESERVED163;
-    __IM uint16_t RESERVED164;
-    __IM uint32_t RESERVED165;
+    __IM uint8_t  RESERVED162;
+    __IM uint16_t RESERVED163;
+    __IM uint32_t RESERVED164;
 
     union
     {
@@ -17330,8 +17341,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 4;
         } SSCR1_b;
     };
-    __IM uint8_t  RESERVED166;
-    __IM uint16_t RESERVED167;
+    __IM uint8_t  RESERVED165;
+    __IM uint16_t RESERVED166;
 
     union
     {
@@ -17343,9 +17354,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 5;
         } SVSCR_b;
     };
-    __IM uint8_t  RESERVED168;
-    __IM uint16_t RESERVED169;
-    __IM uint32_t RESERVED170[4];
+    __IM uint8_t  RESERVED167;
+    __IM uint16_t RESERVED168;
+    __IM uint32_t RESERVED169[4];
 
     union
     {
@@ -17358,8 +17369,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 6;
         } LVOCR_b;
     };
-    __IM uint8_t  RESERVED171;
-    __IM uint16_t RESERVED172;
+    __IM uint8_t  RESERVED170;
+    __IM uint16_t RESERVED171;
 
     union
     {
@@ -17371,9 +17382,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t           : 6;
         } MWMCR_b;
     };
-    __IM uint8_t  RESERVED173;
-    __IM uint16_t RESERVED174;
-    __IM uint32_t RESERVED175[6];
+    __IM uint8_t  RESERVED172;
+    __IM uint16_t RESERVED173;
+    __IM uint32_t RESERVED174[6];
 
     union
     {
@@ -17391,8 +17402,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t BUSMASK  : 1; /*!< [7..7] Bus Error Reset Mask                                               */
         } SYRSTMSK0_b;
     };
-    __IM uint8_t  RESERVED176;
-    __IM uint16_t RESERVED177;
+    __IM uint8_t  RESERVED175;
+    __IM uint16_t RESERVED176;
 
     union
     {
@@ -17408,8 +17419,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 2;
         } SYRSTMSK1_b;
     };
-    __IM uint8_t  RESERVED178;
-    __IM uint16_t RESERVED179;
+    __IM uint8_t  RESERVED177;
+    __IM uint16_t RESERVED178;
 
     union
     {
@@ -17422,8 +17433,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 6;
         } SYRSTMSK2_b;
     };
-    __IM uint8_t  RESERVED180;
-    __IM uint16_t RESERVED181;
+    __IM uint8_t  RESERVED179;
+    __IM uint16_t RESERVED180;
 
     union
     {
@@ -17438,8 +17449,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 4;
         } TEMPRCR_b;
     };
-    __IM uint8_t  RESERVED182;
-    __IM uint16_t RESERVED183;
+    __IM uint8_t  RESERVED181;
+    __IM uint16_t RESERVED182;
 
     union
     {
@@ -17451,9 +17462,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 7;
         } TEMPRLR_b;
     };
-    __IM uint8_t  RESERVED184;
-    __IM uint16_t RESERVED185;
-    __IM uint32_t RESERVED186[7];
+    __IM uint8_t  RESERVED183;
+    __IM uint16_t RESERVED184;
+    __IM uint32_t RESERVED185[7];
 
     union
     {
@@ -17471,8 +17482,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t LDOSTP7 : 1; /*!< [7..7] LDO7 Stop                                                          */
         } LDOSCR_b;
     };
-    __IM uint8_t  RESERVED187;
-    __IM uint16_t RESERVED188;
+    __IM uint8_t  RESERVED186;
+    __IM uint16_t RESERVED187;
 
     union
     {
@@ -17485,8 +17496,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 6;
         } PLL1LDOCR_b;
     };
-    __IM uint8_t  RESERVED189;
-    __IM uint16_t RESERVED190;
+    __IM uint8_t  RESERVED188;
+    __IM uint16_t RESERVED189;
 
     union
     {
@@ -17499,8 +17510,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 6;
         } PLL2LDOCR_b;
     };
-    __IM uint8_t  RESERVED191;
-    __IM uint16_t RESERVED192;
+    __IM uint8_t  RESERVED190;
+    __IM uint16_t RESERVED191;
 
     union
     {
@@ -17513,8 +17524,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 6;
         } HOCOLDOCR_b;
     };
-    __IM uint8_t  RESERVED193;
-    __IM uint16_t RESERVED194;
+    __IM uint8_t  RESERVED192;
+    __IM uint16_t RESERVED193;
 
     union
     {
@@ -17527,9 +17538,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 7;
         } MOMCR2_b;
     };
-    __IM uint8_t  RESERVED195;
-    __IM uint16_t RESERVED196;
-    __IM uint32_t RESERVED197[3];
+    __IM uint8_t  RESERVED194;
+    __IM uint16_t RESERVED195;
+    __IM uint32_t RESERVED196[3];
 
     union
     {
@@ -17541,8 +17552,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LVD1FCR_b;
     };
-    __IM uint8_t  RESERVED198;
-    __IM uint16_t RESERVED199;
+    __IM uint8_t  RESERVED197;
+    __IM uint16_t RESERVED198;
 
     union
     {
@@ -17554,8 +17565,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LVD2FCR_b;
     };
-    __IM uint8_t  RESERVED200;
-    __IM uint16_t RESERVED201;
+    __IM uint8_t  RESERVED199;
+    __IM uint16_t RESERVED200;
 
     union
     {
@@ -17567,8 +17578,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LVD3FCR_b;
     };
-    __IM uint8_t  RESERVED202;
-    __IM uint16_t RESERVED203;
+    __IM uint8_t  RESERVED201;
+    __IM uint16_t RESERVED202;
 
     union
     {
@@ -17580,8 +17591,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LVD4FCR_b;
     };
-    __IM uint8_t  RESERVED204;
-    __IM uint16_t RESERVED205;
+    __IM uint8_t  RESERVED203;
+    __IM uint16_t RESERVED204;
 
     union
     {
@@ -17593,8 +17604,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LVD5FCR_b;
     };
-    __IM uint8_t  RESERVED206;
-    __IM uint16_t RESERVED207;
+    __IM uint8_t  RESERVED205;
+    __IM uint16_t RESERVED206;
 
     union
     {
@@ -17606,9 +17617,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 7;
         } PVDLR_b;
     };
-    __IM uint8_t  RESERVED208;
-    __IM uint16_t RESERVED209;
-    __IM uint32_t RESERVED210[2];
+    __IM uint8_t  RESERVED207;
+    __IM uint16_t RESERVED208;
+    __IM uint32_t RESERVED209[2];
 
     union
     {
@@ -17626,8 +17637,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ23E : 1; /*!< [7..7] IRQ-DS Pin Enable                                                  */
         } DPSIER4_b;
     };
-    __IM uint8_t  RESERVED211;
-    __IM uint16_t RESERVED212;
+    __IM uint8_t  RESERVED210;
+    __IM uint16_t RESERVED211;
 
     union
     {
@@ -17645,8 +17656,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ31E : 1; /*!< [7..7] IRQ-DS Pin Enable                                                  */
         } DPSIER5_b;
     };
-    __IM uint8_t  RESERVED213;
-    __IM uint16_t RESERVED214;
+    __IM uint8_t  RESERVED212;
+    __IM uint16_t RESERVED213;
 
     union
     {
@@ -17664,8 +17675,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ23F : 1; /*!< [7..7] IRQ-DS Pin Deep Standby Cancel Flag                                */
         } DPSIFR4_b;
     };
-    __IM uint8_t  RESERVED215;
-    __IM uint16_t RESERVED216;
+    __IM uint8_t  RESERVED214;
+    __IM uint16_t RESERVED215;
 
     union
     {
@@ -17683,8 +17694,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ31F : 1; /*!< [7..7] IRQ-DS Pin Deep Standby Cancel Flag                                */
         } DPSIFR5_b;
     };
-    __IM uint8_t  RESERVED217;
-    __IM uint16_t RESERVED218;
+    __IM uint8_t  RESERVED216;
+    __IM uint16_t RESERVED217;
 
     union
     {
@@ -17702,9 +17713,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint8_t DIRQ31EG : 1; /*!< [7..7] IRQ-DS Pin Edge Select                                             */
         } DPSIEGR4_b;
     };
-    __IM uint8_t  RESERVED219;
-    __IM uint16_t RESERVED220;
-    __IM uint32_t RESERVED221[3];
+    __IM uint8_t  RESERVED218;
+    __IM uint16_t RESERVED219;
+    __IM uint32_t RESERVED220[3];
 
     union
     {
@@ -17718,8 +17729,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 3;
         } VBTSWMON_b;
     };
-    __IM uint8_t  RESERVED222;
-    __IM uint16_t RESERVED223;
+    __IM uint8_t  RESERVED221;
+    __IM uint16_t RESERVED222;
 
     union
     {
@@ -17731,9 +17742,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 7;
         } VBTSWSCR_b;
     };
-    __IM uint8_t  RESERVED224;
-    __IM uint16_t RESERVED225;
-    __IM uint32_t RESERVED226[38];
+    __IM uint8_t  RESERVED223;
+    __IM uint16_t RESERVED224;
+    __IM uint32_t RESERVED225[38];
 
     union
     {
@@ -17758,7 +17769,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 1;
         } SOMCR_b;
     };
-    __IM uint16_t RESERVED227;
+    __IM uint16_t RESERVED226;
 
     union
     {
@@ -17783,8 +17794,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 7;
         } SOSTDSR_b;
     };
-    __IM uint16_t RESERVED228;
-    __IM uint32_t RESERVED229[14];
+    __IM uint16_t RESERVED227;
+    __IM uint32_t RESERVED228[14];
 
     union
     {
@@ -17797,9 +17808,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 4;
         } VBTBER_b;
     };
-    __IM uint8_t  RESERVED230;
-    __IM uint16_t RESERVED231;
-    __IM uint8_t  RESERVED232;
+    __IM uint8_t  RESERVED229;
+    __IM uint16_t RESERVED230;
+    __IM uint8_t  RESERVED231;
 
     union
     {
@@ -17827,7 +17838,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t              : 2;
         } VBTBPSR_b;
     };
-    __IM uint8_t RESERVED233;
+    __IM uint8_t RESERVED232;
 
     union
     {
@@ -17871,7 +17882,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 5;
         } VBTADCR2_b;
     };
-    __IM uint8_t RESERVED234;
+    __IM uint8_t RESERVED233;
 
     union
     {
@@ -17915,7 +17926,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 5;
         } VBTIMONR_b;
     };
-    __IM uint8_t RESERVED235;
+    __IM uint8_t RESERVED234;
 
     union
     {
@@ -17927,8 +17938,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 5;
         } VBTNCWCR_b;
     };
-    __IM uint8_t  RESERVED236;
-    __IM uint16_t RESERVED237;
+    __IM uint8_t  RESERVED235;
+    __IM uint16_t RESERVED236;
 
     union
     {
@@ -17942,9 +17953,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 5;
         } VBTADCR3_b;
     };
-    __IM uint8_t  RESERVED238;
-    __IM uint16_t RESERVED239;
-    __IM uint32_t RESERVED240[42];
+    __IM uint8_t  RESERVED237;
+    __IM uint16_t RESERVED238;
+    __IM uint32_t RESERVED239[42];
 
     union
     {
@@ -20603,24 +20614,12 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
 
         struct
         {
-            __IOM uint32_t SADMAC00 : 1; /*!< [0..0] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC01 : 1; /*!< [1..1] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC02 : 1; /*!< [2..2] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC03 : 1; /*!< [3..3] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC04 : 1; /*!< [4..4] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC05 : 1; /*!< [5..5] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC06 : 1; /*!< [6..6] Security attributes of registers for DMAC0 channel                 */
-            __IOM uint32_t SADMAC07 : 1; /*!< [7..7] Security attributes of registers for DMAC0 channel                 */
+            __IOM uint32_t SADMAC0n : 8; /*!< [7..0] Security attributes of output and registers for DMAC0
+                                          *   channel                                                                   */
             uint32_t                : 8;
-            __IOM uint32_t SADMAC10 : 1; /*!< [16..16] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC11 : 1; /*!< [17..17] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC12 : 1; /*!< [18..18] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC13 : 1; /*!< [19..19] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC14 : 1; /*!< [20..20] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC15 : 1; /*!< [21..21] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC16 : 1; /*!< [22..22] Security attributes of registers for DMAC1 channel               */
-            __IOM uint32_t SADMAC17 : 1; /*!< [23..23] Security attributes of registers for DMAC1 channel               */
-            uint32_t                : 8;
+            __IOM uint32_t SADMAC1n : 8; /*!< [23..16] Security attributes of output and registers for DMAC1
+                                          *   channel                                                                   */
+            uint32_t : 8;
         } DMACCHSAR_b;
     };
     __IM uint32_t RESERVED11[3];
@@ -71670,6 +71669,9 @@ typedef struct                         /*!< (@ 0x4001C800) R_TCM Structure      
 /* ========================================================  HOCOCR  ========================================================= */
  #define R_SYSTEM_HOCOCR_HCSTP_Pos               (0UL)          /*!< HCSTP (Bit 0)                                         */
  #define R_SYSTEM_HOCOCR_HCSTP_Msk               (0x1UL)        /*!< HCSTP (Bitfield-Mask: 0x01)                           */
+/* ========================================================  HOCOCR2  ======================================================== */
+ #define R_SYSTEM_HOCOCR2_HCFRQ0_Pos             (0UL)          /*!< HCFRQ0 (Bit 0)                                        */
+ #define R_SYSTEM_HOCOCR2_HCFRQ0_Msk             (0x7UL)        /*!< HCFRQ0 (Bitfield-Mask: 0x07)                          */
 /* ========================================================  MOCOCR  ========================================================= */
  #define R_SYSTEM_MOCOCR_MCSTP_Pos               (0UL)          /*!< MCSTP (Bit 0)                                         */
  #define R_SYSTEM_MOCOCR_MCSTP_Msk               (0x1UL)        /*!< MCSTP (Bitfield-Mask: 0x01)                           */
@@ -73766,10 +73768,10 @@ typedef struct                         /*!< (@ 0x4001C800) R_TCM Structure      
  #define R_CPSCU_DEBUGSAR_DBGSA0_Pos         (0UL)          /*!< DBGSA0 (Bit 0)                                        */
  #define R_CPSCU_DEBUGSAR_DBGSA0_Msk         (0x1UL)        /*!< DBGSA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  DMACCHSAR  ======================================================= */
- #define R_CPSCU_DMACCHSAR_SADMAC0_Pos       (0UL)          /*!< SADMAC0 (Bit 0)                                       */
- #define R_CPSCU_DMACCHSAR_SADMAC0_Msk       (0x1UL)        /*!< SADMAC0 (Bitfield-Mask: 0x01)                         */
- #define R_CPSCU_DMACCHSAR_SADMAC1_Pos       (16UL)         /*!< SADMAC1 (Bit 16)                                      */
- #define R_CPSCU_DMACCHSAR_SADMAC1_Msk       (0x10000UL)    /*!< SADMAC1 (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_DMACCHSAR_SADMAC0n_Pos      (0UL)          /*!< SADMAC0n (Bit 0)                                      */
+ #define R_CPSCU_DMACCHSAR_SADMAC0n_Msk      (0xffUL)       /*!< SADMAC0n (Bitfield-Mask: 0xff)                        */
+ #define R_CPSCU_DMACCHSAR_SADMAC1n_Pos      (16UL)         /*!< SADMAC1n (Bit 16)                                     */
+ #define R_CPSCU_DMACCHSAR_SADMAC1n_Msk      (0xff0000UL)   /*!< SADMAC1n (Bitfield-Mask: 0xff)                        */
 /* ========================================================  CPUDSAR  ======================================================== */
  #define R_CPSCU_CPUDSAR_CPUDSA0_Pos         (0UL)          /*!< CPUDSA0 (Bit 0)                                       */
  #define R_CPSCU_CPUDSAR_CPUDSA0_Msk         (0x1UL)        /*!< CPUDSA0 (Bitfield-Mask: 0x01)                         */

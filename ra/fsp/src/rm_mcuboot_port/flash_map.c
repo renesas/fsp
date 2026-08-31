@@ -7,7 +7,9 @@
 
 #include <stdbool.h>
 #include "flash_map_backend/flash_map_backend.h"
+#include "bootutil/boot_hooks.h"
 #include "bootutil/bootutil_log.h"
+#include "bootutil/bootutil_public.h"
 #include "sysflash/sysflash.h"
 #include "bsp_api.h"
 
@@ -38,12 +40,14 @@
  #define R_FLASH_Write                                 R_FLASH_HP_Write
  #define R_FLASH_Erase                                 R_FLASH_HP_Erase
  #define R_FLASH_Close                                 R_FLASH_HP_Close
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE     BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE
 #else
  #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE)
  #define R_FLASH_Open                                  R_FLASH_LP_Open
  #define R_FLASH_Write                                 R_FLASH_LP_Write
  #define R_FLASH_Erase                                 R_FLASH_LP_Erase
  #define R_FLASH_Close                                 R_FLASH_LP_Close
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE     BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE
 #endif
 
 /* Write buffering is not required in overwrite only mode (it is needed for overwrite only fast). */
@@ -53,6 +57,47 @@
  #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE         (1)
 #endif
 
+#if defined(__SAUREGION_PRESENT) && (__SAUREGION_PRESENT == 1U) && defined(BSP_BOOTLOADER_PROJECT)
+
+ #define RM_MCUBOOT_PORT_CONFIGURE_SAU                 1
+
+/* We are duplicating the SAU register here that we would normally get from CMSIS because the bootloader needs to configer the SAU boundaries
+ * in order to validate the Non-Secure region of code flash. The actual SAU register definition is only provided by CMSIS when CMSE is enabled
+ * and the toolchain produces `__ARM_FEATURE_CMSE == 3`. But in E2 Studio, enabling CMSE is coupled with a project being SECURE, which bootloaders
+ * traditionally have not been. If the bootloader is SECURE, we run into other secure bundling issues. */
+ #ifndef SAU
+  #define SAU_BASE                                     (0xE000EDD0UL)
+
+typedef struct
+{
+    volatile uint32_t CTRL;
+    volatile uint32_t TYPE;
+    volatile uint32_t RNR;
+    volatile uint32_t RBAR;
+    volatile uint32_t RLAR;
+    volatile uint32_t SFSR;
+    volatile uint32_t SFAR;
+} SAU_Type;
+
+  #define SAU                                     ((SAU_Type *) SAU_BASE)
+
+  #define SAU_CTRL_ENABLE_Pos                     0U                                  /*!< SAU CTRL: ENABLE Position */
+  #define SAU_CTRL_ENABLE_Msk                     (1UL /*<< SAU_CTRL_ENABLE_Pos*/)    /*!< SAU CTRL: ENABLE Mask */
+
+  #define SAU_RLAR_LADDR_Pos                      5U                                  /*!< SAU RLAR: LADDR Position */
+  #define SAU_RLAR_LADDR_Msk                      (0x7FFFFFFUL << SAU_RLAR_LADDR_Pos) /*!< SAU RLAR: LADDR Mask */
+
+  #define SAU_RLAR_ENABLE_Pos                     0U                                  /*!< SAU RLAR: ENABLE Position */
+  #define SAU_RLAR_ENABLE_Msk                     (1UL /*<< SAU_RLAR_ENABLE_Pos*/)    /*!< SAU RLAR: ENABLE Mask */
+
+  #define SAU_RBAR_BADDR_Pos                      5U                                  /*!< SAU RBAR: BADDR Position */
+  #define SAU_RBAR_BADDR_Msk                      (0x7FFFFFFUL << SAU_RBAR_BADDR_Pos) /*!< SAU RBAR: BADDR Mask */
+ #endif
+
+ #define RM_MCUBOOT_PORT_SAU_REGION_CODE_FLASH    (0)
+ #define RM_MCUBOOT_PORT_FLASH_NS_START           (BSP_FEATURE_FLASH_CODE_FLASH_START | (1 << 28))
+#endif
+
 /* Instance structure to use this module. */
 extern void * const              gp_mcuboot_flash_ctrl;
 extern flash_cfg_t const * const gp_mcuboot_flash_cfg;
@@ -60,11 +105,16 @@ extern flash_cfg_t const * const gp_mcuboot_flash_cfg;
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
 extern spi_flash_instance_t const * const gp_mcuboot_xspi_instance;
 
-/* If the XSPI block size is undefined by the user (this is the case when QSPI is used and only 32K erase is supported with QSPI)
- * then define the erase sector size to 32K. */
- #ifndef RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE
-  #define RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE    32768
- #endif
+/* Virtual sector size reported to MCUboot for BOTH slots. MCUboot's swap logic requires the primary and secondary
+ * slots to report identical sector sizes, and every erase issued to the XSPI flash must cover whole physical erase
+ * blocks. Reporting virtual sectors the size of the XSPI physical erase block for the internal flash as well
+ * satisfies both constraints (the internal flash can always erase at a finer granularity). */
+ #define RM_MCUBOOT_PORT_VIRTUAL_SECTOR_SIZE    (RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE)
+
+#else
+
+/* Without an external XSPI secondary slot, sectors are reported using the internal flash block size. */
+ #define RM_MCUBOOT_PORT_VIRTUAL_SECTOR_SIZE    (RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE)
 
 #endif
 
@@ -161,15 +211,39 @@ int flash_area_open (uint8_t id, const struct flash_area ** area)
             return -1;
         }
 
+#if RM_MCUBOOT_PORT_CONFIGURE_SAU
+
+        /* Configure SAU region used for Code Flash. Determined by the boundary address from the CFSAMONA register. */
+        SAU->RNR = RM_MCUBOOT_PORT_SAU_REGION_CODE_FLASH;
+        uint32_t flash_ns_region_start = RM_MCUBOOT_PORT_FLASH_NS_START +
+                                         (RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE * R_PSCU->CFSAMONA_b.CFS2);
+        SAU->RBAR = flash_ns_region_start & SAU_RBAR_BADDR_Msk;
+        uint32_t flash_ns_region_end = RM_MCUBOOT_PORT_FLASH_NS_START + BSP_ROM_SIZE_BYTES;
+        SAU->RLAR = (flash_ns_region_end & SAU_RLAR_LADDR_Msk) | SAU_RLAR_ENABLE_Msk;
+
+        /* Enable the SAU. */
+        SAU->CTRL = SAU_CTRL_ENABLE_Msk;
+#endif
+
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
-        g_internal_flash_flush_buffer.p_flush_buffer = g_rm_mcuboot_port_flash_write_ram;
+
+        /* Explicitly (re-)initialize this to UINT32_MAX at runtime rather than relying on the struct's static
+         * initializer. This bootloader's Reset_Handler calls main() directly without running the C library's
+         * scatter-loader, so non-zero-initialized (.data) globals are never copied from flash to RAM and read back
+         * as 0 instead of their initializer value. */
+        g_internal_flash_flush_buffer.g_current_block = UINT32_MAX;
+        g_internal_flash_flush_buffer.p_flush_buffer  = g_rm_mcuboot_port_flash_write_ram;
 #endif
         g_internal_flash_driver_open = true;
     }
 
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
  #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
-    g_xspi_flush_buffer.p_flush_buffer = g_rm_mcuboot_port_xspi_write_ram;
+
+    /* Same reasoning as above: g_current_block's static initializer is never applied at reset, so set it
+     * explicitly here. */
+    g_xspi_flush_buffer.g_current_block = UINT32_MAX;
+    g_xspi_flush_buffer.p_flush_buffer  = g_rm_mcuboot_port_xspi_write_ram;
  #endif
 
     /* The QSPI driver is expected to have been opened by the user and set up for DirectWrite mode. */
@@ -202,6 +276,11 @@ void flash_area_close (const struct flash_area * area)
 /*< Reads `len` bytes of flash memory at `off` to the buffer at `dst` */
 int flash_area_read (const struct flash_area * area, uint32_t off, void * dst, uint32_t len)
 {
+    if ((off + len) > area->fa_size)
+    {
+        return -1;
+    }
+
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
 
     /* If any buffered writes have not yet been written, write them before reading. */
@@ -253,7 +332,7 @@ int flash_on_chip_flush (const struct flash_area * area)
                     (int) gp_mcuboot_xspi_instance->p_api->write(gp_mcuboot_xspi_instance->p_ctrl,
                                                                  (uint8_t *) p_area_flush_buffer->p_flush_buffer,
                                                                  (uint8_t *) p_area_flush_buffer->g_current_block,
-                                                                 (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes);
+                                                                 gp_mcuboot_xspi_instance->p_cfg->page_size_bytes);
             }
  #endif
         }
@@ -276,6 +355,11 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
 {
     int err = 0U;
 
+    if ((off + len) > area->fa_size)
+    {
+        return -1;
+    }
+
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
     rm_mcuboot_port_flush_buffer_t * p_area_flush_buffer =
         gp_flush_buffer_lookup[RM_MCUBOOT_PORT_FLUSH_LOOKUP(area->fa_device_id)];
@@ -290,7 +374,7 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
     {
  #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
         p_write_buffer   = g_rm_mcuboot_port_xspi_write_ram;
-        write_align_size = (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
+        write_align_size = gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
  #endif
     }
 
@@ -343,7 +427,7 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
         else
         {
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-            uint32_t page_size      = (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
+            uint32_t page_size      = gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
             uint32_t pages_to_write = len / page_size;
             uint32_t pages_written  = 0;
             while (pages_to_write != 0)
@@ -366,7 +450,11 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
                     break;
                 }
             }
-            err = (int) get_flash_status();
+
+            if (0 == err)
+            {
+                err = (int) get_flash_status();
+            }
 #endif
         }
 
@@ -387,6 +475,11 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
     uint32_t  erase_address    = area->fa_off + off;
     uint32_t  sectors_to_erase = 0;
     uint32_t  sector_size;
+
+    if ((off + len) > area->fa_size)
+    {
+        return FSP_ERR_INVALID_SIZE;
+    }
 
     /* Erase, accounting for block sizes. */
     if (FLASH_DEVICE_INTERNAL_FLASH == area->fa_device_id)
@@ -426,30 +519,46 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
     {
         err = FSP_ERR_UNSUPPORTED;
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-        sector_size = RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE;
-        if (!(len % RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE))
+        uint32_t physical_erase_size = RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE;
+
+        /* Virtual sectors reported to MCUboot equal the XSPI physical erase block, so every erase request must
+         * cover whole physical erase blocks. Reject anything else instead of over- or under-erasing. */
+        if ((0U != (len % physical_erase_size)) ||
+            (0U != (erase_address % physical_erase_size)))
         {
-            uint32_t deleted_len = 0;
+            err = FSP_ERR_INVALID_SIZE;
+        }
+        else
+        {
+            uint32_t deleted_len = 0U;
+
             while (deleted_len < len)
             {
+                uint32_t current_address = erase_address + deleted_len;
+
                 err = get_flash_status();
+
                 if (FSP_SUCCESS == err)
                 {
-                    err =
-                        gp_mcuboot_xspi_instance->p_api->erase(gp_mcuboot_xspi_instance->p_ctrl,
-                                                               (uint8_t *) (erase_address + deleted_len), sector_size);
-                    if (FSP_SUCCESS == err)
-                    {
-                        deleted_len += sector_size;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    err = gp_mcuboot_xspi_instance->p_api->erase(gp_mcuboot_xspi_instance->p_ctrl,
+                                                                 (uint8_t *) current_address,
+                                                                 physical_erase_size);
                 }
-            }
 
-            err = get_flash_status();
+                if (FSP_SUCCESS != err)
+                {
+                    break;
+                }
+
+                err = get_flash_status();
+
+                if (FSP_SUCCESS != err)
+                {
+                    break;
+                }
+
+                deleted_len += physical_erase_size;
+            }
         }
 #endif
     }
@@ -468,7 +577,7 @@ uint32_t flash_area_align (const struct flash_area * area)
     else
     {
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-        write_alignment = (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
+        write_alignment = gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
 #endif
     }
 
@@ -495,18 +604,13 @@ static const struct flash_area * prv_lookup_flash_area (int id)
 /*< Given flash area ID, return info about sectors within the area. */
 int flash_area_get_sectors (int fa_id, uint32_t * count, struct flash_sector * sectors)
 {
-    /* MCUBoot works only if both source and destination have the same sector size.
-     * QSPI is only supported on Flash HP devices and the primary and seccondary images have to be located in
-     * 32K flash blocks to be usable with QSPI. */
- #if BSP_FEATURE_MRAM_IS_AVAILABLE
-    const size_t sector_size = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE;
- #elif BSP_FEATURE_FLASH_HP_VERSION > 0
-    const size_t sector_size = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE;
- #else
-    const size_t sector_size = BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE;
- #endif
-    int retval = -1;
-    const struct flash_area * fa = prv_lookup_flash_area(fa_id);
+    /* MCUboot works only if both source and destination report the same sector size, so both slots report virtual
+     * sectors of RM_MCUBOOT_PORT_VIRTUAL_SECTOR_SIZE. When the secondary slot is on external XSPI memory this is the
+     * XSPI physical block erase size; the internal flash implements a virtual sector erase as multiple native block
+     * erases. Slot sizes must be a multiple of the virtual sector size. */
+    const size_t              sector_size = RM_MCUBOOT_PORT_VIRTUAL_SECTOR_SIZE;
+    int                       retval      = -1;
+    const struct flash_area * fa          = prv_lookup_flash_area(fa_id);
     if (fa->fa_device_id == FLASH_DEVICE_INTERNAL_FLASH)
     {
         /* All sectors are treated as the same size for internal flash. */
@@ -548,11 +652,32 @@ int flash_area_get_sectors (int fa_id, uint32_t * count, struct flash_sector * s
 
 #endif
 
+int flash_area_get_sector (const struct flash_area * fa, uint32_t off, struct flash_sector * sector)
+{
+    FSP_PARAMETER_NOT_USED(fa);
+
+    /* Both slots report virtual sectors of RM_MCUBOOT_PORT_VIRTUAL_SECTOR_SIZE (see flash_area_get_sectors). */
+    const size_t sector_size = RM_MCUBOOT_PORT_VIRTUAL_SECTOR_SIZE;
+    sector->fs_off  = (off / sector_size) * sector_size;
+    sector->fs_size = sector_size;
+
+    return 0;
+}
+
 /*< Returns the `fa_id` for slot, where slot is 0 (primary) or 1 (secondary).
  *  `image_index` (0 or 1) is the index of the image. Image index is
  *  relevant only when multi-image support support is enabled */
 int flash_area_id_from_multi_image_slot (int image_index, int slot)
 {
+    int rc;
+    int id = -1;
+
+    rc = BOOT_HOOK_FLASH_AREA_CALL(flash_area_id_from_multi_image_slot_hook, BOOT_HOOK_REGULAR, image_index, slot, &id);
+    if (rc != BOOT_HOOK_REGULAR)
+    {
+        return id;
+    }
+
     switch (slot)
     {
         case 0:
@@ -636,6 +761,13 @@ int flash_on_chip_cleanup (void)
                 break;
             }
         }
+#endif
+
+#if RM_MCUBOOT_PORT_CONFIGURE_SAU
+
+        /* Clear and disable SAU configuration. When the application begins, it will configure SAU appropriately for the project. */
+        SAU->RNR   = RM_MCUBOOT_PORT_SAU_REGION_CODE_FLASH;
+        SAU->RLAR &= ~SAU_RLAR_ENABLE_Msk;
 #endif
 
         /* Close the flash driver. */

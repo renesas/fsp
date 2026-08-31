@@ -10,5 +10,9 @@ void HW_SCE_Aes256GcmEncryptUpdateAADSub (const uint32_t InData_DataA[], const u
 {
     HW_SCE_p_func430(InData_DataA, MAX_CNT);
 
-    HW_SCE_p_func101(0xa04e32adU, 0xd38636ecU, 0xcbdb9f6aU, 0x5411f0baU);
+    static const uint32_t Param_p34a_func101_001[] =
+    {
+        0xa04e32adU, 0xd38636ecU, 0xcbdb9f6aU, 0x5411f0baU,
+    };
+    HW_SCE_p_func101(Param_p34a_func101_001);
 }

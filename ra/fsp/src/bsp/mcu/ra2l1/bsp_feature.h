@@ -320,6 +320,7 @@
 #define BSP_FEATURE_GPT_AD_DIRECT_START_SUPPORTED                       (0UL)           // GPT A/D conversion start request is directly output to ADC instead of via the ELC.
 #define BSP_FEATURE_GPT_CLOCK_DIVIDER_STEP_SIZE                         (4UL)           // Multiplicative step size of the clock divider (GTCR.TPCS).
 #define BSP_FEATURE_GPT_CLOCK_DIVIDER_VALUE_7_9_VALID                   (0UL)           // Whether or not the bit-values of 0b0111 and 0b1001 are valid divider settings (GTCR.TPCS).
+#define BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED                         (0UL)           // Complementary PWM is supported.
 #define BSP_FEATURE_GPT_EVENT_COUNT_CHANNEL_MASK                        (0x03FFUL)      // Mask of channels that support event count input (has GTUPSR register).
 #define BSP_FEATURE_GPT_EVENT_COUNT_SUPPORTED                           (1UL)           // At least one channel supports event counts.
 #define BSP_FEATURE_GPT_GPTE_CHANNEL_MASK                               (0x00UL)        // Mask of GPT channels that are the GPTE implementation.
@@ -400,6 +401,9 @@
 #define BSP_FEATURE_LPM_HAS_DPSIEGR4                                    (0UL)           // The DPSIEGR4 register is available.
 #define BSP_FEATURE_LPM_HAS_DPSIER4                                     (0UL)           // The DPSIER4 register is available.
 #define BSP_FEATURE_LPM_HAS_DPSIER5                                     (0UL)           // The DPSIER5 register is available.
+#define BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN0                               (0UL)           // The DSLPWUPIRQEN0 registers are available.
+#define BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN1                               (0UL)           // The DSLPWUPIRQEN1 registers are available.
+#define BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN2                               (0UL)           // The DSLPWUPIRQEN2 registers are available.
 #define BSP_FEATURE_LPM_HAS_FLASH_MODE_SELECT                           (0UL)           // The SBYCR.FLSTP field is available.
 #define BSP_FEATURE_LPM_HAS_HOCO_STARTUP_SPEED_MODE                     (0UL)           // The SBYCR.FWKUP field is available.
 #define BSP_FEATURE_LPM_HAS_LDO_SKEEP                                   (0UL)           // PLL1LDOCR, PLL2LDOCR and HOCOLDOCR registers are available.

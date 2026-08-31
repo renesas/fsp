@@ -31,6 +31,11 @@ void R_BSP_SdramInit(bool init_memory);
 void R_BSP_SdramSelfRefreshEnable(void);
 void R_BSP_SdramSelfRefreshDisable(void);
 
+ #if 1U == BSP_CFG_CLOCKS_SECURE && (BSP_TZ_SECURE_BUILD || BSP_TZ_NONSECURE_BUILD)
+BSP_CMSE_NONSECURE_ENTRY void bsp_sdram_secure_sdclk_enable(void);
+
+ #endif
+
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 #endif

@@ -385,6 +385,11 @@ int mbedtls_gcm_starts(mbedtls_gcm_context *ctx,
                        int mode,
                        const unsigned char *iv, size_t iv_len)
 {
+#if defined(MBEDTLS_GCM_ALT)
+    /* HW-accelerated multi-part GCM (SCE cannot be used elsewhere). */
+    return sce_gcm_starts(ctx, mode, iv, iv_len);
+#else
+
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     unsigned char work_buf[16];
     const unsigned char *p;
@@ -452,6 +457,7 @@ int mbedtls_gcm_starts(mbedtls_gcm_context *ctx,
     }
 
     return 0;
+#endif
 }
 
 /**
@@ -474,6 +480,11 @@ int mbedtls_gcm_starts(mbedtls_gcm_context *ctx,
 int mbedtls_gcm_update_ad(mbedtls_gcm_context *ctx,
                           const unsigned char *add, size_t add_len)
 {
+#if defined(MBEDTLS_GCM_ALT)
+    /* HW-accelerated multi-part GCM (SCE cannot be used elsewhere). */
+    return sce_gcm_update_ad(ctx, add, add_len);
+#else
+
     const unsigned char *p;
     size_t use_len, offset;
     uint64_t new_add_len;
@@ -526,6 +537,7 @@ int mbedtls_gcm_update_ad(mbedtls_gcm_context *ctx,
     }
 
     return 0;
+#endif
 }
 
 /* Increment the counter. */
@@ -573,6 +585,11 @@ int mbedtls_gcm_update(mbedtls_gcm_context *ctx,
                        unsigned char *output, size_t output_size,
                        size_t *output_length)
 {
+#if defined(MBEDTLS_GCM_ALT)
+    /* HW-accelerated multi-part GCM (SCE cannot be used elsewhere). */
+    return sce_gcm_update(ctx, input, input_length, output, output_size, output_length);
+#else
+
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     const unsigned char *p = input;
     unsigned char *out_p = output;
@@ -652,6 +669,7 @@ int mbedtls_gcm_update(mbedtls_gcm_context *ctx,
 
     mbedtls_platform_zeroize(ectr, sizeof(ectr));
     return 0;
+#endif
 }
 
 int mbedtls_gcm_finish(mbedtls_gcm_context *ctx,
@@ -659,6 +677,11 @@ int mbedtls_gcm_finish(mbedtls_gcm_context *ctx,
                        size_t *output_length,
                        unsigned char *tag, size_t tag_len)
 {
+#if defined(MBEDTLS_GCM_ALT)
+    /* HW-accelerated multi-part GCM (SCE cannot be used elsewhere). */
+    return sce_gcm_finish(ctx, output, output_size, output_length, tag, tag_len);
+#else
+
     unsigned char work_buf[16];
     uint64_t orig_len;
     uint64_t orig_add_len;
@@ -705,6 +728,7 @@ int mbedtls_gcm_finish(mbedtls_gcm_context *ctx,
     }
 
     return 0;
+#endif
 }
 
 int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
@@ -752,6 +776,10 @@ void mbedtls_gcm_free(mbedtls_gcm_context *ctx)
     if (ctx == NULL) {
         return;
     }
+#if defined(MBEDTLS_GCM_ALT)
+    /* Drain a still-open HW GCM session (abort before finish) before freeing. */
+    sce_gcm_free_session(ctx);
+#endif
 #if defined(MBEDTLS_BLOCK_CIPHER_C)
     mbedtls_block_cipher_free(&ctx->block_cipher_ctx);
 #else

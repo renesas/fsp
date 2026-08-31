@@ -245,6 +245,24 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
 
             NX_PACKET * packet_ptr = driver_req_ptr->nx_ip_driver_packet;
 
+#ifndef NX_DISABLE_PACKET_CHAIN
+
+            /* Do not support chained packets. Return error if packet chaining is present. */
+            if (packet_ptr->nx_packet_next != NX_NULL)
+            {
+                driver_req_ptr->nx_ip_driver_status = NX_INVALID_PACKET;
+                FSP_LOG_PRINT("Chained transmit packets not supported.");
+
+                /* Release the NetX packet because it cannot be sent. */
+                if (NX_SUCCESS != nx_packet_transmit_release(driver_req_ptr->nx_ip_driver_packet))
+                {
+                    FSP_LOG_PRINT("Failed to release transmit packet.");
+                }
+
+                return;
+            }
+#endif
+
             /* Adjust prepend pointer to make room for Ethernet header. */
             UCHAR * p_packet_prepend = packet_ptr->nx_packet_prepend_ptr - NX_ETHERNET_SIZE;
             UINT    packet_length    = packet_ptr->nx_packet_length + NX_ETHERNET_SIZE;
@@ -703,6 +721,23 @@ void rm_netxduo_ether_receive_process_packet (rm_netxduo_ether_instance_t * p_ne
 {
     ether_instance_t const * p_ether_instance = p_netxduo_ether_instance->p_cfg->p_ether_instance;
     uint8_t                * p_mac_address    = p_ether_instance->p_cfg->p_mac_address;
+
+#ifndef NX_DISABLE_PACKET_CHAIN
+
+    /* Do not support chained packets. Return error if packet chaining is present. */
+    if (p_nx_packet->nx_packet_next != NX_NULL)
+    {
+        FSP_LOG_PRINT("Chained receive packets not supported.");
+
+        if (NX_SUCCESS != nx_packet_release(p_nx_packet))
+        {
+            FSP_LOG_PRINT("Failed to release NetX Packet.");
+        }
+
+        return;
+    }
+#endif
+
     ULONG mac_msw = (ULONG) ((p_mac_address[0] << 8) | (p_mac_address[1] << 0));
     ULONG mac_lsw =
         (ULONG) ((p_mac_address[2] << 24) | (p_mac_address[3] << 16) | (p_mac_address[4] << 8) |

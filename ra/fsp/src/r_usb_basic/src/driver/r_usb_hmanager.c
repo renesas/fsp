@@ -562,7 +562,8 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
     uint32_t           usbx_status = UX_ERROR;
   #endif                               /* BSP_CFG_RTOS == 1 */
 
-  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
+  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) \
+    && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
     uint32_t composite_cdc_check = 0;
     uint32_t composite_msc_check = 0;
   #endif
@@ -707,7 +708,8 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
   #if (BSP_CFG_RTOS != 0)
                             if (USB_OK == retval)
                             {
-   #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
+   #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) \
+                                && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
                                 if (USB_IFCLS_CDC == driver->ifclass)
                                 {
                                     composite_cdc_check = 1;
@@ -732,11 +734,17 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                             }
 
    #if (BSP_CFG_RTOS == 1)
-                            usbx_status = _ux_host_stack_interfaces_scan(g_p_usbx_configuration[ptr->ip],
-                                                                         (uint8_t *) g_usb_hstd_config_descriptor[ptr->
-                                                                                                                  ip]);
+    #if (USB_CFG_MULTI_HOST_HUB == USB_CFG_ENABLE)
+                            if (flg == 1)
+    #endif                             /* USB_CFG_MULTI_HOST_HUB == USB_CFG_ENABLE */
+                            {
+                                usbx_status = _ux_host_stack_interfaces_scan(g_p_usbx_configuration[ptr->ip],
+                                                                             (uint8_t *) g_usb_hstd_config_descriptor[
+                                                                                 ptr->
+                                                                                 ip]);
+                            }
    #endif                              /* BSP_CFG_RTOS == 1 */
-  #else /* (BSP_CFG_RTOS != 0) */
+  #else /* (BSP_CFG_RTOS == 1) */
                             g_usb_hstd_check_enu_result[ptr->ip] = USB_OK;
 
                             /* In this function, check device class of       */
@@ -761,7 +769,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                                 }
    #endif                              /* defined(USB_CFG_HAUD_USE) */
                             }
-  #endif /* (BSP_CFG_RTOS != 0) */
+  #endif /* (BSP_CFG_RTOS == 1) */
                         }
                     }
 
@@ -876,7 +884,8 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                             }
   #endif                               /* defined(USB_CFG_OTG_USE) */
 
-  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
+  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) \
+                            && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
                             if (USB_IFCLS_CDC == driver->ifclass)
                             {
                                 composite_cdc_check = 1;
@@ -2625,7 +2634,9 @@ void usb_hstd_mgr_task (void * stacd)
     uint16_t            connect_speed;
     uint16_t            result = 0;
     usb_instance_ctrl_t ctrl;
- #if defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE)
+
+ #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) \
+    && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
     usb_cfg_t * p_cfg = USB_NULL;
  #endif                                /* defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) */
  #if (BSP_CFG_RTOS == 0)
@@ -2978,7 +2989,7 @@ void usb_hstd_mgr_task (void * stacd)
   #endif                               /* BSP_CFG_RTOS_USED == 0 */
  #endif                                /* defined(USB_CFG_HHID_USE) */
 
-                                (*driver->devdetach)(ptr, driver->devaddr, (uint16_t) USB_NO_ARG);
+                                (*driver->devdetach)(ptr, driver->devaddr, driver->ifclass);
 
                                 /* Root port */
                                 g_usb_hstd_device_info[ptr->ip][driver->devaddr][0] = USB_NOPORT;
@@ -3072,7 +3083,8 @@ void usb_hstd_mgr_task (void * stacd)
                                 /*USB_BC_ATTACH(ptr, g_usb_hstd_device_addr[ptr->ip], (uint16_t)g_usb_hstd_bc[ptr->ip].state); */
                                 if (USB_BC_STATE_CDP == g_usb_hstd_bc[ptr->ip].state)
                                 {
-  #if defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTIPORT == USB_CFG_DISABLE)
+  #if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE) && (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) \
+                                    && (USB_CFG_MULTIPORT == USB_CFG_DISABLE))
                                     if (ptr->ip)
                                     {
    #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)

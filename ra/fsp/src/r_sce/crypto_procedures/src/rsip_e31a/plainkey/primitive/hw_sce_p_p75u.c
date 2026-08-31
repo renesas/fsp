@@ -25,7 +25,11 @@ fsp_err_t HW_SCE_Sha2HmacUpdateSub (const uint32_t InData_Msg[], const uint32_t 
     WAIT_STS(REG_118H, 8, 0);
     WR1_PROG(REG_40H, 0x00001600U);
 
-    HW_SCE_p_func101(0x7461fe5fU, 0x9c15d780U, 0xb1e08e30U, 0x32563112U);
+    static const uint32_t Param_p75u_func101_001[] =
+    {
+        0x7461fe5fU, 0x9c15d780U, 0xb1e08e30U, 0x32563112U,
+    };
+    HW_SCE_p_func101(Param_p75u_func101_001);
 
     return FSP_SUCCESS;
 }

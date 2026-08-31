@@ -129,6 +129,8 @@ void r_rsip_func411(const uint32_t ARG1[]);
 void r_rsip_func412(const uint32_t ARG1[]);
 void r_rsip_func413(void);
 void r_rsip_func414(uint32_t ARG1[]);
+void r_rsip_func415(const uint32_t ARG1[]);
+void r_rsip_func416(const uint32_t ARG1[], const uint32_t ARG2[]);
 void r_rsip_func420(void);
 void r_rsip_func421(void);
 void r_rsip_func422(const uint32_t ARG1[], uint32_t ARG2);

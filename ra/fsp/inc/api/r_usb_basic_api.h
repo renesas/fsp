@@ -219,6 +219,7 @@ typedef enum e_usb_class
     USB_CLASS_PAUD,                    ///< PAUD Class
     USB_CLASS_PPRN,                    ///< PPRN Class
     USB_CLASS_DFU,                     ///< DFU Class
+    USB_CLASS_PUVC,                    ///< PUVC Class
     USB_CLASS_PVND,                    ///< PVND Class
     USB_CLASS_HCDC,                    ///< HCDC Class
     USB_CLASS_HCDCC,                   ///< HCDCC Class

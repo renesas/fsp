@@ -7,7 +7,6 @@
 /////////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-256 Decryption ECB Mode>                                //
 // Procedure number: 21                                                //
-// File name      : SC324_p21.prc                                      //
 // State Diagram  : main(FSM1)                                         //
 // Start State    : main03                                             //
 // End State      : main03                                             //

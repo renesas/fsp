@@ -5,15 +5,11 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 void HW_SCE_p_func056 (void)
 {
-    WR1_PROG(REG_94H, 0x38005844U);
-    WR1_PROG(REG_9CH, 0x00000080U);
-    WR1_PROG(REG_40H, 0x00260000U);
+    HW_SCE_p_func_sub009(0x38005844U, 0x00260000U);
 
-    WR1_PROG(REG_94H, 0x3420a880U);
-    WR1_PROG(REG_94H, 0x00000020U);
-    WR1_PROG(REG_9CH, 0x00000080U);
-    WR1_PROG(REG_40H, 0x00A60000U);
+    HW_SCE_p_func_sub006(0x3420a880U, 0x00000020U, 0x00A60000U);
 }

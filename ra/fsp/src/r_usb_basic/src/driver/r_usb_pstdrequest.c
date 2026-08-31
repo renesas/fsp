@@ -275,11 +275,11 @@ void usb_pstd_stand_req3 (usb_utr_t * p_utr)
         }
     }
 
- #if (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_PAUD_USE)
+ #if (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && (defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE))
     if (USB_SET_INTERFACE == (g_usb_pstd_req_type & USB_BREQUEST))
  #else
     if (USB_YES == g_usb_pstd_std_request)
- #endif
+ #endif                                                    /* (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE) */
     {
         ctrl.setup.request_type   = g_usb_pstd_req_type;   /* Request type */
         ctrl.setup.request_value  = g_usb_pstd_req_value;  /* Value */
@@ -1522,6 +1522,9 @@ static void usb_pstd_set_interface0 (usb_utr_t * p_utr)
  #ifdef  USB_CFG_PAUD_USE
 extern uint8_t g_usb_paud_iso_pipe[NUM_OF_INTERFACE];
  #endif
+ #ifdef  USB_CFG_PUVC_USE
+extern uint8_t g_usb_puvc_iso_pipe[NUM_OF_INTERFACE];
+ #endif
  #if (BSP_CFG_RTOS == 1)
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
@@ -1536,10 +1539,10 @@ extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
  ******************************************************************************/
 static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
 {
- #ifdef  USB_CFG_PAUD_USE
+ #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE)
     uint16_t current_alt_value;
     uint8_t  pipe;
- #endif                                // USB_CFG_PAUD_USE
+ #endif                                /* defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE) */
 
     /* Configured ? */
     if ((USB_TRUE == usb_pstd_chk_configured(p_utr)) &&
@@ -1558,18 +1561,18 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
         {
             if (g_usb_pstd_req_value <= usb_pstd_get_alternate_num(g_usb_pstd_req_index))
             {
-  #ifdef  USB_CFG_PAUD_USE
+  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE)
                 current_alt_value = g_usb_pstd_alt_num[g_usb_pstd_req_index];
-  #endif                               // USB_CFG_PAUD_USE
+  #endif                               /* defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE) */
                 g_usb_pstd_alt_num[g_usb_pstd_req_index] = (uint16_t) (g_usb_pstd_req_value & USB_ALT_SET);
                 usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                 usb_pstd_clr_eptbl_index();
 
                 /* Search endpoint setting */
                 usb_pstd_set_eptbl_index(g_usb_pstd_req_index, g_usb_pstd_alt_num[g_usb_pstd_req_index]);
-  #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_DFU_USE)
+  #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_PUVC_USE) && !defined(USB_CFG_DFU_USE)
                 usb_pstd_set_pipe_reg(p_utr);
-  #endif                               /* #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_DFU_USE) */
+  #endif                               /* #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_PUVC_USE) && !defined(USB_CFG_DFU_USE) */
 
   #ifdef  USB_CFG_PAUD_USE
                 if (0 == (g_usb_pstd_req_value & USB_ALT_SET))
@@ -1580,6 +1583,21 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
                         pipe = g_usb_paud_iso_pipe[g_usb_pstd_req_index]; // g_usb_pstd_req_index: Interface Number
                         usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_STOP, p_utr);
                     }
+                }
+  #endif
+  #ifdef  USB_CFG_PUVC_USE
+                if (0 == (g_usb_pstd_req_value & USB_ALT_SET))
+                {
+                    if (current_alt_value > 0)
+                    {
+                        /* Alternate Setting 1 --> 0 */
+                        pipe = g_usb_puvc_iso_pipe[g_usb_pstd_req_index]; // g_usb_pstd_req_index: Interface Number
+                        usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_STOP, p_utr);
+                    }
+                }
+                else
+                {
+                    usb_puvc_pipe_set(p_utr, g_usb_pstd_req_index, g_usb_pstd_alt_num[g_usb_pstd_req_index]);
                 }
   #endif
   #if BSP_CFG_RTOS == 1                // USB_CFG_PAUD_USE

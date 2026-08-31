@@ -230,6 +230,44 @@ typedef enum e_lpm_standby_wake_source_2
 typedef uint64_t lpm_standby_wake_source_bits_t;
 #endif
 
+/** Interrupt enable bit mask for wake from deep sleep sources */
+typedef enum e_lpm_deep_sleep_wake_source
+{
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ0   = (0x00000001ULL), ///< IRQ0 / IRQ32 / IRQ64
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ1   = (0x00000002ULL), ///< IRQ1 / IRQ33 / IRQ65
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ2   = (0x00000004ULL), ///< IRQ2 / IRQ34 / IRQ66
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ3   = (0x00000008ULL), ///< IRQ3 / IRQ35 / IRQ67
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ4   = (0x00000010ULL), ///< IRQ4 / IRQ36 / IRQ68
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ5   = (0x00000020ULL), ///< IRQ5 / IRQ37 / IRQ69
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ6   = (0x00000040ULL), ///< IRQ6 / IRQ38 / IRQ70
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ7   = (0x00000080ULL), ///< IRQ7 / IRQ39 / IRQ71
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ8   = (0x00000100ULL), ///< IRQ8 / IRQ40 / IRQ72
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ9   = (0x00000200ULL), ///< IRQ9 / IRQ41 / IRQ73
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ10  = (0x00000400ULL), ///< IRQ10 / IRQ42 / IRQ74
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ11  = (0x00000800ULL), ///< IRQ11 / IRQ43 / IRQ75
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ12  = (0x00001000ULL), ///< IRQ12 / IRQ44 / IRQ76
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ13  = (0x00002000ULL), ///< IRQ13 / IRQ45 / IRQ77
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ14  = (0x00004000ULL), ///< IRQ14 / IRQ46 / IRQ78
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ15  = (0x00008000ULL), ///< IRQ15 / IRQ47 / IRQ79
+
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ16  = (0x00010000ULL), ///< IRQ16 / IRQ48 / IRQ80
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ17  = (0x00020000ULL), ///< IRQ17 / IRQ49 / IRQ81
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ18  = (0x00040000ULL), ///< IRQ18 / IRQ50 / IRQ82
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ19  = (0x00080000ULL), ///< IRQ19 / IRQ51 / IRQ83
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ20  = (0x00100000ULL), ///< IRQ20 / IRQ52 / IRQ84
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ21  = (0x00200000ULL), ///< IRQ21 / IRQ53 / IRQ85
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ22  = (0x00400000ULL), ///< IRQ22 / IRQ54 / IRQ86
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ23  = (0x00800000ULL), ///< IRQ23 / IRQ55 / IRQ87
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ24  = (0x01000000ULL), ///< IRQ24 / IRQ56 / IRQ88
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ25  = (0x02000000ULL), ///< IRQ25 / IRQ57 / IRQ89
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ26  = (0x04000000ULL), ///< IRQ26 / IRQ58 / IRQ90
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ27  = (0x08000000ULL), ///< IRQ27 / IRQ50 / IRQ91
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ28  = (0x10000000ULL), ///< IRQ28 / IRQ60 / IRQ92
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ29  = (0x20000000ULL), ///< IRQ29 / IRQ61 / IRQ93
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ30  = (0x40000000ULL), ///< IRQ30 / IRQ62 / IRQ94
+    LPM_DEEP_SLEEP_WAKE_SOURCE_IRQ31  = (0x80000000ULL), ///< IRQ31 / IRQ63 / IRQ95
+} lpm_deep_sleep_wake_source_t;
+
 /** I/O port state after Deep Software Standby mode */
 typedef enum e_lpm_io_port
 {
@@ -607,6 +645,20 @@ typedef struct st_lpm_cfg
 
     /** SOSC setting in SSTBY mode or in SNOOZE mode. */
     lpm_standby_sosc_t lpm_standby_sosc;
+#endif
+
+/** Deep Sleep wake-up interrupt enable masks */
+#if BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN0
+    /** deep_sleep_wake_source0 is used to set wake sources 0-31 */
+    lpm_deep_sleep_wake_source_t deep_sleep_wake_source0; 
+#endif
+#if BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN1
+    /** deep_sleep_wake_source1 is used to set wake sources 32-63 */
+    lpm_deep_sleep_wake_source_t deep_sleep_wake_source1; 
+#endif
+#if BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN2
+    /** deep_sleep_wake_source2 is used to set wake sources 64-95 */
+    lpm_deep_sleep_wake_source_t deep_sleep_wake_source2; 
 #endif
 
     /** Placeholder for extension. */

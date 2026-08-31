@@ -7,7 +7,6 @@
 /////////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-128 Encryption with ECB Mode>                           //
 // Procedure number: 04                                                //
-// File name      : SC324_p04.prc                                      //
 // State Diagram  : main(FSM1)                                         //
 // Start State    : main03                                             //
 // End State      : main03                                             //

@@ -7,6 +7,7 @@
 #define R_USB_EXTERN_H
 
 #include "r_usb_basic_api.h"
+#include "r_usb_basic_define.h"
 #if defined(USB_CFG_OTG_USE)
  #include "r_external_irq_api.h"
 #endif                                 /* defined(USB_CFG_OTG_USE) */
@@ -82,7 +83,7 @@ extern uint8_t g_usb_hcdc_int_in_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hcdc2_bulk_in_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hcdc2_bulk_out_pipe[USB_NUM_USBIP];
 extern uint8_t g_usb_hcdc2_int_in_pipe[USB_NUM_USBIP];
-  #endif
+  #endif                               /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
  #endif                                /* defined(USB_CFG_HCDC_USE) */
  #if defined(USB_CFG_HHID_USE)
   #include "r_usb_hhid_cfg.h"
@@ -237,9 +238,22 @@ extern uint16_t g_usb_bc_detect;
 #endif                                 /* USB_CFG_BC == USB_CFG_ENABLE */
 
 #if defined(USB_CFG_HMSC_USE)
+
+ #include "r_usb_hmsc_cfg.h"
 extern uint8_t g_drive_search_lock;
 extern uint8_t g_drive_search_que[];
 extern uint8_t g_drive_search_que_cnt;
+
+ #if (BSP_CFG_RTOS == 1) && \
+    ((USB_CFG_MULTI_HOST_HUB == USB_CFG_ENABLE) || (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE))
+
+/* Extern PIPESEL mutex */
+extern TX_MUTEX g_usbx_pipesel_mutex[USB_NUM_USBIP];
+extern uint16_t g_usb_hmsc_in_pipe[USB_NUM_USBIP][USB_MAX_CONNECT_HMSC_DEVICE_NUM];
+extern uint16_t g_usb_hmsc_out_pipe[USB_NUM_USBIP][USB_MAX_CONNECT_HMSC_DEVICE_NUM];
+ #endif                                /* (BSP_CFG_RTOS == 1) && \
+                                        * ((USB_CFG_MULTI_HOST_HUB == USB_CFG_ENABLE) || \
+                                        * (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE)) */
 
 #endif                                 /* defined(USB_CFG_HMSC_USE) */
 
@@ -767,6 +781,12 @@ extern void usb_paud_read_complete(usb_utr_t * mess, uint16_t data1, uint16_t da
 extern void usb_paud_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
 
 #endif                                 /* defined(USB_CFG_PAUD_USE) */
+
+#if defined(USB_CFG_PUVC_USE)
+extern uint16_t usb_puvc_pipe_set(usb_utr_t * p_utr, uint16_t requested_if_num, uint16_t requested_alt_num);
+extern void     usb_puvc_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
+
+#endif                                 /* defined(USB_CFG_PUVC_USE) */
 
 #if defined(USB_CFG_HCDC_USE)
 extern void usb_hcdc_read_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);

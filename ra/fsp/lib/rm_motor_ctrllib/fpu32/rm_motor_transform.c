@@ -71,7 +71,12 @@ void rm_motor_transform_dq_uvw_abs (const float f_angle, const float * f_dq, flo
     float f4_cos           = 0.0F;
     float f4_sin           = 0.0F;
 
+#if BSP_FEATURE_TFU_SUPPORTED
     sincosf(f_angle, &f4_sin, &f4_cos);
+#else
+    f4_sin = sinf(f_angle);
+    f4_cos = cosf(f_angle);
+#endif
 
     f4_cos_div_sqrt3 = f4_cos * (1.0F / MOTOR_FUNDLIB_SQRT_3);
     f4_sin_div_sqrt3 = f4_sin * (1.0F / MOTOR_FUNDLIB_SQRT_3);

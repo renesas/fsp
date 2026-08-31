@@ -18,7 +18,11 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSuspendSub (uint32_t OutData_State[])
     RD1_ADDR(REG_104H, &OutData_State[18]);
     RD1_ADDR(REG_100H, &OutData_State[19]);
 
-    HW_SCE_p_func102(0x5dc04975U, 0x0d0e02f8U, 0x90d996fbU, 0x5fd1d453U);
+    static const uint32_t Param_p73s_func102_001[] =
+    {
+        0x5dc04975U, 0x0d0e02f8U, 0x90d996fbU, 0x5fd1d453U,
+    };
+    HW_SCE_p_func102(Param_p73s_func102_001);
     WR1_PROG(REG_6CH, 0x00000040U);
     WAIT_STS(REG_20H, 12, 0);
 

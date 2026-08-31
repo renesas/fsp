@@ -7,7 +7,6 @@
 /////////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-256 Encryption ECB Mode>                                //
 // Procedure number: 20                                                //
-// File name      : SC324_p20.prc                                      //
 // State Diagram  : main(FSM1)                                         //
 // Start State    : main03                                             //
 // End State      : main03                                             //

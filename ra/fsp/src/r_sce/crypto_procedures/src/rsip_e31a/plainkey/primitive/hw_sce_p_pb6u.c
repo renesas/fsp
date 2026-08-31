@@ -5,16 +5,19 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 void HW_SCE_Aes128XtsDecryptUpdateSub (const uint32_t InData_Text[], uint32_t OutData_Text[], const uint32_t MAX_CNT)
 {
     uint32_t iLoop = 0U;
 
-    HW_SCE_p_func100(0x56ee18a4U, 0x9637334dU, 0xc972809eU, 0x556a3838U);
+    static const uint32_t Param_pb6u_func100_001[] =
+    {
+        0x56ee18a4U, 0x9637334dU, 0xc972809eU, 0x556a3838U,
+    };
+    HW_SCE_p_func100(Param_pb6u_func100_001);
 
-    WR1_PROG(REG_14H, 0x00020061U);
-    WR1_PROG(REG_D4H, 0x00000020U);
-    WR1_PROG(REG_D0H, 0x0d00890eU);
+    HW_SCE_p_func_sub016(0x00020061U, 0x00000020U, 0x0d00890eU);
     WR1_PROG(REG_08H, 0x000c1000U);
 
     WAIT_STS(REG_14H, 31, 1);
@@ -33,5 +36,9 @@ void HW_SCE_Aes128XtsDecryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
 
     HW_SCE_p_func206();
 
-    HW_SCE_p_func101(0xdd2a2a7aU, 0x262d0f78U, 0xcdbf90ebU, 0xb75b9c30U);
+    static const uint32_t Param_pb6u_func101_001[] =
+    {
+        0xdd2a2a7aU, 0x262d0f78U, 0xcdbf90ebU, 0xb75b9c30U,
+    };
+    HW_SCE_p_func101(Param_pb6u_func101_001);
 }

@@ -437,8 +437,20 @@ void usb_cstd_dma_send_restart (usb_utr_t * ptr, uint32_t src, uint32_t data_siz
     uint16_t useport = 0;
     uint16_t usb_dir;
 
+ #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+    uint16_t pre_pipe_value;
+
+    /* Get the PIPESEL reg value */
+    pre_pipe_value = hw_usb_read_pipesel(ptr);
+ #endif                                /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
     hw_usb_write_pipesel(ptr, pipe);
     usb_dir = hw_usb_read_pipecfg(ptr);
+ #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* After getting endpoint value, select PIPE */
+    hw_usb_write_pipesel(ptr, pre_pipe_value);
+ #endif                                /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
     usb_dir = usb_dir & USB_DIRFIELD;
     if (0 == usb_dir)
     {

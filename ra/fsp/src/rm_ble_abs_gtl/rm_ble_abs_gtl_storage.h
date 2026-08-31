@@ -14,8 +14,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "r_ble_api.h"
-#include "FreeRTOS.h"
-#include "task.h"
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+ #include "FreeRTOS.h"
+ #include "task.h"
+#endif
 #ifdef ENABLE_STORAGE
  #include "rm_vee_flash.h"
  #include "rm_ble_abs_gtl_cfg.h"

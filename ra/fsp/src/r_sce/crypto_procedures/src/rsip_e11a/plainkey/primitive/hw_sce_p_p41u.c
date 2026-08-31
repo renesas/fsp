@@ -22,5 +22,9 @@ void HW_SCE_Aes128CmacUpdateSub (const uint32_t InData_Text[], const uint32_t MA
 
     HW_SCE_p_func205_r1();
 
-    HW_SCE_p_func101(0x497119e6U, 0xceedc857U, 0x390af361U, 0x19975608U);
+    static const uint32_t Param_p41u_func101_001[] =
+    {
+        0x497119e6U, 0xceedc857U, 0x390af361U, 0x19975608U,
+    };
+    HW_SCE_p_func101(Param_p41u_func101_001);
 }

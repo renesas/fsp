@@ -583,13 +583,13 @@ fsp_err_t R_RSIP_ChaCha20_Poly1305_Update (rsip_ctrl_t * const   p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Finalizes a ChaCha20-Poly1305 encryption.
+ * Finalizes a ChaCha20-Poly1305 encryption, generating the Poly1305 Message Authentication Code (MAC).
  *
  * Implements @ref rsip_api_t::chacha20Poly1305Finish.
  *
  * @par Output length
  * @parblock
- * Output length to p_output (p_output_length) is the remaining calculated text length.
+ * p_output_length indicates the length of the text data output to p_output. This is the fractional data (not a multiple of 64 bytes) left unprocessed by the previous R_RSIP_ChaCha20_Poly1305_Update() call.
  *
  * Output length to p_tag is 16 bytes.
  * @endparblock
@@ -651,7 +651,7 @@ fsp_err_t R_RSIP_ChaCha20_Poly1305_Finish (rsip_ctrl_t * const p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Finalizes a ChaCha20-Poly1305 decryption.
+ * Finalizes a ChaCha20-Poly1305 decryption, verifying the correctness of the Poly1305 Message Authentication Code (MAC).
  *
  * Implements @ref rsip_api_t::chacha20Poly1305Verify.
  *
@@ -659,7 +659,7 @@ fsp_err_t R_RSIP_ChaCha20_Poly1305_Finish (rsip_ctrl_t * const p_ctrl,
  * Argument tag_length must be 16 bytes.
  *
  * @par Output length
- * Output length to p_output (p_output_length) is the remaining calculated text length.
+ * p_output_length indicates the length of the text data output to p_output. This is the fractional data (not a multiple of 64 bytes) left unprocessed by the previous R_RSIP_ChaCha20_Poly1305_Update() call.
  *
  * @par State transition
  * @parblock
@@ -909,7 +909,7 @@ static fsp_err_t chacha_poly_update (rsip_ctrl_t         * p_ctrl,
     rsip_chacha20_poly1305_handle_t      * p_handle        = &p_instance_ctrl->handle.chacha20_poly1305;
     rsip_func_subset_chacha20_poly1305_t * p_func          = (rsip_func_subset_chacha20_poly1305_t *) p_handle->p_func;
 
-    uint32_t length_rest = 0;
+    uint32_t processed_len = 0;
     *p_output_length = 0;
 
     /* If plaintext/ciphertext is input for the first time, input remaining AAD and prohibit new AAD input */
@@ -968,54 +968,43 @@ static fsp_err_t chacha_poly_update (rsip_ctrl_t         * p_ctrl,
     }
 
     /* Input plaintext/ciphertext */
-    if (RSIP_RET_PASS_1 == rsip_ret)
+    if ((RSIP_RET_PASS_1 == rsip_ret) && (0 != input_length))
     {
-        if (0 != input_length)
+        const uint8_t * p_msg_pos = p_input;
+        p_handle->total_length += input_length;
+
+        /* (1) Remaining message in buffer and head of new input message */
+        if ((0 != p_handle->buffered_length) &&
+            (RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK < (p_handle->buffered_length + input_length)))
         {
-            p_handle->total_length += input_length;
-            if ((p_handle->buffered_length + input_length) >= RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK)
-            {
-                /* Input remaining data in buffer */
-                memcpy((&p_handle->buffer[0] + p_handle->buffered_length),
-                       p_input,
-                       RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK - p_handle->buffered_length);
+            uint32_t len = RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK - p_handle->buffered_length;
 
-                /* Call function (cast to match the argument type with the primitive function) */
-                p_func->p_update((uint32_t *) (p_handle->buffer), (uint32_t *) (p_output),
-                                 r_rsip_byte_to_word_convert(RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK));
-                length_rest = input_length -
-                              (RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK - p_handle->buffered_length);
-                *p_output_length += RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK;
-                memset(p_handle->buffer, 0, sizeof(p_handle->buffer));
+            /* Copy head of new message to buffer */
+            memcpy(p_handle->buffer + p_handle->buffered_length, p_msg_pos, len);
 
-                /* Input block data */
-                if (length_rest >= RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK)
-                {
-                    uint32_t block_data_length = (length_rest / RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK) *
-                                                 RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK;
+            /* Call function (cast to match the argument type with the primitive function) */
+            p_func->p_update((uint32_t *) (p_handle->buffer), (uint32_t *) (p_output),
+                             r_rsip_byte_to_word_convert(RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK));
 
-                    /* Call function (cast to match the argument type with the primitive function) */
-                    p_func->p_update((const uint32_t *) (p_input +
-                                                         (RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK -
-                                                          p_handle->buffered_length)),
-                                     (uint32_t *) (p_output + RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK),
-                                     r_rsip_byte_to_word_convert(block_data_length));
-                    length_rest      -= block_data_length;
-                    *p_output_length += block_data_length;
-                }
+            memset(p_handle->buffer, 0, sizeof(p_handle->buffer));
+            p_handle->buffered_length = 0;
+            processed_len            += len;
+            *p_output_length         += RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK;
+        }
 
-                p_handle->buffered_length = 0;
+        /* (2) New input message except last block */
+        if (RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK < input_length)
+        {
+            uint32_t len = ((input_length - processed_len - 1) / RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK) *
+                           RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK;
 
-                /* Store remaining data to buffer */
-                memcpy(p_handle->buffer, p_input + (input_length - length_rest), length_rest);
-                p_handle->buffered_length = length_rest;
-            }
-            else
-            {
-                /* Store remaining data to buffer */
-                memcpy(&p_handle->buffer[0] + p_handle->buffered_length, p_input, input_length);
-                p_handle->buffered_length += input_length;
-            }
+            /* Call function */
+            p_func->p_update((uint32_t *) (p_input + processed_len),
+                             (uint32_t *) (p_output + *p_output_length),
+                             r_rsip_byte_to_word_convert(len));
+
+            processed_len    += len;
+            *p_output_length += len;
         }
     }
 
@@ -1025,6 +1014,9 @@ static fsp_err_t chacha_poly_update (rsip_ctrl_t         * p_ctrl,
     {
         case RSIP_RET_PASS_1:
         {
+            /* (3) Last block */
+            memcpy(p_handle->buffer + p_handle->buffered_length, p_input + processed_len, input_length - processed_len);
+            p_handle->buffered_length += input_length - processed_len;
             err = FSP_SUCCESS;
             break;
         }

@@ -9,5 +9,9 @@
 void HW_SCE_Sha224HmacUpdateSub (const uint32_t InData_PaddedMsg[], const uint32_t MAX_CNT)
 {
     HW_SCE_p_func000(InData_PaddedMsg, MAX_CNT);
-    HW_SCE_p_func101(0xdfe9b1cbU, 0x8b9fdf34U, 0x18977478U, 0x4b62bfecU);
+    static const uint32_t Param_pdcu_func101_001[] =
+    {
+        0xdfe9b1cbU, 0x8b9fdf34U, 0x18977478U, 0x4b62bfecU,
+    };
+    HW_SCE_p_func101(Param_pdcu_func101_001);
 }

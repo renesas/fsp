@@ -8,28 +8,11 @@
 
 fsp_err_t HW_SCE_Aes256EncryptDecryptFinalSub (void)
 {
-    if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000000U)
+    static const uint32_t Param_p50f_func102_001[] =
     {
-        HW_SCE_p_func101(0x299cf4a9U, 0x1ad9b8eeU, 0x54c76cd4U, 0x68129500U);
-    }
-    else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000001U)
-    {
-        HW_SCE_p_func101(0xadf89849U, 0x229cd6dbU, 0x50b47babU, 0x1599f647U);
-    }
-    else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000002U)
-    {
-        HW_SCE_p_func101(0x96e38fd7U, 0x6727350fU, 0xc4ecf4f7U, 0x6ef630e3U);
-    }
-    else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000003U)
-    {
-        HW_SCE_p_func101(0x47b480aaU, 0xc4a1d156U, 0x54cb0fc3U, 0x115b54adU);
-    }
-    else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000004U)
-    {
-        HW_SCE_p_func101(0xc9f61e07U, 0xd969c3faU, 0xa8c735bdU, 0xfe52afc4U);
-    }
-
-    HW_SCE_p_func102(0x55dec32eU, 0x11bbed03U, 0xc5af0be4U, 0x256d708fU);
+        0x4128e7b0U, 0x3100b291U, 0xdf3757e9U, 0xf1a72ba7U,
+    };
+    HW_SCE_p_func102(Param_p50f_func102_001);
     WR1_PROG(REG_6CH, 0x00000040U);
     WAIT_STS(REG_20H, 12, 0);
 

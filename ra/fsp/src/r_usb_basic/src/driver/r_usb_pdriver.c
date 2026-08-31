@@ -1217,7 +1217,11 @@ uint16_t usb_pstd_get_interface_num (void)
     uint16_t num_if = 0;
 
     /* Get NumInterfaces.        4:bNumInterfaces */
+ #if defined(USB_CFG_PUVC_USE)
+    num_if = *(g_usb_pstd_driver.p_othertbl + USB_DEV_B_NUM_INTERFACES);
+ #else
     num_if = *(g_usb_pstd_driver.p_configtbl + USB_DEV_B_NUM_INTERFACES);
+ #endif
 
     return num_if;
 }
@@ -1240,13 +1244,23 @@ uint16_t usb_pstd_get_alternate_num (uint16_t int_num)
     uint8_t * ptr;
     uint16_t  length;
 
+ #if defined(USB_CFG_PUVC_USE)
+    ptr = g_usb_pstd_driver.p_othertbl;
+ #else
     ptr = g_usb_pstd_driver.p_configtbl;
-    i   = ptr[0];
+ #endif
+    i = ptr[0];
 
     /* Interface descriptor[0] */
-    ptr     = (uint8_t *) ((uint32_t) ptr + ptr[0]);
+    ptr = (uint8_t *) ((uint32_t) ptr + ptr[0]);
+
+ #if defined(USB_CFG_PUVC_USE)
+    length  = (uint16_t) (*(uint8_t *) ((uint32_t) g_usb_pstd_driver.p_othertbl + (uint16_t) 2U));
+    length |= (uint16_t) ((uint16_t) (*(uint8_t *) ((uint32_t) g_usb_pstd_driver.p_othertbl + (uint16_t) 3U)) << 8U);
+ #else
     length  = (uint16_t) (*(uint8_t *) ((uint32_t) g_usb_pstd_driver.p_configtbl + (uint16_t) 2U));
     length |= (uint16_t) ((uint16_t) (*(uint8_t *) ((uint32_t) g_usb_pstd_driver.p_configtbl + (uint16_t) 3U)) << 8U);
+ #endif
 
     /* Search descriptor table size */
     /* WAIT_LOOP */
@@ -1328,7 +1342,11 @@ void usb_pstd_set_eptbl_index (uint16_t int_num, uint16_t alt_num)
     uint16_t  dir;
 
     /* Configuration descriptor */
-    ptr     = g_usb_pstd_driver.p_configtbl;
+ #if defined(USB_CFG_PUVC_USE)
+    ptr = g_usb_pstd_driver.p_othertbl;
+ #else
+    ptr = g_usb_pstd_driver.p_configtbl;
+ #endif
     i       = *ptr;
     length  = (uint16_t) (*(uint8_t *) ((uint32_t) ptr + (uint32_t) 3U));
     length  = (uint16_t) (length << 8);
@@ -1463,7 +1481,12 @@ uint8_t usb_pstd_get_current_power (void)
     uint8_t currentpower;
 
     /* Standard configuration descriptor */
+ #if defined(USB_CFG_PUVC_USE)
+    tmp = *(uint8_t *) ((uint32_t) g_usb_pstd_driver.p_othertbl + (uint32_t) 7U);
+ #else
     tmp = *(uint8_t *) ((uint32_t) g_usb_pstd_driver.p_configtbl + (uint32_t) 7U);
+ #endif
+
     if (USB_CF_SELFP == (tmp & USB_CF_SELFP))
     {
         /* Self Powered */
@@ -2202,7 +2225,9 @@ void usb_peri_registration (usb_instance_ctrl_t * ctrl, usb_cfg_t const * const 
 void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
 {
     uint8_t * ptable;
-    uint16_t  len;
+ #if !defined(USB_CFG_PUVC_USE)
+    uint16_t len;
+ #endif
 
     FSP_PARAMETER_NOT_USED(data2);
 
@@ -2258,12 +2283,16 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
         }
     }
 
+ #if !defined(USB_CFG_PUVC_USE)
     len = (uint16_t) (*(uint8_t *) ((uint32_t) ptable + (uint32_t) 3));
     len = (uint16_t) (len << 8);
     len = (uint16_t) (len + (uint16_t) (*(uint8_t *) ((uint32_t) ptable + (uint32_t) 2)));
 
     usb_pstd_clr_pipe_table(ptr->ip);
     usb_peri_pipe_info(ptable, mode, len, ptr);
+ #else
+    usb_pstd_clr_pipe_table(ptr->ip);
+ #endif
 
  #if (defined(USB_CFG_PCDC_USE) | defined(USB_CFG_PHID_USE) | defined(USB_CFG_PPRN_USE))
     ctrl.module_number = ptr->ip;
@@ -2274,6 +2303,9 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
  #define NUM_OF_INTERFACE    (8U)
  #ifdef  USB_CFG_PAUD_USE
 uint8_t g_usb_paud_iso_pipe[NUM_OF_INTERFACE];
+ #endif
+ #ifdef  USB_CFG_PUVC_USE
+uint8_t g_usb_puvc_iso_pipe[NUM_OF_INTERFACE];
  #endif
 
 /******************************************************************************
@@ -2290,9 +2322,9 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
     uint16_t retval = USB_ERROR;
     uint8_t  pipe_no;
     uint8_t  class_info = 0;
- #ifdef  USB_CFG_PAUD_USE
+ #if defined(USB_CFG_PAUD_USE)
     uint8_t interface_num = 0;
- #endif                                // USB_CFG_PAUD_USE
+ #endif                                /* defined(USB_CFG_PAUD_USE) */
 
     FSP_PARAMETER_NOT_USED(speed);
 
@@ -2305,9 +2337,9 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
         if (USB_DT_INTERFACE == table[ofdsc + USB_EP_B_DESCRIPTORTYPE])
         {
             class_info = table[ofdsc + USB_IF_B_INTERFACECLASS];
- #ifdef  USB_CFG_PAUD_USE
+ #if defined(USB_CFG_PAUD_USE)
             interface_num = table[ofdsc + USB_IF_B_INTERFACENUMBER];
- #endif                                // USB_CFG_PAUD_USE
+ #endif                                /* defined(USB_CFG_PAUD_USE) */
         }
 
         /* Endpoint Descriptor */

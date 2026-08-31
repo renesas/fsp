@@ -729,6 +729,18 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
     R_ICU->SBYEDCR0 = sbyedcr0;
     R_ICU->SBYEDCR1 = sbyedcr1;
 #endif
+
+    /* Configure Deep Sleep Wakeup IRQ Enable registers */
+#if BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN0
+    R_ICU->DSLPWUPIRQEN[0] = p_cfg->deep_sleep_wake_source0 & UINT32_MAX;
+#endif
+#if BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN1
+    R_ICU->DSLPWUPIRQEN[1] = p_cfg->deep_sleep_wake_source1 & UINT32_MAX;
+#endif
+#if BSP_FEATURE_LPM_HAS_DSLPWUPIRQEN2
+    R_ICU->DSLPWUPIRQEN[2] = p_cfg->deep_sleep_wake_source2 & UINT32_MAX;
+#endif
+
 #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
  #if LPM_CFG_STANDBY_LIMIT
     R_SYSTEM->SBYCR = (uint16_t) (sbycr & ~(1U << R_SYSTEM_SBYCR_SSBY_Pos));

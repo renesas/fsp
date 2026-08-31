@@ -174,12 +174,6 @@ void rm_lwip_ether_callback (ether_callback_args_t * p_args)
     struct netif             * p_netif          = p_lwip_instance->p_ctrl->p_netif;
     ether_instance_t         * p_ether_instance = p_lwip_instance->p_cfg->p_ether_instance;
 
-    /* Call user callback with the ethernet events. */
-    if (NULL != p_lwip_instance->p_cfg->p_callback)
-    {
-        p_lwip_instance->p_cfg->p_callback(p_args);
-    }
-
     switch (p_args->event)
     {
         /* When a frame is received. This includes the case when the receive buffer is full. */
@@ -232,6 +226,12 @@ void rm_lwip_ether_callback (ether_callback_args_t * p_args)
         {
             break;
         }
+    }
+
+    /* Call user callback with the ethernet events. */
+    if (NULL != p_lwip_instance->p_cfg->p_callback)
+    {
+        p_lwip_instance->p_cfg->p_callback(p_args);
     }
 }
 

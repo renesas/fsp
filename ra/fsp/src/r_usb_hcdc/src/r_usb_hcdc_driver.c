@@ -832,6 +832,14 @@ void usb_hcdc_driver_start (usb_utr_t * ptr)
     g_p_usb_hcdc_device_table[ptr->ip]    = 0;
     g_p_usb_hcdc_config_table[ptr->ip]    = 0;
     g_p_usb_hcdc_interface_table[ptr->ip] = 0;
+    g_usb_hcdc_bulk_in_pipe[ptr->ip]      = 0;
+    g_usb_hcdc_bulk_out_pipe[ptr->ip]     = 0;
+    g_usb_hcdc_int_in_pipe[ptr->ip]       = 0;
+#if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+    g_usb_hcdc2_bulk_in_pipe[ptr->ip]  = 0;
+    g_usb_hcdc2_bulk_out_pipe[ptr->ip] = 0;
+    g_usb_hcdc2_int_in_pipe[ptr->ip]   = 0;
+#endif
 
     if (USB_NO == is_init)
     {

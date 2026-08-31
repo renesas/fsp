@@ -1,9 +1,14 @@
 /**
  * This file is a copy of the chacha20.h file from mbedCrypto
- *  chacha20_alt.h
  *
- *  This file contains Chacha20 definitions and functions for the alternate implementation.
+ *  This file contains ChaCha20 definitions and functions for the alternate implementation.
  *
+ */
+
+/*
+ *  Copyright The Mbed TLS Contributors
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+ *  Copyright (C) 2026 Modified by Renesas Electronics Corporation and/or its affiliates
  */
 
 #ifndef MBEDTLS_CHACHA20_ALT_H

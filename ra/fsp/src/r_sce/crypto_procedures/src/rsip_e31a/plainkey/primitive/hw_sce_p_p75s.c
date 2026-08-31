@@ -18,7 +18,11 @@ fsp_err_t HW_SCE_Sha2HmacSuspendSub (uint32_t OutData_State[])
     RD1_ADDR(REG_104H, &OutData_State[18]);
     RD1_ADDR(REG_100H, &OutData_State[19]);
 
-    HW_SCE_p_func102(0xae346b86U, 0x9036ef5dU, 0xc912e10cU, 0x01a3db46U);
+    static const uint32_t Param_p75s_func102_001[] =
+    {
+        0xae346b86U, 0x9036ef5dU, 0xc912e10cU, 0x01a3db46U,
+    };
+    HW_SCE_p_func102(Param_p75s_func102_001);
     WR1_PROG(REG_6CH, 0x00000040U);
     WAIT_STS(REG_20H, 12, 0);
 

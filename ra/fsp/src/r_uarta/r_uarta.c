@@ -1202,8 +1202,11 @@ void uarta_txi_isr (void)
         }
  #endif
     }
-    else if (0U != (p_ctrl->p_reg->ASIMAn0 & R_UARTA0_ASIMAn0_ISSMA_Msk))
+    else if ((0U != (p_ctrl->p_reg->ASIMAn0 & R_UARTA0_ASIMAn0_ISSMA_Msk)) &&
+             (1U == p_ctrl->p_reg->ASISAn_b.TXSFA))
     {
+        /* A nested interrupt may delay clearing ISSMA to 0, causing the transfer-complete callback not to be invoked.
+         * Therefore, resetting ISSMA should be skipped when TXSFA is 0. */
         p_ctrl->p_reg->ASIMAn0_b.ISSMA = 0U;
     }
     else if (0 == p_ctrl->tx_src_bytes)

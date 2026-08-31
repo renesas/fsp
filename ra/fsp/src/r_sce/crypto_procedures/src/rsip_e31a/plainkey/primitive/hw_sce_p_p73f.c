@@ -5,6 +5,7 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 fsp_err_t HW_SCE_ShaGenerateMessageDigestFinalSub (const uint32_t InData_Msg[],
                                                    uint32_t       OutData_MsgDigest[],
@@ -35,61 +36,91 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestFinalSub (const uint32_t InData_Msg[],
 
     WAIT_STS(REG_118H, 4, 1);
 
-    HW_SCE_p_func100(0x0a6815fdU, 0x757d2026U, 0x003fe7a7U, 0x863c6377U);
-    WR1_PROG(REG_94H, 0x38008800U);
-    WR1_PROG(REG_94H, 0x00000003U);
-    WR1_PROG(REG_94H, 0x1000b400U);
-    WR1_PROG(REG_94H, 0x00000001U);
+    static const uint32_t Param_p73f_func100_001[] =
+    {
+        0x0a6815fdU, 0x757d2026U, 0x003fe7a7U, 0x863c6377U,
+    };
+    HW_SCE_p_func100(Param_p73f_func100_001);
+    HW_SCE_p_func_sub001(0x38008800U, 0x00000003U, 0x1000b400U, 0x00000001U);
 
-    WR1_PROG(REG_94H, 0x38008800U);
-    WR1_PROG(REG_94H, 0x00000004U);
-    WR1_PROG(REG_94H, 0x1000b400U);
-    WR1_PROG(REG_94H, 0x00000002U);
+    HW_SCE_p_func_sub001(0x38008800U, 0x00000004U, 0x1000b400U, 0x00000002U);
 
     WR1_PROG(REG_94H, 0x00007c00U);
     WR1_PROG(REG_40H, 0x00600000U);
 
     if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000001U)
     {
-        HW_SCE_p_func100(0xede8fbc9U, 0xd07b4987U, 0x2f7dcb5cU, 0x46bfda9eU);
+        static const uint32_t Param_p73f_func100_002[] =
+        {
+            0xede8fbc9U, 0xd07b4987U, 0x2f7dcb5cU, 0x46bfda9eU,
+        };
+        HW_SCE_p_func100(Param_p73f_func100_002);
         WR1_PROG(REG_08H, 0x0000401eU);
         WAIT_STS(REG_08H, 30, 1);
         RD7_ADDR(REG_2CH, &OutData_MsgDigest[0]);
 
-        HW_SCE_p_func102(0xfc023ccfU, 0xd3595441U, 0xcfa3b025U, 0x4a65d1f2U);
+        static const uint32_t Param_p73f_func102_001[] =
+        {
+            0xfc023ccfU, 0xd3595441U, 0xcfa3b025U, 0x4a65d1f2U,
+        };
+        HW_SCE_p_func102(Param_p73f_func102_001);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
     }
     else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000002U)
     {
-        HW_SCE_p_func100(0x5759f702U, 0x944148e2U, 0x17b012d9U, 0x4f714125U);
+        static const uint32_t Param_p73f_func100_003[] =
+        {
+            0x5759f702U, 0x944148e2U, 0x17b012d9U, 0x4f714125U,
+        };
+        HW_SCE_p_func100(Param_p73f_func100_003);
         WR1_PROG(REG_08H, 0x00004022U);
         WAIT_STS(REG_08H, 30, 1);
         RD8_ADDR(REG_2CH, &OutData_MsgDigest[0]);
 
-        HW_SCE_p_func102(0x492edd28U, 0x0f56ed85U, 0x28484885U, 0xb2187087U);
+        static const uint32_t Param_p73f_func102_002[] =
+        {
+            0x492edd28U, 0x0f56ed85U, 0x28484885U, 0xb2187087U,
+        };
+        HW_SCE_p_func102(Param_p73f_func102_002);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
     }
     else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000005U)
     {
-        HW_SCE_p_func100(0xbf478bdfU, 0x53cf1ab5U, 0xd2196661U, 0x650743d1U);
+        static const uint32_t Param_p73f_func100_004[] =
+        {
+            0xbf478bdfU, 0x53cf1ab5U, 0xd2196661U, 0x650743d1U,
+        };
+        HW_SCE_p_func100(Param_p73f_func100_004);
         WR1_PROG(REG_08H, 0x00004032U);
         WAIT_STS(REG_08H, 30, 1);
         RD12_ADDR(REG_2CH, &OutData_MsgDigest[0]);
 
-        HW_SCE_p_func102(0xa9618cdcU, 0x85b9d121U, 0x4b174196U, 0xc58e26d4U);
+        static const uint32_t Param_p73f_func102_003[] =
+        {
+            0xa9618cdcU, 0x85b9d121U, 0x4b174196U, 0xc58e26d4U,
+        };
+        HW_SCE_p_func102(Param_p73f_func102_003);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
     }
     else if (RD1_MASK(REG_44H, 0xffffffffU) == 0x00000006U)
     {
-        HW_SCE_p_func100(0x280d53deU, 0xcdedb527U, 0x919e798eU, 0x061079a4U);
+        static const uint32_t Param_p73f_func100_005[] =
+        {
+            0x280d53deU, 0xcdedb527U, 0x919e798eU, 0x061079a4U,
+        };
+        HW_SCE_p_func100(Param_p73f_func100_005);
         WR1_PROG(REG_08H, 0x00004042U);
         WAIT_STS(REG_08H, 30, 1);
         RD16_ADDR(REG_2CH, &OutData_MsgDigest[0]);
 
-        HW_SCE_p_func102(0x5ed823c8U, 0x9f80dde1U, 0x15041878U, 0xa476e732U);
+        static const uint32_t Param_p73f_func102_004[] =
+        {
+            0x5ed823c8U, 0x9f80dde1U, 0x15041878U, 0xa476e732U,
+        };
+        HW_SCE_p_func102(Param_p73f_func102_004);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
     }

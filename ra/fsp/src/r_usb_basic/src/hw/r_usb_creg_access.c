@@ -1885,6 +1885,10 @@ void hw_usb_write_brdyenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -1904,6 +1908,10 @@ void hw_usb_set_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->BRDYENB = (uint16_t) (ptr->ipp->BRDYENB | (1 << pipeno));
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -1920,6 +1928,11 @@ void hw_usb_set_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
  ******************************************************************************/
 void hw_usb_clear_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
+
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -1939,6 +1952,10 @@ void hw_usb_clear_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->BRDYENB = (uint16_t) (ptr->ipp->BRDYENB & (~(1 << pipeno)));
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -1976,6 +1993,10 @@ void hw_usb_write_nrdyenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -1995,6 +2016,10 @@ void hw_usb_set_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->NRDYENB = (uint16_t) (ptr->ipp->NRDYENB | (1 << pipeno));
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2011,6 +2036,10 @@ void hw_usb_set_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
  ******************************************************************************/
 void hw_usb_clear_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -2030,6 +2059,10 @@ void hw_usb_clear_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->NRDYENB = (uint16_t) (ptr->ipp->NRDYENB & (~(1 << pipeno)));
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2069,6 +2102,10 @@ void hw_usb_write_bempenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_bempenb (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -2094,6 +2131,10 @@ void hw_usb_set_bempenb (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->BEMPENB = (uint16_t) (ptr->ipp->BEMPENB | (1 << pipeno));
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2110,6 +2151,11 @@ void hw_usb_set_bempenb (usb_utr_t * ptr, uint16_t pipeno)
  ******************************************************************************/
 void hw_usb_clear_bempenb (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
+
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -2129,6 +2175,10 @@ void hw_usb_clear_bempenb (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->BEMPENB = (uint16_t) (ptr->ipp->BEMPENB & (~(1 << pipeno)));
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2289,6 +2339,10 @@ void hw_usb_write_brdysts (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_clear_sts_brdy (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -2308,6 +2362,10 @@ void hw_usb_clear_sts_brdy (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->BRDYSTS = (uint16_t) (~(1 << pipeno)) & BRDYSTS_MASK;
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2345,6 +2403,10 @@ void hw_usb_write_nrdy_sts (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_clear_status_nrdy (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -2364,6 +2426,10 @@ void hw_usb_clear_status_nrdy (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->NRDYSTS = (uint16_t) (~(1 << pipeno)) & NRDYSTS_MASK;
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2400,6 +2466,10 @@ void hw_usb_write_bempsts (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_clear_status_bemp (usb_utr_t * ptr, uint16_t pipeno)
 {
+#if (BSP_CFG_RTOS == 1)
+    TX_INTERRUPT_SAVE_AREA
+        TX_DISABLE
+#endif
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -2419,6 +2489,10 @@ void hw_usb_clear_status_bemp (usb_utr_t * ptr, uint16_t pipeno)
         ptr->ipp->BEMPSTS = (uint16_t) (~(1 << pipeno)) & BEMPSTS_MASK;
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
+
+#if (BSP_CFG_RTOS == 1)
+    TX_RESTORE
+#endif
 }
 
 /******************************************************************************
@@ -2799,6 +2873,43 @@ void hw_usb_write_pipesel (usb_utr_t * ptr, uint16_t data)
 
 /******************************************************************************
  * End of function hw_usb_write_pipesel
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : hw_usb_read_pipesel
+ * Description     : Returns PIPESEL register content.
+ * Arguments       : usb_utr_t *ptr   : Pointer to usb_utr_t structure.
+ * Return value    : PIPESEL content.
+ ******************************************************************************/
+uint16_t hw_usb_read_pipesel (usb_utr_t * ptr)
+{
+    uint16_t result = 0;
+
+    if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
+    {
+#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+        if (USB_CFG_IP0 == ptr->ip)
+        {
+            result = USB_M0->PIPESEL;
+        }
+        else
+        {
+            result = USB_M1->PIPESEL;
+        }
+#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+    }
+    else
+    {
+#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+        result = ptr->ipp->PIPESEL;
+#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+    }
+
+    return result;
+}
+
+/******************************************************************************
+ * End of function hw_usb_read_pipesel
  ******************************************************************************/
 
 /******************************************************************************

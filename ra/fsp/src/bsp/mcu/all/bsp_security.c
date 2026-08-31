@@ -448,7 +448,7 @@ void R_BSP_SecurityInit (void)
   #endif
 
   #ifdef BSP_TZ_CFG_DMACCHSAR
-    R_CPSCU->DMACCHSAR |= (BSP_TZ_CFG_DMACCHSAR << DMACX_REGISTER_SHIFT); /* DMAC Channel Security Attribution. */
+    R_CPSCU->DMACCHSAR = (BSP_TZ_CFG_DMACCHSAR << DMACX_REGISTER_SHIFT); /* DMAC Channel Security Attribution. */
   #endif
 
   #if !BSP_SECONDARY_CORE_BUILD
@@ -494,13 +494,14 @@ void R_BSP_SecurityInit (void)
 
   #if (defined(BSP_TZ_CFG_ICUSARC) && (BSP_TZ_CFG_ICUSARC != UINT32_MAX)) || \
     (defined(BSP_TZ_CFG_DMACCHSAR) &&                                        \
-    ((BSP_TZ_CFG_DMACCHSAR & R_CPSCU_DMACCHSAR_DMACCHSARn_Msk) != R_CPSCU_DMACCHSAR_DMACCHSARn_Msk))
+    ((BSP_TZ_CFG_DMACCHSAR & R_CPSCU_DMACCHSAR_SADMAC0n_Msk) != R_CPSCU_DMACCHSAR_SADMAC0n_Msk))
 
     R_BSP_MODULE_START(FSP_IP_DMAC, 0);
 
    #if BSP_FEATURE_TZ_VERSION == 2
 
     /* On MCUs with this implementation of trustzone, DMAST security attribution is set to secure after reset. */
+    R_CPSCU->DMACSAR &= ~(1U << DMACX_REGISTER_SHIFT);
    #else
 
     /* If any DMAC channels are required by secure program, disable nonsecure write access to DMAST

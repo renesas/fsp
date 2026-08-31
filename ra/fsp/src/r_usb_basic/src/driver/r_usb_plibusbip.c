@@ -63,6 +63,10 @@ uint8_t g_usb_pprn_bulk_out_pipe[USB_NUM_USBIP] = {0};
 uint8_t g_usb_paud_iso_in_pipe[USB_NUM_USBIP]  = {0};
 uint8_t g_usb_paud_iso_out_pipe[USB_NUM_USBIP] = {0};
 #endif                                 /* defined(USB_CFG_PAUD_USE) */
+
+#if defined(USB_CFG_PUVC_USE)
+uint8_t g_usb_puvc_iso_in_pipe[USB_NUM_USBIP] = {0};
+#endif                                 /* defined(USB_CFG_PUVC_USE) */
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
  #include "../hw/inc/r_usb_dmac.h"
 #endif                                 /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
@@ -73,7 +77,8 @@ uint8_t g_usb_paud_iso_out_pipe[USB_NUM_USBIP] = {0};
  * Macro definitions
  ******************************************************************************/
  #if defined(USB_CFG_PCDC_USE)
-  #if defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE) || defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE) || defined(USB_CFG_PPRN_USE) || \
+    defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE)
    #define USB_COMPOSITE_DEVICE
   #else
    #if defined(USB_CFG_PCDC2_USE)
@@ -83,18 +88,24 @@ uint8_t g_usb_paud_iso_out_pipe[USB_NUM_USBIP] = {0};
    #endif
   #endif
  #elif defined(USB_CFG_PMSC_USE)
-  #if defined(USB_CFG_PVND_USE) || defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PVND_USE) || defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PUVC_USE)
    #define USB_COMPOSITE_DEVICE
   #else
    #define USB_NO_COMPOSITE_DEVICE
   #endif
  #elif defined(USB_CFG_PPRN_USE)
-  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PVND_USE)
+  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_PVND_USE) || defined(USB_CFG_PUVC_USE)
    #define USB_COMPOSITE_DEVICE
   #else
    #define USB_NO_COMPOSITE_DEVICE
   #endif
  #elif defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PVND_USE)
+   #define USB_COMPOSITE_DEVICE
+  #else
+   #define USB_NO_COMPOSITE_DEVICE
+  #endif
+ #elif defined(USB_CFG_PUVC_USE)
   #if defined(USB_CFG_PVND_USE)
    #define USB_COMPOSITE_DEVICE
   #else
@@ -1304,6 +1315,10 @@ void usb_pstd_clr_pipe_table (uint8_t usb_ip)
     g_usb_paud_iso_in_pipe[usb_ip]  = USB_NULL;
     g_usb_paud_iso_out_pipe[usb_ip] = USB_NULL;
  #endif
+
+ #if defined(USB_CFG_PUVC_USE)
+    g_usb_puvc_iso_in_pipe[usb_ip] = USB_NULL;
+ #endif
 }                                      /* eof usb_pstd_clr_pipe_table() */
 
 /******************************************************************************
@@ -1669,6 +1684,35 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
     }
  #endif                                /* defined(USB_CFG_PAUD_USE) */
 
+ #if defined(USB_CFG_PUVC_USE)
+    if (USB_IFCLS_VID == class_info)
+    {
+        if (USB_EP_ISO == type)
+        {
+            /* Isochronous PIPE Loop */
+            /* WAIT_LOOP */
+            for (pipe = USB_ISO_PIPE_START; pipe < (USB_ISO_PIPE_END + 1); pipe++)
+            {
+                /* Check if the pipe is free */
+                if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
+                {
+                    if (USB_PIPE_DIR_IN == dir)
+                    {
+                        /*Check if the pipe iso in is not allocated for puvc class*/
+                        if (USB_NULL == g_usb_puvc_iso_in_pipe[p_utr->ip])
+                        {
+                            g_usb_puvc_iso_in_pipe[p_utr->ip] = pipe;   /* Set Free pipe */
+                            idx = (USB_CLASS_INTERNAL_PUVC * 2) + !dir; /*Calculate index*/
+                            g_usb_pipe_peri[idx] = g_usb_puvc_iso_in_pipe[p_utr->ip];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+ #endif                                /* defined(USB_CFG_PUVC_USE) */
+
  #if defined(USB_CFG_PVND_USE)
     if (USB_IFCLS_VEN == class_info)
     {
@@ -1863,6 +1907,17 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
         /*Do nothing.*/
     }
    #endif                              /* defined(USB_CFG_PAUD_USE) */
+
+   #if defined(USB_CFG_PUVC_USE)
+    if (g_usb_puvc_iso_in_pipe[USB_IP1] == pipe_no)
+    {
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+    }
+    else
+    {
+        /*Do nothing.*/
+    }
+   #endif                              /* defined(USB_CFG_PUVC_USE) */
   #else /* defined(USB_NO_COMPOSITE_DEVICE) */
     switch (pipe_no)
     {

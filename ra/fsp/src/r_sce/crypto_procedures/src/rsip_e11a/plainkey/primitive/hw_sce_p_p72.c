@@ -51,12 +51,20 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_InitVal[],
 
     WAIT_STS(REG_F8H, 1, 1);
 
-    HW_SCE_p_func100(0x345f6e95U, 0xd7b24623U, 0x9a61bfd4U, 0x8761df09U);
+    static const uint32_t Param_p72_func100_001[] =
+    {
+        0x345f6e95U, 0xd7b24623U, 0x9a61bfd4U, 0x8761df09U,
+    };
+    HW_SCE_p_func100(Param_p72_func100_001);
     WR1_PROG(REG_08H, 0x00004022U);
     WAIT_STS(REG_08H, 30, 1);
     RD8_ADDR(REG_2CH, &OutData_MsgDigest[0]);
 
-    HW_SCE_p_func102(0xb6abe216U, 0xcdc58683U, 0x8c62c3dfU, 0x3b148ae0U);
+    static const uint32_t Param_p72_func102_001[] =
+    {
+        0xb6abe216U, 0xcdc58683U, 0x8c62c3dfU, 0x3b148ae0U,
+    };
+    HW_SCE_p_func102(Param_p72_func102_001);
     WR1_PROG(REG_68H, 0x00000040U);
     WAIT_STS(REG_20H, 12, 0);
 

@@ -74,9 +74,13 @@ void R_BSP_SdramInit (bool init_memory)
     if (init_memory)
     {
         /* Enable the SDCLK output. */
+ #if 1U == BSP_CFG_CLOCKS_SECURE && BSP_TZ_NONSECURE_BUILD
+        bsp_sdram_secure_sdclk_enable();
+ #else
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
         R_SYSTEM->SDCKOCR = 1;
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
+ #endif
 
         /** If requested, start SDRAM initialization sequence. */
         R_BUS->SDRAM.SDICR = 1U;
@@ -177,9 +181,13 @@ void R_BSP_SdramSelfRefreshDisable (void)
     if (0 == R_SYSTEM->SDCKOCR)
     {
         /* Enable the SDCLK output. It may not already be enabled here if recovering from Deep Software Standby. */
+ #if 1U == BSP_CFG_CLOCKS_SECURE && BSP_TZ_NONSECURE_BUILD
+        bsp_sdram_secure_sdclk_enable();
+ #else
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
         R_SYSTEM->SDCKOCR = 1;
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
+ #endif
     }
 
     while (0U != R_BUS->SDRAM.SDSR)
@@ -194,6 +202,22 @@ void R_BSP_SdramSelfRefreshDisable (void)
     R_BUS->SDRAM.SDCCR = R_BUS_SDRAM_SDCCR_EXENB_Msk | (BSP_CFG_SDRAM_BUS_WIDTH << R_BUS_SDRAM_SDCCR_BSIZE_Pos);
 }
 
+/* Only the secure project has nonsecure callable functions. */
+ #if 1U == BSP_CFG_CLOCKS_SECURE && BSP_TZ_SECURE_BUILD
+
+/*******************************************************************************************************************//**
+ * @brief   Enable the SDRAM Output Clock if not already enabled.
+ *
+ * @note Only Trustzone Nonsecure Project with BSP_CFG_CLOCKS_SECURE calls this function.
+ **********************************************************************************************************************/
+BSP_CMSE_NONSECURE_ENTRY void bsp_sdram_secure_sdclk_enable (void)
+{
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
+    R_SYSTEM->SDCKOCR = 1U;
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
+}
+
+ #endif
 #endif
 
 /** @} (end addtogroup BSP_SDRAM) */

@@ -47,6 +47,48 @@ typedef enum e_ospi_b_chip_select
     OSPI_B_DEVICE_NUMBER_1,            ///< Device connected to Chip-Select 1
 } ospi_b_device_number_t;
 
+/** OSPI target reset method. */
+typedef enum e_ospi_b_reset_method
+{
+    OSPI_B_RESET_METHOD_IN_BAND = 0U,  ///< Reset using In-band reset pattern (OM_CSn and OM_SIO0 signals).
+    OSPI_B_RESET_METHOD_PIN,           ///< Reset using the OM_RESET pin.
+} ospi_b_reset_method_t;
+
+/** Repeat-count setting. */
+typedef enum e_ospi_b_in_band_reset_repeat_count
+{
+    OSPI_B_IN_BAND_RESET_REPEAT_4 = 0x00U, ///< Specifies that the reset pattern is repeated 4 times.
+    OSPI_B_IN_BAND_RESET_REPEAT_5 = 0x01U, ///< Specifies that the reset pattern is repeated 5 times.
+    OSPI_B_IN_BAND_RESET_REPEAT_6 = 0x02U, ///< Specifies that the reset pattern is repeated 6 times.
+    OSPI_B_IN_BAND_RESET_REPEAT_7 = 0x03U, ///< Specifies that the reset pattern is repeated 7 times.
+} ospi_b_in_band_reset_repeat_count_t;
+
+/** CS pulse-width setting. */
+typedef enum e_ospi_b_in_band_reset_width
+{
+    OSPI_B_IN_BAND_RESET_WIDTH_2_CYCLES   = 0x00U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 2 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_4_CYCLES   = 0x01U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 4 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_8_CYCLES   = 0x02U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 8 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_16_CYCLES  = 0x03U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 16 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_32_CYCLES  = 0x04U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 32 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_64_CYCLES  = 0x05U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 64 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_128_CYCLES = 0x06U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 128 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_WIDTH_256_CYCLES = 0x07U, ///< Reset pattern width. It toggles the CS signal with a configured duration of 256 SCLK cycles.
+} ospi_b_in_band_reset_width_t;
+
+/** SIO0 setup-time setting. */
+typedef enum e_ospi_b_in_band_reset_sio_setup
+{
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_1_CYCLE = 0x00U, ///< Reset pattern data output setup time is fixed at 1 SCLK cycle.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_2_CYCLES,        ///< Reset pattern data output setup time is fixed at 2 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_3_CYCLES,        ///< Reset pattern data output setup time is fixed at 3 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_4_CYCLES,        ///< Reset pattern data output setup time is fixed at 4 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_5_CYCLES,        ///< Reset pattern data output setup time is fixed at 5 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_6_CYCLES,        ///< Reset pattern data output setup time is fixed at 6 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_7_CYCLES,        ///< Reset pattern data output setup time is fixed at 7 SCLK cycles.
+    OSPI_B_IN_BAND_RESET_SIO_SETUP_8_CYCLES,        ///< Reset pattern data output setup time is fixed at 8 SCLK cycles.
+} ospi_b_in_band_reset_sio_setup_t;
+
 /** OSPI flash number of command code bytes. */
 typedef enum e_ospi_b_command_bytes
 {
@@ -222,13 +264,19 @@ typedef struct st_ospi_b_table
 /** Fixed timing configuration for bus signals. */
 typedef struct st_ospi_b_timing_setting
 {
-    ospi_b_command_interval_clocks_t    command_to_command_interval; ///< Interval between 2 consecutive commands
-    ospi_b_command_cs_pullup_clocks_t   cs_pullup_lag;               ///< Duration to de-assert CS line after the last command
-    ospi_b_command_cs_pulldown_clocks_t cs_pulldown_lead;            ///< Duration to assert CS line before the first command
-    ospi_b_sdr_drive_timing_t           sdr_drive_timing;            ///< Data signal timing relative to the rising-edge of the CK signal.
-    ospi_b_ck_edge_t                sdr_sampling_edge;               ///< Selects the clock edge to sample the data signal.
-    ospi_b_sdr_sampling_delay_t     sdr_sampling_delay;              ///< Number of cycles to delay before sampling the data signal.
-    ospi_b_ddr_sampling_extension_t ddr_sampling_extension;          ///< Number of cycles to extending the data sampling window in DDR mode.
+    ospi_b_command_interval_clocks_t    command_to_command_interval;        ///< Interval between 2 consecutive commands
+    ospi_b_command_cs_pullup_clocks_t   cs_pullup_lag;                      ///< Duration to de-assert CS line after the last command
+    ospi_b_command_cs_pulldown_clocks_t cs_pulldown_lead;                   ///< Duration to assert CS line before the first command
+    ospi_b_sdr_drive_timing_t           sdr_drive_timing;                   ///< Data signal timing relative to the rising-edge of the CK signal.
+    ospi_b_ck_edge_t                sdr_sampling_edge;                      ///< Selects the clock edge to sample the data signal.
+    ospi_b_sdr_sampling_delay_t     sdr_sampling_delay;                     ///< Number of cycles to delay before sampling the data signal.
+    ospi_b_ddr_sampling_extension_t ddr_sampling_extension;                 ///< Number of cycles to extending the data sampling window in DDR mode.
+
+    ospi_b_in_band_reset_repeat_count_t reset_pattern_repeat_count;         ///< Reset Pattern repeat-count setting.
+    ospi_b_in_band_reset_width_t        reset_pattern_width_cycle;          ///< Reset Pattern Width cycle setting.
+    ospi_b_in_band_reset_sio_setup_t    reset_pattern_sio_setup_time_cycle; ///< Reset Pattern SIO Setup Time cycle setting.
+    uint32_t reset_pin_hold_time;                                           ///< Hold-time setting.
+    uint32_t reset_recovery_time;                                           ///< Reset recovery time setting.
 } ospi_b_timing_setting_t;
 
 /** Command set used for a protocol mode. */
@@ -364,6 +412,7 @@ fsp_err_t R_OSPI_B_DOTF_Configure(spi_flash_ctrl_t * const p_ctrl, ospi_b_dotf_c
 
 fsp_err_t R_OSPI_B_RowLoad(spi_flash_ctrl_t * const p_ctrl, uint32_t row_index);
 fsp_err_t R_OSPI_B_RowStore(spi_flash_ctrl_t * const p_ctrl, uint32_t row_index);
+fsp_err_t R_OSPI_B_TargetReset(spi_flash_ctrl_t const * const p_ctrl, ospi_b_reset_method_t method);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

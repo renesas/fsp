@@ -14756,12 +14756,12 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
 
     union
     {
-        __IOM uint32_t DMACCHSAR;          /*!< (@ 0x000001A0) DMA channel Security Attribution Register                  */
+        __IOM uint32_t DMACCHSAR;        /*!< (@ 0x000001A0) DMAC channel Security Attribution Register                 */
 
         struct
         {
-            __IOM uint32_t DMACCHSARn : 8; /*!< [7..0] Security attributes of output and registers for DMAC
-                                            *   channel                                                                   */
+            __IOM uint32_t SADMAC0n : 8; /*!< [7..0] Security attributes of output and registers for DMAC
+                                          *   channel                                                                   */
             uint32_t : 24;
         } DMACCHSAR_b;
     };
@@ -21747,8 +21747,8 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_CPSCU_DEBUGSAR_DBGSA0_Pos           (0UL)          /*!< DBGSA0 (Bit 0)                                        */
  #define R_CPSCU_DEBUGSAR_DBGSA0_Msk           (0x1UL)        /*!< DBGSA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  DMACCHSAR  ======================================================= */
- #define R_CPSCU_DMACCHSAR_DMACCHSARn_Pos      (0UL)          /*!< DMACCHSARn (Bit 0)                                    */
- #define R_CPSCU_DMACCHSAR_DMACCHSARn_Msk      (0xffUL)       /*!< DMACCHSARn (Bitfield-Mask: 0xff)                      */
+ #define R_CPSCU_DMACCHSAR_SADMAC0n_Pos        (0UL)          /*!< SADMAC0n (Bit 0)                                      */
+ #define R_CPSCU_DMACCHSAR_SADMAC0n_Msk        (0xffUL)       /*!< SADMAC0n (Bitfield-Mask: 0xff)                        */
 /* ========================================================  CPUDSAR  ======================================================== */
  #define R_CPSCU_CPUDSAR_CPUDSA0_Pos           (0UL)          /*!< CPUDSA0 (Bit 0)                                       */
  #define R_CPSCU_CPUDSAR_CPUDSA0_Msk           (0x1UL)        /*!< CPUDSA0 (Bitfield-Mask: 0x01)                         */

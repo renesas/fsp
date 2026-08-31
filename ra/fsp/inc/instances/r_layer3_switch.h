@@ -744,6 +744,13 @@ typedef struct st_layer3_switch_table_cfg
     layer3_switch_frer_cfg_t             frer_cfg;                                         ///< Configuration of FRER feature.
 } layer3_switch_table_cfg_t;
 
+typedef struct st_layer3_switch_timestamp
+{
+    uint16_t sec_upper;                ///< Timestamp second (Upper 16 bit).
+    uint32_t sec_lower;                ///< Timestamp second (Lower 32 bit).
+    uint32_t ns;                       ///< Timestamp nanosecond.
+} layer3_switch_timestamp_t;
+
 /** ESWM extension configures each Ethernet port and forwarding feature. */
 typedef struct st_layer3_switch_extended_cfg
 {
@@ -762,6 +769,7 @@ typedef struct st_layer3_switch_extended_cfg
     uint8_t   etha_error_ipl_port_0;                                                                                ///< ETHA error interrupt priority for port 0.
     uint8_t   etha_error_ipl_port_1;                                                                                ///< ETHA error interrupt priority for port 1.
     uint8_t   gptp_timer_numbers[BSP_FEATURE_ESWM_GPTP_TIMER_NUM];                                                  ///< List of timer numbers for transmission/reception timestamp.
+    layer3_switch_descriptor_queue_cfg_t * p_ts_descriptor_arrays[BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM];    ///< List of TS descriptor queue settings
 } layer3_switch_extended_cfg_t;
 
 /** LAYER3_SWITCH control block. DO NOT INITIALIZE. Initialization occurs when @ref ether_switch_api_t::open is called. */
@@ -897,6 +905,11 @@ fsp_err_t R_LAYER3_SWITCH_PsfpClearErrorStatus(ether_switch_ctrl_t * const      
 fsp_err_t R_LAYER3_SWITCH_LinkStatusCheck(ether_switch_ctrl_t * const           p_ctrl,
                                           layer3_switch_target_port_bitmaps_t * p_port_bitmaps,
                                           ether_switch_link_status_bitmaps_t  * p_link_status_bitmaps);
+
+fsp_err_t R_LAYER3_SWITCH_GetTxTimestamp(ether_switch_ctrl_t * const p_ctrl,
+                                         uint32_t                    descriptor_index,
+                                         uint32_t                    tx_timestamp_seq_num,
+                                         layer3_switch_timestamp_t * p_timestamp);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup LAYER3_SWITCH)

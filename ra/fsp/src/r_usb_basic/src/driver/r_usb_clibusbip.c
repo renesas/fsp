@@ -140,6 +140,11 @@ uint16_t usb_cstd_get_maxpacket_size (usb_utr_t * ptr, uint16_t pipe)
 {
     uint16_t size;
     uint16_t buffer;
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Variable to store the current pipe for restoration before function exit. */
+    uint16_t pre_pipe_value;
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
     if (USB_MAX_PIPE_NO < pipe)
     {
@@ -152,9 +157,21 @@ uint16_t usb_cstd_get_maxpacket_size (usb_utr_t * ptr, uint16_t pipe)
     }
     else
     {
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+        /* Store the current pipe from PIPESEL reg. */
+        pre_pipe_value = hw_usb_read_pipesel(ptr);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
         /* Pipe select */
         hw_usb_write_pipesel(ptr, pipe);
         buffer = hw_usb_read_pipemaxp(ptr);
+
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+        /* After reading PIPEMAXP reg value, restore PIPESEL reg. */
+        hw_usb_write_pipesel(ptr, pre_pipe_value);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
     }
 
     /* Max Packet Size */
@@ -177,17 +194,34 @@ uint16_t usb_cstd_get_maxpacket_size (usb_utr_t * ptr, uint16_t pipe)
 uint16_t usb_cstd_get_pipe_dir (usb_utr_t * ptr, uint16_t pipe)
 {
     uint16_t buffer;
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Variable to store the current pipe for restoration before function exit. */
+    uint16_t pre_pipe_value;
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
     if (USB_MAX_PIPE_NO < pipe)
     {
         return USB_NULL;               /* Error */
     }
 
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Store the current pipe from PIPESEL reg. */
+    pre_pipe_value = hw_usb_read_pipesel(ptr);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
     /* Pipe select */
     hw_usb_write_pipesel(ptr, pipe);
 
     /* Read Pipe direction */
     buffer = hw_usb_read_pipecfg(ptr);
+
+#if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* After reading PIPE direction, restore PIPESEL reg. */
+    hw_usb_write_pipesel(ptr, pre_pipe_value);
+#endif                                 /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
     return (uint16_t) (buffer & USB_DIRFIELD);
 }
@@ -208,17 +242,34 @@ uint16_t usb_cstd_get_pipe_dir (usb_utr_t * ptr, uint16_t pipe)
 uint16_t usb_cstd_get_pipe_type (usb_utr_t * ptr, uint16_t pipe)
 {
     uint16_t buffer;
+ #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Variable to store the current pipe for restoration before function exit. */
+    uint16_t pre_pipe_value;
+ #endif                                /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
     if (USB_MAX_PIPE_NO < pipe)
     {
         return USB_NULL;               /* Error */
     }
 
+ #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* Store the current pipe from PIPESEL reg. */
+    pre_pipe_value = hw_usb_read_pipesel(ptr);
+ #endif                                /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
+
     /* Pipe select */
     hw_usb_write_pipesel(ptr, pipe);
 
     /* Read Pipe direction */
     buffer = hw_usb_read_pipecfg(ptr);
+
+ #if (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE)
+
+    /* After getting PIPE type, restore PIPESEL reg. */
+    hw_usb_write_pipesel(ptr, pre_pipe_value);
+ #endif                                /* (USB_PIPESEL_GUARD_REQUIRED == USB_CFG_ENABLE) */
 
     return (uint16_t) (buffer & USB_TYPFIELD);
 }

@@ -5,6 +5,8 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
+#include "hw_sce_p_sub_func.h"
 
 fsp_err_t HW_SCE_Sha224HmacInitSub (const uint32_t InData_KeyMode[],
                                     const uint32_t InData_KeyIndex[],
@@ -18,93 +20,33 @@ fsp_err_t HW_SCE_Sha224HmacInitSub (const uint32_t InData_KeyMode[],
     WR1_PROG(REG_70H, 0x00dc0001U);
     WR1_PROG(REG_4CH, 0x00000000U);
 
-    WR1_PROG(REG_14H, 0x000000c7U);
-    WR1_PROG(REG_9CH, 0x80010000U);
-    WAIT_STS(REG_14H, 31, 1);
+    HW_SCE_p_func_sub005(0x000000c7U, 0x80010000U);
     WR1_PROG(REG_2CH, InData_KeyMode[0]);
-    WR1_PROG(REG_24H, 0x00000000U);
+    HW_SCE_p_func_sub014(0x0000b4a0U, 0x0000001aU);
 
-    WR1_PROG(REG_94H, 0x38000c00U);
-    WR1_PROG(REG_9CH, 0x00000080U);
-    WR1_PROG(REG_40H, 0x00260000U);
-
-    HW_SCE_p_func100(0xfd585916U, 0xee88e73bU, 0x12383efbU, 0x7ae24532U);
-    WR1_PROG(REG_40H, 0x00400000U);
-    WR1_PROG(REG_24H, 0x00000000U);
-    if (CHCK_STS(REG_40H, 22, 1))
+    static const uint32_t Param_pdci_sub100_001[] =
     {
-        WR1_PROG(REG_14H, 0x000000c7U);
-        WR1_PROG(REG_9CH, 0x800100c0U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR1_PROG(REG_2CH, InData_KeyIndex[0]);
-        WR1_PROG(REG_24H, 0x00000000U);
+        0xa1480ce9U, 0x29d77c3dU, 0xb0ab3089U, 0x6f791640U, 0x000000dcU, 0x1b9f6e2aU, 0xf365c822U, 0xcd298e66U,
+        0x98b77f8bU, 0x000000dcU, 0xb2e6738cU, 0x96cf9863U, 0xb880e9baU, 0x04ed5dc6U, 0x00001404U, 0xd665616aU,
+        0xa60210a1U, 0xa862c24dU, 0x29df8d0cU, 0x00001404U, 0x289f0b5cU, 0xfe60b7deU, 0x5e154c77U, 0xf35e6ddaU,
+    };
+    HW_SCE_p_func_sub100(InData_KeyIndex, InData_Key, Param_pdci_sub100_001);
 
-        WR1_PROG(REG_14H, 0x000000a7U);
-        WR1_PROG(REG_9CH, 0x800100e0U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR1_PROG(REG_2CH, change_endian_long(0x000000dcU));
-        WR1_PROG(REG_24H, 0x00000000U);
-
-        HW_SCE_p_func101(0xb035ed80U, 0x4e7dab2bU, 0xcd68b2d0U, 0x6138d60fU);
-        HW_SCE_p_func043();
-
-        WR1_PROG(REG_94H, 0x0000b4c0U);
-        WR1_PROG(REG_94H, 0x0000001aU);
-
-        WR1_PROG(REG_14H, 0x000000a7U);
-        WR1_PROG(REG_9CH, 0x800100e0U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR1_PROG(REG_2CH, change_endian_long(0x000000dcU));
-        WR1_PROG(REG_24H, 0x00000000U);
-
-        HW_SCE_p_func101(0x7283a2b9U, 0xfc16a0b7U, 0x07e123f1U, 0x7ea399adU);
-        HW_SCE_p_func044();
-
-        WR1_PROG(REG_14H, 0x000007c1U);
-        WR1_PROG(REG_D4H, 0x40000100U);
-        WR1_PROG(REG_D0H, 0xf7009d07U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR4_ADDR(REG_2CH, &InData_KeyIndex[1]);
-        WAIT_STS(REG_14H, 31, 1);
-        WR4_ADDR(REG_2CH, &InData_KeyIndex[5]);
-
-        WR1_PROG(REG_B0H, 0x00001404U);
-        WR1_PROG(REG_00H, 0x00c10021U);
-        WAIT_STS(REG_04H, 30, 0);
-        WR1_PROG(REG_40H, 0x00001800U);
-
-        WR1_PROG(REG_14H, 0x000003c1U);
-        WR1_PROG(REG_D4H, 0x40000000U);
-        WR1_PROG(REG_D0H, 0x07008d05U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR4_ADDR(REG_2CH, &InData_KeyIndex[9]);
-
-        WR1_PROG(REG_D0H, 0x9c100005U);
-        WR1_PROG(REG_00H, 0x00410011U);
-        WAIT_STS(REG_04H, 30, 0);
-        WR1_PROG(REG_40H, 0x00001800U);
-
-        HW_SCE_p_func101(0xd665616aU, 0xa60210a1U, 0xa862c24dU, 0x29df8d0cU);
-    }
-    else
+    static const uint32_t Param_pdci_func100_001[] =
     {
-        WR1_PROG(REG_14H, 0x000007c5U);
-        WR1_PROG(REG_B0H, 0x00001404U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR4_ADDR(REG_2CH, &InData_Key[0]);
-        WAIT_STS(REG_14H, 31, 1);
-        WR4_ADDR(REG_2CH, &InData_Key[4]);
-
-        HW_SCE_p_func101(0x3821200dU, 0x77eaeec9U, 0xd0acc990U, 0x9dee3ecaU);
-    }
-
-    HW_SCE_p_func100(0x5fddb2a3U, 0x73ad4219U, 0x656befb9U, 0x0bfd6fedU);
+        0x5fddb2a3U, 0x73ad4219U, 0x656befb9U, 0x0bfd6fedU,
+    };
+    HW_SCE_p_func100(Param_pdci_func100_001);
     WR1_PROG(REG_40H, 0x00400000U);
     WR1_PROG(REG_24H, 0x00000000U);
 
     if (CHCK_STS(REG_40H, 22, 1))
     {
-        HW_SCE_p_func102(0xa2ad601fU, 0xdb8ef99aU, 0x25cb3060U, 0x585ce026U);
+        static const uint32_t Param_pdci_func102_001[] =
+        {
+            0xa2ad601fU, 0xdb8ef99aU, 0x25cb3060U, 0x585ce026U,
+        };
+        HW_SCE_p_func102(Param_pdci_func102_001);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
 
@@ -112,25 +54,17 @@ fsp_err_t HW_SCE_Sha224HmacInitSub (const uint32_t InData_KeyMode[],
     }
     else
     {
-        WR1_PROG(REG_F4H, 0x00000010U);
-
-        WR1_PROG(REG_14H, 0x000007a4U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR8_PROG(REG_2CH,
-                 change_endian_long(0xc1059ed8U),
-                 change_endian_long(0x367cd507U),
-                 change_endian_long(0x3070dd17U),
-                 change_endian_long(0xf70e5939U),
-                 change_endian_long(0xffc00b31U),
-                 change_endian_long(0x68581511U),
-                 change_endian_long(0x64f98fa7U),
-                 change_endian_long(0xbefa4fa4U));
+        HW_SCE_p_func003();
 
         WR1_PROG(REG_F4H, 0x00000011U);
 
         HW_SCE_p_func001();
 
-        HW_SCE_p_func101(0x53fa0b86U, 0x8f688219U, 0x7b76f7a2U, 0x09e60a83U);
+        static const uint32_t Param_pdci_func101_001[] =
+        {
+            0x53fa0b86U, 0x8f688219U, 0x7b76f7a2U, 0x09e60a83U,
+        };
+        HW_SCE_p_func101(Param_pdci_func101_001);
 
         return FSP_SUCCESS;
     }

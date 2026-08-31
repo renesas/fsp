@@ -7,7 +7,6 @@
 /////////////////////////////////////////////////////////////////////////
 // <SC32#4 AES-128 Decryption with ECB Mode>                           //
 // Procedure number: 05                                                //
-// File name      : SC324_p05.prc                                      //
 // State Diagram  : main(FSM1)                                         //
 // Start State    : main03                                             //
 // End State      : main03                                             //

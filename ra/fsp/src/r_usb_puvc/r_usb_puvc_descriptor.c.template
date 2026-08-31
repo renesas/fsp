@@ -1,0 +1,864 @@
+/* ${REA_DISCLAIMER_PLACEHOLDER} */
+/******************************************************************************
+ Includes   <System Includes> , "Project Includes"
+ ******************************************************************************/
+#include "r_usb_basic.h"
+#include "r_usb_basic_api.h"
+#include "r_usb_basic_cfg.h"
+
+/******************************************************************************
+ Macro definitions
+ ******************************************************************************/
+/* bcdUSB */
+#define USB_BCDNUM                      (0x0200U)
+/* Release Number */
+#define USB_RELEASE                     (0x0200U)
+/* DCP max packet size */
+#define USB_DCPMAXP                     (64U)
+/* Configuration number */
+#define USB_CONFIGNUM                   (1U)
+/* Vendor ID */
+#define USB_VENDORID                    (0x0000U)
+/* Product ID */
+#define USB_PRODUCTID                   (0x0002U)
+
+/* Miscellaneous Device Class */
+#define USB_MISC_CLASS                  (0xEF)
+/* Common Class */
+#define USB_COMMON_CLASS                (0x02)
+/* Interface Association Descriptor */
+#define USB_IAD_DESC                    (0x01)
+/* Interface Association Descriptor Type */
+#define USB_IAD_TYPE                    (0x0B)
+
+/* Descriptor data Mask */
+#define USB_UCHAR_MAX                   (0xFFU)
+#define USB_W_TOTAL_LENGTH_MASK         (256U)
+
+/* USB Class Definitions for Video Devices Specification */
+
+/* Video Class Subclass Codes */
+#define USB_UVC_CONTROL                 (0x01U)
+#define USB_UVC_STREAMING               (0x02U)
+#define USB_UVC_INTERFACE_COLLECTION    (0x03U)
+
+/* Video Class-Specific Descriptor Type */
+#define USB_UVC_CS_INTERFACE            (0x24U)
+#define USB_UVC_CS_ENDPOINT             (0x25U)
+
+/* Video Class specific Video Control (VC) interface descriptor subtypes */
+#define USB_UVC_CS_VC_DESCRIPTOR_UNDEFINED    (0x00U)
+#define USB_UVC_CS_VC_HEADER                  (0x01U)
+#define USB_UVC_CS_VC_INPUT_TERMINAL          (0x02U)
+#define USB_UVC_CS_VC_OUTPUT_TERMINAL         (0x03U)
+#define USB_UVC_CS_VC_SELECTOR_UNIT           (0x04U)
+#define USB_UVC_CS_VC_PROCESSING_UNIT         (0x05U)
+#define USB_UVC_CS_VC_EXTENSION_UNIT          (0x06U)
+#define USB_UVC_CS_VC_ENCODING_UNIT           (0x07U)
+
+/* Video Class-Specific Video Stream (VS) Interface Descriptor Subtypes */
+#define USB_UVC_CS_VS_UNDEFINED               (0x00U)
+#define USB_UVC_CS_VS_INPUT_HEADER            (0x01U)
+#define USB_UVC_CS_VS_OUTPUT_HEADER           (0x02U)
+#define USB_UVC_CS_VS_STILL_IMAGE_FRAME       (0x03U)
+#define USB_UVC_CS_VS_FORMAT_UNCOMPRESSED     (0x04U)
+#define USB_UVC_CS_VS_FRAME_UNCOMPRESSED      (0x05U)
+#define USB_UVC_CS_VS_FORMAT_MJPEG            (0x06U)
+#define USB_UVC_CS_VS_FRAME_MJPEG             (0x07U)
+#define USB_UVC_CS_VS_COLORFORMAT             (0x0DU)
+#define USB_UVC_CS_VS_FORMAT_FRAME_BASED      (0x10U)
+#define USB_UVC_CS_VS_FRAME_FRAME_BASED       (0x11U)
+#define USB_UVC_CS_VS_FORMAT_STREAM_BASED     (0x12U)
+
+#define USB_UVC_VERSION_100                             (0x0100U)
+#define USB_UVC_VC_HEADER_TOTAL_LENGTH                  (0x0033U)   /* 51 */
+#define USB_UVC_CLOCK_FREQUENCY_100_MHZ                  (0x05F5E100U)   /* 100MHz */
+#define USB_UVC_VS_HEADER_TOTAL_LENGTH                  (0x004BU)   /* 75 */
+#define USB_UVC_MJPEG_FRAME_TYPE_DESCRIPTOR_LENGTH	    (0x32U)     /* 50 */
+
+#define USB_UVC_FRAME_WIDTH_640                         (0x0280U)   /* (640U) */
+#define USB_UVC_FRAME_HEIGHT_480                        (0x01E0U)   /* (480U) */
+
+#define USB_UVC_BIT_RATE_1023000                        (0x000F9C18U)   /* 1023000 bps = 127875 bytes/s = 0.12 MB/s */
+#define USB_UVC_BIT_RATE_8184000                        (0x007CE0C0U)   /* 8184000 bps = 1023000 bytes/s = 0.98 MB/s */
+#define USB_UVC_BIT_RATE_8192000                        (0x007D0000U)   /* 8192000 bps = 1024000 bytes/s = 0.98 MB/s */
+#define USB_UVC_BIT_RATE_65536000                       (0x03E80000U)   /* 65536000 bps = 8192000 bytes/s = 7.81 MB/s */
+#define USB_UVC_MIN_BIT_RATE_FS                         USB_UVC_BIT_RATE_1023000
+#define USB_UVC_MAX_BIT_RATE_FS                         USB_UVC_BIT_RATE_8184000
+#define USB_UVC_MIN_BIT_RATE_HS                         USB_UVC_BIT_RATE_8192000
+#define USB_UVC_MAX_BIT_RATE_HS                         USB_UVC_BIT_RATE_65536000
+
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_25000       (0x000061A8U)   /* (25000U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_100000      (0x000186A0U)   /* (100000U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_150000      (0x000249F0U)   /* (150000U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_200000      (0x00030D40U)   /* (200000U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_250000      (0x0003D090U)   /* (250000U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_512000      (0x0007D000U)   /* (512000U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_614989      (0x0009624DU)   /* (614989U) */
+#define USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE             USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE_150000
+
+#define USB_UVC_FRAME_INTERVAL_STEP                     (0x00000000U)
+#define USB_UVC_FRAME_INTERVAL_25_MS                    (0x0003D090U)   /* (250000U) */
+#define USB_UVC_FRAME_INTERVAL_33_MS                    (0x00051615U)   /* (333333U) */
+#define USB_UVC_FRAME_INTERVAL_40_MS                    (0x00061A80U)   /* (400000U) */
+#define USB_UVC_FRAME_INTERVAL_50_MS                    (0x0007A120U)   /* (500000U) */
+#define USB_UVC_FRAME_INTERVAL_66_MS                    (0x000A2C2AU)   /* (666666U) */
+#define USB_UVC_FRAME_INTERVAL_100_MS                   (0x000F4240U)   /* (1000000U) */
+#define USB_UVC_FRAME_INTERVAL_200_MS                   (0x001E8480U)   /* (2000000U) */
+#define USB_UVC_DEFAULT_FRAME_INTERVAL_FS               USB_UVC_FRAME_INTERVAL_200_MS
+#define USB_UVC_DEFAULT_FRAME_INTERVAL_HS               USB_UVC_FRAME_INTERVAL_33_MS
+#define USB_UVC_FRAME_INTERVAL_TYPE_DISCRETE            (0x06U) /* Num of pattern (0x01~)*/
+
+#define USB_PUVC_MAX_PACKET_SIZE_128    (0x80)  /* 128 */
+#define USB_PUVC_MAX_PACKET_SIZE_800    (0x320) /* 800 */
+#define USB_PUVC_MAX_PACKET_SIZE_1024   (0x400) /* 1024 */
+#define USB_PUVC_MAX_PACKET_SIZE_1023   (0x3FF) /* 1023 */
+
+/* Descriptor length */
+#define USB_PUVC_QD_LEN                 (10U)
+
+#define OPTION_VIDEO_STREAMING_IF_SUPPORT_ALT2      /* Option (Comment out for option off) */
+#if defined(OPTION_VIDEO_STREAMING_IF_SUPPORT_ALT2)
+#define USB_PUVC_CD_FULL_LEN            (0xC1) /* 193 */
+#define USB_PUVC_CD_HIGH_LEN            (0xC1) /* 193 */
+#else
+#define USB_PUVC_CD_FULL_LEN            (0xB1) /* 177 */
+#define USB_PUVC_CD_HIGH_LEN            (0xB1) /* 177 */
+#endif
+
+#define STRING_DESCRIPTOR0_LEN          (4U)
+#define STRING_DESCRIPTOR1_LEN          (16U)
+#define STRING_DESCRIPTOR2_LEN          (48U)
+#define STRING_DESCRIPTOR3_LEN          (28U)
+#define STRING_DESCRIPTOR4_LEN          (22U)
+#define STRING_DESCRIPTOR5_LEN          (18U)
+#define STRING_DESCRIPTOR6_LEN          (28U)
+#define NUM_STRING_DESCRIPTOR           (7U)
+
+/******************************************************************************
+ Private global variables and functions
+ ******************************************************************************/
+
+/******************************************************************************
+ Exported global variables
+ ******************************************************************************/
+
+/******************************************************************************
+ Exported global functions (to be accessed by other files)
+ ******************************************************************************/
+
+/* Standard Device Descriptor */
+uint8_t g_apl_device[USB_DD_BLENGTH + ( USB_DD_BLENGTH % 2)] =
+{
+    USB_DD_BLENGTH,                                     /*  0:bLength */
+    USB_DT_DEVICE,                                      /*  1:bDescriptorType */
+    (USB_BCDNUM & (uint8_t) USB_UCHAR_MAX),                     /*  2:bcdUSB_lo */
+    ((uint8_t) (USB_BCDNUM >> 8) & (uint8_t) USB_UCHAR_MAX),    /*  3:bcdUSB_hi */
+    USB_MISC_CLASS,                                     /*  4:bDeviceClass */
+    USB_COMMON_CLASS,                                   /*  5:bDeviceSubClass */
+    USB_IAD_DESC,                                       /*  6:bDeviceProtocol */
+    (uint8_t) USB_DCPMAXP,                              /*  7:bMAXPacketSize(for DCP) */
+    (USB_VENDORID & (uint8_t) USB_UCHAR_MAX),                   /*  8:idVendor_lo */
+    ((uint8_t) (USB_VENDORID >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  9:idVendor_hi */
+    ((uint16_t) USB_PRODUCTID & (uint8_t) USB_UCHAR_MAX),       /* 10:idProduct_lo */
+    ((uint8_t) (USB_PRODUCTID >> 8) & (uint8_t) USB_UCHAR_MAX), /* 11:idProduct_hi */
+    (USB_RELEASE & (uint8_t) USB_UCHAR_MAX),                    /* 12:bcdDevice_lo */
+    ((uint8_t) (USB_RELEASE >> 8) & (uint8_t) USB_UCHAR_MAX),   /* 13:bcdDevice_hi */
+    1,                                                  /* 14:iManufacturer */
+    2,                                                  /* 15:iProduct */
+    0,                                                  /* 16:iSerialNumber */
+    USB_CONFIGNUM /* 17:bNumConfigurations */
+};
+
+/************************************************************
+ *  Device Qualifier Descriptor   *
+ ************************************************************/
+uint8_t g_apl_qualifier_descriptor[USB_PUVC_QD_LEN + ( USB_PUVC_QD_LEN % 2)] =
+{
+    USB_PUVC_QD_LEN,                                    /*  0:bLength */
+    USB_DT_DEVICE_QUALIFIER,                            /*  1:bDescriptorType */
+    (USB_BCDNUM & (uint8_t) USB_UCHAR_MAX),                  /*  2:bcdUSB_lo */
+    ((uint8_t) (USB_BCDNUM >> 8) & (uint8_t) USB_UCHAR_MAX), /*  3:bcdUSB_hi */
+    USB_MISC_CLASS,                                     /*  4:bDeviceClass */
+    USB_COMMON_CLASS,                                   /*  5:bDeviceSubClass */
+    USB_IAD_DESC,                                       /*  6:bDeviceProtocol */
+    (uint8_t) USB_DCPMAXP,                              /*  7:bMAXPacketSize(for DCP) */
+    USB_CONFIGNUM,                                      /*  8:bNumConfigurations */
+    0                                                   /*  9:bReserved */
+};
+
+/************************************************************
+ *  Configuration Or Other_Speed_Configuration Descriptor   *
+ ************************************************************/
+/* For Full-Speed */
+uint8_t g_apl_fs_configuration[USB_PUVC_CD_FULL_LEN + ( USB_PUVC_CD_FULL_LEN % 2)] =
+{
+    USB_CD_BLENGTH,                 /*  0:bLength */
+    USB_SOFT_CHANGE,                /*  1:bDescriptorType */
+    USB_PUVC_CD_FULL_LEN % USB_W_TOTAL_LENGTH_MASK, /*  2:wTotalLength(L) */
+    USB_PUVC_CD_FULL_LEN / USB_W_TOTAL_LENGTH_MASK, /*  3:wTotalLength(H) */
+    2,                              /*  4:bNumInterfaces */
+    1,                              /*  5:bConfigurationValue */
+    0,                              /*  6:iConfiguration */
+    USB_CF_RESERVED | USB_CF_SELFP, /*  7:bmAttributes */
+    (10 / 2),                       /*  8:MAXPower (2mA unit) */
+
+    /* Interface Association Descriptor (IAD) */
+    0x08,                           /*  0:bLength */
+    USB_IAD_TYPE,                   /*  1:bDescriptorType */
+    0x00,                           /*  2:bFirstInterface */
+    0x02,                           /*  3:bInterfaceCount */
+    USB_IFCLS_VID,                  /*  4:bFunctionClass  */
+    0x03,                           /*  5:bFunctionSubClass */
+    0x00,                           /*  6:bFunctionProtocol */
+    0x00,                           /*  7:iFunction */
+
+    /* Interface Descriptor #0: Control */
+    USB_ID_BLENGTH,                 /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptor */
+    0x00,                           /*  2:bInterfaceNumber */
+    0x00,                           /*  3:bAlternateSetting */
+    0x00,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_CONTROL,                /*  6:bInterfaceSubClass */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Video Control Interface Header Descriptor */
+    0x0D,                           /*  0:bLength (13 bytes) */
+    USB_UVC_CS_INTERFACE,           /*  1:bDescriptorType */
+    USB_UVC_CS_VC_HEADER,           /*  2:bDescriptorSubtype */
+    (USB_UVC_VERSION_100 & (uint8_t) USB_UCHAR_MAX),                   /*  3:bcdUVC[L] (UVC Version 1.00) */
+    ((uint8_t) (USB_UVC_VERSION_100 >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  4:bcdUVC[H] (UVC Version 1.00) */
+    (USB_UVC_VC_HEADER_TOTAL_LENGTH & (uint8_t) USB_UCHAR_MAX),                 /*  5:TotalLength[L] (0x0033 (51) bytes) */
+    ((uint8_t) (USB_UVC_VC_HEADER_TOTAL_LENGTH >> 8) & (uint8_t) USB_UCHAR_MAX),/*  6:TotalLength[H] (0x0033 (51) bytes) */
+    (USB_UVC_CLOCK_FREQUENCY_100_MHZ & (uint8_t) USB_UCHAR_MAX),                  /*  7:dwClockFreq[LL] (100 MHz) */
+    ((uint8_t) (USB_UVC_CLOCK_FREQUENCY_100_MHZ >> 8) & (uint8_t) USB_UCHAR_MAX), /*  8:dwClockFreq[LH] (100 MHz) */
+    ((uint8_t) (USB_UVC_CLOCK_FREQUENCY_100_MHZ >> 16) & (uint8_t) USB_UCHAR_MAX),/*  9:dwClockFreq[HL] (100 MHz) */
+    ((uint8_t) (USB_UVC_CLOCK_FREQUENCY_100_MHZ >> 24) & (uint8_t) USB_UCHAR_MAX),/*  10:dwClockFreq[HH] (100 MHz) */
+    0x01,                           /*  11:bInCollection (1 VideoStreaming interface) */
+    0x01,                           /*  12:baInterfaceNr[1] */
+
+    /* Video Control Input Terminal Descriptor */
+    0x12,                           /* bLength */
+    USB_UVC_CS_INTERFACE,           /* bDescriptorType */
+    0x02,                           /* bDescriptorSubtype (Input Terminal) */
+    0x01,                           /* bTerminalID */
+    0x01, 0x02,                     /* wTerminalType (ITT_CAMERA) */
+    0x00,                           /* bAssocTerminal */
+    0x00,                           /* iTerminal */
+    0x00, 0x00,                     /* wObjectiveFocalLengthMin */
+    0x00, 0x00,                     /* wObjectiveFocalLengthMax */
+    0x00, 0x00,                     /* wOcularFocalLength */
+    0x03,                           /* bControlSize */
+    0x00, 0x00, 0x00,               /* bmControls */
+
+    /* Video Control Processing Unit Descriptor */
+    0x0B,                           /* bLength */
+    USB_UVC_CS_INTERFACE,           /* bDescriptorType */
+    0x05,                           /* bDescriptorSubtype (Processing Unit) */
+    0x02,                           /* bUnitID */
+    0x01,                           /* bSourceID */
+    0x00, 0x00,                     /* wMaxMultiplier */
+    0x02,                           /* bControlSize */
+    0x00, 0x00,                     /* bmControls */
+    0x00,                           /* iProcessing */
+
+    /* Video Control Output Terminal Descriptor */
+    0x09,                           /* bLength */
+    USB_UVC_CS_INTERFACE,           /* bDescriptorType */
+    0x03,                           /* bDescriptorSubtype (Output Terminal) */
+    0x04,                           /* bTerminalID */
+    0x01, 0x01,                     /* wTerminalType (TT_STREAMING) */
+    0x00,                           /* bAssocTerminal */
+    0x02,                           /* bSourceID */
+    0x00,                           /* iTerminal */
+
+    /* Interface Descriptor #1 */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x00,                           /*  3:bAlternateSetting */
+    0x00,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* VC-Specific VS Video Input Header Descriptor */
+    0x0E,                           /*  0:bLength */
+    USB_UVC_CS_INTERFACE,           /*  1:bDescriptorType (Video Streaming Interface) */
+    USB_UVC_CS_VS_INPUT_HEADER,     /*  2:bDescriptorSubtype (Input Header) */
+    0x01,                           /*  3:bNumFormats */
+    (USB_UVC_VS_HEADER_TOTAL_LENGTH & (uint8_t) USB_UCHAR_MAX),                   /*  4:wTotalLength[L] (0x004B (75) bytes) */
+    ((uint8_t) (USB_UVC_VS_HEADER_TOTAL_LENGTH >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  5:wTotalLength[H] (0x004B (75) bytes) */
+    USB_EP_IN | USB_EP1,            /*  6:bEndpointAddress (Direction=IN  EndpointID=1) */
+    0x00,                           /*  7:bmInfo (Dynamic Format Change not supported) */
+    0x04,                           /*  8:bTerminalLink (Output Terminal ID 4) */
+    0x00,                           /*  9:bStillCaptureMethod (None) */
+    0x00,                           /*  10:nbTriggerSupport (Hardware Triggering not supported) */
+    0x00,                           /*  11:bTriggerUsage (Host will initiate still image capture) */
+    0x01,                           /*  12:bControlSize (1 bytes each) */
+    0x00,                           /*  13:Video Payload Format 1 (All no) */
+
+    /* Video Streaming MJPEG Format Type Descriptor */
+    0x0B,                           /*  1:bLength (11 bytes) */
+    USB_UVC_CS_INTERFACE,           /*  2:bDescriptorType (Video Streaming Interface) */
+    USB_UVC_CS_VS_FORMAT_MJPEG,     /*  3:bDescriptorSubtype (Format MJPEG) */
+    0x01,                           /*  4:bFormatIndex (1) */
+    0x01,                           /*  5:bNumFrameDescriptors (1) */
+    0x00,                           /*  6:bmFlags (Sample size is not fixed) */
+    0x01,                           /*  7:bDefaultFrameIndex (1) */
+    0x00,                           /*  8:bAspectRatioX */
+    0x00,                           /*  9:bAspectRatioY */
+    0x00,                           /*  10:bmInterlaceFlags                         */
+                                    /*    D0 IL stream or variable:0 (no)           */
+                                    /*    D1 Fields per frame     :0 (2 fields)     */
+                                    /*    D2 Field 1 first        :0 (no)           */
+                                    /*    D3 Reserved             :0                */
+                                    /*    D4..5 Field pattern     :0 (Field 1 only) */
+                                    /*    D6..7 Display Mode      :0 (Bob only)     */
+    0x00,                           /*  11:bCopyProtect (No restrictions) */
+
+    /* Video Streaming MJPEG Frame Type Descriptor */
+    USB_UVC_MJPEG_FRAME_TYPE_DESCRIPTOR_LENGTH,   /*  0:bLength (50 bytes)*/
+    USB_UVC_CS_INTERFACE,           /*  1:bDescriptorType (Video Streaming Interface) */
+    USB_UVC_CS_VS_FRAME_MJPEG,      /*  2:bDescriptorSubtype (MJPEG Frame Type) */
+    0x01,                           /*  3:bFrameIndex */
+    0x00,                           /*  4:bmCapabilities */
+
+    (USB_UVC_FRAME_WIDTH_640 & (uint8_t) USB_UCHAR_MAX),                    /*  5:wWidth[L] (640) */
+    ((uint8_t) (USB_UVC_FRAME_WIDTH_640 >> 8) & (uint8_t) USB_UCHAR_MAX),   /*  6:wWidth[H] (640) */
+
+    (USB_UVC_FRAME_HEIGHT_480 & (uint8_t) USB_UCHAR_MAX),                   /*  7:wHeight[L] (480) */
+    ((uint8_t) (USB_UVC_FRAME_HEIGHT_480 >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  8:wHeight[H] (480) */
+
+    (USB_UVC_MIN_BIT_RATE_FS & (uint8_t) USB_UCHAR_MAX),                  /*  9:dwMinBitRate[LL] (24576000 bps -> 3.72 MB/s) */
+    ((uint8_t) (USB_UVC_MIN_BIT_RATE_FS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  10:dwMinBitRate[LH] (24576000 bps -> 3.72 MB/s) */
+    ((uint8_t) (USB_UVC_MIN_BIT_RATE_FS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  11:dwMinBitRate[HL] (24576000 bps -> 3.72 MB/s) */
+    ((uint8_t) (USB_UVC_MIN_BIT_RATE_FS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  12:dwMinBitRate[HH] (24576000 bps -> 3.72 MB/s) */
+
+    (USB_UVC_MAX_BIT_RATE_FS & (uint8_t) USB_UCHAR_MAX),                  /*  13:dwMaxBitRate[LL] (147456000 bps -> 18.432 MB/s) */
+    ((uint8_t) (USB_UVC_MAX_BIT_RATE_FS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  14:dwMaxBitRate[LH] (147456000 bps -> 18.432 MB/s) */
+    ((uint8_t) (USB_UVC_MAX_BIT_RATE_FS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  15:dwMaxBitRate[HL] (147456000 bps -> 18.432 MB/s) */
+    ((uint8_t) (USB_UVC_MAX_BIT_RATE_FS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  16:dwMaxBitRate[HH] (147456000 bps -> 18.432 MB/s) */
+
+    (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE & (uint8_t) USB_UCHAR_MAX),                  /*  17:dwMaxVideoFrameBufferSize[LL] (614989 bytes) */
+    ((uint8_t) (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE >> 8) & (uint8_t) USB_UCHAR_MAX), /*  18:dwMaxVideoFrameBufferSize[LH] (614989 bytes) */
+    ((uint8_t) (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE >> 16) & (uint8_t) USB_UCHAR_MAX),/*  19:dwMaxVideoFrameBufferSize[HL] (614989 bytes) */
+    ((uint8_t) (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE >> 24) & (uint8_t) USB_UCHAR_MAX),/*  20:dwMaxVideoFrameBufferSize[HH] (614989 bytes) */
+
+    (USB_UVC_DEFAULT_FRAME_INTERVAL_FS & (uint8_t) USB_UCHAR_MAX),                   /*  21:dwDefaultFrameInterval[LL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_DEFAULT_FRAME_INTERVAL_FS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  22:dwDefaultFrameInterval[LH] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_DEFAULT_FRAME_INTERVAL_FS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  23:dwDefaultFrameInterval[HL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_DEFAULT_FRAME_INTERVAL_FS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  24:dwDefaultFrameInterval[HH] (33.3333 ms -> 30.0000 fps) */
+
+    USB_UVC_FRAME_INTERVAL_TYPE_DISCRETE,  /*  25:bFrameIntervalType (6 discrete frame intervals supported) */
+
+    (USB_UVC_FRAME_INTERVAL_33_MS & (uint8_t) USB_UCHAR_MAX),                   /*  26:adwFrameInterval[1][LL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_33_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  27:adwFrameInterval[1][LH] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_33_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  28:adwFrameInterval[1][HL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_33_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  29:adwFrameInterval[1][HH] (33.3333 ms -> 30.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_40_MS & (uint8_t) USB_UCHAR_MAX),                   /*  30:adwFrameInterval[2][LL] (40.0000 ms -> 25.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_40_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  31:adwFrameInterval[2][HL] (40.0000 ms -> 25.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_40_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  32:adwFrameInterval[2][LH] (40.0000 ms -> 25.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_40_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  33:adwFrameInterval[2][HH] (40.0000 ms -> 25.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_50_MS & (uint8_t) USB_UCHAR_MAX),                   /*  34:adwFrameInterval[3][LL] (50.0000 ms -> 20.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_50_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  35:adwFrameInterval[3][LH] (50.0000 ms -> 20.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_50_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  36:adwFrameInterval[3][HL] (50.0000 ms -> 20.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_50_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  37:adwFrameInterval[3][HH] (50.0000 ms -> 20.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_66_MS & (uint8_t) USB_UCHAR_MAX),                   /*  38:adwFrameInterval[4][LL] (66.6666 ms -> 15.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_66_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  39:adwFrameInterval[4][LH] (66.6666 ms -> 15.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_66_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  40:adwFrameInterval[4][HL] (66.6666 ms -> 15.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_66_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  41:adwFrameInterval[4][HH] (66.6666 ms -> 15.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_100_MS & (uint8_t) USB_UCHAR_MAX),                  /*  42:adwFrameInterval[5][LL] (100.0000 ms -> 10.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_100_MS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  43:adwFrameInterval[5][LH] (100.0000 ms -> 10.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_100_MS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  44:adwFrameInterval[5][HL] (100.0000 ms -> 10.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_100_MS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  45:adwFrameInterval[5][HH] (100.0000 ms -> 10.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_200_MS & (uint8_t) USB_UCHAR_MAX),                  /*  46:adwFrameInterval[6][LL] (200.0000 ms -> 5.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_200_MS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  47:adwFrameInterval[6][LH] (200.0000 ms -> 5.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_200_MS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  48:adwFrameInterval[6][HL] (200.0000 ms -> 5.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_200_MS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  49:adwFrameInterval[6][HH] (200.0000 ms -> 5.0000 fps) */
+
+#if defined(OPTION_VIDEO_STREAMING_IF_SUPPORT_ALT2)
+    /* Interface Descriptor */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x01,                           /*  3:bAlternateSetting */
+    0x01,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass (VideoStream) */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Endpoint Descriptor */
+    0x07,                           /*  0:bLength */
+    USB_DT_ENDPOINT,                /*  1:bDescriptorType */
+    USB_EP_IN | USB_EP1,            /*  2:bEndpointAddress (IN transfer, Endpoint Number 1) */
+    0x05,                           /*  3:bmAttributes : bmAttributes (Isochronous, Async, DataEndpoint) */
+    (USB_PUVC_MAX_PACKET_SIZE_128 & (uint8_t) USB_UCHAR_MAX),                  /*  4:wMaxPacketSize[L] */
+    ((uint8_t) (USB_PUVC_MAX_PACKET_SIZE_128 >> 8) & (uint8_t) USB_UCHAR_MAX), /*  5:wMaxPacketSize[H] */
+    0x01,                           /*  6:bInterval (1 frame -> 1 ms) */
+
+        /* Interface Descriptor */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x02,                           /*  3:bAlternateSetting */
+    0x01,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass (VideoStream) */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Endpoint Descriptor */
+    0x07,                           /*  0:bLength */
+    USB_DT_ENDPOINT,                /*  1:bDescriptorType */
+    USB_EP_IN | USB_EP1,            /*  2:bEndpointAddress (IN transfer, Endpoint Number 1) */
+    0x05,                           /*  3:bmAttributes : bmAttributes (Isochronous, Async, DataEndpoint) */
+    (USB_PUVC_MAX_PACKET_SIZE_1023 & (uint8_t) USB_UCHAR_MAX),                  /*  4:wMaxPacketSize[L] */
+    ((uint8_t) (USB_PUVC_MAX_PACKET_SIZE_1023 >> 8) & (uint8_t) USB_UCHAR_MAX), /*  5:wMaxPacketSize[H] */
+    0x01,                           /*  6:bInterval (1 frame -> 1 ms) */
+#else
+    /* Interface Descriptor */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x01,                           /*  3:bAlternateSetting */
+    0x01,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass (VideoStream) */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Endpoint Descriptor */
+    0x07,                           /*  0:bLength */
+    USB_DT_ENDPOINT,                /*  1:bDescriptorType */
+    USB_EP_IN | USB_EP1,            /*  2:bEndpointAddress (IN transfer, Endpoint Number 1) */
+    0x05,                           /*  3:bmAttributes : bmAttributes (Isochronous, Async, DataEndpoint) */
+    (USB_PUVC_MAX_PACKET_SIZE_1023 & (uint8_t) USB_UCHAR_MAX),                  /*  4:wMaxPacketSize[L] */
+    ((uint8_t) (USB_PUVC_MAX_PACKET_SIZE_1023 >> 8) & (uint8_t) USB_UCHAR_MAX), /*  5:wMaxPacketSize[H] */
+    0x01,                           /*  6:bInterval (1 frame -> 1 ms) */
+#endif
+};
+
+/* For High-Speed */
+uint8_t g_apl_hs_configuration[USB_PUVC_CD_HIGH_LEN + ( USB_PUVC_CD_HIGH_LEN % 2)] =
+{
+    9,                              /*  0:bLength */
+    USB_SOFT_CHANGE,                /*  1:bDescriptorType */
+    USB_PUVC_CD_HIGH_LEN % USB_W_TOTAL_LENGTH_MASK,         /*  2:wTotalLength(L) */
+    USB_PUVC_CD_HIGH_LEN / USB_W_TOTAL_LENGTH_MASK,         /*  3:wTotalLength(H) */
+    2,                              /*  4:bNumInterfaces */
+    1,                              /*  5:bConfigurationValue */
+    0,                              /*  6:iConfiguration */
+    USB_CF_RESERVED | USB_CF_SELFP, /*  7:bmAttributes */
+    (10 / 2),                       /*  8:MAXPower (2mA unit) */
+
+    /* Interface Association Descriptor (IAD) */
+    0x08,                           /*  0:bLength */
+    USB_IAD_TYPE,                   /*  1:bDescriptorType */
+    0x00,                           /*  2:bFirstInterface */
+    0x02,                           /*  3:bInterfaceCount */
+    USB_IFCLS_VID,                  /*  4:bFunctionClass  */
+    0x03,                           /*  5:bFunctionSubClass */
+    0x00,                           /*  6:bFunctionProtocol */
+    0x00,                           /*  7:iFunction */
+
+    /* Interface Descriptor #0: Control */
+    USB_ID_BLENGTH,                 /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptor */
+    0x00,                           /*  2:bInterfaceNumber */
+    0x00,                           /*  3:bAlternateSetting */
+    0x00,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_CONTROL,                /*  6:bInterfaceSubClass */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Video Control Interface Header Descriptor */
+    0x0D,                           /*  0:bLength (13 bytes) */
+    USB_UVC_CS_INTERFACE,           /*  1:bDescriptorType */
+    USB_UVC_CS_VC_HEADER,           /*  2:bDescriptorSubtype */
+    (USB_UVC_VERSION_100 & (uint8_t) USB_UCHAR_MAX),                   /*  3:bcdUVC[L] (UVC Version 1.00) */
+    ((uint8_t) (USB_UVC_VERSION_100 >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  4:bcdUVC[H] (UVC Version 1.00) */
+    (USB_UVC_VC_HEADER_TOTAL_LENGTH & (uint8_t) USB_UCHAR_MAX),                 /*  5:TotalLength[L] (0x0033 (51) bytes) */
+    ((uint8_t) (USB_UVC_VC_HEADER_TOTAL_LENGTH >> 8) & (uint8_t) USB_UCHAR_MAX),/*  6:TotalLength[H] (0x0033 (51) bytes) */
+    (USB_UVC_CLOCK_FREQUENCY_100_MHZ & (uint8_t) USB_UCHAR_MAX),                  /*  7:dwClockFreq[LL] (100 MHz) */
+    ((uint8_t) (USB_UVC_CLOCK_FREQUENCY_100_MHZ >> 8) & (uint8_t) USB_UCHAR_MAX), /*  8:dwClockFreq[LH] (100 MHz) */
+    ((uint8_t) (USB_UVC_CLOCK_FREQUENCY_100_MHZ >> 16) & (uint8_t) USB_UCHAR_MAX),/*  9:dwClockFreq[HL] (100 MHz) */
+    ((uint8_t) (USB_UVC_CLOCK_FREQUENCY_100_MHZ >> 24) & (uint8_t) USB_UCHAR_MAX),/*  10:dwClockFreq[HH] (100 MHz) */
+    0x01,                           /*  11:bInCollection (1 VideoStreaming interface) */
+    0x01,                           /*  12:baInterfaceNr[1] */
+
+    /* Video Control Input Terminal Descriptor */
+    0x12,                           /* bLength */
+    USB_UVC_CS_INTERFACE,           /* bDescriptorType */
+    0x02,                           /* bDescriptorSubtype (Input Terminal) */
+    0x01,                           /* bTerminalID */
+    0x01, 0x02,                     /* wTerminalType (ITT_CAMERA) */
+    0x00,                           /* bAssocTerminal */
+    0x00,                           /* iTerminal */
+    0x00, 0x00,                     /* wObjectiveFocalLengthMin */
+    0x00, 0x00,                     /* wObjectiveFocalLengthMax */
+    0x00, 0x00,                     /* wOcularFocalLength */
+    0x03,                           /* bControlSize */
+    0x00, 0x00, 0x00,               /* bmControls */
+
+    /* Video Control Processing Unit Descriptor */
+    0x0B,                           /* bLength */
+    USB_UVC_CS_INTERFACE,           /* bDescriptorType */
+    0x05,                           /* bDescriptorSubtype (Processing Unit) */
+    0x02,                           /* bUnitID */
+    0x01,                           /* bSourceID */
+    0x00, 0x00,                     /* wMaxMultiplier */
+    0x02,                           /* bControlSize */
+    0x00, 0x00,                     /* bmControls */
+    0x00,                           /* iProcessing */
+
+    /* Video Control Output Terminal Descriptor */
+    0x09,                           /* bLength */
+    USB_UVC_CS_INTERFACE,           /* bDescriptorType */
+    0x03,                           /* bDescriptorSubtype (Output Terminal) */
+    0x04,                           /* bTerminalID */
+    0x01, 0x01,                     /* wTerminalType (TT_STREAMING) */
+    0x00,                           /* bAssocTerminal */
+    0x02,                           /* bSourceID */
+    0x00,                           /* iTerminal */
+
+    /* Interface Descriptor #1 */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x00,                           /*  3:bAlternateSetting */
+    0x00,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* VC-Specific VS Video Input Header Descriptor */
+    0x0E,                           /*  0:bLength */
+    USB_UVC_CS_INTERFACE,           /*  1:bDescriptorType (Video Streaming Interface) */
+    USB_UVC_CS_VS_INPUT_HEADER,     /*  2:bDescriptorSubtype (Input Header) */
+    0x01,                           /*  3:bNumFormats */
+    (USB_UVC_VS_HEADER_TOTAL_LENGTH & (uint8_t) USB_UCHAR_MAX),                   /*  4:wTotalLength[L] (0x004B (75) bytes) */
+    ((uint8_t) (USB_UVC_VS_HEADER_TOTAL_LENGTH >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  5:wTotalLength[H] (0x004B (75) bytes) */
+    USB_EP_IN | USB_EP1,            /*  6:bEndpointAddress (Direction=IN  EndpointID=1) */
+    0x00,                           /*  7:bmInfo (Dynamic Format Change not supported) */
+    0x04,                           /*  8:bTerminalLink (Output Terminal ID 4) */
+    0x00,                           /*  9:bStillCaptureMethod (None) */
+    0x00,                           /*  10:nbTriggerSupport (Hardware Triggering not supported) */
+    0x00,                           /*  11:bTriggerUsage (Host will initiate still image capture) */
+    0x01,                           /*  12:bControlSize (1 bytes each) */
+    0x00,                           /*  13:Video Payload Format 1 (All no) */
+
+    /* Video Streaming MJPEG Format Type Descriptor */
+    0x0B,                           /*  1:bLength (11 bytes) */
+    USB_UVC_CS_INTERFACE,           /*  2:bDescriptorType (Video Streaming Interface) */
+    USB_UVC_CS_VS_FORMAT_MJPEG,     /*  3:bDescriptorSubtype (Format MJPEG) */
+    0x01,                           /*  4:bFormatIndex (1) */
+    0x01,                           /*  5:bNumFrameDescriptors (1) */
+    0x00,                           /*  6:bmFlags (Sample size is not fixed) */
+    0x01,                           /*  7:bDefaultFrameIndex (1) */
+    0x00,                           /*  8:bAspectRatioX */
+    0x00,                           /*  9:bAspectRatioY */
+    0x00,                           /*  10:bmInterlaceFlags                         */
+                                    /*    D0 IL stream or variable:0 (no)           */
+                                    /*    D1 Fields per frame     :0 (2 fields)     */
+                                    /*    D2 Field 1 first        :0 (no)           */
+                                    /*    D3 Reserved             :0                */
+                                    /*    D4..5 Field pattern     :0 (Field 1 only) */
+                                    /*    D6..7 Display Mode      :0 (Bob only)     */
+    0x00,                           /*  11:bCopyProtect (No restrictions) */
+
+    /* Video Streaming MJPEG Frame Type Descriptor */
+    USB_UVC_MJPEG_FRAME_TYPE_DESCRIPTOR_LENGTH,   /*  0:bLength (50 bytes)*/
+    USB_UVC_CS_INTERFACE,           /*  1:bDescriptorType (Video Streaming Interface) */
+    USB_UVC_CS_VS_FRAME_MJPEG,      /*  2:bDescriptorSubtype (MJPEG Frame Type) */
+    0x01,                           /*  3:bFrameIndex */
+    0x00,                           /*  4:bmCapabilities */
+
+    (USB_UVC_FRAME_WIDTH_640 & (uint8_t) USB_UCHAR_MAX),                    /*  5:wWidth[L] (640) */
+    ((uint8_t) (USB_UVC_FRAME_WIDTH_640 >> 8) & (uint8_t) USB_UCHAR_MAX),   /*  6:wWidth[H] (640) */
+
+    (USB_UVC_FRAME_HEIGHT_480 & (uint8_t) USB_UCHAR_MAX),                   /*  7:wHeight[L] (480) */
+    ((uint8_t) (USB_UVC_FRAME_HEIGHT_480 >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  8:wHeight[H] (480) */
+
+    (USB_UVC_MIN_BIT_RATE_HS & (uint8_t) USB_UCHAR_MAX),                  /*  9:dwMinBitRate[LL] (24576000 bps -> 3.72 MB/s) */
+    ((uint8_t) (USB_UVC_MIN_BIT_RATE_HS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  10:dwMinBitRate[LH] (24576000 bps -> 3.72 MB/s) */
+    ((uint8_t) (USB_UVC_MIN_BIT_RATE_HS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  11:dwMinBitRate[HL] (24576000 bps -> 3.72 MB/s) */
+    ((uint8_t) (USB_UVC_MIN_BIT_RATE_HS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  12:dwMinBitRate[HH] (24576000 bps -> 3.72 MB/s) */
+
+    (USB_UVC_MAX_BIT_RATE_HS & (uint8_t) USB_UCHAR_MAX),                  /*  13:dwMaxBitRate[LL] (147456000 bps -> 18.432 MB/s) */
+    ((uint8_t) (USB_UVC_MAX_BIT_RATE_HS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  14:dwMaxBitRate[LH] (147456000 bps -> 18.432 MB/s) */
+    ((uint8_t) (USB_UVC_MAX_BIT_RATE_HS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  15:dwMaxBitRate[HL] (147456000 bps -> 18.432 MB/s) */
+    ((uint8_t) (USB_UVC_MAX_BIT_RATE_HS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  16:dwMaxBitRate[HH] (147456000 bps -> 18.432 MB/s) */
+
+    (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE & (uint8_t) USB_UCHAR_MAX),                  /*  17:dwMaxVideoFrameBufferSize[LL] (614989 bytes) */
+    ((uint8_t) (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE >> 8) & (uint8_t) USB_UCHAR_MAX), /*  18:dwMaxVideoFrameBufferSize[LH] (614989 bytes) */
+    ((uint8_t) (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE >> 16) & (uint8_t) USB_UCHAR_MAX),/*  19:dwMaxVideoFrameBufferSize[HL] (614989 bytes) */
+    ((uint8_t) (USB_UVC_MAX_VIDEO_FRAME_BUFFER_SIZE >> 24) & (uint8_t) USB_UCHAR_MAX),/*  20:dwMaxVideoFrameBufferSize[HH] (614989 bytes) */
+
+    (USB_UVC_DEFAULT_FRAME_INTERVAL_HS & (uint8_t) USB_UCHAR_MAX),                   /*  21:dwDefaultFrameInterval[LL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_DEFAULT_FRAME_INTERVAL_HS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  22:dwDefaultFrameInterval[LH] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_DEFAULT_FRAME_INTERVAL_HS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  23:dwDefaultFrameInterval[HL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_DEFAULT_FRAME_INTERVAL_HS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  24:dwDefaultFrameInterval[HH] (33.3333 ms -> 30.0000 fps) */
+
+    USB_UVC_FRAME_INTERVAL_TYPE_DISCRETE,  /*  25:bFrameIntervalType (6 discrete frame intervals supported) */
+
+    (USB_UVC_FRAME_INTERVAL_33_MS & (uint8_t) USB_UCHAR_MAX),                   /*  26:adwFrameInterval[1][LL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_33_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  27:adwFrameInterval[1][LH] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_33_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  28:adwFrameInterval[1][HL] (33.3333 ms -> 30.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_33_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  29:adwFrameInterval[1][HH] (33.3333 ms -> 30.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_40_MS & (uint8_t) USB_UCHAR_MAX),                   /*  30:adwFrameInterval[2][LL] (40.0000 ms -> 25.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_40_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  31:adwFrameInterval[2][HL] (40.0000 ms -> 25.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_40_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  32:adwFrameInterval[2][LH] (40.0000 ms -> 25.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_40_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  33:adwFrameInterval[2][HH] (40.0000 ms -> 25.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_50_MS & (uint8_t) USB_UCHAR_MAX),                   /*  34:adwFrameInterval[3][LL] (50.0000 ms -> 20.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_50_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  35:adwFrameInterval[3][LH] (50.0000 ms -> 20.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_50_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  36:adwFrameInterval[3][HL] (50.0000 ms -> 20.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_50_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  37:adwFrameInterval[3][HH] (50.0000 ms -> 20.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_66_MS & (uint8_t) USB_UCHAR_MAX),                   /*  38:adwFrameInterval[4][LL] (66.6666 ms -> 15.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_66_MS >> 8) & (uint8_t) USB_UCHAR_MAX),  /*  39:adwFrameInterval[4][LH] (66.6666 ms -> 15.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_66_MS >> 16) & (uint8_t) USB_UCHAR_MAX), /*  40:adwFrameInterval[4][HL] (66.6666 ms -> 15.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_66_MS >> 24) & (uint8_t) USB_UCHAR_MAX), /*  41:adwFrameInterval[4][HH] (66.6666 ms -> 15.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_100_MS & (uint8_t) USB_UCHAR_MAX),                  /*  42:adwFrameInterval[5][LL] (100.0000 ms -> 10.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_100_MS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  43:adwFrameInterval[5][LH] (100.0000 ms -> 10.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_100_MS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  44:adwFrameInterval[5][HL] (100.0000 ms -> 10.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_100_MS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  45:adwFrameInterval[5][HH] (100.0000 ms -> 10.0000 fps) */
+
+    (USB_UVC_FRAME_INTERVAL_200_MS & (uint8_t) USB_UCHAR_MAX),                  /*  46:adwFrameInterval[6][LL] (200.0000 ms -> 5.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_200_MS >> 8) & (uint8_t) USB_UCHAR_MAX), /*  47:adwFrameInterval[6][LH] (200.0000 ms -> 5.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_200_MS >> 16) & (uint8_t) USB_UCHAR_MAX),/*  48:adwFrameInterval[6][HL] (200.0000 ms -> 5.0000 fps) */
+    ((uint8_t) (USB_UVC_FRAME_INTERVAL_200_MS >> 24) & (uint8_t) USB_UCHAR_MAX),/*  49:adwFrameInterval[6][HH] (200.0000 ms -> 5.0000 fps) */
+
+#if defined(OPTION_VIDEO_STREAMING_IF_SUPPORT_ALT2)
+    /* Interface Descriptor */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x01,                           /*  3:bAlternateSetting */
+    0x01,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass (VideoStream) */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Endpoint Descriptor */
+    0x07,                           /*  0:bLength */
+    USB_DT_ENDPOINT,                /*  1:bDescriptorType */
+    USB_EP_IN | USB_EP1,            /*  2:bEndpointAddress (IN transfer, Endpoint Number 1) */
+    0x05,                           /*  3:bmAttributes : bmAttributes (Isochronous, Async, DataEndpoint) */
+    (USB_PUVC_MAX_PACKET_SIZE_128 & (uint8_t) USB_UCHAR_MAX),                  /*  4:wMaxPacketSize[L] */
+    ((uint8_t) (USB_PUVC_MAX_PACKET_SIZE_128 >> 8) & (uint8_t) USB_UCHAR_MAX), /*  5:wMaxPacketSize[H] */
+    0x01,                           /* 6:bInterval (1 microframe -> 0.125 ms) */
+
+        /* Interface Descriptor */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x02,                           /*  3:bAlternateSetting */
+    0x01,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass (VideoStream) */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Endpoint Descriptor */
+    0x07,                           /*  0:bLength */
+    USB_DT_ENDPOINT,                /*  1:bDescriptorType */
+    USB_EP_IN | USB_EP1,            /*  2:bEndpointAddress (IN transfer, Endpoint Number 1) */
+    0x05,                           /*  3:bmAttributes : bmAttributes (Isochronous, Async, DataEndpoint) */
+    (USB_PUVC_MAX_PACKET_SIZE_1024 & (uint8_t) USB_UCHAR_MAX),                  /*  4:wMaxPacketSize[L] */
+    ((uint8_t) (USB_PUVC_MAX_PACKET_SIZE_1024 >> 8) & (uint8_t) USB_UCHAR_MAX), /*  5:wMaxPacketSize[H] */
+    0x01,                           /* 6:bInterval (1 microframe -> 0.125 ms) */
+#else
+    /* Interface Descriptor */
+    0x09,                           /*  0:bLength */
+    USB_DT_INTERFACE,               /*  1:bDescriptorType */
+    0x01,                           /*  2:bInterfaceNumber */
+    0x01,                           /*  3:bAlternateSetting */
+    0x01,                           /*  4:bNumEndpoints */
+    USB_IFCLS_VID,                  /*  5:bInterfaceClass */
+    USB_UVC_STREAMING,              /*  6:bInterfaceSubClass (VideoStream) */
+    0x00,                           /*  7:bInterfaceProtocol */
+    0x00,                           /*  8:iInterface */
+
+    /* Endpoint Descriptor */
+    0x07,                           /*  0:bLength */
+    USB_DT_ENDPOINT,                /*  1:bDescriptorType */
+    USB_EP_IN | USB_EP1,            /*  2:bEndpointAddress (IN transfer, Endpoint Number 1) */
+    0x05,                           /*  3:bmAttributes : bmAttributes (Isochronous, Async, DataEndpoint) */
+    (USB_PUVC_MAX_PACKET_SIZE_1024 & (uint8_t) USB_UCHAR_MAX),                  /*  4:wMaxPacketSize[L] */
+    ((uint8_t) (USB_PUVC_MAX_PACKET_SIZE_1024 >> 8) & (uint8_t) USB_UCHAR_MAX), /*  5:wMaxPacketSize[H] */
+    0x01,                           /* 6:bInterval (1 microframe -> 0.125 ms) */
+#endif
+};
+
+/*************************************
+ *    String Descriptor              *
+ *************************************/
+/* UNICODE 0x0409 English (United States) */
+uint8_t g_uvc_string_descriptor0[STRING_DESCRIPTOR0_LEN + ( STRING_DESCRIPTOR0_LEN % 2)] =
+{
+    STRING_DESCRIPTOR0_LEN,     /*  0:bLength */
+    USB_DT_STRING,              /*  1:bDescriptorType */
+    0x09, 0x04                  /*  2:wLANGID[0] */
+};
+
+/* iManufacturer */
+uint8_t g_uvc_string_descriptor1[STRING_DESCRIPTOR1_LEN + ( STRING_DESCRIPTOR1_LEN % 2)] =
+{
+    STRING_DESCRIPTOR1_LEN,     /*  0:bLength */
+    USB_DT_STRING,              /*  1:bDescriptorType */
+    'R', 0x00,                  /*  2:wLANGID[0] */
+    'E', 0x00,
+    'N', 0x00,
+    'E', 0x00,
+    'S', 0x00,
+    'A', 0x00,
+    'S', 0x00,
+};
+
+/* iProduct */
+uint8_t g_uvc_string_descriptor2[STRING_DESCRIPTOR2_LEN + ( STRING_DESCRIPTOR2_LEN % 2)] =
+{
+    STRING_DESCRIPTOR2_LEN, /*  0:bLength */
+    USB_DT_STRING,          /*  1:bDescriptorType */
+    'V', 0x00,
+    'I', 0x00,
+    'D', 0x00,
+    'E', 0x00,
+    'O', 0x00,
+    ' ', 0x00,
+    'U', 0x00,
+    'S', 0x00,
+    'B', 0x00,
+    ' ', 0x00,
+    'D', 0x00,
+    'e', 0x00,
+    'm', 0x00,
+    'o', 0x00,
+    'n', 0x00,
+    's', 0x00,
+    't', 0x00,
+    'r', 0x00,
+    'a', 0x00,
+    't', 0x00,
+    'i', 0x00,
+    'o', 0x00,
+    'n', 0x00,
+
+};
+
+/* iInterface */
+uint8_t g_uvc_string_descriptor3[STRING_DESCRIPTOR3_LEN + ( STRING_DESCRIPTOR3_LEN % 2)] =
+{
+    STRING_DESCRIPTOR3_LEN, /*  0:bLength */
+    USB_DT_STRING,          /*  1:bDescriptorType */
+    'V', 0x00,
+    'i', 0x00,
+    'd', 0x00,
+    'e', 0x00,
+    'o', 0x00,
+    ' ', 0x00,
+    'D', 0x00,
+    'e', 0x00,
+    'v', 0x00,
+    'i', 0x00,
+    'c', 0x00,
+    'e', 0x00,
+    's', 0x00
+};
+
+/* iConfiguration */
+uint8_t g_uvc_string_descriptor4[STRING_DESCRIPTOR4_LEN + ( STRING_DESCRIPTOR4_LEN % 2)] =
+{
+    STRING_DESCRIPTOR4_LEN, /*  0:bLength */
+    USB_DT_STRING,          /*  1:bDescriptorType */
+    'F', 0x00,              /*  2:wLANGID[0] */
+    'u', 0x00,
+    'l', 0x00,
+    'l', 0x00,
+    '-', 0x00,
+    'S', 0x00,
+    'p', 0x00,
+    'e', 0x00,
+    'e', 0x00,
+    'd', 0x00
+};
+
+/* iConfiguration */
+uint8_t g_uvc_string_descriptor5[STRING_DESCRIPTOR5_LEN + ( STRING_DESCRIPTOR5_LEN % 2)] =
+{
+    STRING_DESCRIPTOR5_LEN, /*  0:bLength */
+    USB_DT_STRING,          /*  1:bDescriptorType */
+    'H', 0x00,              /*  2:wLANGID[0] */
+    'i', 0x00,
+    '-', 0x00,
+    'S', 0x00,
+    'p', 0x00,
+    'e', 0x00,
+    'e', 0x00,
+    'd', 0x00
+};
+
+/* iSerialNumber */
+uint8_t g_uvc_string_descriptor6[STRING_DESCRIPTOR6_LEN + ( STRING_DESCRIPTOR6_LEN % 2)] =
+{
+    STRING_DESCRIPTOR6_LEN, /*  0:bLength */
+    USB_DT_STRING,          /*  1:bDescriptorType */
+    '0', 0x00,              /*  2:wLANGID[0] */
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '0', 0x00,
+    '1', 0x00,
+};
+
+uint8_t *g_apl_string_table[] =
+{
+    g_uvc_string_descriptor0,
+    g_uvc_string_descriptor1,
+    g_uvc_string_descriptor2,
+    g_uvc_string_descriptor3,
+    g_uvc_string_descriptor4,
+    g_uvc_string_descriptor5,
+    g_uvc_string_descriptor6
+};
+
+const usb_descriptor_t g_usb_descriptor =
+{
+    g_apl_device,                   /* Pointer to the device descriptor */
+    g_apl_fs_configuration,         /* Pointer to the configuration descriptor for Full-speed */
+    g_apl_hs_configuration,         /* Pointer to the configuration descriptor for Hi-speed */
+    g_apl_qualifier_descriptor,     /* Pointer to the qualifier descriptor */
+    g_apl_string_table,             /* Pointer to the string descriptor table */
+    NUM_STRING_DESCRIPTOR
+};
+
+/******************************************************************************
+ Renesas Abstracted Peripheral Communications Devices Class Driver API functions
+ ******************************************************************************/
+
+/******************************************************************************
+ End  Of File
+ ******************************************************************************/

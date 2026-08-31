@@ -5,6 +5,7 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
 fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
                                          const uint32_t InData_Cmd[],
@@ -26,60 +27,47 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
 
     HW_SCE_p_func048(InData_KeyType);
 
-    WR1_PROG(REG_94H, 0x38000c00U);
-    WR1_PROG(REG_9CH, 0x00000080U);
-    WR1_PROG(REG_40H, 0x00270000U);
+    HW_SCE_p_func_sub010(0x38000c00U, 0x00270000U);
 
-    HW_SCE_p_func100(0x521cbe1eU, 0x4b51b0bfU, 0x1b225562U, 0x1e1cd854U);
+    static const uint32_t Param_p6e_func100_001[] =
+    {
+        0x521cbe1eU, 0x4b51b0bfU, 0x1b225562U, 0x1e1cd854U,
+    };
+    HW_SCE_p_func100(Param_p6e_func100_001);
     WR1_PROG(REG_40H, 0x00400000U);
 
     if (CHCK_STS(REG_40H, 22, 1))
     {
         HW_SCE_p_func049(InData_Cmd);
 
-        WR1_PROG(REG_14H, 0x000000c7U);
-        WR1_PROG(REG_9CH, 0x80010020U);
-        WAIT_STS(REG_14H, 31, 1);
+        HW_SCE_p_func_sub005(0x000000c7U, 0x80010020U);
         WR1_PROG(REG_2CH, change_endian_long(InData_SharedKeyIndex[0]));
         WR1_PROG(REG_24H, 0x00000000U);
 
-        WR1_PROG(REG_94H, 0x00000842U);
-
-        WR1_PROG(REG_94H, 0x3020a880U);
-        WR1_PROG(REG_94H, 0x00000020U);
-        WR1_PROG(REG_94H, 0x00070020U);
-        WR1_PROG(REG_94H, 0x0000b440U);
-        WR1_PROG(REG_94H, 0xAA8003A0U);
-        WR1_PROG(REG_94H, 0x00000080U);
-        WR1_PROG(REG_94H, 0x3020a880U);
-        WR1_PROG(REG_94H, 0x00000040U);
-        WR1_PROG(REG_94H, 0x00070020U);
-        WR1_PROG(REG_94H, 0x3020a880U);
-        WR1_PROG(REG_94H, 0x00000020U);
-        WR1_PROG(REG_94H, 0x00060020U);
-        WR1_PROG(REG_94H, 0x0000b440U);
-        WR1_PROG(REG_94H, 0x00000F88U);
-        WR1_PROG(REG_94H, 0x00000080U);
-        WR1_PROG(REG_94H, 0x00000080U);
-
-        WR1_PROG(REG_94H, 0x000034a4U);
-
-        WR1_PROG(REG_94H, 0x00008c80U);
-        WR1_PROG(REG_94H, 0x0000001fU);
+        HW_SCE_p_func_sub001(0x00000842U, 0x3020a880U, 0x00000020U, 0x00070020U);
+        HW_SCE_p_func_sub001(0x0000b440U, 0xAA8003A0U, 0x00000080U, 0x3020a880U);
+        HW_SCE_p_func_sub001(0x00000040U, 0x00070020U, 0x3020a880U, 0x00000020U);
+        HW_SCE_p_func_sub001(0x00060020U, 0x0000b440U, 0x00000F88U, 0x00000080U);
+        HW_SCE_p_func_sub001(0x00000080U, 0x000034a4U, 0x00008c80U, 0x0000001fU);
 
         HW_SCE_p_func056();
 
-        WR1_PROG(REG_94H, 0x3420a820U);
-        WR1_PROG(REG_94H, 0x00000010U);
-        WR1_PROG(REG_9CH, 0x00000080U);
-        WR1_PROG(REG_40H, 0x00A70000U);
+        HW_SCE_p_func_sub006(0x3420a820U, 0x00000010U, 0x00A70000U);
 
-        HW_SCE_p_func100(0xa35eb2a9U, 0x3034a84cU, 0xc75ace06U, 0x2fa4ea32U);
+        static const uint32_t Param_p6e_func100_002[] =
+        {
+            0xa35eb2a9U, 0x3034a84cU, 0xc75ace06U, 0x2fa4ea32U,
+        };
+        HW_SCE_p_func100(Param_p6e_func100_002);
         WR1_PROG(REG_40H, 0x00400000U);
 
         if (CHCK_STS(REG_40H, 22, 1))
         {
-            HW_SCE_p_func102(0xaee89dc4U, 0x9d278b8eU, 0xf1b852edU, 0x042323f3U);
+            static const uint32_t Param_p6e_func102_001[] =
+            {
+                0xaee89dc4U, 0x9d278b8eU, 0xf1b852edU, 0x042323f3U,
+            };
+            HW_SCE_p_func102(Param_p6e_func102_001);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 
@@ -89,76 +77,72 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         {
             WR1_PROG(REG_94H, 0x00003485U);
 
-            WR1_PROG(REG_14H, 0x000001a1U);
-            WR1_PROG(REG_D0H, 0x07330c04U);
-            WAIT_STS(REG_14H, 31, 1);
-            WR1_PROG(REG_2CH, change_endian_long(0x00000000U));
+            HW_SCE_p_func_sub004(0x000001a1U, 0x07330c04U, 0x00000000U);
 
-            WR1_PROG(REG_D0H, 0x07330d04U);
-            WAIT_STS(REG_14H, 31, 1);
-            WR1_PROG(REG_2CH, change_endian_long(0x00000000U));
+            HW_SCE_p_func_sub018(0x07330d04U, 0x00000000U);
 
             WR1_PROG(REG_9CH, 0x80010000U);
-            WR1_PROG(REG_00H, 0x03410005U);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
-            WR1_PROG(REG_00H, 0x0001000dU);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
+            HW_SCE_p_func_sub003(0x03410005U);
+            HW_SCE_p_func_sub003(0x0001000dU);
 
-            WR1_PROG(REG_14H, 0x000001a1U);
-            WR1_PROG(REG_D0H, 0x07330d04U);
-            WAIT_STS(REG_14H, 31, 1);
-            WR1_PROG(REG_2CH, change_endian_long(0x00000000U));
+            HW_SCE_p_func_sub004(0x000001a1U, 0x07330d04U, 0x00000000U);
 
-            WR1_PROG(REG_D0H, 0x06330104U);
-            WAIT_STS(REG_14H, 31, 1);
-            WR1_PROG(REG_2CH, change_endian_long(0x00000000U));
+            HW_SCE_p_func_sub018(0x06330104U, 0x00000000U);
 
             WR1_PROG(REG_B0H, 0x00001404U);
-            WR1_PROG(REG_00H, 0x00c10021U);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
+            HW_SCE_p_func_sub003(0x00c10021U);
 
             OFS_ADR = InData_SharedKeyIndex[0] << 3;
 
-            WR1_PROG(REG_14H, 0x000000a7U);
-            WR1_PROG(REG_9CH, 0x800100e0U);
-            WAIT_STS(REG_14H, 31, 1);
+            HW_SCE_p_func_sub005(0x000000a7U, 0x800100e0U);
             WR1_PROG(REG_2CH, change_endian_long(0x0000006eU));
             WR1_PROG(REG_24H, 0x00000000U);
 
-            HW_SCE_p_func101(0x85c88c03U, 0x08478fbdU, 0xbad9f453U, 0x0dd56ca4U);
+            static const uint32_t Param_p6e_func101_001[] =
+            {
+                0x85c88c03U, 0x08478fbdU, 0xbad9f453U, 0x0dd56ca4U,
+            };
+            HW_SCE_p_func101(Param_p6e_func101_001);
             HW_SCE_p_func058(InData_SessionKey, OFS_ADR);
 
-            WR1_PROG(REG_14H, 0x000000a7U);
-            WR1_PROG(REG_9CH, 0x800100e0U);
-            WAIT_STS(REG_14H, 31, 1);
+            HW_SCE_p_func_sub005(0x000000a7U, 0x800100e0U);
             WR1_PROG(REG_2CH, change_endian_long(0x0000006eU));
             WR1_PROG(REG_24H, 0x00000000U);
 
-            HW_SCE_p_func101(0x005a7415U, 0x693b6206U, 0xe7ada7bdU, 0x8a53b325U);
+            static const uint32_t Param_p6e_func101_002[] =
+            {
+                0x005a7415U, 0x693b6206U, 0xe7ada7bdU, 0x8a53b325U,
+            };
+            HW_SCE_p_func101(Param_p6e_func101_002);
             HW_SCE_p_func057(InData_IV, InData_InstData, OutData_KeyIndex);
 
-            HW_SCE_p_func100(0x9a143894U, 0x60151963U, 0xc67600a2U, 0x8dfb2ea5U);
+            static const uint32_t Param_p6e_func100_003[] =
+            {
+                0x9a143894U, 0x60151963U, 0xc67600a2U, 0x8dfb2ea5U,
+            };
+            HW_SCE_p_func100(Param_p6e_func100_003);
             WR1_PROG(REG_B0H, 0x00001804U);
 
             WR1_PROG(REG_D0H, 0x080000b5U);
-            WR1_PROG(REG_00H, 0x00430011U);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
+            HW_SCE_p_func_sub003(0x00430011U);
 
             WR1_PROG(REG_D0H, 0x08000075U);
-            WR1_PROG(REG_00H, 0x00430011U);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
+            HW_SCE_p_func_sub003(0x00430011U);
 
-            HW_SCE_p_func100(0x60f57f73U, 0xe4c4d05fU, 0x7c853177U, 0x4f60d1a7U);
+            static const uint32_t Param_p6e_func100_004[] =
+            {
+                0x60f57f73U, 0xe4c4d05fU, 0x7c853177U, 0x4f60d1a7U,
+            };
+            HW_SCE_p_func100(Param_p6e_func100_004);
             WR1_PROG(REG_40H, 0x00400000U);
 
             if (CHCK_STS(REG_40H, 22, 1))
             {
-                HW_SCE_p_func102(0x3e0635ffU, 0xe12e67a4U, 0x6d87290cU, 0xca7def55U);
+                static const uint32_t Param_p6e_func102_002[] =
+                {
+                    0x3e0635ffU, 0xe12e67a4U, 0x6d87290cU, 0xca7def55U,
+                };
+                HW_SCE_p_func102(Param_p6e_func102_002);
                 WR1_PROG(REG_6CH, 0x00000040U);
                 WAIT_STS(REG_20H, 12, 0);
 
@@ -166,13 +150,19 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
             }
             else
             {
-                HW_SCE_p_func100(0x7a4a8799U, 0x4667aa10U, 0x440e7b0cU, 0x4c64dcf9U);
-                WR1_PROG(REG_9CH, 0x81010000U);
-                WR1_PROG(REG_08H, 0x00005006U);
-                WAIT_STS(REG_08H, 30, 1);
+                static const uint32_t Param_p6e_func100_005[] =
+                {
+                    0x7a4a8799U, 0x4667aa10U, 0x440e7b0cU, 0x4c64dcf9U,
+                };
+                HW_SCE_p_func100(Param_p6e_func100_005);
+                HW_SCE_p_func_sub009(0x81010000U, 0x00005006U);
                 RD1_ADDR(REG_2CH, &OutData_KeyIndex[0]);
 
-                HW_SCE_p_func102(0x09c7e53aU, 0x93925457U, 0xe8361c39U, 0xf9c56138U);
+                static const uint32_t Param_p6e_func102_003[] =
+                {
+                    0x09c7e53aU, 0x93925457U, 0xe8361c39U, 0xf9c56138U,
+                };
+                HW_SCE_p_func102(Param_p6e_func102_003);
                 WR1_PROG(REG_6CH, 0x00000040U);
                 WAIT_STS(REG_20H, 12, 0);
 
@@ -184,38 +174,28 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
     {
         HW_SCE_p_func049(InData_Cmd);
 
-        WR1_PROG(REG_94H, 0x00000842U);
-
-        WR1_PROG(REG_94H, 0x3020a880U);
-        WR1_PROG(REG_94H, 0x00000020U);
-        WR1_PROG(REG_94H, 0x00070020U);
-        WR1_PROG(REG_94H, 0x0000b440U);
-        WR1_PROG(REG_94H, 0xAA8003A0U);
-        WR1_PROG(REG_94H, 0x00000080U);
-        WR1_PROG(REG_94H, 0x3020a880U);
-        WR1_PROG(REG_94H, 0x00000040U);
-        WR1_PROG(REG_94H, 0x00070020U);
-        WR1_PROG(REG_94H, 0x3020a880U);
-        WR1_PROG(REG_94H, 0x00000020U);
-        WR1_PROG(REG_94H, 0x00060020U);
-        WR1_PROG(REG_94H, 0x0000b440U);
-        WR1_PROG(REG_94H, 0x00000F88U);
-        WR1_PROG(REG_94H, 0x00000080U);
-        WR1_PROG(REG_94H, 0x00000080U);
-
-        WR1_PROG(REG_94H, 0x000034a4U);
-
-        WR1_PROG(REG_94H, 0x00008c80U);
-        WR1_PROG(REG_94H, 0x0000001fU);
+        HW_SCE_p_func_sub001(0x00000842U, 0x3020a880U, 0x00000020U, 0x00070020U);
+        HW_SCE_p_func_sub001(0x0000b440U, 0xAA8003A0U, 0x00000080U, 0x3020a880U);
+        HW_SCE_p_func_sub001(0x00000040U, 0x00070020U, 0x3020a880U, 0x00000020U);
+        HW_SCE_p_func_sub001(0x00060020U, 0x0000b440U, 0x00000F88U, 0x00000080U);
+        HW_SCE_p_func_sub001(0x00000080U, 0x000034a4U, 0x00008c80U, 0x0000001fU);
 
         HW_SCE_p_func056();
 
-        HW_SCE_p_func100(0x27fb9c44U, 0xdcfa7a0bU, 0x08e18aedU, 0x990b92c4U);
+        static const uint32_t Param_p6e_func100_006[] =
+        {
+            0x27fb9c44U, 0xdcfa7a0bU, 0x08e18aedU, 0x990b92c4U,
+        };
+        HW_SCE_p_func100(Param_p6e_func100_006);
         WR1_PROG(REG_40H, 0x00400000U);
 
         if (CHCK_STS(REG_40H, 22, 1))
         {
-            HW_SCE_p_func102(0xbb29be65U, 0x8c3513f9U, 0xc06b58f0U, 0x9fce056bU);
+            static const uint32_t Param_p6e_func102_004[] =
+            {
+                0xbb29be65U, 0x8c3513f9U, 0xc06b58f0U, 0x9fce056bU,
+            };
+            HW_SCE_p_func102(Param_p6e_func102_004);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 
@@ -225,22 +205,30 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         {
             WR1_PROG(REG_94H, 0x00003485U);
 
-            WR1_PROG(REG_14H, 0x000000a7U);
-            WR1_PROG(REG_9CH, 0x800100e0U);
-            WAIT_STS(REG_14H, 31, 1);
+            HW_SCE_p_func_sub005(0x000000a7U, 0x800100e0U);
             WR1_PROG(REG_2CH, change_endian_long(0x0000006eU));
             WR1_PROG(REG_24H, 0x00000000U);
 
-            HW_SCE_p_func101(0xc7bcb6daU, 0x09fea00eU, 0x45250f82U, 0x25e95514U);
+            static const uint32_t Param_p6e_func101_003[] =
+            {
+                0xc7bcb6daU, 0x09fea00eU, 0x45250f82U, 0x25e95514U,
+            };
+            HW_SCE_p_func101(Param_p6e_func101_003);
             HW_SCE_p_func093(InData_InstData, OutData_KeyIndex);
 
-            HW_SCE_p_func100(0xef970e1aU, 0x37ca3491U, 0x45df93c0U, 0x24b4d44eU);
-            WR1_PROG(REG_9CH, 0x81010000U);
-            WR1_PROG(REG_08H, 0x00005006U);
-            WAIT_STS(REG_08H, 30, 1);
+            static const uint32_t Param_p6e_func100_007[] =
+            {
+                0xef970e1aU, 0x37ca3491U, 0x45df93c0U, 0x24b4d44eU,
+            };
+            HW_SCE_p_func100(Param_p6e_func100_007);
+            HW_SCE_p_func_sub009(0x81010000U, 0x00005006U);
             RD1_ADDR(REG_2CH, &OutData_KeyIndex[0]);
 
-            HW_SCE_p_func102(0x9735052cU, 0xd4093a17U, 0xbfeb3e8dU, 0xd7ad95b1U);
+            static const uint32_t Param_p6e_func102_005[] =
+            {
+                0x9735052cU, 0xd4093a17U, 0xbfeb3e8dU, 0xd7ad95b1U,
+            };
+            HW_SCE_p_func102(Param_p6e_func102_005);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 

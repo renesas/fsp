@@ -340,7 +340,7 @@ extern "C" {
  #define USB_MAXPIPE_ISO                    (2U)
 
 /*Max position pipe for USB class */
- #define USB_MAX_PIPE_POS_PERI              (18U)
+ #define USB_MAX_PIPE_POS_PERI              (20U)
  #define USB_MAX_PIPE_POS_HOST              (72U)
 
 /* SPEED mode */
@@ -741,35 +741,66 @@ extern "C" {
  ******************************************************************************/
 
 /* ControlPipe Max Packet size */
- #define USB_DEFPACKET                          (0x0040U) /* Default DCP Max packet size */
+ #define USB_DEFPACKET            (0x0040U) /* Default DCP Max packet size */
 
 /* Device state define */
- #define USB_NONDEVICE                          (0U)
- #define USB_NOTTPL                             (1U)
- #define USB_DEVICEENUMERATION                  (3U)
- #define USB_COMPLETEPIPESET                    (10U)
+ #define USB_NONDEVICE            (0U)
+ #define USB_NOTTPL               (1U)
+ #define USB_DEVICEENUMERATION    (3U)
+ #define USB_COMPLETEPIPESET      (10U)
 
 /* Control Transfer Stage */
- #define USB_IDLEST                             (0U)  /* Idle */
- #define USB_SETUPNDC                           (1U)  /* Setup Stage No Data Control */
- #define USB_SETUPWR                            (2U)  /* Setup Stage Control Write */
- #define USB_SETUPRD                            (3U)  /* Setup Stage Control Read */
- #define USB_DATAWR                             (4U)  /* Data Stage Control Write */
- #define USB_DATARD                             (5U)  /* Data Stage Control Read */
- #define USB_STATUSRD                           (6U)  /* Status stage */
- #define USB_STATUSWR                           (7U)  /* Status stage */
- #define USB_SETUPWRCNT                         (17U) /* Setup Stage Control Write */
- #define USB_SETUPRDCNT                         (18U) /* Setup Stage Control Read */
- #define USB_DATAWRCNT                          (19U) /* Data Stage Control Write */
- #define USB_DATARDCNT                          (20U) /* Data Stage Control Read */
+ #define USB_IDLEST               (0U)  /* Idle */
+ #define USB_SETUPNDC             (1U)  /* Setup Stage No Data Control */
+ #define USB_SETUPWR              (2U)  /* Setup Stage Control Write */
+ #define USB_SETUPRD              (3U)  /* Setup Stage Control Read */
+ #define USB_DATAWR               (4U)  /* Data Stage Control Write */
+ #define USB_DATARD               (5U)  /* Data Stage Control Read */
+ #define USB_STATUSRD             (6U)  /* Status stage */
+ #define USB_STATUSWR             (7U)  /* Status stage */
+ #define USB_SETUPWRCNT           (17U) /* Setup Stage Control Write */
+ #define USB_SETUPRDCNT           (18U) /* Setup Stage Control Read */
+ #define USB_DATAWRCNT            (19U) /* Data Stage Control Write */
+ #define USB_DATARDCNT            (20U) /* Data Stage Control Read */
 
 /******************************************************************************
  * HUB define
  ******************************************************************************/
 
- #if ((USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) || (USB_CFG_HHID_MULTI == USB_CFG_ENABLE) || \
+ #if BSP_CFG_RTOS != 1
+  #if ((USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) || (USB_CFG_HHID_MULTI == USB_CFG_ENABLE) || \
     (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE))
-  #define USB_CFG_HUB                           (USB_CFG_ENABLE)
+   #define USB_CFG_HUB                (USB_CFG_ENABLE)
+  #endif
+ #else
+
+  #define USB_HMSC_ADDITIONAL_SLOT    (0UL)
+
+  #if (USB_CFG_MULTIPORT == USB_CFG_DISABLE)
+
+/* Multiple Host class Hub combination*/
+   #if defined(USB_CFG_HCDC_USE) && defined(USB_CFG_HMSC_USE)
+    #define USB_CFG_MULTI_HOST_HUB              (USB_CFG_ENABLE)
+
+/* Using HMSC with HCDC class will require an additional slot for HMSC usage. */
+    #undef USB_HMSC_ADDITIONAL_SLOT
+    #define USB_HMSC_ADDITIONAL_SLOT            (1UL)
+   #endif
+  #else
+
+/* When Multiple port feature is enabled, multi host class hub will not be supported. */
+   #define USB_CFG_MULTI_HOST_HUB               (USB_CFG_DISABLE)
+  #endif
+
+  #if ((USB_CFG_MULTI_HOST_HUB == USB_CFG_ENABLE) || (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE))
+
+   #define USB_PIPESEL_GUARD_REQUIRED           USB_CFG_ENABLE
+  #else
+   #define USB_PIPESEL_GUARD_REQUIRED           USB_CFG_DISABLE
+  #endif                               /* ((USB_CFG_MULTI_HOST_HUB == USB_CFG_ENABLE) || \
+                                        * (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE)) */
+  #define USB_MAX_CONNECT_HMSC_DEVICE_NUM       (3UL + USB_HMSC_ADDITIONAL_SLOT)
+
  #endif
 
 /* HUB spec */

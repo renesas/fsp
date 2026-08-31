@@ -322,7 +322,8 @@ void     hw_usb_pset_ccpl(uint8_t usb_ip);
 /************/
 /* PIPESEL  */
 /************/
-void hw_usb_write_pipesel(usb_utr_t * ptr, uint16_t data);
+void     hw_usb_write_pipesel(usb_utr_t * ptr, uint16_t data);
+uint16_t hw_usb_read_pipesel(usb_utr_t * ptr);
 
 /************/
 /* PIPECFG  */

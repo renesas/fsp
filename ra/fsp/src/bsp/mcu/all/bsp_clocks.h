@@ -416,7 +416,13 @@ FSP_HEADER
 #define BSP_CLOCKS_PLL_DIV_1              (0)
 #define BSP_CLOCKS_PLL_DIV_2              (1)
 #define BSP_CLOCKS_PLL_DIV_3              (2)
-#define BSP_CLOCKS_PLL_DIV_4              (3)
+
+#if (2U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+ #define BSP_CLOCKS_PLL_DIV_4             (2)
+#else
+ #define BSP_CLOCKS_PLL_DIV_4             (3)
+#endif
+
 #define BSP_CLOCKS_PLL_DIV_5              (4)
 #define BSP_CLOCKS_PLL_DIV_6              (5)
 #define BSP_CLOCKS_PLL_DIV_8              (7)

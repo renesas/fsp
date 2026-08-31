@@ -268,21 +268,25 @@ void rm_ethosu_isr (void)
  * Flush/clean the data cache by address and size. Passing NULL as p argument
  * expects the whole cache to be flushed.
  */
-void ethosu_flush_dcache (uint32_t * p, size_t bytes)
+void ethosu_flush_dcache (const uint64_t * base_addr, const size_t * base_addr_size, int num_base_addr)
 {
 #if BSP_CFG_DCACHE_ENABLED
-    if (!p)
+    if (!base_addr)
     {
         SCB_CleanDCache();
     }
     else
     {
-        SCB_CleanDCache_by_Addr(p, (int32_t) bytes);
+        for (int i = 0; i < num_base_addr; i++)
+        {
+            SCB_CleanDCache_by_Addr((uint32_t *) (uintptr_t) base_addr[i], (int32_t) base_addr_size[i]);
+        }
     }
 
 #else
-    FSP_PARAMETER_NOT_USED(p);
-    FSP_PARAMETER_NOT_USED(bytes);
+    FSP_PARAMETER_NOT_USED(base_addr);
+    FSP_PARAMETER_NOT_USED(base_addr_size);
+    FSP_PARAMETER_NOT_USED(num_base_addr);
 #endif
 }
 
@@ -290,20 +294,24 @@ void ethosu_flush_dcache (uint32_t * p, size_t bytes)
  * Invalidate the data cache by address and size. Passing NULL as p argument
  * expects the whole cache to be invalidated.
  */
-void ethosu_invalidate_dcache (uint32_t * p, size_t bytes)
+void ethosu_invalidate_dcache (const uint64_t * base_addr, const size_t * base_addr_size, int num_base_addr)
 {
 #if BSP_CFG_DCACHE_ENABLED
-    if (!p)
+    if (!base_addr)
     {
         SCB_CleanInvalidateDCache();
     }
     else
     {
-        SCB_CleanInvalidateDCache_by_Addr(p, (int32_t) bytes);
+        for (int i = 0; i < num_base_addr; i++)
+        {
+            SCB_CleanInvalidateDCache_by_Addr((uint32_t *) (uintptr_t) base_addr[i], (int32_t) base_addr_size[i]);
+        }
     }
 
 #else
-    FSP_PARAMETER_NOT_USED(p);
-    FSP_PARAMETER_NOT_USED(bytes);
+    FSP_PARAMETER_NOT_USED(base_addr);
+    FSP_PARAMETER_NOT_USED(base_addr_size);
+    FSP_PARAMETER_NOT_USED(num_base_addr);
 #endif
 }

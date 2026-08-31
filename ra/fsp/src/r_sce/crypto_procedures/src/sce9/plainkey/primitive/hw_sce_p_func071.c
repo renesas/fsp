@@ -4,332 +4,75 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/***********************************************************************************************************************
- * History : DD.MM.YYYY Version Description
- *         : 05.10.2020 1.00        First Release.
- *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Includes   <System Includes> , "Project Includes"
-***********************************************************************************************************************/
-#include "r_sce_if.h"
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
-/***********************************************************************************************************************
-Macro definitions
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Typedef definitions
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Imported global variables and functions (from other files)
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Exported global variables (to be accessed by other files)
-***********************************************************************************************************************/
-
-/***********************************************************************************************************************
-Private global variables and functions
-***********************************************************************************************************************/
-
-void HW_SCE_p_func071_r2(uint32_t ARG1)
+void HW_SCE_p_func071_r2 (uint32_t ARG1)
 {
-    uint32_t iLoop    = 0U;
-    uint32_t iLoop1   = 0U;
-    uint32_t iLoop2   = 0U;
-    int32_t  jLoop    = 0U;
-    uint32_t kLoop    = 0U;
-    uint32_t oLoop    = 0U;
-    uint32_t oLoop1   = 0U;
-    uint32_t oLoop2   = 0U;
-    uint32_t dummy    = 0U;
-    uint32_t KEY_ADR  = 0U;
-    uint32_t OFS_ADR  = 0U;
-    uint32_t MAX_CNT2 = 0U;
-    (void)iLoop;
-    (void)iLoop1;
-    (void)iLoop2;
-    (void)jLoop;
-    (void)kLoop;
-    (void)oLoop;
-    (void)oLoop1;
-    (void)oLoop2;
-    (void)dummy;
-    (void)KEY_ADR;
-    (void)OFS_ADR;
-    (void)MAX_CNT2;
-    SCE->REG_ECH = 0x30003340U;
-    SCE->REG_ECH = 0x00050020U;
-    SCE->REG_ECH = 0x0000b7c0U;
-    SCE->REG_ECH = 0x017d423aU;
-    SCE->REG_ECH = 0x00030040U;
-    SCE->REG_ECH = 0x0000b7c0U;
-    SCE->REG_ECH = 0x0163c737U;
-    SCE->REG_ECH = 0x00070040U;
-    SCE->REG_ECH = 0x30003380U;
-    SCE->REG_ECH = 0x00070020U;
-    SCE->REG_ECH = 0x0000b7c0U;
-    SCE->REG_ECH = 0x017c67d8U;
-    SCE->REG_ECH = 0x00030040U;
-    SCE->REG_ECH = 0x0000b7c0U;
-    SCE->REG_ECH = 0x0126ddb5U;
-    SCE->REG_ECH = 0x00050040U;
-    SCE->REG_ECH = 0x0000b7c0U;
-    SCE->REG_ECH = 0x01bcfa36U;
-    SCE->REG_ECH = 0x00000080U;
-    SCE->REG_ECH = 0x00000080U;
-    SCE->REG_28H = 0x00870001U;
-    SCE->REG_C4H = 0x00443a0cU;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_C4H = 0x000c3e1cU;
-    SCE->REG_E0H = 0x810103c0U;
-    SCE->REG_00H = 0x00002807U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_104H = 0x00003f62U;
-    SCE->REG_D0H = 0x00000f00U;
-    SCE->REG_C4H = 0x02f087bfU;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+0 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+0 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+0 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+0 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+4 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+4 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+4 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+4 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x0000001aU;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+8 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+8 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+8 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+8 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+12 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+12 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+12 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+12 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x0000001bU;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+16 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+16 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+16 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+16 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+20 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+20 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+20 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+20 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x00000098U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+24 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+24 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+24 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+24 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+28 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+28 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+28 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+28 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x00000099U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+32 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+32 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+32 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+32 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+36 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+36 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+36 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+36 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x00000094U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+40 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+40 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+40 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+40 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+44 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+44 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+44 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+44 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x00000095U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+48 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+48 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+48 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+48 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+52 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+52 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+52 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+52 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x0000009cU;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+56 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+56 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+56 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+56 + 3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+60 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+60 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+60 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+60 + 3];
-    SCE->REG_00H = 0x00003223U;
-    SCE->REG_2CH = 0x0000009dU;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_C4H = 0x000007bdU;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_FLASH2[ARG1+64 + 0];
-    SCE->REG_100H = S_FLASH2[ARG1+64 + 1];
-    SCE->REG_100H = S_FLASH2[ARG1+64 + 2];
-    SCE->REG_100H = S_FLASH2[ARG1+64 + 3];
-    SCE->REG_C4H = 0x00800c45U;
-    SCE->REG_00H = 0x00002213U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-}
+    HW_SCE_p_func_sub022(0x30003340U, 0x00050020U, 0x0000b7c0U, 0x017d423aU);
+    HW_SCE_p_func_sub022(0x00030040U, 0x0000b7c0U, 0x0163c737U, 0x00070040U);
+    HW_SCE_p_func_sub022(0x30003380U, 0x00070020U, 0x0000b7c0U, 0x017c67d8U);
+    HW_SCE_p_func_sub022(0x00030040U, 0x0000b7c0U, 0x0126ddb5U, 0x00050040U);
+    HW_SCE_p_func_sub022(0x0000b7c0U, 0x01bcfa36U, 0x00000080U, 0x00000080U);
 
-/***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_func071_r2.prc
-***********************************************************************************************************************/
+    WR1_PROG(REG_28H, 0x00870001U);
+    WR1_PROG(REG_C4H, 0x00443a0cU);
+    WAIT_STS(REG_104H, 31, 1);
+    WR1_PROG(REG_100H, change_endian_long(0x00000000U));
+    WR1_PROG(REG_C4H, 0x000c3e1cU);
+    WR1_PROG(REG_E0H, 0x810103c0U);
+    WR1_PROG(REG_00H, 0x00002807U);
+    HW_SCE_p_func_sub003(0x00003f62U, 0x00000f00U, 0x02f087bfU);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 0]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 4]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x0000001aU);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 8]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 12]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x0000001bU);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 16]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 20]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x00000098U);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 24]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 28]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x00000099U);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 32]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 36]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x00000094U);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 40]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 44]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x00000095U);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 48]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 52]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x0000009cU);
+
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 56]);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 60]);
+    HW_SCE_p_func_sub011(0x00003223U, 0x0000009dU);
+
+    WR1_PROG(REG_C4H, 0x000007bdU);
+    WAIT_STS(REG_104H, 31, 1);
+    WR4_ADDR(REG_100H, &S_FLASH2[ARG1 + 64]);
+
+    HW_SCE_p_func_sub013(0x00800c45U, 0x00002213U);
+}

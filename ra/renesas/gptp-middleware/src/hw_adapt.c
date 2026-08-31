@@ -325,6 +325,18 @@ void send_frame(uint16_t port_number, uint16_t frame_length, uint8_t *p_frame_bu
             }
             else
             {
+                if(message_type == MESSAGE_ID_SYNC)
+                {
+                    // timestamp correction for second gptp driver function processing time
+                    if(GPTP_TIME_VALUE_GET_PROCESSING_TIME > s_working_clock_tx_timestamp[port_number].nanoseconds)
+                    {
+                        s_working_clock_tx_timestamp[port_number].seconds_lsb = s_working_clock_tx_timestamp[port_number].seconds_lsb - 1;
+                        s_working_clock_tx_timestamp[port_number].nanoseconds = s_working_clock_tx_timestamp[port_number].nanoseconds + ONE_SECOND;
+                    }
+                    s_working_clock_tx_timestamp[port_number].nanoseconds = s_working_clock_tx_timestamp[port_number].nanoseconds - \
+                            GPTP_TIME_VALUE_GET_PROCESSING_TIME;
+                }
+
                 s_transmit_timestamp.seconds_msb = s_working_clock_tx_timestamp[port_number].seconds_msb;
                 s_transmit_timestamp.seconds_lsb = s_working_clock_tx_timestamp[port_number].seconds_lsb;
                 s_transmit_timestamp.nanoseconds = s_working_clock_tx_timestamp[port_number].nanoseconds + \

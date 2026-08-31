@@ -20,14 +20,13 @@
 /* "GPT3" in ASCII, used to determine if channel is open. */
 #define GPT_THREE_PHASE_OPEN                       (0x47505433ULL)
 
-#define GPT_THREE_PHASE_PRV_GTWP_RESET_VALUE       (0xA500U)
-#define GPT_THREE_PHASE_PRV_GTWP_WRITE_PROTECT     (0xA501U)
+#if GPT_CFG_WRITE_PROTECT_ENABLE
+ #define GPT_THREE_PHASE_PRV_GTWP_RESET_VALUE      (0xA500U)
+ #define GPT_THREE_PHASE_PRV_GTWP_WRITE_PROTECT    (0xA501U)
+#endif
 
 #define GPT_THREE_PHASE_PRV_GTBER_SINGLE_BUFFER    (0x50000U)
 #define GPT_THREE_PHASE_PRV_GTBER_DOUBLE_BUFFER    (0xA0000U)
-
-#define GPT_THREE_PHASE_PRV_GTWP_RESET_VALUE       (0xA500U)
-#define GPT_THREE_PHASE_PRV_GTWP_WRITE_PROTECT     (0xA501U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -91,6 +90,7 @@ const three_phase_api_t g_gpt_three_phase_on_gpt_three_phase =
  * @retval FSP_SUCCESS                    Initialization was successful.
  * @retval FSP_ERR_ASSERTION              A required input pointer is NULL.
  * @retval FSP_ERR_ALREADY_OPEN           Module is already open.
+ * @retval FSP_ERR_INVALID_ARGUMENT       Dead time is 0 or exceeds the valid duty range in Complementary PWM modes.
  **********************************************************************************************************************/
 fsp_err_t R_GPT_THREE_PHASE_Open (three_phase_ctrl_t * const p_ctrl, three_phase_cfg_t const * const p_cfg)
 {
@@ -99,6 +99,29 @@ fsp_err_t R_GPT_THREE_PHASE_Open (three_phase_ctrl_t * const p_ctrl, three_phase
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(GPT_THREE_PHASE_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
+
+ #if BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED
+    gpt_extended_cfg_t const * p_ext_u =
+        (gpt_extended_cfg_t const *) p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->p_extend;
+
+    FSP_ASSERT(NULL != p_ext_u);
+    FSP_ASSERT(NULL != p_ext_u->p_pwm_cfg);
+
+    if (p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->mode >= TIMER_MODE_COMPLEMENTARY_PWM_MODE1)
+    {
+        for (three_phase_channel_t ch = THREE_PHASE_CHANNEL_U; ch <= THREE_PHASE_CHANNEL_W; ch++)
+        {
+            /* Dead time must be greater than 0 and less than both the duty cycle and (period - duty cycle) in Complementary PWM modes. */
+            FSP_ERROR_RETURN((0U < p_ext_u->p_pwm_cfg->dead_time_count_up) &&
+                             (p_ext_u->p_pwm_cfg->dead_time_count_up <
+                              p_cfg->p_timer_instance[ch]->p_cfg->duty_cycle_counts) &&
+                             (p_ext_u->p_pwm_cfg->dead_time_count_up <
+                              (p_cfg->p_timer_instance[ch]->p_cfg->period_counts -
+                               p_cfg->p_timer_instance[ch]->p_cfg->duty_cycle_counts)),
+                             FSP_ERR_INVALID_ARGUMENT);
+        }
+    }
+ #endif
 #endif
 
     fsp_err_t err;
@@ -132,10 +155,49 @@ fsp_err_t R_GPT_THREE_PHASE_Open (three_phase_ctrl_t * const p_ctrl, three_phase
         p_instance_ctrl->p_reg[ch]->GTWP = GPT_THREE_PHASE_PRV_GTWP_RESET_VALUE;
 #endif
 
-        /* Set the buffer mode */
-        if (THREE_PHASE_BUFFER_MODE_DOUBLE == p_cfg->buffer_mode)
+#if BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED
+
+        /* Configure complementary PWM buffer chain for the GPT three phase channels. */
+        if (p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->mode >= TIMER_MODE_COMPLEMENTARY_PWM_MODE1)
         {
-            p_instance_ctrl->p_reg[ch]->GTBER |= GPT_THREE_PHASE_PRV_GTBER_DOUBLE_BUFFER;
+            timer_mode_t mode = p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->mode;
+
+            if (ch == THREE_PHASE_CHANNEL_U)
+            {
+                p_instance_ctrl->p_reg[ch]->GTPDBR = p_cfg->p_timer_instance[ch]->p_cfg->period_counts;
+            }
+
+            uint32_t duty_initial = p_cfg->p_timer_instance[ch]->p_cfg->duty_cycle_counts;
+
+            if ((THREE_PHASE_BUFFER_MODE_DOUBLE == p_cfg->buffer_mode) && (mode >= TIMER_MODE_COMPLEMENTARY_PWM_MODE3))
+            {
+                /* Double buffer (Modes 3-4): GTCCRF -> Temp B -> GTCCRE -> GTCCRA */
+                p_instance_ctrl->p_reg[ch]->GTBER2_b.CP3DB = 1U;
+
+                /* Initialize active register and both buffer stages with initial duty */
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRD] = duty_initial;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRC] = duty_initial;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRF] = duty_initial;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRE] = duty_initial;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRA] = duty_initial;
+            }
+            else
+            {
+                /* Single buffer (Modes 1-4): GTCCRD -> Temp A -> GTCCRC ->GTCCRA */
+                p_instance_ctrl->p_reg[ch]->GTBER2_b.CP3DB = 0U;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRD] = duty_initial;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRC] = duty_initial;
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRA] = duty_initial;
+            }
+        }
+        else
+#endif
+        {
+            /* Set the buffer mode */
+            if (THREE_PHASE_BUFFER_MODE_DOUBLE == p_cfg->buffer_mode)
+            {
+                p_instance_ctrl->p_reg[ch]->GTBER |= GPT_THREE_PHASE_PRV_GTBER_DOUBLE_BUFFER;
+            }
         }
 
 #if GPT_CFG_WRITE_PROTECT_ENABLE
@@ -244,7 +306,7 @@ fsp_err_t R_GPT_THREE_PHASE_Reset (three_phase_ctrl_t * const p_ctrl)
  * @retval FSP_SUCCESS                 Duty cycle updated successfully.
  * @retval FSP_ERR_ASSERTION           p_ctrl was NULL
  * @retval FSP_ERR_NOT_OPEN            The instance is not opened.
- * @retval FSP_ERR_INVALID_ARGUMENT    One or more duty cycle count values was outside the range 0..(period - 1).
+ * @retval FSP_ERR_INVALID_ARGUMENT    One or more duty cycle count values was outside the range 0..(period - 1), less than or equal to dead time, or greater than or equal to period minus dead time.
  **********************************************************************************************************************/
 fsp_err_t R_GPT_THREE_PHASE_DutyCycleSet (three_phase_ctrl_t * const       p_ctrl,
                                           three_phase_duty_cycle_t * const p_duty_cycle)
@@ -255,17 +317,42 @@ fsp_err_t R_GPT_THREE_PHASE_DutyCycleSet (three_phase_ctrl_t * const       p_ctr
     FSP_ASSERT(NULL != p_duty_cycle);
     FSP_ERROR_RETURN(GPT_THREE_PHASE_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
+ #if BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED
+    uint32_t dead_time                 = 0U;
+    gpt_extended_cfg_t const * p_ext_u =
+        (gpt_extended_cfg_t const *) p_instance_ctrl->p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->p_extend;
+
+    if (p_instance_ctrl->p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->mode >=
+        TIMER_MODE_COMPLEMENTARY_PWM_MODE1)
+    {
+        dead_time = p_ext_u->p_pwm_cfg->dead_time_count_up;
+    }
+ #endif
+
     /* Check that duty cycle values are in-range (less than period) */
     for (three_phase_channel_t ch = THREE_PHASE_CHANNEL_U; ch <= THREE_PHASE_CHANNEL_W; ch++)
     {
         uint32_t gtpr = p_instance_ctrl->p_reg[THREE_PHASE_CHANNEL_U]->GTPR;
         FSP_ERROR_RETURN((p_duty_cycle->duty[ch] < gtpr) && (p_duty_cycle->duty[ch] > 0), FSP_ERR_INVALID_ARGUMENT);
 
+ #if BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED
+
+        /* Accounting for dead time in Complementary PWM modes. */
+        FSP_ERROR_RETURN((p_duty_cycle->duty[ch] > dead_time) && (p_duty_cycle->duty[ch] < (gtpr - dead_time)),
+                         FSP_ERR_INVALID_ARGUMENT);
+ #endif
+
         /* In double-buffer mode also check double buffer */
         if (THREE_PHASE_BUFFER_MODE_DOUBLE == p_instance_ctrl->buffer_mode)
         {
             FSP_ERROR_RETURN((p_duty_cycle->duty_buffer[ch] < gtpr) && (p_duty_cycle->duty_buffer[ch] > 0),
                              FSP_ERR_INVALID_ARGUMENT);
+
+ #if BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED
+            FSP_ERROR_RETURN((p_duty_cycle->duty_buffer[ch] > dead_time) &&
+                             (p_duty_cycle->duty_buffer[ch] < (gtpr - dead_time)),
+                             FSP_ERR_INVALID_ARGUMENT);
+ #endif
         }
     }
 #endif
@@ -275,15 +362,40 @@ fsp_err_t R_GPT_THREE_PHASE_DutyCycleSet (three_phase_ctrl_t * const       p_ctr
     /* Set all duty cycle registers */
     for (three_phase_channel_t ch = THREE_PHASE_CHANNEL_U; ch <= THREE_PHASE_CHANNEL_W; ch++)
     {
-        p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRC] = p_duty_cycle->duty[ch];
-        p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRE] = p_duty_cycle->duty[ch];
+#if BSP_FEATURE_GPT_COMPLEMENTARY_SUPPORTED
+        timer_mode_t mode = p_instance_ctrl->p_cfg->p_timer_instance[THREE_PHASE_CHANNEL_U]->p_cfg->mode;
 
-        /* Set double-buffer registers (if applicable) */
-        if ((THREE_PHASE_BUFFER_MODE_DOUBLE == p_instance_ctrl->buffer_mode) ||
-            (TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 == p_instance_ctrl->p_cfg->p_timer_instance[0]->p_cfg->mode))
+        if (mode >= TIMER_MODE_COMPLEMENTARY_PWM_MODE1)
         {
-            p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRD] = p_duty_cycle->duty_buffer[ch];
-            p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRF] = p_duty_cycle->duty_buffer[ch];
+            /*
+             * Complementary PWM modes using operation buffer.
+             * Single buffer: duty[ch] -> GTCCRD -> TempA -> GTCCRC -> GTCCRA
+             * Double: two independent paths —
+             *     duty[ch] -> GTCCRD -> TempA -> GTCCRC -> GTCCRA  (fires at Crest)
+             *     duty_buffer[ch] -> GTCCRF -> TempB -> GTCCRE -> GTCCRA  (fires at Trough)
+             */
+            if ((THREE_PHASE_BUFFER_MODE_DOUBLE == p_instance_ctrl->buffer_mode) &&
+                (mode >= TIMER_MODE_COMPLEMENTARY_PWM_MODE3))
+            {
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRF] = p_duty_cycle->duty_buffer[ch];
+            }
+
+            p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRD] = p_duty_cycle->duty[ch];
+        }
+        else
+#endif
+        {
+            p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRC] = p_duty_cycle->duty[ch];
+            p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRE] = p_duty_cycle->duty[ch];
+
+            /* Set double-buffer registers (if applicable) */
+            if ((THREE_PHASE_BUFFER_MODE_DOUBLE == p_instance_ctrl->buffer_mode) ||
+                (TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 ==
+                 p_instance_ctrl->p_cfg->p_timer_instance[0]->p_cfg->mode))
+            {
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRD] = p_duty_cycle->duty_buffer[ch];
+                p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRF] = p_duty_cycle->duty_buffer[ch];
+            }
         }
     }
 

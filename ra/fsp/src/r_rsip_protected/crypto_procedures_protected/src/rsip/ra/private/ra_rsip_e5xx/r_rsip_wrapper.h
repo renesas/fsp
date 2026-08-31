@@ -338,9 +338,9 @@
 #define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_INIT                                  r_rsip_pefi
 #define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_RESUME                                r_rsip_pefr
 #define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_ENC_UPDATE                            r_rsip_pefe
-#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_UPDATE                                r_rsip_pefu
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_UPDATE                                r_rsip_wrapper_pefu
 #define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_SUSPEND                               r_rsip_pefs
-#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_FINAL                                 r_rsip_peff
+#define RSIP_PRV_FUNC_NAME_KDF_SHA1SHA2_FINAL                                 r_rsip_wrapper_peff
 
 #define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_INIT                             r_rsip_pe5i
 #define RSIP_PRV_FUNC_NAME_KDF_HMAC_SHA1SHA2_RESUME                           r_rsip_pe5r
@@ -389,7 +389,7 @@
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_DERIVED_KEY_IMPORT_SHA384_AES_256          r_rsip_wrapper_pe7_sha384_aes256
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_DERIVED_IV_WRAP_SHA384_AES                 r_rsip_wrapper_pe7_sha384_iv_aes
 
-#define RSIP_PRV_FUNC_NAME_KDF_SHA_ECDH_SECRET_MSG_WRAP_SHA512_SECP521R1      NULL
+#define RSIP_PRV_FUNC_NAME_KDF_SHA_ECDH_SECRET_MSG_WRAP_SHA512_SECP521R1      r_rsip_wrapper_pe3_sha512_secp521r1
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_ECDH_SECRET_MSG_WRAP_SHA512_BRAINPOOLP512R1 \
     r_rsip_wrapper_pe3_sha512_brainpoolp512r1
 #define RSIP_PRV_FUNC_NAME_KDF_SHA_DERIVED_KEY_IMPORT_SHA512_AES_128          r_rsip_wrapper_pe7_sha512_aes128
@@ -1093,6 +1093,19 @@ rsip_ret_t r_rsip_wrapper_pe7_sha512_iv_aes(const uint32_t InData_KDFInfo[],
                                             const uint32_t InData_OutDataLocation[],
                                             const uint32_t InData_SeqNum[],
                                             uint32_t       OutData_EncIV[]);
+rsip_ret_t r_rsip_wrapper_pefu(const uint32_t InData_Msg1[],
+                               const uint32_t InData_Msg1Length[],
+                               const uint32_t InData_EncMsg[],
+                               const uint32_t InData_EncMsgLength_Word[],
+                               const uint32_t InData_Msg2[],
+                               const uint32_t InData_Msg2Length[]);
+rsip_ret_t r_rsip_wrapper_peff(const uint32_t InData_Msg1[],
+                               const uint32_t InData_Msg1Length[],
+                               const uint32_t InData_EncMsg[],
+                               const uint32_t InData_EncMsgLength_Word[],
+                               const uint32_t InData_Msg2[],
+                               const uint32_t InData_Msg2Length[],
+                               uint32_t       OutData_KDFInfo[]);
 rsip_ret_t r_rsip_wrapper_p2c_ch0(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
 rsip_ret_t r_rsip_wrapper_p2d_ch0(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
 rsip_ret_t r_rsip_wrapper_p2e_ch0(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);

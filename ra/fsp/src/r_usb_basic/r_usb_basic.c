@@ -462,6 +462,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         case USB_CLASS_INTERNAL_PVND:
         case USB_CLASS_INTERNAL_PMSC:
         case USB_CLASS_INTERNAL_PAUD:
+        case USB_CLASS_INTERNAL_PUVC:
         case USB_CLASS_INTERNAL_PPRN:
         case USB_CLASS_INTERNAL_DFU:
         {
@@ -665,7 +666,9 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
   #endif                               /* !defined(USB_CFG_OTG_USE) */
 
   #if defined(USB_CFG_HCDC_USE)
+   #if (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE)
             if (USB_CLASS_HCDC == p_cfg->type)
+   #endif                              /* (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) */
             {
                 ux_host_stack_class_register(_ux_system_host_class_cdc_acm_name, ux_host_class_cdc_acm_entry);
                 if (USB_SPEED_HS == p_cfg->usb_speed)
@@ -693,7 +696,9 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             }
   #endif                               /* defined(USB_CFG_HCDC_USE) */
   #if defined(USB_CFG_HMSC_USE)
+   #if (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE)
             if (USB_CLASS_HMSC == p_cfg->type)
+   #endif                              /* (USB_CFG_MULTI_HOST_HUB == USB_CFG_DISABLE) */
             {
                 ux_host_stack_class_register(_ux_system_host_class_storage_name, ux_host_class_storage_entry);
                 if (USB_SPEED_HS == p_cfg->usb_speed)
@@ -963,6 +968,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if defined(USB_CFG_PPRN_USE)
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PPRN);
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
+
+#if defined(USB_CFG_PUVC_USE)
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PUVC);
+#endif                                 /* defined(USB_CFG_PUVC_USE) */
 
 #if defined(USB_CFG_DFU_USE)
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_DFU);

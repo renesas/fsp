@@ -55,7 +55,9 @@
 #define RMAC_GET_TX_TIMESTAMP_WAIT_TIME       (10000)
 
 /* Timestamp sequence number mask. */
-#define RMAC_TS_SEQUENCE_NUMBER_MASK          (0x7F)
+#define RMAC_TS_CHANNEL_MASK                  (0x03)
+#define RMAC_TS_SEQUENCE_NUMBER_MASK          (0x3F)
+#define RMAC_TS_SEQUENCE_NUMBER_POS           (6U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -1191,8 +1193,6 @@ static fsp_err_t rmac_link_status_check (rmac_instance_ctrl_t * const p_instance
     ether_switch_link_status_bitmaps_t    link_status = {0};
     layer3_switch_target_port_bitmaps_t   default_ports;
     layer3_switch_target_port_bitmaps_t * p_check_ports;
-    uint16_t link_ports_num     = 0;
-    uint16_t monitored_port_num = 0;
 
     p_rmac_extended_cfg = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     p_ether_switch_ctrl = p_rmac_extended_cfg->p_ether_switch->p_ctrl;
@@ -1212,27 +1212,36 @@ static fsp_err_t rmac_link_status_check (rmac_instance_ctrl_t * const p_instance
 
     if (err == FSP_SUCCESS)
     {
-        for (uint8_t i = 0; i <= ((BSP_FEATURE_ETHER_NUM_CHANNELS - 1) / (sizeof(uint32_t) * 8)); i++)
+        if (RMAC_LINK_DETECTION_ANY_MONITORED_PORT_UP == p_rmac_extended_cfg->link_detection)
         {
-            monitored_port_num += (uint16_t) __builtin_popcount(p_check_ports->ports[i]);
-            link_ports_num     += (uint16_t) __builtin_popcount(link_status.link_status[i]);
-        }
+            /* Any monitored port must be link up */
+            err = FSP_ERR_ETHER_ERROR_LINK;
 
-        if (p_rmac_extended_cfg->link_detection == RMAC_LINK_DETECTION_ALL_MONITORED_PORTS_UP)
-        {
-            /* All ports must be link up */
-            if (link_ports_num != monitored_port_num)
+            for (uint8_t i = 0; i <= ((BSP_FEATURE_ETHER_NUM_CHANNELS - 1) / (sizeof(uint32_t) * 8)); i++)
             {
-                err = FSP_ERR_ETHER_ERROR_LINK;
+                if (0 != (p_check_ports->ports[i] & link_status.link_status[i]))
+                {
+                    err = FSP_SUCCESS;
+                    break;
+                }
+            }
+        }
+        else if ((RMAC_LINK_DETECTION_DEFAULT_PORTS_UP == p_rmac_extended_cfg->link_detection) ||
+                 (RMAC_LINK_DETECTION_ALL_MONITORED_PORTS_UP == p_rmac_extended_cfg->link_detection))
+        {
+            /* Default port / all monitored ports must be link up */
+            for (uint8_t i = 0; i <= ((BSP_FEATURE_ETHER_NUM_CHANNELS - 1) / (sizeof(uint32_t) * 8)); i++)
+            {
+                if (p_check_ports->ports[i] != (p_check_ports->ports[i] & link_status.link_status[i]))
+                {
+                    err = FSP_ERR_ETHER_ERROR_LINK;
+                    break;
+                }
             }
         }
         else
         {
-            /* Any port must be link up */
-            if (link_ports_num == 0)
-            {
-                err = FSP_ERR_ETHER_ERROR_LINK;
-            }
+            ;
         }
     }
 
@@ -1654,7 +1663,9 @@ static fsp_err_t r_rmac_set_tx_buffer (rmac_instance_ctrl_t * p_instance_ctrl,
         descriptor.info1_tx.tn  =
             (uint8_t) (p_layer3_switch_extend->gptp_timer_numbers[p_instance_ctrl->p_cfg->channel] & 0x1);
         descriptor.info1_tx.tsun =
-            (p_instance_ctrl->tx_timestamp_seq_num & RMAC_TS_SEQUENCE_NUMBER_MASK);
+            ((uint8_t) ((p_instance_ctrl->p_cfg->channel & RMAC_TS_CHANNEL_MASK) << RMAC_TS_SEQUENCE_NUMBER_POS) |
+             (uint8_t) ((p_instance_ctrl->tx_timestamp_seq_num) & RMAC_TS_SEQUENCE_NUMBER_MASK));
+
         p_instance_ctrl->tx_timestamp_seq_num = (p_instance_ctrl->tx_timestamp_seq_num + 1) &
                                                 RMAC_TS_SEQUENCE_NUMBER_MASK;
     }
@@ -1911,30 +1922,13 @@ static fsp_err_t r_rmac_set_rx_queue (rmac_instance_ctrl_t * p_instance_ctrl, ui
 
 static fsp_err_t r_rmac_get_tx_timestamp (rmac_instance_ctrl_t * p_instance_ctrl)
 {
-    fsp_err_t                            err                 = FSP_ERR_NOT_FOUND;
-    rmac_extended_cfg_t                * p_rmac_extended_cfg = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    layer3_switch_descriptor_queue_cfg_t queue_cfg           = p_rmac_extended_cfg->p_ts_queue->queue_cfg;
-
-    /* Search tx timestamp from ts reception descriptor that has same timestamp id and not empty. */
-    for (uint8_t i = 0; i < (queue_cfg.array_length - 1); i++)
-    {
-        if ((LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND !=
-             queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.dt) &&
-            (((p_instance_ctrl->tx_timestamp_seq_num - 1) & RMAC_TS_SEQUENCE_NUMBER_MASK) ==
-             queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.tsun))
-        {
-            p_instance_ctrl->tx_timestamp.sec_lower =
-                queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.tss;
-            p_instance_ctrl->tx_timestamp.ns =
-                queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.tsns;
-
-            queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.dt =
-                LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND;
-
-            err = FSP_SUCCESS;
-            break;
-        }
-    }
+    fsp_err_t             err                 = FSP_ERR_NOT_FOUND;
+    rmac_extended_cfg_t * p_rmac_extended_cfg = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    err = R_LAYER3_SWITCH_GetTxTimestamp(p_rmac_extended_cfg->p_ether_switch->p_ctrl,
+                                         p_rmac_extended_cfg->p_ts_queue->index,
+                                         ((uint32_t) (p_instance_ctrl->p_cfg->channel << RMAC_TS_SEQUENCE_NUMBER_POS) |
+                                          ((p_instance_ctrl->tx_timestamp_seq_num - 1) & RMAC_TS_SEQUENCE_NUMBER_MASK)),
+                                         (layer3_switch_timestamp_t *) &p_instance_ctrl->tx_timestamp);
 
     return err;
 }

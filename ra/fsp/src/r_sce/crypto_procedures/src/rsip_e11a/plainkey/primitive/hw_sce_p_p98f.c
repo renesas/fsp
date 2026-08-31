@@ -5,29 +5,41 @@
 */
 
 #include "hw_sce_ra_private.h"
+#include "hw_sce_p_sub_func.h"
 
-fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub (const uint32_t InData_Text[], const uint32_t InData_MAC[], uint32_t OutData_Text[])
+fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub (const uint32_t InData_Text[],
+                                           const uint32_t InData_TextLen[],
+                                           const uint32_t InData_MAC[],
+                                           const uint32_t InData_MACLength[],
+                                           uint32_t       OutData_Text[])
 {
     uint32_t iLoop = 0U;
 
-    WR1_PROG(REG_94H, 0x38008860U);
-    WR1_PROG(REG_94H, 0x00000000U);
+    HW_SCE_p_func_sub005(0x000000c7U, 0x80010060U);
+    WR1_PROG(REG_2CH, InData_MACLength[0]);
+    WR1_PROG(REG_24H, 0x00000000U);
+
+    HW_SCE_p_func_sub006(0x38008860U, 0x00000000U, 0x00260000U);
+
+    HW_SCE_p_func_sub001(0x0000b4a0U, 0x00000010U, 0x342028a3U);
     WR1_PROG(REG_9CH, 0x00000080U);
     WR1_PROG(REG_40H, 0x00260000U);
 
-    WR1_PROG(REG_94H, 0x0000b4a0U);
-    WR1_PROG(REG_94H, 0x00000010U);
-    WR1_PROG(REG_94H, 0x342028a3U);
-    WR1_PROG(REG_9CH, 0x00000080U);
-    WR1_PROG(REG_40H, 0x00260000U);
-
-    HW_SCE_p_func100(0x33584754U, 0xbd5a29e7U, 0xe2f6920aU, 0x1647f681U);
+    static const uint32_t Param_p98f_func100_001[] =
+    {
+        0x0fe71966U, 0xbaaf71aeU, 0x60d866d7U, 0x0d3ac19fU,
+    };
+    HW_SCE_p_func100(Param_p98f_func100_001);
     WR1_PROG(REG_40H, 0x00400000U);
     WR1_PROG(REG_24H, 0x00000000U);
 
     if (CHCK_STS(REG_40H, 22, 1))
     {
-        HW_SCE_p_func102(0xb70f9c79U, 0x00bee3fcU, 0x5e7857c0U, 0x5a15cfa8U);
+        static const uint32_t Param_p98f_func102_001[] =
+        {
+            0x6e67ea31U, 0xcdfff92cU, 0xe695cec1U, 0x0f74a663U,
+        };
+        HW_SCE_p_func102(Param_p98f_func102_001);
         WR1_PROG(REG_6CH, 0x00000040U);
         WAIT_STS(REG_20H, 12, 0);
 
@@ -35,32 +47,29 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub (const uint32_t InData_Text[], const u
     }
     else
     {
-        WR1_PROG(REG_94H, 0x00003404U);
+        HW_SCE_p_func_sub005(0x000000c7U, 0x80010000U);
+        WR1_PROG(REG_2CH, InData_TextLen[0]);
+        WR1_PROG(REG_24H, 0x00000000U);
 
-        WR1_PROG(REG_94H, 0x00008c00U);
-        WR1_PROG(REG_94H, 0x0000000fU);
+        HW_SCE_p_func_sub001(0x00008c00U, 0x0000000fU, 0x38008800U);
+        HW_SCE_p_func_sub009(0x00000000U, 0x00A60000U);
 
-        WR1_PROG(REG_94H, 0x38008800U);
-        WR1_PROG(REG_94H, 0x00000000U);
-        WR1_PROG(REG_9CH, 0x00000080U);
-        WR1_PROG(REG_40H, 0x00A60000U);
-
-        HW_SCE_p_func100(0xf416b0afU, 0x4df510cdU, 0x37e1b789U, 0x06264df8U);
+        static const uint32_t Param_p98f_func100_002[] =
+        {
+            0xc42aaee1U, 0xe3400395U, 0x43aee20dU, 0xa76c033aU,
+        };
+        HW_SCE_p_func100(Param_p98f_func100_002);
         WR1_PROG(REG_40H, 0x00400000U);
         WR1_PROG(REG_24H, 0x00000000U);
 
         if (CHCK_STS(REG_40H, 22, 1))
         {
-            WR1_PROG(REG_14H, 0x000003c1U);
-            WR1_PROG(REG_D0H, 0x07000d05U);
-            WAIT_STS(REG_14H, 31, 1);
+            HW_SCE_p_func_sub008(0x000003c1U, 0x07000d05U);
             WR4_ADDR(REG_2CH, &InData_Text[0]);
 
             WR1_PROG(REG_94H, 0x00000821U);
             WR1_PROG(REG_9CH, 0x80840001U);
-            WR1_PROG(REG_00H, 0x03410011U);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
+            HW_SCE_p_func_sub002(0x03410011U);
 
             WR1_PROG(REG_94H, 0x00000821U);
 
@@ -68,16 +77,16 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub (const uint32_t InData_Text[], const u
 
             for (iLoop = 0U; iLoop < 16U; iLoop++)
             {
-                WR1_PROG(REG_94H, 0x3c0028a0U);
-                WR1_PROG(REG_94H, 0x12003c25U);
-                WR1_PROG(REG_94H, 0x00002ca0U);
+                HW_SCE_p_func_sub001(0x3c0028a0U, 0x12003c25U, 0x00002ca0U);
             }
 
-            HW_SCE_p_func100(0xad872a4fU, 0x0534deadU, 0x13c9242fU, 0xe515b752U);
+            static const uint32_t Param_p98f_func100_003[] =
+            {
+                0x398acac6U, 0xa68de941U, 0xe0e94c78U, 0x26cd197dU,
+            };
+            HW_SCE_p_func100(Param_p98f_func100_003);
             WR1_PROG(REG_94H, 0x00000821U);
-            WR1_PROG(REG_9CH, 0x81840001U);
-            WR1_PROG(REG_08H, 0x00005012U);
-            WAIT_STS(REG_08H, 30, 1);
+            HW_SCE_p_func_sub012(0x81840001U, 0x00005012U);
             RD1_ADDR(REG_2CH, &OutData_Text[0]);
             WAIT_STS(REG_08H, 30, 1);
             RD1_ADDR(REG_2CH, &OutData_Text[1]);
@@ -88,32 +97,31 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub (const uint32_t InData_Text[], const u
 
             WR1_PROG(REG_D0H, 0x0e100405U);
             WR1_PROG(REG_9CH, 0x81840001U);
-            WR1_PROG(REG_00H, 0x00490011U);
-            WAIT_STS(REG_04H, 30, 0);
-            WR1_PROG(REG_40H, 0x00001800U);
+            HW_SCE_p_func_sub002(0x00490011U);
 
-            HW_SCE_p_func101(0xb7edc9f4U, 0xe9da3806U, 0x2d89097aU, 0x04b43830U);
+            static const uint32_t Param_p98f_func101_001[] =
+            {
+                0x0c4a1ec0U, 0xa3730b30U, 0xd0c96bccU, 0xa1019d0aU,
+            };
+            HW_SCE_p_func101(Param_p98f_func101_001);
         }
         else
         {
-            HW_SCE_p_func101(0x3b4e2123U, 0x0e3f125cU, 0x1f87e816U, 0x20a6ef38U);
+            static const uint32_t Param_p98f_func101_002[] =
+            {
+                0x8f224d1eU, 0xc6a15a9dU, 0x20a77796U, 0xd16932a9U,
+            };
+            HW_SCE_p_func101(Param_p98f_func101_002);
         }
 
-        WR1_PROG(REG_14H, 0x000000a1U);
-        WR1_PROG(REG_D0H, 0x0c100104U);
-        WAIT_STS(REG_14H, 31, 1);
-        WR1_PROG(REG_2CH, change_endian_long(0x00000000U));
+        HW_SCE_p_func_sub004(0x000000a1U, 0x0c100104U, 0x00000000U);
 
         WR1_PROG(REG_D0H, 0x07200d05U);
-        WR1_PROG(REG_00H, 0x00410011U);
-        WAIT_STS(REG_04H, 30, 0);
-        WR1_PROG(REG_40H, 0x00001800U);
+        HW_SCE_p_func_sub002(0x00410011U);
 
         WR1_PROG(REG_94H, 0x00000821U);
         WR1_PROG(REG_9CH, 0x80840001U);
-        WR1_PROG(REG_00H, 0x03410011U);
-        WAIT_STS(REG_04H, 30, 0);
-        WR1_PROG(REG_40H, 0x00001800U);
+        HW_SCE_p_func_sub002(0x03410011U);
 
         WR1_PROG(REG_94H, 0x000008a5U);
 
@@ -121,40 +129,44 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub (const uint32_t InData_Text[], const u
 
         for (iLoop = 0U; iLoop < 16U; iLoop++)
         {
-            WR1_PROG(REG_94H, 0x3c0028a3U);
-            WR1_PROG(REG_94H, 0x12003c25U);
-            WR1_PROG(REG_94H, 0x00002ca0U);
+            HW_SCE_p_func_sub001(0x3c0028a3U, 0x12003c25U, 0x00002ca0U);
         }
 
-        WR1_PROG(REG_14H, 0x000003c1U);
-        WR1_PROG(REG_D0H, 0x08000055U);
-        WAIT_STS(REG_14H, 31, 1);
+        HW_SCE_p_func_sub008(0x000003c1U, 0x08000055U);
         WR4_ADDR(REG_2CH, &InData_MAC[0]);
 
-        WR1_PROG(REG_D0H, 0x9c100005U);
-        WR1_PROG(REG_94H, 0x00000821U);
-        WR1_PROG(REG_9CH, 0x81840001U);
-        WR1_PROG(REG_00H, 0x00490011U);
-        WAIT_STS(REG_04H, 30, 0);
-        WR1_PROG(REG_40H, 0x00001800U);
+        HW_SCE_p_func_sub016(0x9c100005U, 0x00000821U, 0x81840001U);
+        HW_SCE_p_func_sub002(0x00490011U);
         WR1_PROG(REG_D0H, 0x00000000U);
 
-        HW_SCE_p_func100(0xde944d9dU, 0xceb9b074U, 0x9f3b4cacU, 0xaa24682bU);
+        static const uint32_t Param_p98f_func100_004[] =
+        {
+            0xc690565dU, 0x1f3991ddU, 0xeb9e51a1U, 0x3495e6a0U,
+        };
+        HW_SCE_p_func100(Param_p98f_func100_004);
         WR1_PROG(REG_40H, 0x00400000U);
         WR1_PROG(REG_24H, 0x00000000U);
 
         if (CHCK_STS(REG_40H, 22, 1))
         {
-            HW_SCE_p_func102(0x16dad1b1U, 0x05443daeU, 0x57a21d09U, 0x686f9f1dU);
+            static const uint32_t Param_p98f_func102_002[] =
+            {
+                0x27e9707fU, 0x4fbea5b6U, 0xb6dd3648U, 0x6bbec710U,
+            };
+            HW_SCE_p_func102(Param_p98f_func102_002);
 
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 
-            return FSP_ERR_CRYPTO_SCE_FAIL;
+            return FSP_ERR_CRYPTO_SCE_AUTHENTICATION;
         }
         else
         {
-            HW_SCE_p_func102(0x012a1015U, 0x1cd6ad8eU, 0x977db968U, 0x4b7e3568U);
+            static const uint32_t Param_p98f_func102_003[] =
+            {
+                0xfeffdd51U, 0x8ccb2e0aU, 0xeda1a01cU, 0x4f83af8fU,
+            };
+            HW_SCE_p_func102(Param_p98f_func102_003);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 
